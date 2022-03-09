@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="jeharabic" format="1">
+  <advance width="325"/>
+  <unicode hex="0698"/>
+  <unicode hex="FB8A"/>
+  <outline>
+    <contour>
+      <point x="293" y="454" type="line"/>
+      <point x="181" y="454" type="line"/>
+      <point x="181" y="72" type="line" smooth="yes"/>
+      <point x="181" y="-24"/>
+      <point x="135" y="-70"/>
+      <point x="42" y="-70" type="curve"/>
+      <point x="42" y="-166" type="line"/>
+      <point x="214" y="-166"/>
+      <point x="293" y="-91"/>
+      <point x="293" y="89" type="curve" smooth="yes"/>
+    </contour>
+    <contour>
+      <point x="103" y="546" type="line"/>
+      <point x="103" y="658" type="line"/>
+      <point x="-7" y="658" type="line"/>
+      <point x="-7" y="546" type="line"/>
+    </contour>
+    <contour>
+      <point x="292" y="546" type="line"/>
+      <point x="292" y="658" type="line"/>
+      <point x="182" y="658" type="line"/>
+      <point x="182" y="546" type="line"/>
+    </contour>
+    <contour>
+      <point x="199" y="705" type="line"/>
+      <point x="199" y="816" type="line"/>
+      <point x="89" y="816" type="line"/>
+      <point x="89" y="705" type="line"/>
+    </contour>
+  </outline>
+</glyph>

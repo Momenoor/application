@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="thehinitialarabic" format="1">
+  <advance width="308"/>
+  <unicode hex="FE9B"/>
+  <outline>
+    <contour>
+      <point x="276" y="181" type="curve" smooth="yes"/>
+      <point x="276" y="454" type="line"/>
+      <point x="164" y="454" type="line"/>
+      <point x="164" y="219" type="line" smooth="yes"/>
+      <point x="164" y="182"/>
+      <point x="161" y="158"/>
+      <point x="156" y="147" type="curve" smooth="yes"/>
+      <point x="145" y="125"/>
+      <point x="122" y="114"/>
+      <point x="85" y="114" type="curve" smooth="yes"/>
+      <point x="-13" y="114" type="line"/>
+      <point x="-13" y="0" type="line"/>
+      <point x="109" y="0" type="line" smooth="yes"/>
+      <point x="220" y="0"/>
+      <point x="276" y="60"/>
+    </contour>
+    <contour>
+      <point x="185" y="690" type="line"/>
+      <point x="185" y="789" type="line"/>
+      <point x="77" y="789" type="line"/>
+      <point x="77" y="690" type="line"/>
+    </contour>
+    <contour>
+      <point x="273" y="546" type="line"/>
+      <point x="273" y="645" type="line"/>
+      <point x="165" y="645" type="line"/>
+      <point x="165" y="546" type="line"/>
+    </contour>
+    <contour>
+      <point x="100" y="546" type="line"/>
+      <point x="100" y="645" type="line"/>
+      <point x="-8" y="645" type="line"/>
+      <point x="-8" y="546" type="line"/>
+    </contour>
+  </outline>
+</glyph>

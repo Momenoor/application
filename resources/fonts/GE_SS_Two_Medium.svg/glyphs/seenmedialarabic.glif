@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="seenmedialarabic" format="1">
+  <advance width="976"/>
+  <unicode hex="FEB4"/>
+  <outline>
+    <contour>
+      <point x="-22" y="0" type="line"/>
+      <point x="992" y="0" type="line"/>
+      <point x="992" y="114" type="line"/>
+      <point x="821" y="114" type="line"/>
+      <point x="838" y="150"/>
+      <point x="846" y="191"/>
+      <point x="846" y="238" type="curve" smooth="yes"/>
+      <point x="846" y="454" type="line"/>
+      <point x="733" y="454" type="line"/>
+      <point x="733" y="224" type="line" smooth="yes"/>
+      <point x="733" y="151"/>
+      <point x="705" y="114"/>
+      <point x="648" y="114" type="curve" smooth="yes"/>
+      <point x="539" y="114" type="line"/>
+      <point x="554" y="130"/>
+      <point x="562" y="171"/>
+      <point x="562" y="236" type="curve" smooth="yes"/>
+      <point x="562" y="454" type="line"/>
+      <point x="449" y="454" type="line"/>
+      <point x="449" y="225" type="line" smooth="yes"/>
+      <point x="449" y="151"/>
+      <point x="421" y="114"/>
+      <point x="364" y="114" type="curve" smooth="yes"/>
+      <point x="260" y="114" type="line"/>
+      <point x="260" y="120" type="line"/>
+      <point x="272" y="139"/>
+      <point x="278" y="177"/>
+      <point x="278" y="236" type="curve" smooth="yes"/>
+      <point x="278" y="454" type="line"/>
+      <point x="165" y="454" type="line"/>
+      <point x="165" y="232" type="line" smooth="yes"/>
+      <point x="165" y="153"/>
+      <point x="137" y="114"/>
+      <point x="80" y="114" type="curve" smooth="yes"/>
+      <point x="-22" y="114" type="line"/>
+    </contour>
+  </outline>
+</glyph>

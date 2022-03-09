@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="extendedarabicindicdigitseven" format="1">
+  <advance width="549"/>
+  <unicode hex="06F7"/>
+  <outline>
+    <contour>
+      <point x="349" y="0" type="line"/>
+      <point x="499" y="645" type="line"/>
+      <point x="377" y="645" type="line"/>
+      <point x="279" y="124" type="line"/>
+      <point x="164" y="645" type="line"/>
+      <point x="50" y="645" type="line"/>
+      <point x="203" y="0" type="line"/>
+    </contour>
+  </outline>
+</glyph>

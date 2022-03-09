@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="zerojoin" format="1">
+  <advance width="20"/>
+  <unicode hex="200D"/>
+  <outline>
+    <contour>
+      <point x="71" y="663" type="line"/>
+      <point x="24" y="711" type="line"/>
+      <point x="71" y="758" type="line"/>
+      <point x="57" y="772" type="line"/>
+      <point x="10" y="724" type="line"/>
+      <point x="-37" y="772" type="line"/>
+      <point x="-51" y="758" type="line"/>
+      <point x="-3" y="711" type="line"/>
+      <point x="-51" y="663" type="line"/>
+      <point x="-37" y="650" type="line"/>
+      <point x="0" y="687" type="line"/>
+      <point x="0" y="0" type="line"/>
+      <point x="20" y="0" type="line"/>
+      <point x="20" y="687" type="line"/>
+      <point x="57" y="650" type="line"/>
+    </contour>
+  </outline>
+</glyph>

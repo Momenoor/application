@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="meeminitialarabic" format="1">
+  <advance width="601"/>
+  <unicode hex="FEE3"/>
+  <outline>
+    <contour>
+      <point x="568" y="142" type="curve" smooth="yes"/>
+      <point x="568" y="273"/>
+      <point x="477" y="376"/>
+      <point x="344" y="376" type="curve" smooth="yes"/>
+      <point x="211" y="376"/>
+      <point x="118" y="280"/>
+      <point x="118" y="146" type="curve" smooth="yes"/>
+      <point x="118" y="137"/>
+      <point x="119" y="128"/>
+      <point x="120" y="119" type="curve" smooth="yes"/>
+      <point x="121" y="114" type="line"/>
+      <point x="-17" y="114" type="line"/>
+      <point x="-17" y="0" type="line"/>
+      <point x="163" y="0" type="line"/>
+      <point x="206" y="-59"/>
+      <point x="267" y="-89"/>
+      <point x="344" y="-89" type="curve" smooth="yes"/>
+      <point x="477" y="-89"/>
+      <point x="568" y="9"/>
+    </contour>
+    <contour>
+      <point x="453" y="142" type="curve" smooth="yes"/>
+      <point x="453" y="66"/>
+      <point x="409" y="15"/>
+      <point x="347" y="15" type="curve" smooth="yes"/>
+      <point x="280" y="15"/>
+      <point x="233" y="72"/>
+      <point x="233" y="147" type="curve" smooth="yes"/>
+      <point x="233" y="222"/>
+      <point x="278" y="275"/>
+      <point x="341" y="275" type="curve" smooth="yes"/>
+      <point x="407" y="275"/>
+      <point x="453" y="218"/>
+    </contour>
+  </outline>
+</glyph>

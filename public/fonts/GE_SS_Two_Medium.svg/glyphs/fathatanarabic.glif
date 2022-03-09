@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="fathatanarabic" format="1">
+  <advance width="0"/>
+  <unicode hex="064B"/>
+  <unicode hex="FE70"/>
+  <outline>
+    <contour>
+      <point x="218" y="804" type="curve"/>
+      <point x="63" y="768" type="line" smooth="yes"/>
+      <point x="43" y="761"/>
+      <point x="30" y="748"/>
+      <point x="24" y="730" type="curve"/>
+      <point x="34" y="732" type="line" smooth="yes"/>
+      <point x="118" y="750"/>
+      <point x="163" y="759"/>
+      <point x="170" y="761" type="curve" smooth="yes"/>
+      <point x="199" y="768"/>
+      <point x="215" y="783"/>
+    </contour>
+    <contour>
+      <point x="206" y="742" type="curve"/>
+      <point x="51" y="706" type="line" smooth="yes"/>
+      <point x="31" y="699"/>
+      <point x="18" y="686"/>
+      <point x="12" y="668" type="curve"/>
+      <point x="103" y="687"/>
+      <point x="151" y="697"/>
+      <point x="158" y="698" type="curve" smooth="yes"/>
+      <point x="187" y="705"/>
+      <point x="203" y="720"/>
+    </contour>
+  </outline>
+</glyph>

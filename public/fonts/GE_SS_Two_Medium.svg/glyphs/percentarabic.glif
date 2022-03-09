@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="percentarabic" format="1">
+  <advance width="430"/>
+  <unicode hex="066A"/>
+  <outline>
+    <contour>
+      <point x="187" y="526" type="line"/>
+      <point x="187" y="618" type="line"/>
+      <point x="91" y="618" type="line"/>
+      <point x="91" y="526" type="line"/>
+    </contour>
+    <contour>
+      <point x="397" y="646" type="line"/>
+      <point x="298" y="646" type="line"/>
+      <point x="32" y="0" type="line"/>
+      <point x="131" y="0" type="line"/>
+    </contour>
+    <contour>
+      <point x="346" y="32" type="line"/>
+      <point x="346" y="124" type="line"/>
+      <point x="249" y="124" type="line"/>
+      <point x="249" y="32" type="line"/>
+    </contour>
+  </outline>
+</glyph>

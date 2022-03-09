@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="khahmedialarabic" format="1">
+  <advance width="774"/>
+  <unicode hex="FEA8"/>
+  <outline>
+    <contour>
+      <point x="787" y="0" type="line"/>
+      <point x="787" y="114" type="line"/>
+      <point x="681" y="114" type="line"/>
+      <point x="672" y="253"/>
+      <point x="622" y="350"/>
+      <point x="531" y="406" type="curve" smooth="yes"/>
+      <point x="479" y="438"/>
+      <point x="418" y="454"/>
+      <point x="349" y="454" type="curve" smooth="yes"/>
+      <point x="305" y="454"/>
+      <point x="261" y="445"/>
+      <point x="217" y="426" type="curve" smooth="yes"/>
+      <point x="176" y="408"/>
+      <point x="141" y="384"/>
+      <point x="110" y="355" type="curve"/>
+      <point x="135" y="317"/>
+      <point x="153" y="288"/>
+      <point x="164" y="267" type="curve"/>
+      <point x="188" y="294"/>
+      <point x="218" y="315"/>
+      <point x="254" y="330" type="curve" smooth="yes"/>
+      <point x="285" y="343"/>
+      <point x="313" y="349"/>
+      <point x="338" y="349" type="curve" smooth="yes"/>
+      <point x="411" y="349"/>
+      <point x="469" y="324"/>
+      <point x="510" y="273" type="curve" smooth="yes"/>
+      <point x="545" y="229"/>
+      <point x="562" y="176"/>
+      <point x="562" y="114" type="curve"/>
+      <point x="-16" y="114" type="line"/>
+      <point x="-16" y="0" type="line"/>
+    </contour>
+    <contour>
+      <point x="402" y="548" type="line"/>
+      <point x="402" y="659" type="line"/>
+      <point x="292" y="659" type="line"/>
+      <point x="292" y="548" type="line"/>
+    </contour>
+  </outline>
+</glyph>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="rehfinalarabic" format="1">
+  <advance width="443"/>
+  <unicode hex="FEAE"/>
+  <outline>
+    <contour>
+      <point x="465" y="0" type="line"/>
+      <point x="465" y="114" type="line"/>
+      <point x="293" y="114" type="line"/>
+      <point x="293" y="454" type="line"/>
+      <point x="181" y="454" type="line"/>
+      <point x="181" y="72" type="line" smooth="yes"/>
+      <point x="181" y="-24"/>
+      <point x="135" y="-70"/>
+      <point x="42" y="-70" type="curve"/>
+      <point x="42" y="-166" type="line"/>
+      <point x="178" y="-166"/>
+      <point x="269" y="-107"/>
+      <point x="286" y="0" type="curve"/>
+    </contour>
+  </outline>
+</glyph>

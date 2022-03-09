@@ -1,0 +1,74 @@
+@font-face {
+    font-family: naskh;
+    src: url(/fonts/DroidNaskh-Regular.ttf?51e724f6664b77347a556815916fa93d) format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: naskh;
+    src: url(/fonts/DroidNaskh-bold.ttf?6501a22599329555c3ca585c5a91f90f) format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: kufi;
+    src: url(/fonts/DroidKufi-Regular.ttf?475efa448565fa19578b62bea2360ed3) format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: kufi;
+    src: url(/fonts/DroidKufi-bold.ttf?9595f807a0a420e93302b0a14d45407c) format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: ACNGESS;
+    src: url(/fonts/GESSTwoRegular.otf?580b91a80c190c806c047cfae41f6a97) format('otf'), url(/fonts/GESSTwoRegular.woff?17b1e48847d380db8480711723ad9bc0) format('woff'), url(/fonts/GESSTwoRegular.ttf?7728cb849e7659d9ba9d25f02e7f261a) format('truetype'), url(/fonts/GESSTwoRegular.svg?6442ba2fd8d0cdf03915134d6a504821#GESSTwoMedium-Medium) format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: ACNGESS;
+    src: url(/fonts/GE_SS_Two_Light.woff?c6f869dcf7c70d76fb0430f7198cae95) format("woff"), url(/fonts/GE_SS_Two_Light.ttf?97b99b55a9ac6f98a52b4b10a337e502) format("truetype"), url(/fonts/GE_SS_Two_Light.svg?8decad28ada8943ae1b729299af5902d#GESSTwoLight-Light) format("svg");
+    font-weight: 400;
+    font-style: light;
+}
+@font-face {
+    font-family: ACNGESS;
+    src: url(/fonts/GE_SS_Two_Medium.woff?978db6c03acf1f41ff77dbf121322f07) format("woff"), url(/fonts/GE_SS_Two_Medium.ttf?1dda1b34737ac9c27ecb6bed21aff7a5) format("truetype");
+    font-weight: 700;
+    font-style: bold;
+}
+@font-face {
+    font-family: ACNGESS;
+    src: url(/fonts/GE_SS_Two_Bold.woff?56c72a739073eb855d1314866478e399) format("woff"), url(/fonts/GE_SS_Two_Bold.ttf?9a985a4468c267e95bc6e7791a56c58d) format("truetype"), url(/fonts/GE_SS_Two_Bold.svg?a6f94e0285c3b2c321568d05b360f928#GESSTwoBold-Bold) format("svg");
+    font-weight: 900;
+    font-style: bolder;
+}
+@font-face {
+    font-family: neotech;
+    src: url(/fonts/neotech-light.eot?7e32d7232b46f6702ff0ebe4e9c3272b);
+    src: url(/fonts/neotech-light.eot?7e32d7232b46f6702ff0ebe4e9c3272b?#iefix) format('embedded-opentype'), url(/fonts/neotech-light.woff?49f6746336a3e0d90b16b287b60dac6d) format('woff'), url(/fonts/neotech-light.ttf?5868348695ba308ba0521d449226a375) format('truetype'), url(/fonts/neotech-light.svg?c11ceb77e5b5162006235974a3dc4fa9#neotech-light) format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: neotech;
+    src: url(/fonts/neotech-medium.eot?d0bb85685f514c956aefc8319f5dfe01);
+    src: url(/fonts/neotech-medium.eot?d0bb85685f514c956aefc8319f5dfe01?#iefix) format('embedded-opentype'), url(/fonts/neotech-medium.woff?f189815ae7fe6ed211fd65eb6dc2c9c5) format('woff'), url(/fonts/neotech-medium.ttf?8d5e069d8bf48e7fb007c9727c11d6e7) format('truetype'), url(/fonts/neotech-medium.svg?365ca613456908ff8693151c2400a867#neotech-medium) format('svg');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: neotech;
+    src: url(/fonts/neotech-regular.eot?f24d4a6bb627842e4e2a21cd1264ccd1);
+    src: url(/fonts/neotech-regular.eot?f24d4a6bb627842e4e2a21cd1264ccd1?#iefix) format('embedded-opentype'), url(/fonts/neotech-regular.woff?be0914bcc003717b2b00588f4b5bdf9c) format('woff'), url(/fonts/neotech-regular.ttf?80e80e6aba02b86694d5fbb73bf112b9) format('truetype'), url(/fonts/neotech-regular.svg?08c0935609abc5e7ce9d1cfb37ebb24b#neotech-regular) format('svg');
+    font-weight: 500;
+    font-style: normal;
+}
+
+body{
+    font-family: "neotech", "ACNGESS" !important;
+}
+

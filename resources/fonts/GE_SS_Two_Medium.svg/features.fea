@@ -1,0 +1,597 @@
+languagesystem arab dflt;
+languagesystem latn dflt;
+
+
+# GSUB 
+
+
+lookup aaltAccessAllAlternatesinLatinlookup0 {
+  lookupflag 0;
+    sub \hamzaarabic by \hamzaarabic ;
+    sub \fathatanarabic by \fathatanarabic ;
+    sub \dammatanarabic by \dammatanarabic ;
+    sub \kasratanarabic by \kasratanarabic ;
+    sub \fathaarabic by \fathaarabic ;
+    sub \dammaarabic by \dammaarabic ;
+    sub \kasraarabic by \kasraarabic ;
+    sub \shaddaarabic by \shaddaarabic ;
+    sub \sukunarabic by \sukunarabic ;
+} aaltAccessAllAlternatesinLatinlookup0;
+
+lookup aaltAccessAllAlternatesinLatinlookup1 {
+  lookupflag 0;
+    sub \alefmaddaabovearabic from [\alefmaddaabovearabic \alefmaddaabovefinalarabic ];
+    sub \alefhamzaabovearabic from [\alefhamzaabovearabic \alefhamzaabovefinalarabic ];
+    sub \wawhamzaabovearabic from [\wawhamzaabovearabic \wawhamzaabovefinalarabic ];
+    sub \alefhamzabelowarabic from [\alefhamzabelowarabic \alefhamzabelowfinalarabic ];
+    sub \yehhamzaabovearabic from [\yehhamzaabovearabic \yehhamzaabovefinalarabic \yehhamzaabovemedialarabic 
+	\yehhamzaaboveinitialarabic ];
+    sub \alefarabic from [\alefarabic \aleffinalarabic ];
+    sub \beharabic from [\beharabic \behfinalarabic \behmedialarabic \behinitialarabic ];
+    sub \tehmarbutaarabic from [\tehmarbutaarabic \tehmarbutafinalarabic ];
+    sub \teharabic from [\teharabic \tehfinalarabic \tehmedialarabic \tehinitialarabic ];
+    sub \theharabic from [\theharabic \thehfinalarabic \thehmedialarabic \thehinitialarabic ];
+    sub \jeemarabic from [\jeemarabic \jeemfinalarabic \jeemmedialarabic \jeeminitialarabic ];
+    sub \haharabic from [\haharabic \hahfinalarabic \hahmedialarabic \hahinitialarabic ];
+    sub \khaharabic from [\khaharabic \khahfinalarabic \khahmedialarabic \khahinitialarabic ];
+    sub \dalarabic from [\dalarabic \dalfinalarabic ];
+    sub \thalarabic from [\thalarabic \thalfinalarabic ];
+    sub \reharabic from [\reharabic \rehfinalarabic ];
+    sub \zainarabic from [\zainarabic \zainfinalarabic ];
+    sub \seenarabic from [\seenarabic \seenfinalarabic \seenmedialarabic \seeninitialarabic ];
+    sub \sheenarabic from [\sheenarabic \sheenfinalarabic \sheenmedialarabic \sheeninitialarabic ];
+    sub \sadarabic from [\sadarabic \sadfinalarabic \sadmedialarabic \sadinitialarabic ];
+    sub \dadarabic from [\dadarabic \dadfinalarabic \dadmedialarabic \dadinitialarabic ];
+    sub \taharabic from [\taharabic \tahfinalarabic \tahmedialarabic \tahinitialarabic ];
+    sub \zaharabic from [\zaharabic \zahfinalarabic \zahmedialarabic \zahinitialarabic ];
+    sub \ainarabic from [\ainarabic \ainfinalarabic \ainmedialarabic \aininitialarabic ];
+    sub \ghainarabic from [\ghainarabic \ghainfinalarabic \ghainmedialarabic \ghaininitialarabic ];
+    sub \feharabic from [\feharabic \fehfinalarabic \fehmedialarabic \fehinitialarabic ];
+    sub \qafarabic from [\qafarabic \qaffinalarabic \qafmedialarabic \qafinitialarabic ];
+    sub \kafarabic from [\kafarabic \kaffinalarabic \kafmedialarabic \kafinitialarabic ];
+    sub \lamarabic from [\lamarabic \lamfinalarabic \lammedialarabic \laminitialarabic ];
+    sub \meemarabic from [\meemarabic \meemfinalarabic \meemmedialarabic \meeminitialarabic ];
+    sub \noonarabic from [\noonarabic \noonfinalarabic \noonmedialarabic \nooninitialarabic ];
+    sub \heharabic from [\heharabic \hehfinalarabic \hehmedialarabic \hehinitialarabic ];
+    sub \wawarabic from [\wawarabic \wawfinalarabic ];
+    sub \alefmaksuraarabic from [\alefmaksuraarabic \alefmaksurafinalarabic ];
+    sub \yeharabic from [\yeharabic \yehfinalarabic \yehmedialarabic \yehinitialarabic ];
+    sub \peharabic from [\peharabic \pehfinalarabic \pehmedialarabic \pehinitialarabic ];
+    sub \tcheharabic from [\tcheharabic \tchehfinalarabic \tchehmedialarabic \tchehinitialarabic ];
+    sub \veharabic from [\veharabic \vehfinalarabic \vehmedialarabic \vehinitialarabic ];
+    sub \jeharabic from [\jeharabic \jehfinalarabic ];
+    sub \alefwaslaisolated from [\alefwaslaisolated \alefwaslafinal ];
+} aaltAccessAllAlternatesinLatinlookup1;
+
+lookup ccmpGlyphCompositionDecompositioninArabiclookup2 {
+  lookupflag RightToLeft;
+    sub \alefarabic \maddaabove  by \alefmaddaabovearabic;
+    sub \alefarabic \hamzaabove  by \alefhamzaabovearabic;
+    sub \wawarabic \hamzaabove  by \wawhamzaabovearabic;
+    sub \alefarabic \hamzabelow  by \alefhamzabelowarabic;
+    sub \yeharabic \hamzaabove  by \yehhamzaabovearabic;
+} ccmpGlyphCompositionDecompositioninArabiclookup2;
+
+lookup ccmpGlyphCompositionDecompositioninArabiclookup3 {
+  lookupflag RightToLeft;
+    sub \shaddaarabic \kasraarabic  by \shaddakasraarabic;
+    sub \kasraarabic \shaddaarabic  by \shaddakasraarabic;
+    sub \shaddaarabic \kasratanarabic  by \shaddakasratanarabic;
+    sub \kasratanarabic \shaddaarabic  by \shaddakasratanarabic;
+    sub \shaddaarabic \fathaarabic  by \shaddafathaarabic;
+    sub \fathaarabic \shaddaarabic  by \shaddafathaarabic;
+    sub \shaddaarabic \dammaarabic  by \shaddadammaarabicX;
+    sub \dammaarabic \shaddaarabic  by \shaddadammaarabicX;
+    sub \shaddaarabic \dammatanarabic  by \shaddadammatanarabic;
+    sub \dammatanarabic \shaddaarabic  by \shaddadammatanarabic;
+} ccmpGlyphCompositionDecompositioninArabiclookup3;
+
+lookup ligaStandardLigaturesinArabiclookup4 {
+  lookupflag RightToLeft;
+    sub \alefarabic \maddaabove  by \alefmaddaabovearabic;
+    sub \alefarabic \hamzaabove  by \alefhamzaabovearabic;
+    sub \wawarabic \hamzaabove  by \wawhamzaabovearabic;
+    sub \alefarabic \hamzabelow  by \alefhamzabelowarabic;
+    sub \yeharabic \hamzaabove  by \yehhamzaabovearabic;
+    sub \alefarabic \fathatanarabic  by \alefwithfathatanisolated;
+} ligaStandardLigaturesinArabiclookup4;
+
+lookup ligaStandardLigaturesinArabiclookup5 {
+  lookupflag RightToLeft;
+    sub \shaddaarabic \kasraarabic  by \shaddakasraarabic;
+    sub \kasraarabic \shaddaarabic  by \shaddakasraarabic;
+    sub \shaddaarabic \kasratanarabic  by \shaddakasratanarabic;
+    sub \kasratanarabic \shaddaarabic  by \shaddakasratanarabic;
+    sub \shaddaarabic \fathaarabic  by \shaddafathaarabic;
+    sub \fathaarabic \shaddaarabic  by \shaddafathaarabic;
+    sub \shaddaarabic \dammaarabic  by \shaddadammaarabicX;
+    sub \dammaarabic \shaddaarabic  by \shaddadammaarabicX;
+    sub \shaddaarabic \dammatanarabic  by \shaddadammatanarabic;
+    sub \dammatanarabic \shaddaarabic  by \shaddadammatanarabic;
+} ligaStandardLigaturesinArabiclookup5;
+
+lookup ligaStandardLigaturesinArabiclookup6 {
+  lookupflag RightToLeft;
+    sub \laminitialarabic \alefhamzaabovefinalarabic  by \lamalefhamzaaboveisolatedarabi;
+    sub \lammedialarabic \alefmaddaabovefinalarabic  by \lamalefmaddaabovefinalarabic;
+    sub \laminitialarabic \aleffinalarabic  by \lamalefisolatedarabic;
+    sub \lammedialarabic \aleffinalarabic  by \lamaleffinalarabic;
+    sub \lammedialarabic \alefhamzaabovefinalarabic  by \lamalefhamzaabovefinalarabicX;
+    sub \laminitialarabic \alefhamzabelowfinalarabic  by \lamalefhamzabelowisolatedarabi;
+    sub \lammedialarabic \alefhamzabelowfinalarabic  by \lamalefhamzabelowfinalarabicX;
+    sub \laminitialarabic \alefmaddaabovefinalarabic  by \lamalefmaddaaboveisolatedarabi;
+} ligaStandardLigaturesinArabiclookup6;
+
+lookup ligaStandardLigaturesinArabiclookup7 {
+  lookupflag RightToLeft;
+    sub \laminitialarabic \lammedialarabic \hehfinalarabic  by \allahisolated;
+} ligaStandardLigaturesinArabiclookup7;
+
+lookup ligaStandardLigaturesinArabiclookup8 {
+  lookupflag RightToLeft;
+    sub \laminitialarabic \alefhamzaabovefinalarabic  by \lamalefhamzaaboveisolatedarabi;
+    sub \lammedialarabic \alefmaddaabovefinalarabic  by \lamalefmaddaabovefinalarabic;
+    sub \laminitialarabic \aleffinalarabic  by \lamalefisolatedarabic;
+    sub \lammedialarabic \aleffinalarabic  by \lamaleffinalarabic;
+    sub \lammedialarabic \alefhamzaabovefinalarabic  by \lamalefhamzaabovefinalarabicX;
+    sub \laminitialarabic \alefhamzabelowfinalarabic  by \lamalefhamzabelowisolatedarabi;
+    sub \lammedialarabic \alefhamzabelowfinalarabic  by \lamalefhamzabelowfinalarabicX;
+    sub \laminitialarabic \alefmaddaabovefinalarabic  by \lamalefmaddaaboveisolatedarabi;
+    sub \laminitialarabic \lammedialarabic \hehfinalarabic  by \allahisolated;
+} ligaStandardLigaturesinArabiclookup8;
+
+lookup ligaStandardLigaturesinArabiclookup9 {
+  lookupflag RightToLeft;
+    sub \aleffinalarabic \fathatanarabic  by \alefwithfathatanfinal;
+} ligaStandardLigaturesinArabiclookup9;
+
+lookup rligRequiredLigaturesinArabiclookup10 {
+  lookupflag RightToLeft;
+    sub \shaddaarabic \kasraarabic  by \shaddakasraarabic;
+    sub \kasraarabic \shaddaarabic  by \shaddakasraarabic;
+    sub \shaddaarabic \kasratanarabic  by \shaddakasratanarabic;
+    sub \kasratanarabic \shaddaarabic  by \shaddakasratanarabic;
+    sub \shaddaarabic \fathaarabic  by \shaddafathaarabic;
+    sub \fathaarabic \shaddaarabic  by \shaddafathaarabic;
+    sub \shaddaarabic \dammaarabic  by \shaddadammaarabicX;
+    sub \dammaarabic \shaddaarabic  by \shaddadammaarabicX;
+    sub \shaddaarabic \dammatanarabic  by \shaddadammatanarabic;
+    sub \dammatanarabic \shaddaarabic  by \shaddadammatanarabic;
+} rligRequiredLigaturesinArabiclookup10;
+
+lookup rligRequiredLigaturesinArabiclookup11 {
+  lookupflag RightToLeft;
+    sub \laminitialarabic \alefhamzaabovefinalarabic  by \lamalefhamzaaboveisolatedarabi;
+    sub \lammedialarabic \alefmaddaabovefinalarabic  by \lamalefmaddaabovefinalarabic;
+    sub \laminitialarabic \aleffinalarabic  by \lamalefisolatedarabic;
+    sub \lammedialarabic \aleffinalarabic  by \lamaleffinalarabic;
+    sub \lammedialarabic \alefhamzaabovefinalarabic  by \lamalefhamzaabovefinalarabicX;
+    sub \laminitialarabic \alefhamzabelowfinalarabic  by \lamalefhamzabelowisolatedarabi;
+    sub \lammedialarabic \alefhamzabelowfinalarabic  by \lamalefhamzabelowfinalarabicX;
+    sub \laminitialarabic \alefmaddaabovefinalarabic  by \lamalefmaddaaboveisolatedarabi;
+} rligRequiredLigaturesinArabiclookup11;
+
+lookup rligRequiredLigaturesinArabiclookup12 {
+  lookupflag RightToLeft;
+    sub \laminitialarabic \lammedialarabic \hehfinalarabic  by \allahisolated;
+} rligRequiredLigaturesinArabiclookup12;
+
+lookup isolIsolatedFormsinArabiclookup13 {
+  lookupflag RightToLeft;
+    sub \hamzaarabic by \hamzaarabic ;
+    sub \alefmaddaabovearabic by \alefmaddaabovearabic ;
+    sub \alefhamzaabovearabic by \alefhamzaabovearabic ;
+    sub \wawhamzaabovearabic by \wawhamzaabovearabic ;
+    sub \alefhamzabelowarabic by \alefhamzabelowarabic ;
+    sub \yehhamzaabovearabic by \yehhamzaabovearabic ;
+    sub \alefarabic by \alefarabic ;
+    sub \beharabic by \beharabic ;
+    sub \tehmarbutaarabic by \tehmarbutaarabic ;
+    sub \teharabic by \teharabic ;
+    sub \theharabic by \theharabic ;
+    sub \jeemarabic by \jeemarabic ;
+    sub \haharabic by \haharabic ;
+    sub \khaharabic by \khaharabic ;
+    sub \dalarabic by \dalarabic ;
+    sub \thalarabic by \thalarabic ;
+    sub \reharabic by \reharabic ;
+    sub \zainarabic by \zainarabic ;
+    sub \seenarabic by \seenarabic ;
+    sub \sheenarabic by \sheenarabic ;
+    sub \sadarabic by \sadarabic ;
+    sub \dadarabic by \dadarabic ;
+    sub \taharabic by \taharabic ;
+    sub \zaharabic by \zaharabic ;
+    sub \ainarabic by \ainarabic ;
+    sub \ghainarabic by \ghainarabic ;
+    sub \feharabic by \feharabic ;
+    sub \qafarabic by \qafarabic ;
+    sub \kafarabic by \kafarabic ;
+    sub \lamarabic by \lamarabic ;
+    sub \meemarabic by \meemarabic ;
+    sub \noonarabic by \noonarabic ;
+    sub \heharabic by \heharabic ;
+    sub \wawarabic by \wawarabic ;
+    sub \alefmaksuraarabic by \alefmaksuraarabic ;
+    sub \yeharabic by \yeharabic ;
+    sub \peharabic by \peharabic ;
+    sub \tcheharabic by \tcheharabic ;
+    sub \veharabic by \veharabic ;
+    sub \jeharabic by \jeharabic ;
+    sub \alefwaslaisolated by \alefwaslaisolated ;
+} isolIsolatedFormsinArabiclookup13;
+
+lookup isolIsolatedFormsinArabiclookup14 {
+  lookupflag RightToLeft;
+    sub \fathatanarabic by \fathatanarabic ;
+    sub \dammatanarabic by \dammatanarabic ;
+    sub \kasratanarabic by \kasratanarabic ;
+    sub \fathaarabic by \fathaarabic ;
+    sub \dammaarabic by \dammaarabic ;
+    sub \kasraarabic by \kasraarabic ;
+    sub \shaddaarabic by \shaddaarabic ;
+    sub \sukunarabic by \sukunarabic ;
+} isolIsolatedFormsinArabiclookup14;
+
+lookup finaTerminalFormsinArabiclookup15 {
+  lookupflag RightToLeft;
+    sub \alefmaddaabovearabic by \alefmaddaabovefinalarabic ;
+    sub \alefhamzaabovearabic by \alefhamzaabovefinalarabic ;
+    sub \wawhamzaabovearabic by \wawhamzaabovefinalarabic ;
+    sub \alefhamzabelowarabic by \alefhamzabelowfinalarabic ;
+    sub \yehhamzaabovearabic by \yehhamzaabovefinalarabic ;
+    sub \alefarabic by \aleffinalarabic ;
+    sub \beharabic by \behfinalarabic ;
+    sub \tehmarbutaarabic by \tehmarbutafinalarabic ;
+    sub \teharabic by \tehfinalarabic ;
+    sub \theharabic by \thehfinalarabic ;
+    sub \jeemarabic by \jeemfinalarabic ;
+    sub \haharabic by \hahfinalarabic ;
+    sub \khaharabic by \khahfinalarabic ;
+    sub \dalarabic by \dalfinalarabic ;
+    sub \thalarabic by \thalfinalarabic ;
+    sub \reharabic by \rehfinalarabic ;
+    sub \zainarabic by \zainfinalarabic ;
+    sub \seenarabic by \seenfinalarabic ;
+    sub \sheenarabic by \sheenfinalarabic ;
+    sub \sadarabic by \sadfinalarabic ;
+    sub \dadarabic by \dadfinalarabic ;
+    sub \taharabic by \tahfinalarabic ;
+    sub \zaharabic by \zahfinalarabic ;
+    sub \ainarabic by \ainfinalarabic ;
+    sub \ghainarabic by \ghainfinalarabic ;
+    sub \feharabic by \fehfinalarabic ;
+    sub \qafarabic by \qaffinalarabic ;
+    sub \kafarabic by \kaffinalarabic ;
+    sub \lamarabic by \lamfinalarabic ;
+    sub \meemarabic by \meemfinalarabic ;
+    sub \noonarabic by \noonfinalarabic ;
+    sub \heharabic by \hehfinalarabic ;
+    sub \wawarabic by \wawfinalarabic ;
+    sub \alefmaksuraarabic by \alefmaksurafinalarabic ;
+    sub \yeharabic by \yehfinalarabic ;
+    sub \peharabic by \pehfinalarabic ;
+    sub \tcheharabic by \tchehfinalarabic ;
+    sub \veharabic by \vehfinalarabic ;
+    sub \jeharabic by \jehfinalarabic ;
+    sub \alefwaslaisolated by \alefwaslafinal ;
+} finaTerminalFormsinArabiclookup15;
+
+lookup mediMedialFormsinArabiclookup16 {
+  lookupflag RightToLeft;
+    sub \yehhamzaabovearabic by \yehhamzaabovemedialarabic ;
+    sub \beharabic by \behmedialarabic ;
+    sub \teharabic by \tehmedialarabic ;
+    sub \theharabic by \thehmedialarabic ;
+    sub \jeemarabic by \jeemmedialarabic ;
+    sub \haharabic by \hahmedialarabic ;
+    sub \khaharabic by \khahmedialarabic ;
+    sub \seenarabic by \seenmedialarabic ;
+    sub \sheenarabic by \sheenmedialarabic ;
+    sub \sadarabic by \sadmedialarabic ;
+    sub \dadarabic by \dadmedialarabic ;
+    sub \taharabic by \tahmedialarabic ;
+    sub \zaharabic by \zahmedialarabic ;
+    sub \ainarabic by \ainmedialarabic ;
+    sub \ghainarabic by \ghainmedialarabic ;
+    sub \feharabic by \fehmedialarabic ;
+    sub \qafarabic by \qafmedialarabic ;
+    sub \kafarabic by \kafmedialarabic ;
+    sub \lamarabic by \lammedialarabic ;
+    sub \meemarabic by \meemmedialarabic ;
+    sub \noonarabic by \noonmedialarabic ;
+    sub \heharabic by \hehmedialarabic ;
+    sub \yeharabic by \yehmedialarabic ;
+    sub \peharabic by \pehmedialarabic ;
+    sub \tcheharabic by \tchehmedialarabic ;
+    sub \veharabic by \vehmedialarabic ;
+} mediMedialFormsinArabiclookup16;
+
+lookup initInitialFormsinArabiclookup17 {
+  lookupflag RightToLeft;
+    sub \yehhamzaabovearabic by \yehhamzaaboveinitialarabic ;
+    sub \beharabic by \behinitialarabic ;
+    sub \teharabic by \tehinitialarabic ;
+    sub \theharabic by \thehinitialarabic ;
+    sub \jeemarabic by \jeeminitialarabic ;
+    sub \haharabic by \hahinitialarabic ;
+    sub \khaharabic by \khahinitialarabic ;
+    sub \seenarabic by \seeninitialarabic ;
+    sub \sheenarabic by \sheeninitialarabic ;
+    sub \sadarabic by \sadinitialarabic ;
+    sub \dadarabic by \dadinitialarabic ;
+    sub \taharabic by \tahinitialarabic ;
+    sub \zaharabic by \zahinitialarabic ;
+    sub \ainarabic by \aininitialarabic ;
+    sub \ghainarabic by \ghaininitialarabic ;
+    sub \feharabic by \fehinitialarabic ;
+    sub \qafarabic by \qafinitialarabic ;
+    sub \kafarabic by \kafinitialarabic ;
+    sub \lamarabic by \laminitialarabic ;
+    sub \meemarabic by \meeminitialarabic ;
+    sub \noonarabic by \nooninitialarabic ;
+    sub \heharabic by \hehinitialarabic ;
+    sub \yeharabic by \yehinitialarabic ;
+    sub \peharabic by \pehinitialarabic ;
+    sub \tcheharabic by \tchehinitialarabic ;
+    sub \veharabic by \vehinitialarabic ;
+} initInitialFormsinArabiclookup17;
+
+feature aalt {
+
+ script latn;
+     language dflt ;
+      lookup aaltAccessAllAlternatesinLatinlookup0;
+      lookup aaltAccessAllAlternatesinLatinlookup1;
+} aalt;
+
+feature ccmp {
+
+ script arab;
+     language dflt ;
+      lookup ccmpGlyphCompositionDecompositioninArabiclookup2;
+      lookup ccmpGlyphCompositionDecompositioninArabiclookup3;
+} ccmp;
+
+feature liga {
+
+ script arab;
+     language dflt ;
+      lookup ligaStandardLigaturesinArabiclookup4;
+      lookup ligaStandardLigaturesinArabiclookup5;
+      lookup ligaStandardLigaturesinArabiclookup6;
+      lookup ligaStandardLigaturesinArabiclookup7;
+      lookup ligaStandardLigaturesinArabiclookup8;
+      lookup ligaStandardLigaturesinArabiclookup9;
+} liga;
+
+feature rlig {
+
+ script arab;
+     language dflt ;
+      lookup rligRequiredLigaturesinArabiclookup10;
+      lookup rligRequiredLigaturesinArabiclookup11;
+      lookup rligRequiredLigaturesinArabiclookup12;
+} rlig;
+
+feature isol {
+
+ script arab;
+     language dflt ;
+      lookup isolIsolatedFormsinArabiclookup13;
+      lookup isolIsolatedFormsinArabiclookup14;
+} isol;
+
+feature fina {
+
+ script arab;
+     language dflt ;
+      lookup finaTerminalFormsinArabiclookup15;
+} fina;
+
+feature medi {
+
+ script arab;
+     language dflt ;
+      lookup mediMedialFormsinArabiclookup16;
+} medi;
+
+feature init {
+
+ script arab;
+     language dflt ;
+      lookup initInitialFormsinArabiclookup17;
+} init;
+
+# GPOS 
+
+
+lookup kernHorizontalKerninginLatinlookup0 {
+  lookupflag 0;
+    pos \guillemotleft \ninearabic -16;
+    pos \guillemotleft \sevenarabic -71;
+    pos \guillemotleft \sixarabic -208;
+    pos \divide \eightarabic -39;
+    pos \divide \sevenarabic -53;
+    pos \divide \sixarabic -137;
+    pos \multiply \ninearabic -27;
+    pos \multiply \eightarabic -47;
+    pos \multiply \sevenarabic -48;
+    pos \multiply \sixarabic -115;
+    pos \multiply \fivearabic -38;
+    pos \multiply \fourarabic -29;
+    pos \plus \eightarabic -61;
+    pos \plus \sevenarabic -53;
+    pos \plus \sixarabic -161;
+    pos \commaarabic \ninearabic -59;
+    pos \commaarabic \sevenarabic -98;
+    pos \commaarabic \sixarabic -187;
+    pos \hyphen \eightarabic -69;
+    pos \hyphen \sevenarabic -53;
+    pos \hyphen \sixarabic -206;
+    pos \period \ninearabic -153;
+    pos \period \sevenarabic -106;
+    pos \period \sixarabic -176;
+    pos \slash \eightarabic -99;
+    pos \slash \sevenarabic 16;
+    pos \slash \fivearabic -69;
+    pos \slash \twoarabic -38;
+    pos \slash \zeroarabic -99;
+    pos \zeroarabic \ninearabic -38;
+    pos \zeroarabic \sevenarabic -76;
+    pos \zeroarabic \sixarabic -175;
+    pos \onearabic \sixarabic -46;
+    pos \onearabic \slash 16;
+    pos \twoarabic \equal -153;
+    pos \twoarabic \eightarabic -122;
+    pos \twoarabic \fivearabic -91;
+    pos \twoarabic \twoarabic -61;
+    pos \twoarabic \onearabic -53;
+    pos \twoarabic \zeroarabic -175;
+    pos \twoarabic \slash -168;
+    pos \twoarabic \hyphen -191;
+    pos \twoarabic \plus -146;
+    pos \twoarabic \multiply -105;
+    pos \twoarabic \divide -176;
+    pos \threearabic \eightarabic -69;
+    pos \threearabic \fivearabic -46;
+    pos \threearabic \zeroarabic -62;
+    pos \threearabic \slash -130;
+    pos \threearabic \hyphen -99;
+    pos \threearabic \plus -69;
+    pos \threearabic \multiply -29;
+    pos \threearabic \divide -69;
+    pos \fourarabic \ninearabic -46;
+    pos \fourarabic \fivearabic -38;
+    pos \fourarabic \slash 31;
+    pos \fourarabic \hyphen -53;
+    pos \fourarabic \plus -69;
+    pos \fourarabic \multiply -38;
+    pos \fourarabic \divide -69;
+    pos \fivearabic \eightarabic -46;
+    pos \fivearabic \sevenarabic -54;
+    pos \fivearabic \sixarabic -77;
+    pos \fivearabic \multiply -38;
+    pos \sixarabic \backslash -79;
+    pos \sixarabic \sevenarabic -46;
+    pos \sixarabic \sixarabic -92;
+    pos \sixarabic \slash 16;
+    pos \sevenarabic \eightarabic -100;
+    pos \sevenarabic \fivearabic -61;
+    pos \sevenarabic \fourarabic -54;
+    pos \sevenarabic \twoarabic -54;
+    pos \sevenarabic \onearabic -38;
+    pos \sevenarabic \zeroarabic -84;
+    pos \sevenarabic \slash -107;
+    pos \sevenarabic \hyphen -84;
+    pos \sevenarabic \plus -61;
+    pos \sevenarabic \multiply -48;
+    pos \sevenarabic \divide -53;
+    pos \eightarabic \backslash -110;
+    pos \eightarabic \ninearabic -38;
+    pos \eightarabic \sevenarabic -84;
+    pos \eightarabic \sixarabic -114;
+    pos \eightarabic \hyphen -53;
+    pos \eightarabic \plus -46;
+    pos \eightarabic \multiply -47;
+    pos \eightarabic \divide -54;
+    pos \ninearabic \backslash -67;
+    pos \ninearabic \sevenarabic -54;
+    pos \ninearabic \sixarabic -77;
+    pos \colon \ninearabic -28;
+    pos \colon \sevenarabic -67;
+    pos \colon \sixarabic -176;
+    pos \semicolonarabic \sevenarabic -43;
+    pos \semicolonarabic \sixarabic -129;
+    pos \equal \sixarabic -152;
+    pos \less \ninearabic -51;
+    pos \less \eightarabic -47;
+    pos \less \sevenarabic -66;
+    pos \less \sixarabic -137;
+    pos \questionarabic \eightarabic -78;
+    pos \questionarabic \sevenarabic -23;
+    pos \backslash \ninearabic -102;
+    pos \backslash \sevenarabic -118;
+    pos \backslash \sixarabic -200;
+    pos \bracketleft \eightarabic -31;
+    pos \ornateleftparenthesis \ninearabic -40;
+    pos \at \ninearabic -43;
+    pos \at \eightarabic -23;
+    pos \at \sevenarabic -86;
+    pos \at \sixarabic -156;
+} kernHorizontalKerninginLatinlookup0;
+
+feature kern {
+
+ script latn;
+     language dflt ;
+      lookup kernHorizontalKerninginLatinlookup0;
+} kern;
+
+@GDEF_Simple = [\.null \CR \space \_4 \behinitialarabic \tehinitialarabic 
+	\thehinitialarabic \jeeminitialarabic \hahinitialarabic \khahinitialarabic 
+	\seeninitialarabic \sheeninitialarabic \_13 \tahinitialarabic 
+	\zahinitialarabic \aininitialarabic \ghaininitialarabic \fehinitialarabic 
+	\qafinitialarabic \kafinitialarabic \laminitialarabic \meeminitialarabic 
+	\nooninitialarabic \hehinitialarabic \yehinitialarabic 
+	\yehhamzaabovemedialarabic \behmedialarabic \tehmedialarabic 
+	\thehmedialarabic \jeemmedialarabic \hahmedialarabic \khahmedialarabic 
+	\seenmedialarabic \kashidaautoarabic \sheenmedialarabic \sadmedialarabic 
+	\dadmedialarabic \tahmedialarabic \zahmedialarabic \ainmedialarabic 
+	\ghainmedialarabic \fehmedialarabic \qafmedialarabic \kafmedialarabic 
+	\lammedialarabic \meemmedialarabic \noonmedialarabic \hehmedialarabic 
+	\yehmedialarabic \alefmaddaabovefinalarabic \alefhamzaabovefinalarabic 
+	\wawhamzaabovefinalarabic \alefhamzabelowfinalarabic 
+	\yehhamzaabovefinalarabic \aleffinalarabic \behfinalarabic 
+	\tehmarbutafinalarabic \tehfinalarabic \thehfinalarabic \jeemfinalarabic 
+	\decimalseparatorarabic \thousandsseparatorarabic \hahfinalarabic 
+	\khahfinalarabic \dalfinalarabic \thalfinalarabic \rehfinalarabic 
+	\zainfinalarabic \seenfinalarabic \sheenfinalarabic \sadfinalarabic 
+	\dadfinalarabic \tahfinalarabic \zahfinalarabic \ainfinalarabic 
+	\ghainfinalarabic \fehfinalarabic \qaffinalarabic \kaffinalarabic 
+	\lamfinalarabic \meemfinalarabic \noonfinalarabic \hehfinalarabic 
+	\wawfinalarabic \alefmaksurafinalarabic \yehfinalarabic 
+	\yehhamzaaboveinitialarabic \dadinitialarabic \alefmaksurainitialarabic 
+	\alefmaksuramedialarabic \sadinitialarabic \pehinitialarabic 
+	\nonbreakingspace \vehinitialarabic \guillemotleft \vehmedialarabic 
+	\vehfinalarabic \jehfinalarabic \guillemotright \divide \exclam \quotedbl 
+	\dollar \percentarabic \quotesingle \parenright \parenleft \multiply \plus 
+	\commaarabic \hyphen \period \slash \zeroarabic \onearabic \twoarabic 
+	\threearabic \fourarabic \fivearabic \sixarabic \sevenarabic \eightarabic 
+	\ninearabic \colon \semicolonarabic \greater \equal \less \questionarabic 
+	\asteriskarabic \hamzaarabic \alefarabic \beharabic \tehmarbutaarabic 
+	\teharabic \theharabic \jeemarabic \haharabic \khaharabic \dalarabic 
+	\thalarabic \reharabic \zainarabic \seenarabic \sheenarabic \sadarabic 
+	\dadarabic \taharabic \zaharabic \ainarabic \ghainarabic \bracketright 
+	\backslash \bracketleft \underscore \tatweelarabic \feharabic \qafarabic 
+	\kafarabic \lamarabic \meemarabic \noonarabic \heharabic \wawarabic 
+	\alefmaksuraarabic \yeharabic \fathatanarabic \dammatanarabic 
+	\kasratanarabic \fathaarabic \dammaarabic \kasraarabic \shaddaarabic 
+	\sukunarabic \peharabic \tcheharabic \veharabic \braceright \bar \braceleft 
+	\jeharabic \zero \one \two \three \four \five \six \seven \eight \nine 
+	\quotedblleft \quotedblright \hyphenminus \delete \nbspace 
+	\ornaterightparenthesis \ornateleftparenthesis \alefwaslafinal 
+	\alefwaslaisolated \righttoleft \lefttoright \zerojoin \zeronojoin 
+	\extendedarabicindicdigitnine \extendedarabicindicdigiteight 
+	\extendedarabicindicdigitseven \extendedarabicindicdigitsix 
+	\extendedarabicindicdigitfive \extendedarabicindicdigitfour 
+	\extendedarabicindicdigitthree \extendedarabicindicdigittwo 
+	\extendedarabicindicdigitone \extendedarabicindicdigitzero 
+	\superscriptalef \maddaabove \hamzaabove \hamzabelow \zerowidthnobreakspace 
+	\_246 \at \pehmedialarabic \tchehfinalarabic \tchehmedialarabic 
+	\tchehinitialarabic \pehfinalarabic ];
+@GDEF_Ligature = [\shaddakasraarabic \shaddakasratanarabic \shaddafathaarabic 
+	\shaddadammaarabicX \lamalefhamzaaboveisolatedarabi 
+	\lamalefmaddaabovefinalarabic \shaddadammatanarabic \lamalefisolatedarabic 
+	\lamaleffinalarabic \lamalefhamzaabovefinalarabicX 
+	\lamalefhamzabelowisolatedarabi \lamalefhamzabelowfinalarabicX 
+	\lamalefmaddaaboveisolatedarabi \alefmaddaabovearabic 
+	\alefhamzaabovearabic \wawhamzaabovearabic \alefhamzabelowarabic 
+	\yehhamzaabovearabic \allahisolated \alefwithfathatanisolated 
+	\alefwithfathatanfinal ];
+
+table GDEF {
+  GlyphClassDef @GDEF_Simple, @GDEF_Ligature, , ;
+
+} GDEF;
+
