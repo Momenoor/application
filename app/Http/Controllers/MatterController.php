@@ -32,7 +32,6 @@ class MatterController extends Controller
         $experts = Expert::whereIn('category', ['main', 'certified'])->get();
         $courts = Court::all();
         $types = Type::all();
-        $experts = Expert::whereIn('category', ['main', 'certified'])->get();
         $parties = Party::where('type', 'party')->get();
         $advocates = Party::whereIn('type', ['office', 'advocate'])->get();
         $committees = Expert::CommitteesList()->get();
@@ -101,6 +100,6 @@ class MatterController extends Controller
      */
     public function destroy(matter $matter)
     {
-        //
+        return redirect(route('matter.index'))->withToastSuccess('Matter Successfully Deletete');
     }
 }

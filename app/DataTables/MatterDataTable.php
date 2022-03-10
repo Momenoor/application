@@ -28,8 +28,8 @@ class MatterDataTable extends DataTable
             })
             ->editColumn('dates', function ($model) {
                 return '<div class="position-relative">
-                                ' . Carbon::create($model->nextSessionDateProcedure->first()->datetime)->diffForHumans() . '
-                            <div class="fs-7 text-muted fw-bolder">' . Carbon::create($model->receivedDateProcedure->first()->datetime)->format('Y-m-d') . '</div>
+                                ' . $model->nextSessionDateProcedure->last()->datetime->format('Y-d-m') . '
+                            <div class="fs-7 text-muted fw-bolder">' . $model->receivedDateProcedure->first()->datetime->format('Y-d-m') . '</div>
                         </div>';
             })
             ->editColumn('expert_id', function ($model) {
@@ -54,7 +54,9 @@ class MatterDataTable extends DataTable
                 return app(NumberFormatterService::class)->getFormattedNumber($model->claims_sum_amount);
             })
             ->rawColumns(['expert_id', 'court_id', 'parties', 'dates'])
-            ->addColumn('action', 'matter.action');
+            ->addColumn('action', function ($model) {
+                return view('common.table-action')->with('model' ,$model);
+            });
     }
 
     /**
@@ -78,7 +80,14 @@ class MatterDataTable extends DataTable
             'nextSessionDateProcedure' => function ($query) {
                 return $query->where('type', 'next_session_date');
             }
-        ])->withSum('claims', 'amount')->newQuery();
+        ])->withSum(
+            [
+                'claims as claims_sum_amount' => function ($query) {
+                    $query->whereIn('claims.type', ['main', 'additional']);
+                }
+            ],
+            'amount'
+        )->newQuery();
     }
 
     /**
@@ -90,6 +99,7 @@ class MatterDataTable extends DataTable
     {
         return $this->builder()
             ->setTableId('matter-table')
+            ->setTableAttributes(['class' => 'table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4'])
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
@@ -126,7 +136,7 @@ class MatterDataTable extends DataTable
             Column::make('court_id')->title('Court/Type'),
             Column::make('parties')->title('Parties'),
             Column::make('dates')->title('Session/Receive'),
-            Column::make('claims')->name('claims_sum_total')->title('Claims')->class('text-end'),
+            Column::make('claims')->name('claims.amount')->title('Claims')->class('text-end'),
         ];
     }
 

@@ -10,6 +10,8 @@
     {{-- Inject Scripts --}}
 @endsection
 @push('scripts')
-<script src="{{asset('assets/js/buttons.server-side.js')}}"></script>    
-{{ $dataTable->scripts() }}
+    @once
+        <script src="{{ asset('assets/js/buttons.server-side.js') }}"></script>
+    @endonce
+    {{ $dataTable->scripts() }}
 @endpush

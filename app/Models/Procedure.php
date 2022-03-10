@@ -18,6 +18,10 @@ class Procedure extends Model
         'matter_id',
     ];
 
+    protected $dates = [
+        'datetime'
+    ];
+
     public function scopeReceivedDate($query)
     {
         return $query->where('type', 'received_date');
