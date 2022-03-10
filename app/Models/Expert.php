@@ -28,7 +28,14 @@ class Expert extends Model
         return $this->morphToMany(Matter::class, 'partiable', 'matter_party')->wherePivot('type', '=', 'assistant');
     }
 
-    public function scopeCommitteesList(){
-        return $this->where('category','external');
+    public function scopeCommitteesList()
+    {
+        return $this->where('category', 'external');
+    }
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
