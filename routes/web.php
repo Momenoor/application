@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\MatterController;
+use App\Http\Controllers\PartyController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('matter', MatterController::class);
     Route::resource('expert', ExpertController::class);
+    Route::resource('party', PartyController::class);
 
 
 

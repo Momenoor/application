@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\Matter2DataTable;
 use App\Models\Party;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,9 @@ class PartyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Matter2DataTable $dataTable)
     {
-        //
+        return $dataTable->render('pages.matters.form.index');
     }
 
     /**
