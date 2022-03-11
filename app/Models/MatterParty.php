@@ -14,4 +14,9 @@ class MatterParty extends Pivot
         'partiable_type',
         'type',
     ];
+
+    public function partiable()
+    {
+        return $this->morphTo();
+    }
 }

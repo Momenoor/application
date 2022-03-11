@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Expert;
 use App\Models\Matter;
+use App\Models\MatterParty;
 use App\Models\Party;
 use App\Services\NumberFormatterService;
 use Carbon\Carbon;
@@ -68,15 +69,15 @@ class Matter2DataTable extends DataTable
                     ->orWhere('matters.year', 'like', '%' . $keyword . '%');
             })
             ->filterColumn('expert_id', function ($query, $keyword) {
+                $matterParty = MatterParty::orwhereHasMorph('partiable', Expert::class, function ($subquery) use ($keyword) {
+                    $subquery->where('experts.name', 'like', '%' . $keyword . '%')
+                        ->where('matter_party.type', '=', 'assistant');
+                })->get()->pluck('matter_id')->toArray();
+                $query->whereIn('matter_id',$matterParty);
                 return $query->whereHas('expert', function ($q) use ($keyword) {
                     $q->where('experts.name', 'like', '%' . $keyword . '%');
                 });
-                $matters = Matter::whereHasMorph('assistants', [Expert::class], function ($subquery, $type) use ($keyword) {
-                    if ($type === Expert::class) {
-                        $subquery->where('experts.name', 'like', '%' . $keyword . '%');
-                    }
-                })->get()->pluck('id')->toArray();
-                $query->whereIn($matters);
+
             })
             ->filterColumn('court_id', function ($query, $keyword) {
                 return $query->whereHas('court', function ($q) use ($keyword) {
@@ -85,26 +86,20 @@ class Matter2DataTable extends DataTable
                     $q->where('types.name', 'like', '%' . $keyword . '%');
                 });
             })
-            ->filterColumn('plaintiff_name', function ($query, $keyword) {
-                $matters = Matter::whereHasMorph('plaintiffs', [Party::class], function ($subquery, $type) use ($keyword) {
-                    if ($type === Party::class) {
-                        $subquery->where('parties.name', 'like', '%' . $keyword . '%');
-                    }
-                })->get()->pluck('id')->toArray();
-                $query->whereIn($matters);
-                $matters = Matter::whereHasMorph('defendants', [Party::class], function ($subquery, $type) use ($keyword) {
-                    if ($type === Party::class) {
-                        $subquery->where('parties.name', 'like', '%' . $keyword . '%');
-                    }
-                })->get()->pluck('id')->toArray();
-                $query->whereIn($matters);
-            })
+
             ->filterColumn('next_session_date', function ($query, $keyword) {
-                return $query->orWhere('procedures_received_date.datetime', 'like', '%' . $keyword . '%')
-                    ->orWhere('procedures_next_session_date.datetime', 'like', '%' . $keyword . '%');
+                return $query->whereHas('receivedDateProcedure', function ($q) use ($keyword) {
+                    $q->where('procedures.datetime', 'like', '%' . $keyword . '%');
+                });
+                return $query->whereHas('receivedDateProcedure', function ($q) use ($keyword) {
+                    $q->where('procedures.datetime', 'like', '%' . $keyword . '%');
+                });
             })
             ->filterColumn('claims_sum_amount', function ($query, $keyword) {
-                return $query->orWhere('claims_sum_amount', 'like', '%' . $keyword . '%');
+                return $query->withSum('claims', 'amount as claims_sum_amount', function ($q) use ($keyword) {
+                    $q->where('claims.amount', 'like', '%' . $keyword . '%')
+                        ->whereIn('claims.type', ['main', 'additional']);
+                });
             });
     }
 
@@ -176,7 +171,7 @@ class Matter2DataTable extends DataTable
             Column::make('number')->searchable(true)->title('No/Year'),
             Column::make('expert_id')->searchable(true)->title('Expert/Assistant'),
             Column::make('court_id')->searchable(true)->title('Court/Type'),
-            Column::make('plaintiff_name')->searchable(true)->orderable(true)->title('Parties'),
+            Column::make('plaintiff_name')->searchable(false)->orderable(true)->title('Parties'),
             Column::make('next_session_date')->searchable(true)->orderable(true)->title('Session/Receive'),
             Column::make('claims_sum_amount')->searchable(true)->title('Claims')->class('text-end'),
         ];

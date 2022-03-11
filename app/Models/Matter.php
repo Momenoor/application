@@ -60,11 +60,6 @@ class Matter extends Model
         return $this->morphedByMany(Party::class, 'partiable', 'matter_party')->wherePivot('type', '=', 'defendant');
     }
 
-    public function partiable()
-    {
-        return $this->morphTo();
-    }
-
     public function procedures()
     {
         return $this->hasMany(Procedure::class);
