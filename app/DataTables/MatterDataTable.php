@@ -44,13 +44,13 @@ class MatterDataTable extends DataTable
                             <div class="fs-7 text-muted fw-bolder">' . $model->type->name . '</div>
                         </div>';
             })
-            ->editColumn('parties_id', function ($model) {
+            ->editColumn('plaintiff_name', function ($model) {
                 return '<div class="position-relative">
                                 ' . \Str::of($model->plaintiff_name)->limit(30) . '
                             <div class="text-danger">' . \Str::of($model->defendant_name)->limit(30)  . '</div>
                         </div>';
             })
-            ->editColumn('dates', function ($model) {
+            ->editColumn('next_session_date', function ($model) {
                 return '<div class="position-relative">
                                 ' . Carbon::createFromFormat('Y-m-d H:i:s', $model->next_session_date)->format('Y-m-d') . '
                             <div class="fs-7 text-muted fw-bolder">' . Carbon::createFromFormat('Y-m-d H:i:s', $model->received_date)->format('Y-m-d') . '</div>
@@ -59,7 +59,7 @@ class MatterDataTable extends DataTable
             ->editColumn('claims_sum_amount', function ($model) {
                 return app(NumberFormatterService::class)->getFormattedNumber($model->claims_sum_amount);
             })
-            ->rawColumns(['expert_id', 'court_id', 'parties_id', 'dates'])
+            ->rawColumns(['expert_id', 'court_id', 'plaintiff_name', 'next_session_date'])
             ->addColumn('action', function ($model) {
                 return view('common.table-action')->with('model', $model);
             })
@@ -78,11 +78,11 @@ class MatterDataTable extends DataTable
                 return $query->where('courts.name', 'like', '%' . $keyword . '%')
                     ->orWhere('types.name', 'like', '%' . $keyword . '%');
             })
-            ->filterColumn('parties_id', function ($query, $keyword) {
+            ->filterColumn('plaintiff_name', function ($query, $keyword) {
                 return $query->orWhere('matter_party_pivot_plaintiff.plaintiff_name', 'like', '%' . $keyword . '%')
                     ->orWhere('matter_party_pivot_defendant.defendant_name', 'like', '%' . $keyword . '%');
             })
-            ->filterColumn('dates', function ($query, $keyword) {
+            ->filterColumn('next_session_date', function ($query, $keyword) {
                 return $query->orWhere('procedures_received_date.datetime', 'like', '%' . $keyword . '%')
                     ->orWhere('procedures_next_session_date.datetime', 'like', '%' . $keyword . '%');
             })
@@ -259,6 +259,7 @@ class MatterDataTable extends DataTable
             <'row'<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'li><'col-sm-7col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>>'")
             ->parameters([
                 'scrollX' => true,
+                "searchDelay" => 50,
                 /* 'initComplete' => " function () {this.api().columns().every(function () {var column = this;var input = document.createElement('input');$(input).appendTo($(column.header()).empty()).on('change', function () {var val = $.fn.dataTable.util.escapeRegex($(this).val());column.search(val ? val : '', true, false).draw();});})}", */
             ])
             ->buttons(
@@ -286,8 +287,8 @@ class MatterDataTable extends DataTable
             Column::make('number')->searchable(true)->title('No/Year'),
             Column::make('expert_id')->searchable(true)->title('Expert/Assistant'),
             Column::make('court_id')->searchable(true)->title('Court/Type'),
-            Column::make('parties_id')->searchable(true)->orderable(false)->title('Parties'),
-            Column::make('dates')->searchable(true)->orderable(false)->title('Session/Receive'),
+            Column::make('plaintiff_name')->searchable(true)->orderable(true)->title('Parties'),
+            Column::make('next_session_date')->searchable(true)->orderable(true)->title('Session/Receive'),
             Column::make('claims_sum_amount')->searchable(true)->title('Claims')->class('text-end'),
         ];
     }
