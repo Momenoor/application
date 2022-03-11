@@ -41,7 +41,7 @@ class MatterDataTable extends DataTable
             ->editColumn('court_id', function ($model) {
                 return '<div class="position-relative">
                                 ' . $model->court_name . '
-                            <div class="fs-7 text-muted fw-bolder">' . $model->type->name . '</div>
+                            <div class="fs-7 text-muted fw-bolder">' . $model->type_name . '</div>
                         </div>';
             })
             ->editColumn('plaintiff_name', function ($model) {
