@@ -185,6 +185,7 @@ class MatterDataTable extends DataTable
                     $join->on('matters.id', '=', 'matter_party_pivot_plaintiff.pivot_plaintiff_matter_id');
                 }
             )
+            ->where('matter.status', '=', 'current')
             ->groupBy('matters.id');
 
         /*  \DB::select([
