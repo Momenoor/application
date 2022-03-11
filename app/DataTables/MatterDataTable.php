@@ -25,7 +25,6 @@ class MatterDataTable extends DataTable
      */
     public function dataTable($query)
     {
-        $search = request()->search['value'];
         return datatables()
             ->eloquent($query)
             ->editColumn('number', function ($model) {
@@ -63,32 +62,7 @@ class MatterDataTable extends DataTable
             ->addColumn('action', function ($model) {
                 return view('common.table-action')->with('model', $model);
             })
-            ->filterColumn('number', function ($query, $keyword) {
-                /* $statusKey = collect(Lang::get('defination.status'))->each(function ($value, $key) use ($keyword) {
-                    return (\Str::of($value)->contains($keyword)) ? $value : $keyword;
-                })->first(); */
-                return $query->orWhere('matters.number', 'like', '%' . $keyword . '%')
-                    ->orWhere('matters.year', 'like', '%' . $keyword . '%');
-            })
-            ->filterColumn('expert_id', function ($query, $keyword) {
-                return $query->orWhere('experts.name', 'like', '%' . $keyword . '%')
-                    ->orWhere('matter_party_pivot_assistant.assistant_name', 'like', '%' . $keyword . '%');
-            })
-            ->filterColumn('court_id', function ($query, $keyword) {
-                return $query->where('courts.name', 'like', '%' . $keyword . '%')
-                    ->orWhere('types.name', 'like', '%' . $keyword . '%');
-            })
-            ->filterColumn('plaintiff_name', function ($query, $keyword) {
-                return $query->orWhere('matter_party_pivot_plaintiff.plaintiff_name', 'like', '%' . $keyword . '%')
-                    ->orWhere('matter_party_pivot_defendant.defendant_name', 'like', '%' . $keyword . '%');
-            })
-            ->filterColumn('next_session_date', function ($query, $keyword) {
-                return $query->orWhere('procedures_received_date.datetime', 'like', '%' . $keyword . '%')
-                    ->orWhere('procedures_next_session_date.datetime', 'like', '%' . $keyword . '%');
-            })
-            ->filterColumn('claims_sum_amount', function ($query, $keyword) {
-                return $query->orWhere('claims.amount', 'like', '%' . $keyword . '%');
-            });
+            ;
     }
 
     /**

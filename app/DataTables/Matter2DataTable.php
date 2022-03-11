@@ -21,7 +21,9 @@ class Matter2DataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'matter2.action');
+            ->addColumn('action', function ($model) {
+                return view('common.table-action')->with('model', $model);
+            })
     }
 
     /**
@@ -32,7 +34,7 @@ class Matter2DataTable extends DataTable
      */
     public function query(Matter $model)
     {
-        return $model->newQuery();
+        return $model->with('')->newQuery();
     }
 
     /**
