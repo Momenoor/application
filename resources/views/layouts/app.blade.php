@@ -1500,7 +1500,8 @@ License: For each use you must have a valid license purchased only from above li
                                         <div class="menu-item px-5">
                                             <form action="{{ route('logout') }}" method="POST">
                                                 @csrf
-                                                <button type="submit" class="menu-link btn w-100 ps-5 px-5">{{__('sign out')}}</button>
+                                                <button type="submit"
+                                                    class="menu-link btn w-100 ps-5 px-5">{{ __('sign out') }}</button>
                                             </form>
                                         </div>
                                         <!--end::Menu item-->
@@ -3835,8 +3836,9 @@ License: For each use you must have a valid license purchased only from above li
                                 </div>
                                 <!--end::Wrapper-->
                                 <!--begin::Button-->
-                                <a href="#" class="btn btn-dark fw-bolder" data-bs-toggle="modal"
-                                    data-bs-target="#kt_modal_create_app" id="kt_toolbar_primary_button">Create</a>
+                                <a href="{{ route(request()->baseRouteName() . '.create') }}"
+                                    class="btn btn-dark fw-bolder"
+                                    id="kt_toolbar_primary_button">{{ __('create') }}</a>
                                 <!--end::Button-->
                             </div>
                             <!--end::Actions-->

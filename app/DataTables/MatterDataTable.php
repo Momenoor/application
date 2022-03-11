@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\Matter;
 use App\Services\NumberFormatterService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Lang;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -13,6 +14,9 @@ use Yajra\DataTables\Services\DataTable;
 
 class MatterDataTable extends DataTable
 {
+
+    protected $model;
+
     /**
      * Build DataTable class.
      *
@@ -21,41 +25,69 @@ class MatterDataTable extends DataTable
      */
     public function dataTable($query)
     {
+        $search = request()->search['value'];
         return datatables()
             ->eloquent($query)
             ->editColumn('number', function ($model) {
                 return $model->year . '/' . $model->number;
             })
-            ->editColumn('dates', function ($model) {
-                return '<div class="position-relative">
-                                ' . $model->nextSessionDateProcedure->last()->datetime->format('Y-d-m') . '
-                            <div class="fs-7 text-muted fw-bolder">' . $model->receivedDateProcedure->first()->datetime->format('Y-d-m') . '</div>
-                        </div>';
-            })
             ->editColumn('expert_id', function ($model) {
                 return '<div class="position-relative">
-                                ' . $model->expert->name . '
-                            <div class="fs-7 text-muted fw-bolder">' . $model->assistants->first()->name . '</div>
+                                ' . $model->expert_name . '
+                                ' . (($model->expert_name != $model->assistant_name) ?
+                    '<div class="fs-7 text-muted fw-bolder">' . $model->assistant_name . '</div>' : '') . '
                         </div>';
             })
             ->editColumn('court_id', function ($model) {
                 return '<div class="position-relative">
-                                ' . $model->court->name . '
+                                ' . $model->court_name . '
                             <div class="fs-7 text-muted fw-bolder">' . $model->type->name . '</div>
                         </div>';
             })
-            ->editColumn('parties', function ($model) {
+            ->editColumn('parties_id', function ($model) {
                 return '<div class="position-relative">
-                                ' . \Str::of($model->plaintiffs->first()->name)->limit(30) . '
-                            <div class="text-danger">' . \Str::of($model->defendants->first()->name)->limit(30)  . '</div>
+                                ' . \Str::of($model->plaintiff_name)->limit(30) . '
+                            <div class="text-danger">' . \Str::of($model->defendant_name)->limit(30)  . '</div>
                         </div>';
             })
-            ->editColumn('claims', function ($model) {
+            ->editColumn('dates', function ($model) {
+                return '<div class="position-relative">
+                                ' . Carbon::createFromFormat('Y-m-d H:i:s', $model->next_session_date)->format('Y-m-d') . '
+                            <div class="fs-7 text-muted fw-bolder">' . Carbon::createFromFormat('Y-m-d H:i:s', $model->received_date)->format('Y-m-d') . '</div>
+                        </div>';
+            })
+            ->editColumn('claims_sum_amount', function ($model) {
                 return app(NumberFormatterService::class)->getFormattedNumber($model->claims_sum_amount);
             })
-            ->rawColumns(['expert_id', 'court_id', 'parties', 'dates'])
+            ->rawColumns(['expert_id', 'court_id', 'parties_id', 'dates'])
             ->addColumn('action', function ($model) {
-                return view('common.table-action')->with('model' ,$model);
+                return view('common.table-action')->with('model', $model);
+            })
+            ->filterColumn('number', function ($query, $keyword) {
+                /* $statusKey = collect(Lang::get('defination.status'))->each(function ($value, $key) use ($keyword) {
+                    return (\Str::of($value)->contains($keyword)) ? $value : $keyword;
+                })->first(); */
+                return $query->orWhere('matters.number', 'like', '%' . $keyword . '%')
+                    ->orWhere('matters.year', 'like', '%' . $keyword . '%');
+            })
+            ->filterColumn('expert_id', function ($query, $keyword) {
+                return $query->orWhere('experts.name', 'like', '%' . $keyword . '%')
+                    ->orWhere('matter_party_pivot_assistant.assistant_name', 'like', '%' . $keyword . '%');
+            })
+            ->filterColumn('court_id', function ($query, $keyword) {
+                return $query->where('courts.name', 'like', '%' . $keyword . '%')
+                    ->orWhere('types.name', 'like', '%' . $keyword . '%');
+            })
+            ->filterColumn('parties_id', function ($query, $keyword) {
+                return $query->orWhere('matter_party_pivot_plaintiff.plaintiff_name', 'like', '%' . $keyword . '%')
+                    ->orWhere('matter_party_pivot_defendant.defendant_name', 'like', '%' . $keyword . '%');
+            })
+            ->filterColumn('dates', function ($query, $keyword) {
+                return $query->orWhere('procedures_received_date.datetime', 'like', '%' . $keyword . '%')
+                    ->orWhere('procedures_next_session_date.datetime', 'like', '%' . $keyword . '%');
+            })
+            ->filterColumn('claims_sum_amount', function ($query, $keyword) {
+                return $query->orWhere('claims.amount', 'like', '%' . $keyword . '%');
             });
     }
 
@@ -67,19 +99,136 @@ class MatterDataTable extends DataTable
      */
     public function query(Matter $model)
     {
-        return $model->with([
+
+        return $model->select([
+            'matters.*',
+            \DB::raw('experts.name as expert_name'),
+            \DB::raw('courts.name as court_name'),
+            \DB::raw('types.name as type_name'),
+            \DB::raw('SUM(claims.amount) as claims_sum_amount'),
+            'matter_party_pivot_assistant.assistant_name',
+            'matter_party_pivot_plaintiff.plaintiff_name',
+            'matter_party_pivot_defendant.defendant_name',
+            \DB::raw('procedures_received_date.datetime as received_date'),
+            \DB::raw('procedures_next_session_date.datetime as next_session_date'),
+        ])
+            ->leftJoin('experts', 'experts.id', '=', 'matters.expert_id')
+            ->leftJoin('courts', 'courts.id', '=', 'matters.court_id')
+            ->leftJoin('types', 'types.id', '=', 'matters.type_id')
+            ->leftJoin('claims', function ($join) {
+                $join->on('matters.id', '=', 'claims.matter_id')
+                    ->whereIn('claims.type', [
+                        'main',
+                        'additional'
+                    ]);
+            })
+            ->leftJoin('procedures as procedures_received_date', function ($join) {
+                $join->on('matters.id', '=', 'procedures_received_date.matter_id')
+                    ->where('procedures_received_date.type', '=', 'received_date');
+            })
+            ->leftJoin('procedures as procedures_next_session_date', function ($join) {
+                $join->on('matters.id', '=', 'procedures_next_session_date.matter_id')
+                    ->where('procedures_next_session_date.type', '=', 'next_session_date')
+                    ->orderBy('datetime', 'DESC');
+            })
+            ->leftJoinSub(
+                \DB::table('matter_party')
+                    ->select([
+                        \DB::raw('matter_party.matter_id as pivot_matter_id'),
+                        \DB::raw('matter_party.partiable_id as pivot_partiable_id'),
+                        \DB::raw('matter_party.partiable_type as pivot_partiable_type'),
+                        \DB::raw('experts.name as assistant_name'),
+                    ])
+                    ->rightJoin('experts', function ($join) {
+                        $join->on('experts.id', '=', 'matter_party.partiable_id')
+                            ->where('matter_party.type', '=', 'assistant')
+                            ->where('matter_party.partiable_type', '=', 'App\\Models\\Expert');
+                    }),
+                'matter_party_pivot_assistant',
+                function ($join) {
+                    $join->on('matters.id', '=', 'matter_party_pivot_assistant.pivot_matter_id');
+                }
+            )
+            ->leftJoinSub(
+                \DB::table('matter_party')
+                    ->select([
+                        \DB::raw('matter_party.matter_id as pivot_defendant_matter_id'),
+                        \DB::raw('matter_party.partiable_id as pivot_defendant_partiable_id'),
+                        \DB::raw('matter_party.partiable_type as pivot_defendant_partiable_type'),
+                        \DB::raw('parties.name as defendant_name'),
+                    ])
+                    ->rightJoin('parties', function ($join) {
+                        $join->on('parties.id', '=', 'matter_party.partiable_id')
+                            ->where('matter_party.type', '=', 'defendant')
+                            ->where('matter_party.partiable_type', '=', 'App\\Models\\Party');
+                    }),
+                'matter_party_pivot_defendant',
+                function ($join) {
+                    $join->on('matters.id', '=', 'matter_party_pivot_defendant.pivot_defendant_matter_id');
+                }
+            )
+            ->leftJoinSub(
+                \DB::table('matter_party')
+                    ->select([
+                        \DB::raw('matter_party.matter_id as pivot_plaintiff_matter_id'),
+                        \DB::raw('matter_party.partiable_id as pivot_plaintiff_partiable_id'),
+                        \DB::raw('matter_party.partiable_type as pivot_plaintiff_partiable_type'),
+                        \DB::raw('parties.name as plaintiff_name'),
+                    ])
+                    ->rightJoin('parties', function ($join) {
+                        $join->on('parties.id', '=', 'matter_party.partiable_id')
+                            ->where('matter_party.type', '=', 'plaintiff')
+                            ->where('matter_party.partiable_type', '=', 'App\\Models\\Party');
+                    }),
+                'matter_party_pivot_plaintiff',
+                function ($join) {
+                    $join->on('matters.id', '=', 'matter_party_pivot_plaintiff.pivot_plaintiff_matter_id');
+                }
+            )
+            ->groupBy('matters.id');
+
+        /*  \DB::select([
+            \DB::raw('matter_party.matter_id as pivot_matter_id'),
+            \DB::raw('matter_party.partiable_id as pivot_partiable_id'),
+            \DB::raw('matter_party.partiable_type as pivot_partiable_type'),
+        ])->from('experts')
+            ->leftJoin('matter_party', function ($join) {
+                $join->on('experts.id', '=', 'matter_party.partiable_id')
+                    ->where('matter_party.type', '=', 'assistant')
+                    ->where('matter_party.partiable_type', '=', 'App\Models\Expert')
+                    ->where('matters.id', '=', 'matter_party.matter_id');
+            }), */
+        /* $this->model = $model;
+        /*   $search = request()->get('search')['value'];
+        if (!is_null($search)) {
+
+            if (\Str::of($search)->contains(' ')) {
+                \Str::of($search)->explode(' ')->each(function ($item) {
+                    return $this->applyFilter($item);
+                });
+            } else {
+                $this->applyFilter($search);
+            }
+
+            return $this->model->withSum(
+                [
+                    'claims as claims_sum_amount' => function ($query) {
+                        $query->whereIn('claims.type', ['main', 'additional']);
+                    }
+                ],
+                'amount'
+            );
+        }
+
+        return $this->model->with([
             'court',
             'expert',
             'assistants',
             'defendants',
             'plaintiffs',
             'type',
-            'receivedDateProcedure' => function ($query) {
-                return $query->where('type', 'received_date');
-            },
-            'nextSessionDateProcedure' => function ($query) {
-                return $query->where('type', 'next_session_date');
-            }
+            'receivedDateProcedure:id,matter_id,datetime',
+            'nextSessionDateProcedure:id,matter_id,datetime',
         ])->withSum(
             [
                 'claims as claims_sum_amount' => function ($query) {
@@ -87,7 +236,7 @@ class MatterDataTable extends DataTable
                 }
             ],
             'amount'
-        )->newQuery();
+        ); */
     }
 
     /**
@@ -108,9 +257,12 @@ class MatterDataTable extends DataTable
             ->dom("'<'row'<'col-sm-7'B><'col-sm-5'f>> +
             <'row'<'col-sm-12'tr>> +
             <'row'<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'li><'col-sm-7col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>>'")
-            ->parameters(['scrollX' => true])
+            ->parameters([
+                'scrollX' => true,
+                /* 'initComplete' => " function () {this.api().columns().every(function () {var column = this;var input = document.createElement('input');$(input).appendTo($(column.header()).empty()).on('change', function () {var val = $.fn.dataTable.util.escapeRegex($(this).val());column.search(val ? val : '', true, false).draw();});})}", */
+            ])
             ->buttons(
-                Button::make('create'),
+                //Button::make('create'),
                 Button::make('export'),
                 Button::make('print'),
                 Button::make('reset'),
@@ -131,12 +283,12 @@ class MatterDataTable extends DataTable
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center'),
-            Column::make('number')->title('No/Year'),
-            Column::make('expert_id')->title('Expert/Assistant'),
-            Column::make('court_id')->title('Court/Type'),
-            Column::make('parties')->title('Parties'),
-            Column::make('dates')->title('Session/Receive'),
-            Column::make('claims')->name('claims.amount')->title('Claims')->class('text-end'),
+            Column::make('number')->searchable(true)->title('No/Year'),
+            Column::make('expert_id')->searchable(true)->title('Expert/Assistant'),
+            Column::make('court_id')->searchable(true)->title('Court/Type'),
+            Column::make('parties_id')->searchable(true)->orderable(false)->title('Parties'),
+            Column::make('dates')->searchable(true)->orderable(false)->title('Session/Receive'),
+            Column::make('claims_sum_amount')->searchable(true)->title('Claims')->class('text-end'),
         ];
     }
 
@@ -148,5 +300,18 @@ class MatterDataTable extends DataTable
     protected function filename()
     {
         return 'Matter_' . date('YmdHis');
+    }
+
+    protected function applyFilter($keyword)
+    {
+        $this->model
+            ->WhereHas('court', function ($query) use ($keyword) {
+                $query->where('courts.name', 'like', '%' . $keyword . '%');
+            });
+
+        /*             ->orWhere('matters.number', 'like', '%' . $keyword . '%')
+            ->orWhere('matters.year', 'like', '%' . $keyword . '%')
+            ->orWhere('matters.status', 'like', '%' . $keyword . '%')
+            ->orWhere('matters.commissioning', 'like', '%' . $keyword . '%') */
     }
 }

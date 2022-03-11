@@ -52,12 +52,17 @@ class Matter extends Model
 
     public function plaintiffs()
     {
-        return $this->morphedByMany(Party::class, 'partiable', 'matter_party')->wherePivot('type','=','plaintiff');
+        return $this->morphedByMany(Party::class, 'partiable', 'matter_party')->wherePivot('type', '=', 'plaintiff');
     }
 
     public function defendants()
     {
-        return $this->morphedByMany(Party::class, 'partiable', 'matter_party')->wherePivot('type','=','defendant');
+        return $this->morphedByMany(Party::class, 'partiable', 'matter_party')->wherePivot('type', '=', 'defendant');
+    }
+
+    public function partiable()
+    {
+        return $this->morphTo();
     }
 
     public function procedures()
@@ -66,28 +71,12 @@ class Matter extends Model
     }
     public function receivedDateProcedure()
     {
-        return $this->procedures();
+        return $this->procedures()->where('type', 'received_date');
     }
     public function nextSessionDateProcedure()
     {
-        return $this->procedures();
+        return $this->procedures()->where('type', 'next_session_date');
     }
-
-    public function getReceivedDateAttribute()
-    {
-        return $this->receivedDateProcedure()->ReceivedDate()->first()->datetime;
-    }
-
-    public function getNextSessionDateAttribute()
-    {
-        return Carbon::create($this->procedures()->NextSessionDate()->first()->datetime);
-    }
-
-    public function getNextSessionDateForHumanAttribute()
-    {
-        return $this->nextSessionDate->diffForHumans();
-    }
-
 
     public function claims()
     {
