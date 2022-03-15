@@ -26,8 +26,9 @@
                     <div class="fv-row mb-5">
                         <label
                             class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.matter.receive-date') }}</label>
-                        <input type="text" name="receive_date" data-control="flatpickr"
-                            class="form-control form-control-solid" placeholder="Matter Receive Date">
+                        <input type="text" name="received_date" data-control="flatpickr"
+                            class="form-control form-control-solid" value="{{ old('received_date') }}"
+                            placeholder="Matter Receive Date">
                     </div>
                 </div>
             </div>
@@ -36,16 +37,16 @@
                     <div class="fv-row mb-5">
                         <label
                             class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.matter.number') }}</label>
-                        <input type="text" name="number" class="form-control form-control-solid"
-                            placeholder="Matter Number">
+                        <input type="text" name="number" value="{{ old('number') }}"
+                            class="form-control form-control-solid" placeholder="Matter Number">
                     </div>
                 </div>
                 <div class="col-lg-8">
                     <div class="fv-row -ml-1mb-5">
                         <label
                             class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.matter.year') }}</label>
-                        <input type="text" name="year" class="form-control form-control-solid"
-                            placeholder="Matter Year">
+                        <input type="text" name="year" value="{{ old('year') }}"
+                            class="form-control form-control-solid" placeholder="Matter Year">
                     </div>
                 </div>
             </div>
@@ -64,7 +65,7 @@
             <div class="col-lg-6">
                 <!--begin::Option-->
                 <input type="radio" class="btn-check matter-commissioning" name="commissioning" value="individual"
-                    checked="checked" id="kt_commissioning_individual" />
+                    {{ old('commissioning') == 'individual' ? 'checked' : '' }} id="kt_commissioning_individual" />
                 <label
                     class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10"
                     for="kt_commissioning_individual">
@@ -96,7 +97,7 @@
             <div class="col-lg-6">
                 <!--begin::Option-->
                 <input type="radio" class="btn-check matter-commissioning" name="commissioning" value="committee"
-                    id="kt_commissioning_committee" />
+                    {{ old('commissioning') == 'committee' ? 'checked' : '' }} id="kt_commissioning_committee" />
                 <label class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center"
                     for="kt_commissioning_committee">
                     <!--begin::Svg Icon | path: icons/duotune/finance/fin006.svg-->
@@ -137,7 +138,8 @@
                     data-placeholder="Select court" class="form-select form-select-solid">
                     <option value=""></option>
                     @foreach ($courts as $court)
-                        <option value="{{$court['id']}}">{{$court['name']}}</option>
+                        <option {{ old('court_id') == $court['id'] ? 'selected' : '' }} value="{{ $court['id'] }}">
+                            {{ $court['name'] }}</option>
                     @endforeach
                 </select>
             </div>
@@ -150,7 +152,7 @@
                 <select name="level_id" aria-label="Select a Matter Level" data-control="select2"
                     data-placeholder="Select Level" class="form-select form-select-solid">
                     <option value=""></option>
-                    
+
                 </select>
             </div>
         </div>
@@ -163,7 +165,7 @@
                     data-placeholder="Select Type" class="form-select form-select-solid">
                     <option value=""></option>
                     @foreach ($types as $type)
-                        <option value="{{$type['id']}}">{{$type['name']}}</option>
+                        <option {{ old('type_id') == $type['id'] ? 'selected' : '' }} value="{{ $type['id'] }}">{{ $type['name'] }}</option>
                     @endforeach
                 </select>
             </div>
@@ -174,7 +176,7 @@
             <div class="fv-row mb-5">
                 <label
                     class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.matter.next-session-date') }}</label>
-                <input type="text" name="next_session_date" data-control="flatpickr"
+                <input type="text" value="{{old('next_session_date')}}" name="next_session_date" data-control="flatpickr"
                     class="form-control form-control-solid" placeholder="Matter Next Session">
             </div>
         </div>

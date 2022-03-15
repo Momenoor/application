@@ -4,7 +4,8 @@
             <label
                 class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack mt-12 mb-5">
                 <span class="form-check-label ms-0 fw-bolder fs-6 text-gray-700">Marketing Commission?</span>
-                <input class="form-check-input" name="has_marketing_commission" value="1" wire:model="hasMarketingCommission" type="checkbox">
+                <input class="form-check-input" name="has_marketing_commission" value="1"
+                    wire:model="hasMarketingCommission" type="checkbox">
             </label>
         </div>
         @if ($hasMarketingCommission)
@@ -16,27 +17,11 @@
                     <select id="marketingRep" data-placeholder="Select marketing-rep"
                         class="form-select form-select-solid" name="parties[marketing][name]">
                         <option value=""></option>
-                        <option data-kt-flag="flags/united-states.svg" value="USD">
-                            <b>USD</b>&#160;-&#160;USA dollar
-                        </option>
-                        <option data-kt-flag="flags/united-kingdom.svg" value="GBP">
-                            <b>GBP</b>&#160;-&#160;British pound
-                        </option>
-                        <option data-kt-flag="flags/australia.svg" value="AUD">
-                            <b>AUD</b>&#160;-&#160;Australian dollar
-                        </option>
-                        <option data-kt-flag="flags/japan.svg" value="JPY">
-                            <b>JPY</b>&#160;-&#160;Japanese yen
-                        </option>
-                        <option data-kt-flag="flags/sweden.svg" value="SEK">
-                            <b>SEK</b>&#160;-&#160;Swedish krona
-                        </option>
-                        <option data-kt-flag="flags/canada.svg" value="CAD">
-                            <b>CAD</b>&#160;-&#160;Canadian dollar
-                        </option>
-                        <option data-kt-flag="flags/switzerland.svg" value="CHF">
-                            <b>CHF</b>&#160;-&#160;Swiss franc
-                        </option>
+                        @foreach ($marketers as $marketer)
+                            <option {{ old('parties[marketing][name]') == $marketer->id ? 'selected' : '' }}
+                                value="{{ $marketer->id }}">{{ $marketer->id }} - {{ $marketer->display_name }}
+                            </option>
+                        @endforeach
                     </select>
                     <input type="hidden" name="parties[marketing][type]" value="marketing_rep">
                 </div>
@@ -48,7 +33,8 @@
             <label
                 class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack mt-12 mb-5">
                 <span class="form-check-label ms-0 fw-bolder fs-6 text-gray-700">External Commission?</span>
-                <input class="form-check-input" name="has_external_commission" value="1" wire:model="hasExternalCommission" type="checkbox">
+                <input class="form-check-input" name="has_external_commission" value="1"
+                    wire:model="hasExternalCommission" type="checkbox">
             </label>
         </div>
         @if ($hasExternalCommission)
@@ -64,7 +50,8 @@
                     class="form-select form-select-solid" name="parties[third_party][name]">
                     <option value=""></option>
                     @foreach ($thirdPartiesList as $id => $thirdPartyName)
-                        <option value="{{ $id }}">{{ $id }} - {{ $thirdPartyName }}</option>
+                        <option {{ old('parties[third_party][name]') == $marketer->id ? 'selected' : '' }}
+                            value="{{ $id }}">{{ $id }} - {{ $thirdPartyName }}</option>
                     @endforeach
                 </select>
                 <input type="hidden" name="parties[third_party][type]" value="third_party">
@@ -72,7 +59,8 @@
             <div class="col-2">
                 <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.percent') }}</label>
                 <div class="input-group input-group-solid">
-                    <input type="text" name="external_commission_percent" class="form-control">
+                    <input type="text" value="{{ old('external_commission_percent') }}"
+                        name="external_commission_percent" class="form-control">
                     <span class="input-group-text" id="basic-addon2">%</span>
                 </div>
             </div>
@@ -87,8 +75,8 @@
                     <!--end::Label-->
                     <!--begin::Input-->
                     <div class="input-group input-group-solid mb-5">
-                        <input type="text" wire:model.lazy="claim.amount"
-                            class="form-control form-control-solid" placeholder="Claim amount" />
+                        <input type="text" wire:model.lazy="claim.amount" class="form-control form-control-solid"
+                            placeholder="Claim amount" />
                         <!--end::Input-->
                         <span class="input-group-text">AED</span>
                     </div>
@@ -150,6 +138,7 @@
                     <!--end::Table head-->
                     <!--begin::Table body-->
                     <tbody class="fw-bold text-gray-600">
+                        {{ var_dump(old('claims')) }}
                         @foreach ($claims as $key => $claim)
                             <tr>
                                 <td>
@@ -180,10 +169,13 @@
                                         value="{{ $claim['amount'] }}">
                                 </td>
                                 <td>
+
                                     <div class="badge badge-{{ $claim['type']['color'] }}">
                                         {{ $claim['type']['name'] }}</div>
                                     <input type="hidden" name="claims[{{ $key }}][type]"
                                         value="{{ $claim['type']['id'] }}">
+                                    <input type="hidden" name="claims[{{ $key }}][color]"
+                                        value="{{ $claim['type']['color'] ?? '' }}">
                                 </td>
                                 <td>
                                     <div class="badge badge-light-{{ $claim['recurring']['color'] }}">
@@ -219,7 +211,10 @@
                     <p>
                     <div class="row">
                         <div class="col-12">
-                            @include('pages.thirdparties.form.create',['isLivewire'=>true,'dropdownParent'=>"$('#kt_thirdparty_modal')"])
+                            @include('pages.thirdparties.form.create', [
+                                'isLivewire' => true,
+                                'dropdownParent' => "$('#kt_thirdparty_modal')",
+                            ])
                         </div>
                     </div>
                     </p>

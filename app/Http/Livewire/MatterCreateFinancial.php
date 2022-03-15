@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Services\NumberFormatterService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Livewire\Component;
 
@@ -23,81 +24,22 @@ class MatterCreateFinancial extends Component
     ];
 
     // Claims Vars
-    public $claimsTypes = [
-        'main' => [
-            'id' => 1,
-            'name' => 'Main',
-            'color' => 'success',
-            'display' => true,
-        ],
-        'additional' => [
-            'id' => 2,
-            'name' => 'Additional',
-            'color' => 'secondary',
-            'display' => true,
-        ],
-        'penality' => [
-            'id' => 3,
-            'name' => 'Penality',
-            'color' => 'danger',
-            'display' => true,
-        ],
-        'recurring' => [
-            'id' => 4,
-            'name' => 'Recurring',
-            'color' => 'warning',
-            'display' => false,
-            'values' => [
-                'no' => [
-                    'name' => 'No',
-                    'color' => 'danger'
-                ],
-                'monthly' => [
-                    'name' => 'Monthly',
-                    'color' => 'success'
-                ],
-                'quartely' => [
-                    'name' => 'Quartely',
-                    'color' => 'primary'
-                ],
-                'half-yearly' => [
-                    'name' => 'Half-yearly',
-                    'color' => 'warning'
-                ],
-                'yearly' => [
-                    'name' => 'Yearly',
-                    'color' => 'info'
-                ],
-            ]
-        ],
-        'vat' => [
-            'id' => 5,
-            'name' => 'VAT',
-            'color' => 'dark',
-            'display' => false,
-        ],
-        'office_share' => [
-            'id' => 6,
-            'name' => 'Office Share',
-            'color' => 'warning',
-            'display' => true,
-        ],
-        'commission' => [
-            'id' => 6,
-            'name' => 'Commission',
-            'color' => 'primary',
-            'display' => false,
-        ],
-    ];
+    public $claimsTypes = [];
     public $claim = [
         'type' => '',
         'amount' => '',
         'recurring' => '',
         'taxable' => false,
+        'color' => '',
     ];
     public $claims = [];
+    public $marketers = [];
 
-
+    public function mount($marketers)
+    {
+        $this->claimsTypes = config('system.claims');
+        $this->marketers = $marketers;
+    }
 
     public function render()
     {

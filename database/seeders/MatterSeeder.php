@@ -6,6 +6,7 @@ use App\Models\Cash;
 use App\Models\Claim;
 use App\Models\Matter;
 use App\Models\MatterParty;
+use App\Models\MatterExpert;
 use App\Models\Note;
 use App\Models\Procedure;
 use Carbon\Carbon;
@@ -3330,12 +3331,18 @@ class MatterSeeder extends Seeder
      */
     public function run()
     {
-        collect($this->cases)->each(function ($item) {
+/*         $chunk = collect($this->cases)->chunk(100);
+        $chunk->each(function ($mainItem) { */
+            collect($this->cases)->each(function($item){
             Matter::create([
                 'id' => $item['caseid'],
                 'number' => $item['no'],
                 'year' => $item['year'],
                 'commissioning' => $this->commissioning[$item['kind']],
+                'received_date' => $item['date'],
+                'next_session_date' => $item['assizesdate'],
+                'reported_date' => $item['reported_date'],
+                'submitted_date' => $item['delivery_date'],
                 'type_id' => $item['typeid'],
                 'court_id' => $item['courtid'],
                 'expert_id' => ($item['class'] == 0) ? $item['expertid'] : 1,
@@ -3379,12 +3386,12 @@ class MatterSeeder extends Seeder
                 'user_id' => $item['userid'] ?? 3,
             ]);
 
-            MatterParty::create([
+            MatterExpert::create([
                 'matter_id' => $item['caseid'],
-                'partiable_id' => $item['expertid'],
-                'partiable_type' => \App\Models\Expert::class,
+                'expert_id' => $item['expertid'],
                 'type' => 'assistant',
             ]);
+       /*  }); */
         });
 
         collect($this->payment)->each(function ($item) {

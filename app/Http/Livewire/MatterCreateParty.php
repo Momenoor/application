@@ -21,11 +21,11 @@ class MatterCreateParty extends Component
         'selectSubPartyName'
     ];
 
-    public function mount($partyTypes): void
+    public function mount()
     {
-        $this->partyTypes = $partyTypes;
+        $this->partyTypes = config('system.parties.type');
         $this->partiesFormItems[$this->i] = ['subPartyFormItems' => [], 'showAddSubPartyButton' => false];
-        $this->partTypesConfig = config('system.party.type');
+        $this->partTypesConfig = config('system.parties.type');
     }
 
     public function render()

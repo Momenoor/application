@@ -30,7 +30,8 @@
                         <option value=""></option>
 
                         @foreach ($experts as $expert)
-                            <option value="{{ $expert['id'] }}">
+                            <option {{ old('expert_id') == $expert['id'] ? 'selected' : '' }}
+                                value="{{ $expert['id'] }}">
                                 <b>{{ $expert['id'] }}</b> - {{ $expert['name'] }}
                             </option>
                         @endforeach
@@ -50,7 +51,9 @@
                             data-placeholder="Select Expert" class="form-select form-select-solid mb-5 mb-md-0" multiple
                             data-control="select2" disabled>
                             @foreach ($committees as $committee)
-                                <option value="{{ $committee['id'] }}">{{ $committee['name'] }}</option>
+                                <option
+                                    {{ is_array(old('parties.committee.name')) && in_array($committee['id'], old('parties.committee.name'))? 'selected': '' }}
+                                    value="{{ $committee['id'] }}">{{ $committee['name'] }}</option>
                             @endforeach
                         </select>
                         <input type="hidden" name="parties[committee][type]" value="committee" disabled>
@@ -61,7 +64,7 @@
     </div>
     <div class="separator separator-dashed my-10"></div>
     <label class="form-label fs-6 fw-bolder text-gray-700 mb-3">Parties:</label>
-    @livewire('matter-create-party', ['partyTypes' => $partyTypes],key('parties-'.time()))
+    @livewire('matter-create-party',key('parties-'.time()))
     <!--end::Repeater-->
     <!--end::Input group-->
 </div>

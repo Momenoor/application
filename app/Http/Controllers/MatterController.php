@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\MatterDataTable;
+use App\Http\Requests\CreateMatterRequest;
+use App\Http\Requests\UpdateMatterRequest;
+use App\Jobs\CreateMatter;
 use App\Models\Court;
 use App\Models\Expert;
 use App\Models\Matter;
 use App\Models\Party;
 use App\Models\Type;
-use Illuminate\Http\Request;
+use App\Models\User;
 
 class MatterController extends Controller
 {
@@ -19,7 +22,7 @@ class MatterController extends Controller
      */
     public function index(MatterDataTable $dataTable)
     {
-        return $dataTable->render('pages.matters.form.index');
+        return $dataTable->render('pages.matters.index');
     }
 
     /**
@@ -32,18 +35,18 @@ class MatterController extends Controller
         $experts = Expert::whereIn('category', ['main', 'certified'])->get();
         $courts = Court::all();
         $types = Type::all();
-        $parties = Party::where('type', 'party')->get();
-        $advocates = Party::whereIn('type', ['office', 'advocate'])->get();
+        $parties = Party::where('type', 'party')->notBlackList()->get();
+        $advocates = Party::whereIn('type', ['office', 'advocate'])->notBlackList()->get();
         $committees = Expert::CommitteesList()->get();
-        $partyTypes = config('system.party.type');
+        $marketers = User::where('category', 'staff')->get();
         return view('pages.matters.form.create', compact(
             'experts',
-            'partyTypes',
             'courts',
             'types',
             'parties',
             'advocates',
-            'committees'
+            'committees',
+            'marketers',
         ));
     }
 
@@ -53,9 +56,11 @@ class MatterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateMatterRequest $request)
     {
-        dd($request->all());
+        $matter = CreateMatter::dispatchSync($request->validated());
+
+        return redirect()->route('matter.show', $matter->getInserted());
     }
 
     /**
@@ -87,7 +92,7 @@ class MatterController extends Controller
      * @param  \App\Models\matter  $matter
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, matter $matter)
+    public function update(UpdateMatterRequest $request, matter $matter)
     {
         //
     }
@@ -100,6 +105,6 @@ class MatterController extends Controller
      */
     public function destroy(matter $matter)
     {
-        return redirect(route('matter.index'))->withToastSuccess('Matter Successfully Deletete');
+        return redirect(route('matter.index'))->withToastSuccess('Matter Successfully Deleted');
     }
 }

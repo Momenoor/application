@@ -16,7 +16,8 @@
         <div class="row gx-10 mb-5">
             <!--begin::Col-->
             <div class="col-lg-12">
-                @livewire('matter-create-financial')
+
+                @livewire('matter-create-financial',['marketers' => $marketers])
             </div>
         </div>
         <div class="separator separator-dashed my-10"></div>

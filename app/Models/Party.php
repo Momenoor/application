@@ -20,4 +20,9 @@ class Party extends Model
         'parent_id',
         'user_id',
     ];
+
+    public function scopeNotBlackList()
+    {
+        return $this->where('black_list', false);
+    }
 }

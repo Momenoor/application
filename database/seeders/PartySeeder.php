@@ -4110,9 +4110,7 @@ class PartySeeder extends Seeder
             $party = Party::firstWhere('name', $item['party_name']);
 
             MatterParty::create([
-                'party_id' => $subParty->id ?? null,
-                'partiable_id' => $party->id,
-                'partiable_type' => Party::class,
+                'party_id' => $party->id,
                 'matter_id' => $item['caseid'],
                 'type' => $item['party_type'],
             ]);

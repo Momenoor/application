@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Expert;
 use Illuminate\Http\Request;
+use simplehtmldom\HtmlWeb;
 
 class ExpertController extends Controller
 {
@@ -14,7 +15,35 @@ class ExpertController extends Controller
      */
     public function index()
     {
-        
+    }
+
+    public function getExpertsDataFromUrlForm()
+    {
+        return view('pages.experts.get-experts-data-from-url-form');
+    }
+
+    public function getExpertsDataFromUrl(Request $request)
+    {
+
+        $data = [];
+
+        $url = $request->get('data-url');
+
+        $doc = new HtmlWeb();
+        $html = $doc->load($url);
+
+        foreach ($html->find('table') as $table) {
+            foreach($table->find('tr') as $index => $row){
+                $data[$index]['name'] = $row->find('td',0)->plaintext??null;
+                $data[$index]['phone'] = $row->find('td',2)->plaintext??null;
+                $data[$index]['email'] = $row->find('td',3)->plaintext??null;
+                $data[$index]['address'] = $row->find('td',4)->plaintext??null;
+            }
+        }
+
+        $data = $html->plaintext;
+
+        return view('pages.experts.get-experts-data-from-url-result', compact('data'));
     }
 
     /**

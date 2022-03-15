@@ -1298,7 +1298,7 @@ License: For each use you must have a valid license purchased only from above li
                                             <span
                                                 class="text-muted fs-8 fw-bold lh-1 mb-1">{{ Auth::user()->display_name }}</span>
                                             <span
-                                                class="text-white fs-8 fw-bolder lh-1">{{ Auth::user()->expert->field }}</span>
+                                                class="text-white fs-8 fw-bolder lh-1">{{ Auth::user()->expert->field ?? '' }}</span>
                                         </div>
                                         <!--end::Name-->
                                         <!--begin::Symbol-->
@@ -1325,7 +1325,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <div class="fw-bolder d-flex align-items-center fs-4">
                                                         {{ Auth::user()->display_name }}
                                                         <span
-                                                            class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">{{ Auth::user()->expert->category }}</span>
+                                                            class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">{{ Auth::user()->expert->category ?? '' }}</span>
                                                     </div>
                                                     <a href="#"
                                                         class="fw-bold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>

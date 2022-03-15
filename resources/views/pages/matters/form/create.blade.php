@@ -95,9 +95,22 @@
         <!--begin::Content-->
         <div class="card d-flex flex-row-fluid flex-center">
             <!--begin::Form-->
-            <form class="card-body py-20 w-100 w-xl-700px px-9" method="POST" action="{{ route('matter.store') }}"
+            <div class="pt-10 w-xl-700px">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <p><strong>Opps Something went wrong</strong></p>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
+            <form class="card-body py-10 w-100 w-xl-700px px-9" method="POST" action="{{ route('matter.store') }}"
                 novalidate="novalidate" id="create_matter_form">
                 <!--begin::Step 1-->
+
                 <div class="current" data-kt-stepper-element="content">
                     @csrf
                     @include('pages.matters.form.steps.basic')
@@ -111,7 +124,9 @@
                 <!--begin::Step 3-->
                 <div data-kt-stepper-element="content">
                     <!--begin::Wrapper-->
-                    @include('pages.matters.form.steps.advanced')
+                    @include('pages.matters.form.steps.advanced', [
+                        'marketers' => $marketers,
+                    ])
                 </div>
                 <!--end::Step 4-->
                 <!--begin::Step 5-->
@@ -252,18 +267,8 @@
                     // Handle previous step
                     stepper.on("kt.stepper.previous", function(stepper) {
                         // go previous step
-                        var validator = validations[stepper.getCurrentStepIndex() - 1];
-                        if (validator) {
-                            validator.validate().then(function(status) {
-                                if (status == "Valid") {
-                                    stepper.goPrevious();
-                                    KTUtil.scrollTop();
-                                }
-                            })
-                        } else {
-                            stepper.goPrevious();
-                            KTUtil.scrollTop();
-                        }
+                        stepper.goPrevious();
+                        KTUtil.scrollTop();
                     });
                 }
 
@@ -324,8 +329,6 @@
                 }
 
                 var initValidator = function() {
-
-                    console.log(form)
 
                     //Step 1 validtions rules
                     validations.push(
@@ -450,7 +453,6 @@
                         initFlatPickr();
                         initValidator();
                         initCommissioning();
-                        console.log(validations)
                     }
                 }
             }();

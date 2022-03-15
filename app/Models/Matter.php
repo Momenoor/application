@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use App\Services\NumberFormatterService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +15,11 @@ class Matter extends Model
         'number',
         'status',
         'commissioning',
-        'external_marketing_percent',
+        'external_marketing_rate',
+        'received_date',
+        'next_session_date',
+        'reported_date',
+        'submitted_date',
         'user_id',
         'expert_id',
         'court_id',
@@ -24,6 +28,58 @@ class Matter extends Model
         'parent_id',
     ];
 
+    protected $dates = [
+        'received_date',
+        'next_session_date',
+        'reported_date',
+        'submitted_date',
+    ];
+
+    protected $with = [
+        'court',
+        'expert',
+        'assistants',
+        'plaintiffs',
+        'defendants',
+        'type',
+        'claims',
+    ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($query) {
+            $query->user_id = auth()->id();
+            $query->status = 'current';
+        });
+    }
+
+    public function getAssistantAttribute()
+    {
+        $assistant = $this->assistants->first();
+        $this->unsetRelation('assistants');
+        return $assistant;
+    }
+
+    public function getPlaintiffAttribute()
+    {
+        $plaintiff = $this->plaintiffs->first();
+        $this->unsetRelation('plaintiffs');
+        return $plaintiff;
+    }
+
+    public function getDefendantAttribute()
+    {
+        $defendant = $this->defendants->first();
+        $this->unsetRelation('defendants');
+        return $defendant;
+    }
+
+    public function getClaimsSumAmountAttribute()
+    {
+        return NumberFormatterService::getFormattedNumber($this->claims->sum('amount'));
+    }
 
     public function court()
     {
@@ -42,35 +98,36 @@ class Matter extends Model
 
     public function assistants()
     {
-        return $this->morphedByMany(Expert::class, 'partiable', 'matter_party')->wherePivot('type', '=', 'assistant');
-    }
-
-    public function parties()
-    {
-        return $this->morphedByMany(Party::class, 'partiable', 'matter_party');
+        return $this->belongsToMany(Expert::class, 'matter_expert')
+            ->wherePivot('type', '=', 'assistant');
     }
 
     public function plaintiffs()
     {
-        return $this->morphedByMany(Party::class, 'partiable', 'matter_party')->wherePivot('type', '=', 'plaintiff');
+        return $this->belongsToMany(Party::class)
+            ->wherePivot('type', '=', 'plaintiff');
     }
 
     public function defendants()
     {
-        return $this->morphedByMany(Party::class, 'partiable', 'matter_party')->wherePivot('type', '=', 'defendant');
+        return $this->belongsToMany(Party::class)
+            ->wherePivot('type', '=', 'defendant');
+    }
+
+    public function parties()
+    {
+        return $this->belongsToMany(Party::class);
     }
 
     public function procedures()
     {
         return $this->hasMany(Procedure::class);
     }
-    public function receivedDateProcedure()
+
+    public function nextSessionDateProcedureList()
     {
-        return $this->procedures()->where('type', 'received_date');
-    }
-    public function nextSessionDateProcedure()
-    {
-        return $this->procedures()->where('type', 'next_session_date');
+        return $this->procedures()
+            ->where('type', 'next_session_date');
     }
 
     public function claims()

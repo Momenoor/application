@@ -1,7 +1,7 @@
 <div>
     <div id="matter_create_parties_repeater" class="card card-dashed p-5">
         @foreach ($partiesFormItems as $index => $partyItem)
-            <div wire:key="{{ $loop->index.time().time() }}" class="form-group row mb-5">
+            <div wire:key="{{ $loop->index . time() . time() }}" class="form-group row mb-5">
                 <div class="col-md-4 mb-5">
                     <label class="form-label">{{ __('app.type') }}:</label>
                     <select name="parties[{{ $index }}][type]" aria-label="Select a Type"
@@ -10,25 +10,28 @@
                         wire:model="selectedPartyType.{{ $index }}.type">
                         <option value=""></option>
                         @foreach ($partyTypes as $id => $type)
-                            <option value="{{ $id }}">
-                                {{ $type['text'] }}
+                            <option wire:key="{{ $loop->index . time() }}" value="{{ $id }}">
+                                {{ __('app.' . $type['text']) }}
                             </option>
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-8 mb-5">
+                <div class="col-md-8 mb-5" wire:key="{{ $loop->index . '_name' . time() }}">
                     <label class="form-label">{{ __('app.name') }}:</label>
-                    <input name="parties[{{ $index }}][name]" wire:model="selectedPartyType.{{$index}}.name" type="text"
+                    <input name="parties[{{ $index }}][name]"
+                        wire:model.lazy="selectedPartyType.{{ $index }}.name" type="text"
                         class="form-control form-control-solid mb-2 mb-md-0" placeholder="Enter contact name" />
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" wire:key="{{ $loop->index . '_phone' . time() }}">
                     <label class="form-label">{{ __('app.phone') }}:</label>
-                    <input name="parties[{{ $index }}][phone]" wire:model="selectedPartyType.{{$index}}.phone" type="text"
+                    <input name="parties[{{ $index }}][phone]"
+                        wire:model.lazy="selectedPartyType.{{ $index }}.phone" type="text"
                         class="form-control form-control-solid mb-2 mb-md-0" placeholder="Enter contact number" />
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" wire:key="{{ $loop->index . '_email' . time() }}">
                     <label class="form-label">{{ __('app.email') }}:</label>
-                    <input name="parties[{{ $index }}][email]" wire:model="selectedPartyType.{{$index}}.email" type="text"
+                    <input name="parties[{{ $index }}][email]"
+                        wire:model.lazy="selectedPartyType.{{ $index }}.email" type="text"
                         class="form-control form-control-solid mb-2 mb-md-0"
                         placeholder="Enter contact email address" />
                 </div>
@@ -47,7 +50,6 @@
                                 class="btn btn-sm btn-link mt-3 text-danger">
                                 {{ __('app.party.remove_party') }}
                             </a>
-
                         @else
                             <a href="javascript:;" wire:click="addSubPartyItem({{ $index }})"
                                 class="btn btn-sm btn-link mt-3">
@@ -123,9 +125,7 @@
             })
 
             function initSelect() {
-                $('#matter_create_parties_repeater').find('[data-control="select2"]').select2({
-                    minimumResultsForSearch: Infinity
-                })
+                $('#matter_create_parties_repeater').find('[data-control="select2"]').select2({})
             }
 
             function initSelection() {

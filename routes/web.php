@@ -19,19 +19,13 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('home');
 
     Route::resource('matter', MatterController::class);
+    Route::get('/expert/get-data/', [ExpertController::class, 'getExpertsDataFromUrlForm'])->name('expert.get-data');
+    Route::post('expert/get-data/', [ExpertController::class, 'getExpertsDataFromUrl'])->name('expert.parse-data');
     Route::resource('expert', ExpertController::class);
     Route::resource('party', PartyController::class);
-
-
-
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

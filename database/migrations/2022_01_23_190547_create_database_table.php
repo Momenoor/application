@@ -68,7 +68,11 @@ class CreateDatabaseTable extends Migration
             $table->string('number');
             $table->string('status')->default('current');
             $table->string('commissioning');
-            $table->decimal('external_marketing_percent', 3)->nullable();
+            $table->date('received_date')->nullable();
+            $table->date('next_session_date')->nullable();
+            $table->date('reported_date')->nullable();
+            $table->date('submitted_date')->nullable();
+            $table->decimal('external_marketing_rate', 3)->nullable();
             $table->foreignId('user_id')->comment('user whom add the matter to can access to it even if he is not a party.')->constrained();
             $table->foreignId('expert_id')->constrained();
             $table->foreignId('court_id')->constrained();
@@ -96,7 +100,7 @@ class CreateDatabaseTable extends Migration
             $table->dateTime('datetime');
             $table->decimal('amount', 10, 2);
             $table->text('description')->nullable();
-            $table->enum('type',['income','expense'])->default('income');
+            $table->enum('type', ['income', 'expense'])->default('income');
             $table->foreignId('matter_id')->constrained();
             $table->foreignId('claim_id')->constrained();
             $table->foreignId('user_id')->comment('The user whom made the transaction.')->constrained();
@@ -115,14 +119,20 @@ class CreateDatabaseTable extends Migration
         });
         Schema::create('matter_party', function (Blueprint $table) {
             $table->foreignId('matter_id')->constrained();
-            $table->foreignId('party_id')->comment('this parent id when party relate to another party.')->nullable()->constrained();
-            $table->unsignedBigInteger('partiable_id');
-            $table->string('partiable_type');
-            $table->string('type')->default('party');
+            $table->foreignId('party_id')->constrained();
+            $table->unsignedBigInteger('parent_id')->default(0)->comment('this parent id when party relate to another party.')->on('parties')->references('id');
+            $table->string('type')->default('plaintiff');
             $table->timestamps();
         });
 
-        Schema::create('notes',function(Blueprint $table){
+        Schema::create('matter_expert', function (Blueprint $table) {
+            $table->foreignId('matter_id')->constrained();
+            $table->foreignId('expert_id')->constrained();
+            $table->string('type')->default('assistant');
+            $table->timestamps();
+        });
+
+        Schema::create('notes', function (Blueprint $table) {
             $table->id();
             $table->dateTime('datetime');
             $table->text('text');
