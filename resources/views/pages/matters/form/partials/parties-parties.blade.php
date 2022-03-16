@@ -23,7 +23,7 @@
             <div class="col-md-4">
                 <label class="form-label">{{ __('app.phone') }}:</label>
                 <input name="parties.{{ $index }}.phone"
-                    wire:model="selectedPartyType.{{ $index }}.phone" type="text"
+                    wire:model="parties.{{ $index }}.phone" type="text"
                     class="form-control form-control-solid mb-2 mb-md-0" placeholder="Enter contact number" />
             </div>
             <div class="col-md-4">
