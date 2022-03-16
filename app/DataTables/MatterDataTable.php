@@ -24,7 +24,7 @@ class MatterDataTable extends DataTable
 
             ->editColumn('number', function ($model) {
 
-                return $model->year . '/' . $model->number;
+                return '<a class="text-' . config('system.matter.status.' . $model->status . '.color') . '" href="' . route('matter.show', $model) . '">' . $model->year . '/' . $model->number . '</a>';
             })
 
 
@@ -112,7 +112,7 @@ class MatterDataTable extends DataTable
             })
 
 
-            ->rawColumns(['expert_id', 'court_id', 'plaintiff_name', 'next_session_date']);
+            ->rawColumns(['number', 'expert_id', 'court_id', 'plaintiff_name', 'next_session_date']);
     }
 
     /**

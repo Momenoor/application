@@ -2,10 +2,16 @@
 $modelName = class_basename($model);
 $modelLowerName = Str::lower($modelName);
 $modelId = $model->id;
+$color = null;
+if ($model->status) {
+    $color = config('system.' . $modelLowerName . '.status.' . $model->status . '.color');
+}
 @endphp
 
-
 <div class="d-flex justify-content-end flex-shrink-0">
+    @if ($color)
+        <span class="bullet bullet-vertical h-40px bg-{{ $color }} me-2"></span>
+    @endif
     <a href="{{ route($modelLowerName . '.edit', $modelId) }}"
         class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
         <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
@@ -21,7 +27,8 @@ $modelId = $model->id;
         </span>
         <!--end::Svg Icon-->
     </a>
-    <form action="{{ route($modelLowerName . '.destroy', $modelId) }}" method="POST" class="delete-{{ $modelName }}">
+    <form action="{{ route($modelLowerName . '.destroy', $modelId) }}" method="POST"
+        class="delete-{{ $modelName }}">
         @csrf
         @method("DELETE")
         <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">

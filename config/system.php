@@ -5,6 +5,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Main Settings
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the xxxxxx.
+    |
+    */
+
+    'vat' => [
+        'rate' => 5
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Parties Types
     |--------------------------------------------------------------------------
     |
@@ -38,7 +51,7 @@ return [
                 'showAddPartyButton' => false,
                 'text' => 'committee',
             ],
-            'marketing' => [
+            'marketer' => [
                 'showAddPartyButton' => false,
                 'text' => 'marketing',
             ],
@@ -58,6 +71,21 @@ return [
     | This option controls the xxxxxx.
     |
     */
+
+    'matter' => [
+        'status' => [
+            'current' => [
+                'color' => 'danger'
+            ],
+            'reported' => [
+                'color' => 'warning'
+            ],
+            'submitted' => [
+                'color' => 'primary'
+            ],
+        ],
+    ],
+
 
     'claims' => [
         'main' => [

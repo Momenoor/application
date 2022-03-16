@@ -20,7 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('display_name');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('gender', ['male', 'female'])->default('male');
             $table->string('category')->default('staff');
+            $table->string('avatar')->default('user.jpg');
             $table->rememberToken();
             $table->timestamps();
         });

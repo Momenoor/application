@@ -74,8 +74,8 @@ License: For each use you must have a valid license purchased only from above li
                             <!--end::Aside  toggle-->
                             <!--begin::Logo-->
                             <a href="../../demo14/dist/index.html">
-                                <img alt="Logo" src="{{ asset('assets/media/logos/logo-2.svg') }}"
-                                    class="h-25px h-lg-30px" />
+                                <img alt="Logo" src="{{ asset('assets/media/logos/logo-white-trans-bg.png') }}"
+                                    class="h-30px h-lg-40px" />
                             </a>
                             <!--end::Logo-->
                             <!--begin::Nav-->
@@ -126,12 +126,7 @@ License: For each use you must have a valid license purchased only from above li
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">Warehouse</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">Production</a>
+                                        <a href="#" class="menu-link px-3">Matters1</a>
                                     </div>
                                     <!--end::Menu item-->
                                 </div>
@@ -143,7 +138,7 @@ License: For each use you must have a valid license purchased only from above li
                         <!--begin::Topbar-->
                         <div class="d-flex align-items-center flex-shrink-0">
                             <!--begin::Search-->
-                            <div id="kt_header_search" class="d-flex align-items-stretch" data-kt-search-keypress="true"
+                            {{-- <div id="kt_header_search" class="d-flex align-items-stretch" data-kt-search-keypress="true"
                                 data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="menu"
                                 data-kt-menu-trigger="auto" data-kt-menu-overflow="false" data-kt-menu-permanent="true"
                                 data-kt-menu-placement="bottom-end">
@@ -1282,7 +1277,7 @@ License: For each use you must have a valid license purchased only from above li
                                     <i class="fonticon-sun fs-3"></i>
                                 </a>
                                 <!--end::Theme mode docs-->
-                            </div>
+                            </div> --}}
                             <!--end::Theme mode-->
                             <!--begin::User-->
                             @auth
@@ -1303,7 +1298,7 @@ License: For each use you must have a valid license purchased only from above li
                                         <!--end::Name-->
                                         <!--begin::Symbol-->
                                         <div class="symbol symbol-30px symbol-md-40px">
-                                            <img src="{{ asset('assets/media/avatars/300-1.jpg') }}" alt="image" />
+                                            <img src="{{ asset('assets/media/avatars/blank.png') }}" alt="image" />
                                         </div>
                                         <!--end::Symbol-->
                                     </div>
@@ -1316,8 +1311,7 @@ License: For each use you must have a valid license purchased only from above li
                                             <div class="menu-content d-flex align-items-center px-3">
                                                 <!--begin::Avatar-->
                                                 <div class="symbol symbol-50px me-5">
-                                                    <img alt="Logo"
-                                                        src="{{ asset('assets/media/avatars/300-1.jpg') }}" />
+                                                    <img alt="Logo" src="{{ asset('assets/media/avatars/blank.png') }}" />
                                                 </div>
                                                 <!--end::Avatar-->
                                                 <!--begin::Username-->
@@ -1492,8 +1486,8 @@ License: For each use you must have a valid license purchased only from above li
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5 my-1">
-                                            <a href="../../demo14/dist/account/settings.html"
-                                                class="menu-link px-5">Account Settings</a>
+                                            <a href="../../demo14/dist/account/settings.html" class="menu-link px-5">Account
+                                                Settings</a>
                                         </div>
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
@@ -1552,7 +1546,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--begin::Menu-->
                                 <div class="menu menu-column menu-rounded fw-bold fs-6" id="#kt_aside_menu"
                                     data-kt-menu="true">
-                                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->is('matter/*') ? 'here show' : '' }}">
                                         <span class="menu-link">
                                             <span class="menu-icon">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
@@ -1573,25 +1567,24 @@ License: For each use you must have a valid license purchased only from above li
                                             <span class="menu-title">Dashboards</span>
                                             <span class="menu-arrow"></span>
                                         </span>
-                                        <div class="menu-sub menu-sub-accordion menu-active-bg">
+                                        <div class="menu-sub menu-sub-accordion menu-active-bg {{ (request()->is('matter/*')||request()->is('matter')) ? 'here show' : '' }}">
                                             <div class="menu-item">
-                                                <a class="menu-link" href="../../demo14/dist/index.html">
+                                                <a class="menu-link {{ (request()->is('matter') || request()->is('matter/index')) ? 'active' : '' }}" href="{{ route('matter.index') }}">
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">Multipurpose</span>
+                                                    <span class="menu-title">{{ __('Matters') }}</span>
                                                 </a>
                                             </div>
                                             <div class="menu-item">
-                                                <a class="menu-link"
-                                                    href="../../demo14/dist/dashboards/ecommerce.html">
+                                                <a class="menu-link {{ request()->is('matter/create') ? 'active' : '' }}" href="{{ route('matter.create') }}">
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">eCommerce</span>
+                                                    <span class="menu-title">{{ __('Create') }}</span>
                                                 </a>
                                             </div>
-                                            <div class="menu-item">
+                                            {{-- <div class="menu-item">
                                                 <a class="menu-link"
                                                     href="../../demo14/dist/dashboards/store-analytics.html">
                                                     <span class="menu-bullet">
@@ -1643,10 +1636,10 @@ License: For each use you must have a valid license purchased only from above li
                                                     </span>
                                                     <span class="menu-title">Landing</span>
                                                 </a>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
-                                    <div class="menu-item">
+                                    {{-- <div class="menu-item">
                                         <div class="menu-content pt-8 pb-2">
                                             <span
                                                 class="menu-section text-muted text-uppercase fs-8 ls-1">Crafted</span>
@@ -3664,7 +3657,7 @@ License: For each use you must have a valid license purchased only from above li
                                             </span>
                                             <span class="menu-title">Changelog v8.0.35</span>
                                         </a>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <!--end::Menu-->
                             </div>
@@ -3745,8 +3738,8 @@ License: For each use you must have a valid license purchased only from above li
                                         <!--end::Svg Icon-->Filter
                                     </a>
                                     <!--begin::Menu 1-->
-                                    <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px"
-                                        data-kt-menu="true" id="kt_menu_61de1183187ef">
+                                    <div class="menu menu-sub menu-sub-dropdown w-250px w-md-300px" data-kt-menu="true"
+                                        id="kt_menu_61de1183187ef">
                                         <!--begin::Header-->
                                         <div class="px-7 py-5">
                                             <div class="fs-5 text-dark fw-bolder">Filter Options</div>

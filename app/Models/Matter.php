@@ -45,6 +45,9 @@ class Matter extends Model
         'claims',
     ];
 
+    public const INDIVIDUAL = 'individual';
+    public const COMMITTEE = 'committee';
+
     protected static function boot()
     {
         parent::boot();

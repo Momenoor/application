@@ -40,7 +40,7 @@ class ExpertSeeder extends Seeder
                 'email' => '',
                 'category' => $item['category'],
                 'field' => $item['class'],
-                'user_id' => \Str::of($item['userid'])->isNotEmpty()?:null,
+                'user_id' => is_null($item['userid'])?:1,
             ]);
         });
     }

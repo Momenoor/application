@@ -32,22 +32,7 @@ class MatterController extends Controller
      */
     public function create()
     {
-        $experts = Expert::whereIn('category', ['main', 'certified'])->get();
-        $courts = Court::all();
-        $types = Type::all();
-        $parties = Party::where('type', 'party')->notBlackList()->get();
-        $advocates = Party::whereIn('type', ['office', 'advocate'])->notBlackList()->get();
-        $committees = Expert::CommitteesList()->get();
-        $marketers = User::where('category', 'staff')->get();
-        return view('pages.matters.form.create', compact(
-            'experts',
-            'courts',
-            'types',
-            'parties',
-            'advocates',
-            'committees',
-            'marketers',
-        ));
+        return view('pages.matters.form.create');
     }
 
     /**
@@ -71,7 +56,7 @@ class MatterController extends Controller
      */
     public function show(Matter $matter)
     {
-        dd($matter);
+        return view('pages.matters.show', compact('matter'));
     }
 
     /**
