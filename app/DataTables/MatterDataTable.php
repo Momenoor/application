@@ -31,7 +31,8 @@ class MatterDataTable extends DataTable
             ->filterColumn('number', function ($query, $keyword) {
                 $query->orWhere('matters.number', 'like', '%' . $keyword . '%')
                     ->orWhere('matters.year', 'like', '%' . $keyword . '%')
-                    ->orWhere('matters.status', 'like', '%' . $keyword . '%');
+                    ->orWhere('matters.status', 'like', '%' . $keyword . '%')
+                    ->orWhere('matters.commissioning', 'like', '%' . $keyword . '%');
             })
 
 

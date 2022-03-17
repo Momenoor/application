@@ -36,6 +36,8 @@ class CreateMatterRequest extends FormRequest
             'user_id' => 'required|exists:users,id',
             'external_marketing_rate' => 'integer',
             'commissioning' => 'required',
+            'otherParties.marketer.id' => 'required|exists:users,id',
+
             //'status' => 'required',
 
         ];

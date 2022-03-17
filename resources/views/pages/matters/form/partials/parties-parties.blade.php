@@ -4,7 +4,8 @@
             <div class="col-md-4 mb-5">
                 <label class="form-label">{{ __('app.type') }}:</label>
                 <select name="parties[{{ $index }}][type]" aria-label="Select a Type"
-                    data-placeholder="Select Type" class="form-select form-select-solid mb-5 mb-md-0 party-type"
+                    data-placeholder="Select Type"
+                    class="form-select @error('parties.'. $index .'.type') is-invalid @enderror form-select-solid mb-5 mb-md-0 party-type"
                     data-control="select2" data-row-index="{{ $index }}"
                     wire:model="parties.{{ $index }}.type">
                     <option value=""></option>
@@ -14,23 +15,43 @@
                         </option>
                     @endforeach
                 </select>
+                @error('parties.'. $index .'.type')
+                    <div class="invalid-feedback fv-plugins-message-container">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-8 mb-5">
                 <label class="form-label">{{ __('app.name') }}:</label>
-                <input name="parties.{{ $index }}.name" wire:model="parties.{{ $index }}.name" type="text"
-                    class="form-control form-control-solid mb-2 mb-md-0" placeholder="Enter contact name" />
+                <input name="parties.{{ $index }}.name" wire:model="parties.{{ $index }}.name"
+                    type="text" class="form-control @error('parties.'. $index .'.name') is-invalid @enderror form-control-solid mb-2 mb-md-0" placeholder="Enter contact name" />
+                    @error('parties.'. $index .'.name')
+                    <div class="invalid-feedback fv-plugins-message-container">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-4">
                 <label class="form-label">{{ __('app.phone') }}:</label>
-                <input name="parties.{{ $index }}.phone"
-                    wire:model="parties.{{ $index }}.phone" type="text"
-                    class="form-control form-control-solid mb-2 mb-md-0" placeholder="Enter contact number" />
+                <input name="parties.{{ $index }}.phone" wire:model="parties.'. $index .'.phone"
+                    type="text" class="form-control @error('parties.{{ $index }}.phone') is-invalid @enderror form-control-solid mb-2 mb-md-0"
+                    placeholder="Enter contact number" />
+                    @error('parties.'. $index .'.phone')
+                    <div class="invalid-feedback fv-plugins-message-container">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             <div class="col-md-4">
                 <label class="form-label">{{ __('app.email') }}:</label>
                 <input name="parties.{{ $index }}.email" wire:model="parties.{{ $index }}.email"
-                    type="text" class="form-control form-control-solid mb-2 mb-md-0"
+                    type="text" class="form-control @error('parties.'. $index .'.email') is-invalid @enderror form-control-solid mb-2 mb-md-0"
                     placeholder="Enter contact email address" />
+                    @error('parties.'. $index .'.email')
+                    <div class="invalid-feedback fv-plugins-message-container">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
             @if (!$loop->first)
                 <div class="col-md-4">
@@ -40,7 +61,9 @@
                     </a>
                 </div>
             @endif
-            @include('pages.matters.form.partials.parties-sub-parties')
+            @include(
+                'pages.matters.form.partials.parties-sub-parties'
+            )
         </div>
         @if (!$loop->last)
             <div class="separator separator-dashed my-5"></div>
@@ -50,7 +73,7 @@
     <div class="separator separator-dashed my-5"></div>
     <div class="form-group">
         <a href="javascript:;" class="btn btn-sm btn-block btn-warning col-12" wire:click="addParty">
-            <i class="la la-plus"></i>{{__('add')}}
+            <i class="la la-plus"></i>{{ __('add') }}
         </a>
     </div>
 </div>

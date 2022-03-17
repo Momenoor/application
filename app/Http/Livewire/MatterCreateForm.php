@@ -48,6 +48,36 @@ class MatterCreateForm extends Component
         'showAddSubPartyButton'
     ];
 
+
+    protected $rules = [
+        'matter.year' => 'required|min:4|max:4|date_format:Y',
+        'matter.number' => 'required',
+        'matter.received_date' => 'required|date',
+        'matter.next_session_date' => 'required|date',
+        'matter.commissioning' => 'required',
+        'matter.court_id' => 'required|exists:courts,id',
+        'matter.type_id' => 'required|exists:types,id',
+        'matter.expert_id' => 'required|exists:experts,id',
+        'matter.committee' => 'required_if:matter.commissioning,committee',
+        'parties.*.type' => 'required',
+        'parties.*.name' => 'required',
+        'parties.*.phone' => 'phone',
+        'parties.*.email' => 'email',
+        'parties.*.subParties.*' => 'required',
+        'matter.external_commission_percent' => 'required_if:hasExternalCommission,1|numeric',
+        'otherParties.external_markter.id' => 'required_if:hasExternalCommission,1',
+        'otherParties.marketer.id' => 'required_if:hasMarketingCommission,1',
+    ];
+
+    protected $messages = [
+        'matter.year.required' => 'The :attribute cannot be empty.',
+        'email.email' => 'The :attribute format is not valid.',
+    ];
+
+    protected $validationAttributes = [
+        'matter.year' => 'Matter year'
+    ];
+
     public function mount()
     {
         $this->expertsList = Expert::whereIn('category', ['main', 'certified'])->get(['id', 'name'])->toArray();
@@ -136,5 +166,10 @@ class MatterCreateForm extends Component
     public function removeClaim($index)
     {
         unset($this->claims[$index]);
+    }
+
+    public function save()
+    {
+        $validated = $this->validate();
     }
 }

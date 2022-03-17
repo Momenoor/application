@@ -22,8 +22,14 @@
                         <label
                             class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.matter.receive-date') }}</label>
                         <input type="text" name="received_date" data-control="flatpickr"
-                            wire:model="matter.received_date" class="form-control form-control-solid"
+                            wire:model="matter.received_date"
+                            class="@error('matter.received_date') is-invalid @enderror form-control form-control-solid"
                             placeholder="Matter Receive Date">
+                        @error('matter.received_date')
+                            <div class="invalid-feedback fv-plugins-message-container">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="row">
@@ -32,7 +38,12 @@
                             <label
                                 class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.matter.year') }}</label>
                             <input type="text" name="year" wire:model="matter.year"
-                                class="form-control form-control-solid" placeholder="Matter Year">
+                                class="@error('matter.year') is-invalid @enderror form-control form-control-solid" placeholder="Matter Year">
+                                @error('matter.year')
+                            <div class="invalid-feedback fv-plugins-message-container">
+                                {{ $message }}
+                            </div>
+                        @enderror
                         </div>
                     </div>
                     <div class="col-lg-8">
@@ -40,7 +51,12 @@
                             <label
                                 class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.matter.number') }}</label>
                             <input type="text" name="number" wire:model="matter.number"
-                                class="form-control form-control-solid" placeholder="Matter Number">
+                                class="@error('matter.number') is-invalid @enderror form-control form-control-solid" placeholder="Matter Number">
+                                @error('matter.number')
+                            <div class="invalid-feedback fv-plugins-message-container">
+                                {{ $message }}
+                            </div>
+                        @enderror
                         </div>
                     </div>
                 </div>
@@ -56,7 +72,7 @@
                     <!--begin::Col-->
                     <div class="col-lg-6">
                         <!--begin::Option-->
-                        <input type="radio" class="btn-check matter-commissioning" name="commissioning"
+                        <input type="radio" class="@error('matter.commissioning') is-invalid @enderror btn-check matter-commissioning" name="commissioning"
                             value="individual" id="kt_commissioning_individual" wire:model="matter.commissioning" />
                         <label
                             class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center mb-10"
@@ -88,7 +104,7 @@
                     <!--begin::Col-->
                     <div class="col-lg-6">
                         <!--begin::Option-->
-                        <input type="radio" class="btn-check matter-commissioning" name="commissioning"
+                        <input type="radio" class="btn-check matter-commissioning @error('matter.commissioning') is-invalid @enderror " name="commissioning"
                             value="committee" wire:model="matter.commissioning" id="kt_commissioning_committee" />
                         <label
                             class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center"
@@ -118,6 +134,11 @@
                         <!--end::Option-->
                     </div>
                     <!--end::Col-->
+                    @error('matter.commissioning')
+                            <div class="invalid-feedback fv-plugins-message-container">
+                                {{ $message }}
+                            </div>
+                        @enderror
                 </div>
                 <!--end::Row-->
             </div>
@@ -130,13 +151,18 @@
                         <!--begin::Select-->
                         <select name="court_id" aria-label="Select a court" data-control="select2"
                             data-placeholder="Select court" wire:model="matter.court_id"
-                            class="form-select form-select-solid">
+                            class="@error('matter.court_id') is-invalid @enderror form-select form-select-solid">
                             <option value=""></option>
                             @foreach ($courtsList as $court)
                                 <option value="{{ $court['id'] }}">
                                     {{ $court['name'] }}</option>
                             @endforeach
                         </select>
+                        @error('matter.court_id')
+                            <div class="invalid-feedback fv-plugins-message-container">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="col-lg-4">
                         <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.level') }}</label>
@@ -144,9 +170,14 @@
                         <!--begin::Select-->
                         <select name="level_id" aria-label="Select a Matter Level" data-control="select2"
                             data-placeholder="Select Level" wire:model="matter.level_id"
-                            class="form-select form-select-solid">
+                            class="@error('matter.level_id') is-invalid @enderror form-select form-select-solid">
                             <option value=""></option>
                         </select>
+                        @error('matter.level_id')
+                            <div class="invalid-feedback fv-plugins-message-container">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="col-lg-4">
                         <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.type') }}</label>
@@ -154,19 +185,29 @@
                         <!--begin::Select-->
                         <select name="type_id" aria-label="Select a Matter Type" data-control="select2"
                             data-placeholder="Select Type" wire:model="matter.type_id"
-                            class="form-select form-select-solid">
+                            class="@error('matter.type_id') is-invalid @enderror form-select form-select-solid">
                             <option value=""></option>
                             @foreach ($typesList as $type)
                                 <option value="{{ $type['id'] }}">{{ $type['name'] }}</option>
                             @endforeach
                         </select>
+                        @error('matter.type_id')
+                            <div class="invalid-feedback fv-plugins-message-container">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                     <div class="col-lg-4 mt-10">
                         <label
                             class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.matter.next-session-date') }}</label>
                         <input type="text" wire:model="matter.next_session_date" name="next_session_date"
-                            data-control="flatpickr" class="form-control form-control-solid"
+                            data-control="flatpickr" class="@error('matter.next_session_date') is-invalid @enderror form-control form-control-solid"
                             placeholder="Matter Next Session">
+                            @error('matter.next_session_date')
+                            <div class="invalid-feedback fv-plugins-message-container">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
                 </div>
             </div>

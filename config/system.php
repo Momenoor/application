@@ -75,13 +75,16 @@ return [
     'matter' => [
         'status' => [
             'current' => [
-                'color' => 'danger'
+                'color' => 'danger',
+                'text' => 'current',
             ],
             'reported' => [
-                'color' => 'warning'
+                'color' => 'warning',
+                'text' => 'reported',
             ],
             'submitted' => [
-                'color' => 'primary'
+                'color' => 'primary',
+                'text' => 'submitted',
             ],
         ],
     ],

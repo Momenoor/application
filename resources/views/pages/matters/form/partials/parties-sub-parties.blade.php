@@ -21,7 +21,7 @@
                             <div class="overflow-hidden flex-grow-1">
                                 <select name="parties[{{ $index }}][sub-party][{{ $subIndex }}]"
                                     aria-label="Select a Type" data-placeholder="Select Type"
-                                    class="form-select sub-party-name form-select-solid rounded-end-0 border-end"
+                                    class="form-select @error('parties.' . $index . '.subParties.' . $subIndex) is-invalid @enderror  sub-party-name form-select-solid rounded-end-0 border-end"
                                     data-row-index="{{ $subIndex }}" data-row-parent-index="{{ $index }}"
                                     data-control="select2"
                                     wire:model="parties.{{ $index }}.subParties.{{ $subIndex }}">
@@ -32,6 +32,11 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                @error('parties.' . $index . '.subParties.' . $subIndex)
+                                    <div class="invalid-feedback fv-plugins-message-container">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                             <a href="javascript:;"
                                 class="rounded-start-0 input-group-text border border-secondary btn btn-icon btn-light-danger"
