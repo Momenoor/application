@@ -18,10 +18,12 @@
         $(document).ready(function() {
             var table = window.LaravelDataTables["matter-table"];
             $('#filterApply').on('click',function(){
+
                 var status = $('#globalFilter select#status_id').select2('val');
                 var commissioning = $('#globalFilter input[name="commissioning"]:checked').val();
-                var searchText = ((jQuery.type(status) === "undefined")?'':status) + ' ' + ((jQuery.type(commissioning) === "undefined")?'':commissioning);
-                table.search(searchText).draw();
+                var searchText = ((jQuery.type(status) === "undefined")?'':status) + '|' + ((jQuery.type(commissioning) === "undefined")?'':commissioning);
+                table.column(1).search(commissioning).draw();
+                table.column(1).search(status).draw();
             })
         });
     </script>

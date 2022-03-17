@@ -81,7 +81,7 @@ class Matter extends Model
 
     public function getClaimsSumAmountAttribute()
     {
-        return NumberFormatterService::getFormattedNumber($this->claims->sum('amount'));
+        return app(NumberFormatterService::class)->getFormattedNumber($this->claims->sum('amount'));
     }
 
     public function court()

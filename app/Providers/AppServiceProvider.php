@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\NumberFormatterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -17,7 +18,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(NumberFormatterService::class, function () {
+            return new NumberFormatterService();
+        });
     }
 
     /**
@@ -62,9 +65,7 @@ class AppServiceProvider extends ServiceProvider
                 }
 
                 return;
-
             });
-
         }
 
         Schema::defaultStringLength(191);
