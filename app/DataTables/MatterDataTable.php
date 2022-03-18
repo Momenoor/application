@@ -30,8 +30,7 @@ class MatterDataTable extends DataTable
             ->filterColumn('number', function ($query, $keyword) {
                 $query->orWhere('matters.number', 'like', '%' . $keyword . '%')
                     ->orWhere('matters.year', 'like', '%' . $keyword . '%')
-                    ->orWhere('matters.status', 'like', '%' . $keyword . '%')
-                    ->orWhere('matters.commissioning', 'like', '%' . $keyword . '%');
+                    ->orWhere('matters.status', 'like', '%' . $keyword . '%');
             })
 
 
@@ -64,7 +63,8 @@ class MatterDataTable extends DataTable
             ->filterColumn('court_id', function ($query, $keyword) {
 
                 $query->whereRelation('court', 'courts.name', 'like', '%' . $keyword . '%')
-                    ->orWhereRelation('type', 'types.name', 'like', '%' . $keyword . '%');
+                    ->orWhereRelation('type', 'types.name', 'like', '%' . $keyword . '%')
+                    ->orWhere('matters.commissioning', 'like', '%' . $keyword . '%');
             })
 
 
@@ -135,18 +135,19 @@ class MatterDataTable extends DataTable
     {
         return $this->builder()
             ->setTableId('matter-table')
-            ->setTableAttributes(['class' => 'table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4'])
+            ->setTableAttributes(['class' => 'table table-strip table-row-dashed table-row-gray-200 align-middle gs-0 gy-4'])
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('Bfrtip')
+            ->dom('Brtip')
             ->stateSave(true)
             ->orderBy(1)
-            ->dom("'<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'f>> +
+            ->dom("'<'row'<'col-sm-12 col-md-6'B><'#idFilter.col-sm-12.col-md-6'>> +
         <'row'<'col-sm-12'tr>> +
         <'row'<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'li><'col-sm-7col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>>'")
             ->parameters([
                 'scrollX' => true,
-                "searchDelay" => 50,
+                'searchDelay' => 50,
+                'responsive' => true
                 /* 'initComplete' => " function () {this.api().columns().every(function () {var column = this;var input = document.createElement('input');$(input).appendTo($(column.header()).empty()).on('change', function () {var val = $.fn.dataTable.util.escapeRegex($(this).val());column.search(val ? val : '', true, false).draw();});})}", */
             ])
             ->buttons(
@@ -166,12 +167,10 @@ class MatterDataTable extends DataTable
     protected function getColumns()
     {
         return [
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
-                ->addClass('text-center'),
 
+            Column::computed('a')
+                ->title('#')
+                ->searchable(false),
             Column::make('number')
                 ->searchable(true)
                 ->title('No/Year'),
@@ -198,6 +197,11 @@ class MatterDataTable extends DataTable
                 ->searchable(true)
                 ->title('Claims')
                 ->class('text-end'),
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 

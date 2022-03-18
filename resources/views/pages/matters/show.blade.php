@@ -247,6 +247,5 @@
         </div>
 
     </div>
-    </div>
     {{-- Inject Scripts --}}
 @endsection
