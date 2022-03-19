@@ -504,9 +504,6 @@ License: For each use you must have a valid license purchased only from above li
                                 <!--end::Breadcrumb-->
                             </div>
                             <!--end::Page title-->
-                            <!--begin::Actions-->
-                            @include('layouts._action')
-                            <!--end::Actions-->
                         </div>
                         <!--end::Toolbar-->
                         <!--begin::Post-->

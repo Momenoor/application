@@ -196,50 +196,7 @@
                         <!--end::Details-->
                         <div class="separator"></div>
                         <!--begin::Nav-->
-                        <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder">
-                            <!--begin::Nav item-->
-                            <li class="nav-item">
-                                <a class="nav-link text-active-primary py-5 me-6 active"
-                                    href="/metronic8/demo14/../demo14/apps/projects/project.html">Overview</a>
-                            </li>
-                            <!--end::Nav item-->
-                            <!--begin::Nav item-->
-                            <li class="nav-item">
-                                <a class="nav-link text-active-primary py-5 me-6"
-                                    href="/metronic8/demo14/../demo14/apps/projects/targets.html">Targets</a>
-                            </li>
-                            <!--end::Nav item-->
-                            <!--begin::Nav item-->
-                            <li class="nav-item">
-                                <a class="nav-link text-active-primary py-5 me-6"
-                                    href="/metronic8/demo14/../demo14/apps/projects/budget.html">Budget</a>
-                            </li>
-                            <!--end::Nav item-->
-                            <!--begin::Nav item-->
-                            <li class="nav-item">
-                                <a class="nav-link text-active-primary py-5 me-6"
-                                    href="/metronic8/demo14/../demo14/apps/projects/users.html">Users</a>
-                            </li>
-                            <!--end::Nav item-->
-                            <!--begin::Nav item-->
-                            <li class="nav-item">
-                                <a class="nav-link text-active-primary py-5 me-6"
-                                    href="/metronic8/demo14/../demo14/apps/projects/files.html">Files</a>
-                            </li>
-                            <!--end::Nav item-->
-                            <!--begin::Nav item-->
-                            <li class="nav-item">
-                                <a class="nav-link text-active-primary py-5 me-6"
-                                    href="/metronic8/demo14/../demo14/apps/projects/activity.html">Activity</a>
-                            </li>
-                            <!--end::Nav item-->
-                            <!--begin::Nav item-->
-                            <li class="nav-item">
-                                <a class="nav-link text-active-primary py-5 me-6"
-                                    href="/metronic8/demo14/../demo14/apps/projects/settings.html">Settings</a>
-                            </li>
-                            <!--end::Nav item-->
-                        </ul>
+
                         <!--end::Nav-->
                     </div>
                 </div>
