@@ -5,13 +5,8 @@ namespace App\Http\Controllers;
 use App\DataTables\MatterDataTable;
 use App\Http\Requests\CreateMatterRequest;
 use App\Http\Requests\UpdateMatterRequest;
-use App\Jobs\CreateMatter;
-use App\Models\Court;
-use App\Models\Expert;
 use App\Models\Matter;
-use App\Models\Party;
-use App\Models\Type;
-use App\Models\User;
+
 
 class MatterController extends Controller
 {
@@ -43,7 +38,6 @@ class MatterController extends Controller
      */
     public function store(CreateMatterRequest $request)
     {
-        $matter = CreateMatter::dispatchSync($request->validated());
 
         return redirect()->route('matter.show', $matter->getInserted());
     }

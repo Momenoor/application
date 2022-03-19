@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Services\NumberFormatterService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User;
 
 class Matter extends Model
 {
@@ -52,10 +53,10 @@ class Matter extends Model
     {
         parent::boot();
 
-        /* static::creating(function ($query) {
+        static::creating(function ($query) {
             $query->user_id = auth()->id();
             $query->status = 'current';
-        }); */
+        });
     }
 
     public function getAssistantAttribute()
@@ -103,6 +104,23 @@ class Matter extends Model
     {
         return $this->belongsToMany(Expert::class, 'matter_expert')
             ->wherePivot('type', '=', 'assistant');
+    }
+
+    public function marketers()
+    {
+        return $this->belongsToMany(User::class, 'matter_marketing');
+    }
+
+    public function internalMarketers()
+    {
+        return $this->belongsToMany(User::class, 'matter_marketing')
+            ->wherePivot('type', '=', 'marketer');
+    }
+
+    public function externalMarketers()
+    {
+        return $this->belongsToMany(Party::class, 'matter_party')
+            ->wherePivot('type', '=', 'external_marketer');
     }
 
     public function plaintiffs()

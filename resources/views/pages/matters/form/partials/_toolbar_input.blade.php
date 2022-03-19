@@ -1,10 +1,10 @@
 <div class="card-toolbar">
     <!--begin::Filter-->
-    <div id="globalFilter" class="d-flex align-items-center">
+    <div class="d-flex align-items-center">
         <!--begin::Wrapper-->
-        <div class="me-3">
+        <div id="globalFilter" class="me-3">
             <!--begin::Menu-->
-            <a href="#" class="btn btn-warning" data-kt-menu-trigger="click"
+            <a href="#" class="btn btn-light-primary" data-kt-menu-trigger="click"
                 data-kt-menu-placement="bottom-end">
                 <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
                 <span class="svg-icon svg-icon-5 svg-icon-gray-500 me-1">
@@ -88,7 +88,7 @@
                     <!--end::Input group-->
                     <!--begin::Actions-->
                     <div class="d-flex justify-content-end">
-                        <button type="reset" class="btn btn-sm btn-light btn-active-light-primary me-2"
+                        <button type="reset" id="filterReset" class="btn btn-sm btn-light btn-active-light-primary me-2"
                             data-kt-menu-dismiss="true">{{ __('app.reset') }}</button>
                         <button type="submit" id="filterApply" class="btn btn-sm btn-primary"
                             data-kt-menu-dismiss="true">{{ __('app.apply') }}</button>

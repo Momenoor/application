@@ -33,8 +33,8 @@
             </div>
             <div class="col-md-4">
                 <label class="form-label">{{ __('app.phone') }}:</label>
-                <input name="parties.{{ $index }}.phone" wire:model="parties.'. $index .'.phone"
-                    type="text" class="form-control @error('parties.{{ $index }}.phone') is-invalid @enderror form-control-solid mb-2 mb-md-0"
+                <input name="parties.{{ $index }}.phone" wire:model="parties.{{ $index }}.phone"
+                    type="text" class="form-control @error('parties.'. $index .'.phone') is-invalid @enderror form-control-solid mb-2 mb-md-0"
                     placeholder="Enter contact number" />
                     @error('parties.'. $index .'.phone')
                     <div class="invalid-feedback fv-plugins-message-container">

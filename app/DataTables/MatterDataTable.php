@@ -37,9 +37,9 @@ class MatterDataTable extends DataTable
             ->editColumn('expert_id', function ($model) {
 
                 return '<div class="position-relative">
-                                ' . $model->expert->name . '
+                                ' . ($model->expert->name??null) . '
                                 ' . ((!$model->has('assistants')) ?:
-                    '<div class="fs-7 text-muted fw-bolder">' . $model->assistant->name . '</div>') . '
+                    '<div class="fs-7 text-muted fw-bolder">' . ($model->assistant->name??null) . '</div>') . '
                         </div>';
             })
 
@@ -54,8 +54,8 @@ class MatterDataTable extends DataTable
             ->editColumn('court_id', function ($model) {
 
                 return '<div class="position-relative">
-                                ' . $model->court->name . '
-                            <div class="fs-7 text-muted fw-bolder">' . $model->type->name . '</div>
+                                ' . ($model->court->name??null) . '
+                            <div class="fs-7 text-muted fw-bolder">' . ($model->type->name??null) . '</div>
                         </div>';
             })
 
@@ -71,8 +71,8 @@ class MatterDataTable extends DataTable
             ->editColumn('plaintiff_name', function ($model) {
 
                 return '<div class="position-relative">
-                                ' . \Str::of($model->plaintiff->name)->limit(30) . '
-                            <div class="text-danger">' . \Str::of($model->defendant->name)->limit(30)  . '</div>
+                                ' . (\Str::of($model->plaintiff->name??null)->limit(30)) . '
+                            <div class="text-danger">' . (\Str::of($model->defendant->name??null)->limit(30))  . '</div>
                         </div>';
             })
 
@@ -191,7 +191,7 @@ class MatterDataTable extends DataTable
             Column::make('claims_sum_amount')
                 ->searchable(true)
                 ->title('Claims')
-                ->class('text-end'),
+                ->class('text-end pe-3'),
 
         ];
     }

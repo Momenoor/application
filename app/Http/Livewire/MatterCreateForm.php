@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Enums\MatterCommissioning;
+use App\Jobs\CreateMatter;
 use Livewire\Component;
 use App\Models\Court;
 use App\Models\Expert;
@@ -11,9 +11,13 @@ use App\Models\Party;
 use App\Models\Type;
 use App\Models\User;
 use App\Services\NumberFormatterService;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class MatterCreateForm extends Component
 {
+
+    use DispatchesJobs;
+
 
     // Main Model Definations
     public $matter;
@@ -61,7 +65,7 @@ class MatterCreateForm extends Component
         'matter.committee' => 'required_if:matter.commissioning,committee',
         'parties.*.type' => 'required',
         'parties.*.name' => 'required',
-        'parties.*.phone' => 'phone',
+        'parties.*.phone' => 'numeric',
         'parties.*.email' => 'email',
         'parties.*.subParties.*' => 'required',
         'matter.external_commission_percent' => 'required_if:hasExternalCommission,1|numeric',
@@ -75,7 +79,23 @@ class MatterCreateForm extends Component
     ];
 
     protected $validationAttributes = [
-        'matter.year' => 'Matter year'
+        'matter.year' => 'Year',
+        'matter.number' => 'Number',
+        'matter.received_date' => 'Receive Date',
+        'matter.next_session_date' => 'Next Session',
+        'matter.commissioning' => 'Commissioning',
+        'matter.court_id' => 'Court',
+        'matter.type_id' => 'Type',
+        'matter.expert_id' => 'Expert',
+        'matter.committee' => 'Committee',
+        'parties.*.type' => 'Party Type',
+        'parties.*.name' => 'Party Name',
+        'parties.*.phone' => 'Party Phone',
+        'parties.*.email' => 'Party Email',
+        'parties.*.subParties.*' => 'Advocate',
+        'matter.external_commission_percent' => 'Commission Rate',
+        'otherParties.external_markter.id' => 'External Marketer',
+        'otherParties.marketer.id' => 'Marketer',
     ];
 
     public function mount()
@@ -171,5 +191,15 @@ class MatterCreateForm extends Component
     public function save()
     {
         $validated = $this->validate();
+        $data = [
+            'matter' => $this->matter,
+            'claims' => $this->claims,
+            'parties' => $this->parties,
+            'marketing' => $this->otherParties
+        ];
+        /* dd($data); */
+        $this->dispatchNow(new CreateMatter($data));
+
+        return redirect(route('matter.index'))->with('toast_success',__('app.matter-successfully-added'));
     }
 }

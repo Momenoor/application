@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use NumberFormatter;
@@ -21,5 +22,10 @@ class NumberFormatterService
         }
 
         return $formatter->format($value);
+    }
+
+    public static function getUnformattedNumber($value, $decimal = 2)
+    {
+        return round(preg_replace("/([,])/", "", $value), $decimal);
     }
 }

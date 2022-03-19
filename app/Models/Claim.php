@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\NumberFormatterService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,6 +20,17 @@ class Claim extends Model
         'user_id',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($query) {
+            $query->date = now();
+            $query->status = 'unpaid';
+            $query->user_id = auth()->id();
+        });
+    }
+
     public function matter()
     {
         return $this->belongsTo(Matter::class);
@@ -32,5 +44,10 @@ class Claim extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function setAmountAttribute($value)
+    {
+        $this->attributes['amount'] = app(NumberFormatterService::class)->getUnformattedNumber($value);
     }
 }

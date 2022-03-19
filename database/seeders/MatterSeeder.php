@@ -3347,7 +3347,7 @@ class MatterSeeder extends Seeder
                 'court_id' => $item['courtid'],
                 'expert_id' => ($item['class'] == 0) ? $item['expertid'] : 1,
                 'status' => $this->status[$item['statusid']],
-                'user_id' => $item['userid'] ?: 7,
+                'user_id' => $item['userid']?:7,
                 'parent_id' => ($item['category'] == '0')
                     ? null
                     : collect($this->cases)->where('no', $item['no'])->where('year', $item['year'])->first()['caseid'],

@@ -27,7 +27,7 @@
                                     wire:model="parties.{{ $index }}.subParties.{{ $subIndex }}">
                                     <option value=""></option>
                                     @foreach ($advocatesList as $id => $advocate)
-                                        <option value="{{ $id }}">
+                                        <option value="{{ $advocate['id'] }}">
                                             {{ $advocate['name'] }}
                                         </option>
                                     @endforeach

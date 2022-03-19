@@ -89,7 +89,7 @@ class CreateDatabaseTable extends Migration
             $table->decimal('amount', 10, 2);
             $table->string('status')->default('unpaid');
             $table->string('type')->default('main');
-            $table->string('receurring')->default('no');
+            $table->string('recurring')->default('no');
             $table->foreignId('matter_id')->constrained();
             $table->foreignId('user_id')->comment('The user whom made the transaction.')->constrained();
             $table->timestamps();
@@ -129,6 +129,13 @@ class CreateDatabaseTable extends Migration
             $table->foreignId('matter_id')->constrained();
             $table->foreignId('expert_id')->constrained();
             $table->string('type')->default('assistant');
+            $table->timestamps();
+        });
+
+        Schema::create('matter_marketing', function (Blueprint $table) {
+            $table->foreignId('matter_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->string('type')->default('marketer');
             $table->timestamps();
         });
 

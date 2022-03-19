@@ -2,31 +2,34 @@
 
 namespace App\Jobs;
 
-use App\Http\Requests\CreateMatterRequest;
 use App\Models\Matter;
+use App\Services\MatterService;
+use Exception;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Throwable;
 
 class CreateMatter implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
 
-    protected $request;
+    protected $data;
     protected $matter;
+    protected $service;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($request)
+    public function __construct($data)
     {
-        $this->request = $request;
+        $this->service = (new MatterService());
+        $this->data = $this->service->resolve($data);
     }
 
     /**
@@ -36,7 +39,44 @@ class CreateMatter implements ShouldQueue
      */
     public function handle()
     {
-        $this->matter = Matter::create($this->request);
+        try {
+            \DB::transaction(function () {
+
+                $this->matter = Matter::create($this->data->get('matter'));
+
+                if ($this->data->has('claims')) {
+
+                    $this->matter->claims()->saveMany(
+                        $this->data->get('claims')
+                    );
+                }
+
+                if ($this->data->has('parties')) {
+
+                    $this->matter->parties()->sync(
+                        $this->data->get('parties')
+                    );
+                }
+
+                if ($this->data->has('marketing')) {
+
+                    $this->matter->marketers()->sync(
+                        $this->data->get('marketing')
+                    );
+                }
+
+                if ($this->data->has('procedures')) {
+
+                    $this->matter->procedures()->saveMany(
+                        $this->data->get('procedures')
+                    );
+                }
+            });
+        } catch (Throwable $ex) {
+
+            dd($ex);
+            return false;
+        }
     }
 
     public function getInserted(): Matter
