@@ -40,7 +40,7 @@
                                 <!--begin::Actions-->
                                 <div class="d-flex mb-4">
                                     @if ($matter->reported_date)
-                                        
+                                        {{$matter->reported_date}}
                                     @endif
                                     <a href="{{route('matter.change-status')}}"
                                         class="btn btn-sm btn-bg-light btn-active-color-primary me-3">{{ _('app.change-statue') }}</a>
