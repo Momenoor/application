@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Throwable;
 
 class CreateMatter implements ShouldQueue
@@ -72,6 +73,7 @@ class CreateMatter implements ShouldQueue
                     );
                 }
             });
+            session()->flash('last_inserted_matter',$this->matter);
         } catch (Throwable $ex) {
 
             dd($ex);

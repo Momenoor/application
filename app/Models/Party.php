@@ -25,4 +25,5 @@ class Party extends Model
     {
         return $this->where('black_list', false);
     }
+
 }

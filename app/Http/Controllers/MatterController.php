@@ -6,7 +6,7 @@ use App\DataTables\MatterDataTable;
 use App\Http\Requests\CreateMatterRequest;
 use App\Http\Requests\UpdateMatterRequest;
 use App\Models\Matter;
-
+use App\Services\MatterService;
 
 class MatterController extends Controller
 {
@@ -30,17 +30,6 @@ class MatterController extends Controller
         return view('pages.matters.form.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CreateMatterRequest $request)
-    {
-
-        return redirect()->route('matter.show', $matter->getInserted());
-    }
 
     /**
      * Display the specified resource.
@@ -50,7 +39,8 @@ class MatterController extends Controller
      */
     public function show(Matter $matter)
     {
-        return view('pages.matters.show', compact('matter'));
+        $parties = MatterService::partiesResolve($matter);
+        return view('pages.matters.show', compact('matter','parties'));
     }
 
     /**
@@ -60,18 +50,6 @@ class MatterController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(matter $matter)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\matter  $matter
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateMatterRequest $request, matter $matter)
     {
         //
     }

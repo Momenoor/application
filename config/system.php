@@ -30,14 +30,17 @@ return [
             'plaintiff' => [
                 'showAddPartyButton' => true,
                 'text' => 'plaintiff',
+                'color'=> 'primary',
             ],
             'defendant' => [
                 'showAddPartyButton' => true,
                 'text' => 'defendant',
+                'color'=> 'danger',
             ],
             'implicat-litigant' => [
                 'showAddPartyButton' => true,
                 'text' => 'implicat litigant',
+                'color' => 'warning',
             ],
             /* 'expert' => [
                 'showAddPartyButton' => false,
@@ -46,18 +49,22 @@ return [
             'assistant' => [
                 'showAddPartyButton' => false,
                 'text' => 'assistant',
+                'color' => 'info',
             ],
             'committee' => [
                 'showAddPartyButton' => false,
                 'text' => 'committee',
+                'color', 'info'
             ],
             'marketer' => [
                 'showAddPartyButton' => false,
                 'text' => 'marketing',
+                'color' => 'dark',
             ],
-            'third-party' => [
+            'external_marketer' => [
                 'showAddPartyButton' => false,
                 'text' => 'third-party',
+                'color' => 'dark',
             ],
         ],
     ],

@@ -13,4 +13,11 @@ class MatterParty extends Pivot
         'parent_id',
         'type',
     ];
+
+
+    public function subParties(){
+
+        return $this->belongsTo(Party::class,'parent_id');
+    }
+
 }

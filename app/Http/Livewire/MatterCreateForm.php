@@ -197,9 +197,10 @@ class MatterCreateForm extends Component
             'parties' => $this->parties,
             'marketing' => $this->otherParties
         ];
+
         /* dd($data); */
         $this->dispatchNow(new CreateMatter($data));
 
-        return redirect(route('matter.index'))->with('toast_success',__('app.matter-successfully-added'));
+        return redirect(route('matter.show',session('last_inserted_matter')))->with('toast_success',__('app.matter-successfully-added'));
     }
 }

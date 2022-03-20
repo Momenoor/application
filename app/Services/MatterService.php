@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Claim;
+use App\Models\Matter;
 use App\Models\Party;
 use App\Models\Procedure;
 use Illuminate\Support\Collection;
@@ -90,5 +91,23 @@ class MatterService
             ]),
         ];
         return collect($matter);
+    }
+
+    public static function partiesResolve(Matter $matter)
+    {
+        $newPrties = [];
+        $parties = $matter->parties;
+        foreach ($parties as $party) {
+
+            $party->color = config('system.parties.type.' . $party->pivot->type . '.color');
+            $newPrties[$party->id] = $party->toArray();
+            if ($party->pivot->parent_id != 0) {
+
+                $newPrties[$party->pivot->parent_id]['subparty'][$party->id] = $party;
+                unset($newPrties[$party->id]);
+            }
+        }
+
+        return $newPrties;
     }
 }

@@ -123,7 +123,15 @@ class MatterDataTable extends DataTable
      */
     public function query(Matter $model)
     {
-        return $model->withSum('claims', 'amount')->newQuery();
+        return $model->with([
+            'court',
+            'expert',
+            'assistants',
+            'plaintiffs',
+            'defendants',
+            'type',
+            'claims',
+        ])->withSum('claims', 'amount')->newQuery();
     }
 
     /**

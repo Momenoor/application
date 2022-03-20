@@ -3,14 +3,11 @@
 namespace App\Models;
 
 use App\Services\NumberFormatterService;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 
 class Matter extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'year',
         'number',
@@ -36,15 +33,7 @@ class Matter extends Model
         'submitted_date',
     ];
 
-    protected $with = [
-        'court',
-        'expert',
-        'assistants',
-        'plaintiffs',
-        'defendants',
-        'type',
-        'claims',
-    ];
+
 
     public const INDIVIDUAL = 'individual';
     public const COMMITTEE = 'committee';
@@ -106,6 +95,12 @@ class Matter extends Model
             ->wherePivot('type', '=', 'assistant');
     }
 
+    public function experts()
+    {
+        return $this->belongsToMany(Expert::class, 'matter_expert')
+        ->withPivot('type');
+    }
+
     public function marketers()
     {
         return $this->belongsToMany(User::class, 'matter_marketing');
@@ -137,7 +132,7 @@ class Matter extends Model
 
     public function parties()
     {
-        return $this->belongsToMany(Party::class);
+        return $this->belongsToMany(Party::class)->withPivot(['type','parent_id']);
     }
 
     public function procedures()

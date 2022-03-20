@@ -32,6 +32,7 @@ License: For each use you must have a valid license purchased only from above li
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
     @livewireStyles
+    @stack('style')
 </head>
 <!--end::Head-->
 <!--begin::Body-->

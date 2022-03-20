@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourtController;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\MatterController;
 use App\Http\Controllers\PartyController;
@@ -28,4 +29,5 @@ Route::middleware('auth')->group(function () {
     Route::post('expert/get-data/', [ExpertController::class, 'getExpertsDataFromUrl'])->name('expert.parse-data');
     Route::resource('expert', ExpertController::class);
     Route::resource('party', PartyController::class);
+    Route::resource('court', CourtController::class);
 });
