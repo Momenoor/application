@@ -25,7 +25,7 @@
                                         class="text-muted">{{ __('app.for-year') }}:</span>
                                     {{ $matter->year }}.</a>
                                 <span
-                                    class="fs-6 badge badge-light-{{ config('system.matter.status.' . $matter->status . '.color') }} me-auto">{{ __($matter->status) }}</span>
+                                    class="fs-6 badge badge-light-{{ config('system.matter.status.' . $matter->status . '.color') }} me-auto">{{ __('app.' . $matter->status) }}</span>
                             </div>
                             <!--end::Status-->
                             <!--begin::Description-->
@@ -36,14 +36,14 @@
                         <!--end::Details-->
                         <!--begin::Actions-->
                         <div class="d-flex mb-4">
-                            @if (! $matter->isReported())
+                            @if (!$matter->isReported())
                                 <a href="{{ route('matter.change-status', 'reported') }}"
-                                    class="btn btn-sm btn-bg-light btn-active-color-primary me-3">{{ _('app.mark-as-reported') }}</a>
+                                    class="btn btn-sm btn-bg-light btn-active-color-primary me-3">{{ __('app.mark-as-reported') }}</a>
                             @elseif($matter->isReported() && !$matter->isSubmitted())
                                 <a href="{{ route('matter.change-status', 'submitted') }}"
-                                    class="btn btn-sm btn-bg-light btn-active-color-primary me-3">{{ _('app.mark-as-submitted') }}</a>
+                                    class="btn btn-sm btn-bg-light btn-active-color-primary me-3">{{ __('app.mark-as-submitted') }}</a>
                             @endif
-                            <a href="#" class="btn btn-sm btn-success me-3">{{ _('app.collect-claim') }}</a>
+                            <a href="#" class="btn btn-sm btn-success me-3">{{ __('app.collect-claim') }}</a>
                             <!--begin::Menu-->
                             <div class="me-0">
                                 <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
@@ -110,13 +110,11 @@
                                                     <label
                                                         class="form-check form-switch form-check-custom form-check-solid">
                                                         <!--begin::Input-->
-                                                        <input class="form-check-input w-30px h-20px"
-                                                            type="checkbox" value="1" checked="checked"
-                                                            name="notifications" />
+                                                        <input class="form-check-input w-30px h-20px" type="checkbox"
+                                                            value="1" checked="checked" name="notifications" />
                                                         <!--end::Input-->
                                                         <!--end::Label-->
-                                                        <span
-                                                            class="form-check-label text-muted fs-6">Recuring</span>
+                                                        <span class="form-check-label text-muted fs-6">Recuring</span>
                                                         <!--end::Label-->
                                                     </label>
                                                     <!--end::Switch-->
@@ -145,8 +143,7 @@
                         <!--begin::Stats-->
                         <div class="d-flex flex-wrap">
                             <!--begin::Stat-->
-                            <div
-                                class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                 <!--begin::Number-->
                                 <div class="d-flex align-items-center">
                                     <div class="fs-4 fw-bolder">
@@ -160,19 +157,21 @@
                             </div>
                             <!--end::Stat-->
                             <!--begin::Stat-->
-                            <div
-                                class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                <!--begin::Number-->
-                                <div class="d-flex align-items-center">
-                                    <div class="fs-4 fw-bolder">
-                                        {{ $matter->next_session_date->format('d, M Y') }}</div>
+                            @if ($matter->next_session_date)
+                                <div
+                                    class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                    <!--begin::Number-->
+                                    <div class="d-flex align-items-center">
+                                        <div class="fs-4 fw-bolder">
+                                            {{ $matter->next_session_date->format('d, M Y') ?: null }}</div>
+                                    </div>
+                                    <!--end::Number-->
+                                    <!--begin::Label-->
+                                    <div class="fw-bold fs-6 text-gray-400">{{ __('next-session-date') }}
+                                    </div>
+                                    <!--end::Label-->
                                 </div>
-                                <!--end::Number-->
-                                <!--begin::Label-->
-                                <div class="fw-bold fs-6 text-gray-400">{{ __('next-session-date') }}
-                                </div>
-                                <!--end::Label-->
-                            </div>
+                            @endif
                             <!--end::Stat-->
                             @if ($matter->isReported())
                                 <div
@@ -205,8 +204,7 @@
                                 </div>
                             @endif
                             <!--begin::Stat-->
-                            <div
-                                class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                 <!--begin::Number-->
                                 <div class="d-flex align-items-center">
                                     <div class="fs-4 fw-bolder" data-kt-countup="true"

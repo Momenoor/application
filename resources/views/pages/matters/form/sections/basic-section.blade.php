@@ -1,14 +1,14 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title align-items-start flex-column">
-            <span class="card-label fw-bolder fs-3 mb-1">{{ __('Create New Matter') }}</span>
+            <span class="card-label fw-bolder fs-3 mb-1">{{ __('app.create-new-matter') }}</span>
         </h3>
         <div class="separator separator my-10"></div>
     </div>
     <div class="card-body">
         <div class="row gx-10 mb-5 w-900px">
             <div class="col-lg-3">
-                <h4 class="fw-bolder d-flex align-items-center text-dark">{{ __('app.basic_data') }}
+                <h4 class="fw-bolder d-flex align-items-center text-dark">{{ __('app.basic-data') }}
                     <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
                         title="Billing is issued based on your selected account type"></i>
                 </h4>
@@ -20,7 +20,7 @@
                 <div class="col-lg-4">
                     <div class="fv-row mb-5">
                         <label
-                            class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.matter.receive-date') }}</label>
+                            class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.receive-date') }}</label>
                         <input type="text" name="received_date" data-control="flatpickr"
                             wire:model="matter.received_date"
                             class="@error('matter.received_date') is-invalid @enderror form-control form-control-solid"
@@ -36,7 +36,7 @@
                     <div class="col-lg-4">
                         <div class="fv-row -ml-1mb-5">
                             <label
-                                class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.matter.year') }}</label>
+                                class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.year') }}</label>
                             <input type="text" name="year" wire:model="matter.year"
                                 class="@error('matter.year') is-invalid @enderror form-control form-control-solid" placeholder="Matter Year">
                                 @error('matter.year')
@@ -49,7 +49,7 @@
                     <div class="col-lg-8">
                         <div class="fv-row mb-5">
                             <label
-                                class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.matter.number') }}</label>
+                                class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.number') }}</label>
                             <input type="text" name="number" wire:model="matter.number"
                                 class="@error('matter.number') is-invalid @enderror form-control form-control-solid" placeholder="Matter Number">
                                 @error('matter.number')
@@ -68,7 +68,7 @@
                 <!--begin::Row-->
                 <div class="row">
                     <label
-                        class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.matter.commissioning') }}</label>
+                        class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.commissioning') }}</label>
                     <!--begin::Col-->
                     <div class="col-lg-6">
                         <!--begin::Option-->
@@ -104,7 +104,7 @@
                     <!--begin::Col-->
                     <div class="col-lg-6">
                         <!--begin::Option-->
-                        <input type="radio" class="btn-check matter-commissioning @error('matter.commissioning') is-invalid @enderror " name="commissioning"
+                        <input type="radio" class="btn-check matter-commissioning @error('app.commissioning') is-invalid @enderror " name="commissioning"
                             value="committee" wire:model="matter.commissioning" id="kt_commissioning_committee" />
                         <label
                             class="btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center"
@@ -199,7 +199,7 @@
                     </div>
                     <div class="col-lg-4 mt-10">
                         <label
-                            class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.matter.next-session-date') }}</label>
+                            class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.next-session-date') }}</label>
                         <input type="text" wire:model="matter.next_session_date" name="next_session_date"
                             data-control="flatpickr" class="@error('matter.next_session_date') is-invalid @enderror form-control form-control-solid"
                             placeholder="Matter Next Session">

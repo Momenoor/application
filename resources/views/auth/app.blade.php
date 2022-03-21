@@ -14,8 +14,7 @@ License: For each use you must have a valid license purchased only from above li
 <!--begin::Head-->
 
 <head>
-    <title>Metronic - the world's #1 selling Bootstrap Admin Theme Ecosystem for HTML, Vue, React, Angular &amp; Laravel
-        by Keenthemes</title>
+    <title>JPA Emirates - By MIE.Systems</title>
     <meta charset="utf-8" />
     <meta name="description"
         content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
@@ -62,7 +61,7 @@ License: For each use you must have a valid license purchased only from above li
                         </a>
                         <!--end::Logo-->
                         <!--begin::Title-->
-                        <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #00A0B0;">Welcome to {{config('app.name')}}</h1>
+                        <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #00A0B0;">{{__('app.welcome-to')}} {{config('app.name')}}</h1>
                         <!--end::Title-->
                         <!--begin::Description-->
                         <p class="fw-bold fs-2" style="color: #00346D;">Discover Amazing Features

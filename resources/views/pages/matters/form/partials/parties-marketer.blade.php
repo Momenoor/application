@@ -1,7 +1,6 @@
 <div class="col-lg-4">
     <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack mt-12 mb-5">
-        <span class="form-check-label ms-0 fw-bolder fs-6 text-gray-700">Marketing
-            Commission?</span>
+        <span class="form-check-label ms-0 fw-bolder fs-6 text-gray-700">{{__('app.marketing-commission')}}?</span>
         <input class="form-check-input" name="has_marketing_commission" value="1" wire:model="hasMarketingCommission"
             type="checkbox">
     </label>

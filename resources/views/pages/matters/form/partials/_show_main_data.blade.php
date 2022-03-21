@@ -5,7 +5,7 @@
             <h3 class="fw-bolder m-0">{{ __('app.matter-data') }}</h3>
         </div>
         <a href="{{ route('matter.edit', $matter) }}"
-            class="btn btn-primary align-self-center">{{ 'app.edit' }}</a>
+            class="btn btn-primary align-self-center">{{ __('app.edit') }}</a>
 
         <!--end::Card title-->
     </div>

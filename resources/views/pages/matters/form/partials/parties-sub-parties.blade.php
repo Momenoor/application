@@ -3,11 +3,11 @@
         @if (count($party['subParties']) > 0)
             <a href="javascript:;" wire:click="removeAllSubPartyItem({{ $index }})"
                 class="btn btn-sm btn-link mt-3 text-danger">
-                {{ __('app.party.remove_party') }}
+                {{ __('app.remove-party') }}
             </a>
         @else
             <a href="javascript:;" wire:click="addSubParty({{ $index }})" class="btn btn-sm btn-link mt-3">
-                {{ __('app.party.add_party') }}
+                {{ __('app.add-party') }}
             </a>
         @endif
         <div class="mt-5 mb-10 ms-10">

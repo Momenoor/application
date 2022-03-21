@@ -32,7 +32,7 @@
         @enderror
     </div>
     <div class="col-2">
-        <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.percent') }}</label>
+        <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.rate') }}</label>
         <div class="input-group input-group-solid">
             <input type="text" name="matter[external_commission_percent]"
                 wire:model="matter.external_commission_percent"
