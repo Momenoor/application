@@ -35,7 +35,7 @@
 
             });
 
-            searchInput.on('keyup mouseout', function() {
+            searchInput.on('keyup', function() {
 
                 var searchText = $(this).val();
                 table.search(searchText).draw();

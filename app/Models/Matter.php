@@ -42,10 +42,10 @@ class Matter extends Model
     {
         parent::boot();
 
-        /* static::creating(function ($query) {
+        static::creating(function ($query) {
             $query->user_id = auth()->id();
             $query->status = 'current';
-        }); */
+        });
     }
 
     public function getAssistantAttribute()

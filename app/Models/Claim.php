@@ -24,11 +24,11 @@ class Claim extends Model
     {
         parent::boot();
 
-        /* static::creating(function ($query) {
+        static::creating(function ($query) {
             $query->date = now();
             $query->status = 'unpaid';
             $query->user_id = auth()->id();
-        }); */
+        });
     }
 
     public function matter()

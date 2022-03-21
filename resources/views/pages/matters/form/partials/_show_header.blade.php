@@ -20,9 +20,9 @@
                             <!--begin::Status-->
                             <div class="d-flex align-items-center mb-1">
                                 <a href="#" class="text-gray-800 text-hover-primary fs-2 fw-bolder me-3"><span
-                                        class="text-muted">{{ __('matter-no') }}:</span>
+                                        class="text-muted">{{ __('app.matter-no') }}:</span>
                                     {{ $matter->number }}, <span
-                                        class="text-muted">{{ __('for-year') }}:</span>
+                                        class="text-muted">{{ __('app.for-year') }}:</span>
                                     {{ $matter->year }}.</a>
                                 <span
                                     class="fs-6 badge badge-light-{{ config('system.matter.status.' . $matter->status . '.color') }} me-auto">{{ __($matter->status) }}</span>
