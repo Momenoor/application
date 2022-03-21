@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\MatterPartyContract;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class MatterParty extends Pivot

@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Contracts\MatterPartyContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Expert extends Model
+class Expert extends Model implements MatterPartyContract
 {
     use HasFactory;
 
@@ -37,5 +38,34 @@ class Expert extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function type()
+    {
+        return $this->type;
+    }
+    public function category()
+    {
+        return $this->category;
+    }
+    public function field()
+    {
+        return $this->field;
+    }
+    public function pivotType()
+    {
+        if ($this->pivot) {
+            return $this->pivot->type;
+        }
+        return 'expert';
+    }
+    public function symbol(){
+        return 'E';
+    }
+    public function color(){
+        if ($this->pivot) {
+            return 'light';
+        }
+        return 'dark';
     }
 }
