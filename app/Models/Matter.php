@@ -42,10 +42,10 @@ class Matter extends Model
     {
         parent::boot();
 
-        static::creating(function ($query) {
+        /* static::creating(function ($query) {
             $query->user_id = auth()->id();
             $query->status = 'current';
-        });
+        }); */
     }
 
     public function getAssistantAttribute()
@@ -162,10 +162,10 @@ class Matter extends Model
     }
 
     public function isReported(){
-        return (! is_null($this->reported_date) || $this->reported_date->year < 1 ) ;
+        return (! is_null($this->reported_date) ) ;
     }
 
     public function isSubmitted(){
-        return $this->isReported() && (! is_null($this->submitted_date) || $this->submitted_date->year < 1);
+        return $this->isReported() && (! is_null($this->submitted_date));
     }
 }
