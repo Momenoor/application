@@ -160,4 +160,12 @@ class Matter extends Model
     {
         return $this->hasMany(Note::class);
     }
+
+    public function isReported(){
+        return (! is_null($this->reported_date) || $this->reported_date->year < 1 ) ;
+    }
+
+    public function isSubmitted(){
+        return $this->isReported() && (! is_null($this->submitted_date) || $this->submitted_date->year < 1);
+    }
 }

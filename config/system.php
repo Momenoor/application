@@ -82,7 +82,7 @@ return [
     'matter' => [
         'status' => [
             'current' => [
-                'color' => 'danger',
+                'color' => 'primary',
                 'text' => 'current',
             ],
             'reported' => [
@@ -90,7 +90,7 @@ return [
                 'text' => 'reported',
             ],
             'submitted' => [
-                'color' => 'primary',
+                'color' => 'success',
                 'text' => 'submitted',
             ],
         ],

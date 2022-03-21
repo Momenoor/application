@@ -39,11 +39,13 @@
                                 <!--end::Details-->
                                 <!--begin::Actions-->
                                 <div class="d-flex mb-4">
-                                    @if ($matter->reported_date)
-                                        {{$matter->reported_date}}
+                                    @if (! $matter->isReported())
+                                        <a href="{{ route('matter.change-status', 'reported') }}"
+                                            class="btn btn-sm btn-bg-light btn-active-color-primary me-3">{{ _('app.mark-as-reported') }}</a>
+                                    @elseif($matter->isReported() && !$matter->isSubmitted())
+                                        <a href="{{ route('matter.change-status', 'submitted') }}"
+                                            class="btn btn-sm btn-bg-light btn-active-color-primary me-3">{{ _('app.mark-as-submitted') }}</a>
                                     @endif
-                                    <a href="{{route('matter.change-status')}}"
-                                        class="btn btn-sm btn-bg-light btn-active-color-primary me-3">{{ _('app.change-statue') }}</a>
                                     <a href="#" class="btn btn-sm btn-success me-3">{{ _('app.collect-claim') }}</a>
                                     <!--begin::Menu-->
                                     <div class="me-0">
@@ -175,6 +177,36 @@
                                         <!--end::Label-->
                                     </div>
                                     <!--end::Stat-->
+                                    @if ($matter->isReported())
+                                        <div
+                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                            <!--begin::Number-->
+                                            <div class="d-flex align-items-center">
+                                                <div class="fs-4 fw-bolder">
+                                                    {{ $matter->reported_date->format('d, M Y') }}
+                                                </div>
+                                            </div>
+                                            <!--end::Number-->
+                                            <!--begin::Label-->
+                                            <div class="fw-bold fs-6 text-gray-400">{{ __('app.reported-date') }}</div>
+                                            <!--end::Label-->
+                                        </div>
+                                    @endif
+                                    @if ($matter->isSubmitted())
+                                        <div
+                                            class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                            <!--begin::Number-->
+                                            <div class="d-flex align-items-center">
+                                                <div class="fs-4 fw-bolder">
+                                                    {{ $matter->submitted_date->format('d, M Y') }}
+                                                </div>
+                                            </div>
+                                            <!--end::Number-->
+                                            <!--begin::Label-->
+                                            <div class="fw-bold fs-6 text-gray-400">{{ __('app.submitted-date') }}</div>
+                                            <!--end::Label-->
+                                        </div>
+                                    @endif
                                     <!--begin::Stat-->
                                     <div
                                         class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
@@ -292,7 +324,7 @@
                                         </div>
                                     </div>
                                     <div class="fw-bold">
-                                        <div class="fs-5 fw-bolder text-gray-900">
+                                        <div class="fs-6 fw-bolder text-gray-900">
                                             {{ $matter->expert->name }}
                                         </div>
                                     </div>
@@ -315,7 +347,7 @@
                                             </div>
                                         </div>
                                         <div class="fw-bold">
-                                            <div class="fs-5 fw-bolder text-gray-900">
+                                            <div class="fs-6 fw-bolder text-gray-900">
                                                 {{ $expert->name }}
                                             </div>
                                         </div>
@@ -342,7 +374,7 @@
                                             </div>
                                         </div>
                                         <div class="fw-bold">
-                                            <div class="fs-5 fw-bolder text-gray-900">
+                                            <div class="fs-6 fw-bolder text-gray-900">
                                                 {{ $marketer->name }}
                                             </div>
                                         </div>
@@ -372,7 +404,7 @@
                                             </div>
                                             <div class="fw-bold">
                                                 <div
-                                                    class="fs-5 fw-bolder text-gray-900 text-hover-{{ $party['color'] }}">
+                                                    class="fs-6 fw-bolder text-gray-900 text-hover-{{ $party['color'] }}">
                                                     {{ $party['name'] }}
                                                 </div>
                                             </div>
