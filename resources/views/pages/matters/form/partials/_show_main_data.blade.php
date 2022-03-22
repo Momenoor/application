@@ -43,7 +43,7 @@
                     <!--end::Label-->
                     <!--begin::Col-->
                     <div class="col-8">
-                        <span class="fw-bolder fs-6 text-gray-800">{{ $matter->commissioning }}</span>
+                        <span class="fw-bolder fs-6 text-gray-800">{{ __('app.'.$matter->commissioning) }}</span>
                     </div>
                 </div>
                 <div class="row mb-10">

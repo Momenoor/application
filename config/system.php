@@ -3,6 +3,22 @@
 return [
 
 
+    'lang' => [
+        'ar' => [
+            'dir' => 'rtl',
+            'direction' => 'rtl',
+            'style' => 'direction:rtl;',
+            'css' => '.rtl',
+        ],
+        'en' => [
+            'dir' => 'ltr',
+            'direction' => 'ltr',
+            'style' => 'direction:ltr;',
+            'css' => '',
+        ]
+    ],
+
+
     /*
     |--------------------------------------------------------------------------
     | Main Settings
@@ -30,12 +46,12 @@ return [
             'plaintiff' => [
                 'showAddPartyButton' => true,
                 'text' => 'plaintiff',
-                'color'=> 'primary',
+                'color' => 'primary',
             ],
             'defendant' => [
                 'showAddPartyButton' => true,
                 'text' => 'defendant',
-                'color'=> 'danger',
+                'color' => 'danger',
             ],
             'implicat-litigant' => [
                 'showAddPartyButton' => true,

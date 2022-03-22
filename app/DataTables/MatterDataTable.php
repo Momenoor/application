@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Matter;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
@@ -84,9 +85,8 @@ class MatterDataTable extends DataTable
 
 
             ->editColumn('next_session_date', function ($model) {
-
                 return '<div class="position-relative">
-                                ' .  $model->next_session_date->format('Y-m-d') . '
+                                ' .  (($model->next_session_date instanceof Carbon)? $model->next_session_date->format('Y-m-d'):__('app.not-set')) . '
                             <div class="fs-7 text-muted fw-bolder">' .  $model->received_date->format('Y-m-d') . '</div>
                         </div>';
             })

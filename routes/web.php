@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('home');
-    Route::get('/matter/change-status/{status}',[MatterController::class,'changeStatus'])->name('matter.change-status');
+    Route::get('/matter/{matter}/change-status/{status}',[MatterController::class,'changeStatus'])->name('matter.change-status');
     Route::resource('matter', MatterController::class)->except(['store','update']);
     Route::get('/expert/get-data/', [ExpertController::class, 'getExpertsDataFromUrlForm'])->name('expert.get-data');
     Route::post('expert/get-data/', [ExpertController::class, 'getExpertsDataFromUrl'])->name('expert.parse-data');

@@ -37,10 +37,10 @@
                         <!--begin::Actions-->
                         <div class="d-flex mb-4">
                             @if (!$matter->isReported())
-                                <a href="{{ route('matter.change-status', 'reported') }}"
+                                <a href="{{ route('matter.change-status', ['matter'=> $matter, 'status'=> 'reported']) }}"
                                     class="btn btn-sm btn-bg-light btn-active-color-primary me-3">{{ __('app.mark-as-reported') }}</a>
                             @elseif($matter->isReported() && !$matter->isSubmitted())
-                                <a href="{{ route('matter.change-status', 'submitted') }}"
+                                <a href="{{ route('matter.change-status', ['matter'=> $matter, 'status'=> 'submitted']) }}"
                                     class="btn btn-sm btn-bg-light btn-active-color-primary me-3">{{ __('app.mark-as-submitted') }}</a>
                             @endif
                             <a href="#" class="btn btn-sm btn-success me-3">{{ __('app.collect-claim') }}</a>
@@ -152,7 +152,7 @@
                                 </div>
                                 <!--end::Number-->
                                 <!--begin::Label-->
-                                <div class="fw-bold fs-6 text-gray-400">{{ __('received-date') }}</div>
+                                <div class="fw-bold fs-6 text-gray-400">{{ __('app.received-date') }}</div>
                                 <!--end::Label-->
                             </div>
                             <!--end::Stat-->
@@ -167,11 +167,12 @@
                                     </div>
                                     <!--end::Number-->
                                     <!--begin::Label-->
-                                    <div class="fw-bold fs-6 text-gray-400">{{ __('next-session-date') }}
+                                    <div class="fw-bold fs-6 text-gray-400">{{ __('app.next-session-date') }}
                                     </div>
                                     <!--end::Label-->
                                 </div>
                             @endif
+
                             <!--end::Stat-->
                             @if ($matter->isReported())
                                 <div
