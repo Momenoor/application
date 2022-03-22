@@ -94,8 +94,8 @@ class MatterDataTable extends DataTable
 
             ->filterColumn('next_session_date', function ($query, $keyword) {
 
-                return $query->where('next_session_date',  'like', '%' . $keyword . '%')
-                    ->orWhere('received_date', 'like', '%' . $keyword . '%');
+                return $query->where('matters.next_session_date',  'like', '%' . $keyword . '%')
+                    ->orWhere('matters.received_date', 'like', '%' . $keyword . '%');
             })
 
 
