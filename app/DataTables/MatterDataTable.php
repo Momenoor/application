@@ -92,11 +92,11 @@ class MatterDataTable extends DataTable
             })
 
 
-            ->filterColumn('next_session_date', function ($query, $keyword) {
+            /* ->filterColumn('next_session_date', function ($query, $keyword) {
 
                 return $query->where('matters.next_session_date',  'like', '%' . $keyword . '%')
                     ->orWhere('matters.received_date', 'like', '%' . $keyword . '%');
-            })
+            }) */
 
 
             ->filterColumn('claims_sum_amount', function ($query, $keyword) {
