@@ -29,9 +29,9 @@ class MatterDataTable extends DataTable
 
 
             ->filterColumn('number', function ($query, $keyword) {
-                $query->orWhere('matters.number', 'like', '%' . $keyword . '%')
-                    ->orWhere('matters.year', 'like', '%' . $keyword . '%')
-                    ->orWhere('matters.status', 'like', '%' . $keyword . '%');
+                $query->orWhere('matters.number', 'like', "'%' . $keyword . '%'")
+                    ->orWhere('matters.year', 'like', "'%' . $keyword . '%'")
+                    ->orWhere('matters.status', 'like', "'%' . $keyword . '%'");
             })
 
 
@@ -47,8 +47,8 @@ class MatterDataTable extends DataTable
 
             ->filterColumn('expert_id', function ($query, $keyword) {
 
-                $query->whereRelation('expert', 'experts.name', 'like', '%' . $keyword . '%')
-                    ->orWhereRelation('assistants', 'experts.name', 'like', '%' . $keyword . '%');
+                $query->whereRelation('expert', 'experts.name', 'like', "'%' . $keyword . '%'")
+                    ->orWhereRelation('assistants', 'experts.name', 'like', "'%' . $keyword . '%'");
             })
 
 
@@ -63,9 +63,9 @@ class MatterDataTable extends DataTable
 
             ->filterColumn('court_id', function ($query, $keyword) {
 
-                $query->whereRelation('court', 'courts.name', 'like', '%' . $keyword . '%')
-                    ->orWhereRelation('type', 'types.name', 'like', '%' . $keyword . '%')
-                    ->orWhere('matters.commissioning', 'like', '%' . $keyword . '%');
+                $query->whereRelation('court', 'courts.name', 'like', "'%' . $keyword . '%'")
+                    ->orWhereRelation('type', 'types.name', 'like', "'%' . $keyword . '%'")
+                    ->orWhere('matters.commissioning', 'like', "'%' . $keyword . '%'");
             })
 
 
@@ -80,7 +80,7 @@ class MatterDataTable extends DataTable
 
             ->filterColumn('plaintiff_name', function ($query, $keyword) {
 
-                $query->whereRelation('parties', 'parties.name', 'like', '%' . $keyword . '%');
+                $query->whereRelation('parties', 'parties.name', 'like', "'%' . $keyword . '%'");
             })
 
 
@@ -94,14 +94,14 @@ class MatterDataTable extends DataTable
 
             ->filterColumn('next_session_date', function ($query, $keyword) {
 
-                return $query->where('matters.next_session_date',  'like', '%' . $keyword . '%')
-                    ->orWhere('matters.received_date', 'like', '%' . $keyword . '%');
+                return $query->where('matters.next_session_date',  'like', "'%' . $keyword . '%'")
+                    ->orWhere('matters.received_date', 'like', "'%' . $keyword . '%'");
             })
 
 
             ->filterColumn('claims_sum_amount', function ($query, $keyword) {
                 $query->whereHas('claims', function ($query) use ($keyword) {
-                    $query->having(\DB::raw('SUM(claims.amount)'), 'like', '%' . $keyword . '%')->groupBy('claims.matter_id');
+                    $query->having(\DB::raw('SUM(claims.amount)'), 'like', "'%' . $keyword . '%'")->groupBy('claims.matter_id');
                 });
             })
 
