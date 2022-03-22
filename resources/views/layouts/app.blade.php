@@ -72,7 +72,7 @@ License: For each use you must have a valid license purchased only from above li
                             </div>
                             <!--end::Aside  toggle-->
                             <!--begin::Logo-->
-                            <a href="../../demo14/dist/index.html">
+                            <a href="{{route('home')}}">
                                 <img alt="Logo" src="{{ asset('assets/media/logos/logo-white-trans-bg.png') }}"
                                     class="h-30px h-lg-40px" />
                             </a>

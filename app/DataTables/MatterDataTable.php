@@ -176,29 +176,29 @@ class MatterDataTable extends DataTable
 
             Column::make('number')
                 ->searchable(true)
-                ->title('No/Year'),
+                ->title(__('app.no').'/'.__('app.year')),
 
             Column::make('expert_id')
                 ->searchable(true)
-                ->title('Expert/Assistant'),
+                ->title(__('app.expert').'/'.__('app.assistant')),
 
             Column::make('court_id')
                 ->searchable(true)
-                ->title('Court/Type'),
+                ->title(__('app.court').'/'.__('app.type')),
 
             Column::make('plaintiff_name')
                 ->searchable(true)
                 ->orderable(false)
-                ->title('Parties'),
+                ->title(__('app.parties')),
 
             Column::make('next_session_date')
                 ->searchable(true)
                 ->orderable(true)
-                ->title('Session/Receive'),
+                ->title(__('app.session').'/'.__('app.receive')),
 
             Column::make('claims_sum_amount')
                 ->searchable(true)
-                ->title('Claims')
+                ->title(__('app.claims'))
                 ->class('text-end pe-3'),
 
         ];
