@@ -7,5 +7,5 @@
         </svg>
     </span>
     <!--end::Svg Icon-->
-    <input type="search" data-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('app.search-matter')}}" />
+    <input type="search" class="form-control form-control-solid w-250px ps-14" placeholder="{{__('app.search-matter')}}" />
 </div>

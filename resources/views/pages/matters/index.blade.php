@@ -35,7 +35,7 @@
 
             });
 
-            searchInput.on('keyup', function() {
+            searchInput.on('search', function() {
 
                 var searchText = $(this).val();
                 table.search(searchText).draw();
