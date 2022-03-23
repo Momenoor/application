@@ -51,21 +51,21 @@ class Matter extends Model
     public function getAssistantAttribute()
     {
         $assistant = $this->assistants->first();
-        $this->unsetRelation('assistants');
+        //$this->unsetRelation('assistants');
         return $assistant;
     }
 
     public function getPlaintiffAttribute()
     {
         $plaintiff = $this->plaintiffs->first();
-        $this->unsetRelation('plaintiffs');
+        //$this->unsetRelation('plaintiffs');
         return $plaintiff;
     }
 
     public function getDefendantAttribute()
     {
         $defendant = $this->defendants->first();
-        $this->unsetRelation('defendants');
+        //$this->unsetRelation('defendants');
         return $defendant;
     }
 

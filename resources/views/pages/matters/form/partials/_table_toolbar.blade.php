@@ -6,5 +6,6 @@
     </div>
     <!--begin::Card title-->
     <!--begin::Card toolbar-->
-  @include('pages.matters.form.partials._toolbar_input')
+    @include('pages.matters.form.partials._toolbar_input')
+    <div class="datatable-buttons d-none"></div>
 </div>

@@ -54,6 +54,38 @@
                 table.column(1).search(status).draw();
             });
 
+            var buttons = new $.fn.dataTable.Buttons(table, {
+                buttons: [{
+                        extend: 'copyHtml5',
+                        title: 'e'
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        title: 'e'
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        title: 'e'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'e'
+                    }
+                ]
+            })
+
+            buttons.container().appendTo($('.datatable-buttons'));
+            var exportValue = null;
+            $('#modal-datatable-export .form-select').on('change', function() {
+                exportValue = $(this).select2('val');
+            });
+            $('#modal-datatable-export .btn-export').on('click', function() {
+                target = $('.dt-buttons .buttons-' + exportValue);
+                target.click();
+            })
+
+
+
         });
     </script>
 @endpush

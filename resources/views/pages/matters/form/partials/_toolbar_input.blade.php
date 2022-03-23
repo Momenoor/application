@@ -4,8 +4,7 @@
         <!--begin::Wrapper-->
         <div id="globalFilter" class="me-3">
             <!--begin::Menu-->
-            <a href="#" class="btn btn-light-primary" data-kt-menu-trigger="click"
-                data-kt-menu-placement="bottom-end">
+            <a href="#" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                 <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
                 <span class="svg-icon svg-icon-5 svg-icon-gray-500 me-1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -104,7 +103,7 @@
         <!--end::Filter-->
         <!--begin::Export-->
         <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal"
-            data-bs-target="#kt_modal_export_users">
+            data-bs-target="#export-datatable">
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
             <span class="svg-icon svg-icon-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -118,7 +117,7 @@
                         fill="#C4C4C4" />
                 </svg>
             </span>
-            <!--end::Svg Icon-->{{__('app.export')}}
+            <!--end::Svg Icon-->{{ __('app.export') }}
         </button>
         <!--end::Export-->
         <!--begin::Add user-->
@@ -137,7 +136,7 @@
     </div>
     <!--end::Toolbar-->
     <!--begin::Modal - Adjust Balance-->
-    <div class="modal fade" id="kt_modal_export_users" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="export-datatable" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <!--begin::Modal content-->
@@ -145,10 +144,10 @@
                 <!--begin::Modal header-->
                 <div class="modal-header">
                     <!--begin::Modal title-->
-                    <h2 class="fw-bolder">Export Users</h2>
+                    <h2 class="fw-bolder">{{ __('app.export-data') }}</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
-                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal" aria-label="Close">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                         <span class="svg-icon svg-icon-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -167,29 +166,12 @@
                 <!--begin::Modal body-->
                 <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                     <!--begin::Form-->
-                    <form id="kt_modal_export_users_form" class="form" action="#">
+                    <div id="modal-datatable-export">
                         <!--begin::Input group-->
                         <div class="fv-row mb-10">
                             <!--begin::Label-->
-                            <label class="fs-6 fw-bold form-label mb-2">Select Roles:</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <select name="role" data-control="select2" data-placeholder="Select a role"
-                                data-hide-search="true" class="form-select form-select-solid fw-bolder">
-                                <option></option>
-                                <option value="Administrator">Administrator</option>
-                                <option value="Analyst">Analyst</option>
-                                <option value="Developer">Developer</option>
-                                <option value="Support">Support</option>
-                                <option value="Trial">Trial</option>
-                            </select>
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-10">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold form-label mb-2">Select Export Format:</label>
+                            <label
+                                class="required fs-6 fw-bold form-label mb-2">{{ __('app.select-export-format') }}:</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <select name="format" data-control="select2" data-placeholder="Select a format"
@@ -198,23 +180,21 @@
                                 <option value="excel">Excel</option>
                                 <option value="pdf">PDF</option>
                                 <option value="cvs">CVS</option>
-                                <option value="zip">ZIP</option>
+                                <option value="print">Print</option>
                             </select>
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
                         <!--begin::Actions-->
                         <div class="text-center">
-                            <button type="reset" class="btn btn-light me-3"
-                                data-kt-users-modal-action="cancel">Discard</button>
-                            <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-                                <span class="indicator-label">Submit</span>
-                                <span class="indicator-progress">Please wait...
-                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                            <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal"
+                                aria-label="Close">{{ __('app.cancel') }}</button>
+                            <button type="button" class="btn btn-primary btn-export" data-bs-dismiss="modal">
+                                <span class="indicator-label">{{ __('app.export') }}</span>
                             </button>
                         </div>
                         <!--end::Actions-->
-                    </form>
+                    </div>
                     <!--end::Form-->
                 </div>
                 <!--end::Modal body-->
