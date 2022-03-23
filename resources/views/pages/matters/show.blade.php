@@ -9,18 +9,29 @@
                 <div class="mb-5">
                     @include('pages.matters.form.partials._show_parties')
                 </div>
-                <div class="mb-5">
-                    @include(
-                        'pages.matters.form.partials._show_attachment'
-                    )
-                </div>
+                @if ($matter->attachments()->exists())
+                    <div class="mb-5">
+                        @include(
+                            'pages.matters.form.partials._show_attachment'
+                        )
+                    </div>
+                @endif
                 <!--end::Card-->
             </div>
             <div class="col-lg-5 col-md-12">
                 <!--begin::Card-->
                 <div class="mb-5">
-                @include('pages.matters.form.partials._show_activities')
+                    @include(
+                        'pages.matters.form.partials._show_activities'
+                    )
                 </div>
+                @if ($matter->notes()->exists())
+                    <div class="mb-5">
+                        @include(
+                            'pages.matters.form.partials._show_notes'
+                        )
+                    </div>
+                @endif
                 <!--end::Card-->
             </div>
         </div>

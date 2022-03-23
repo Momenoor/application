@@ -98,7 +98,7 @@ class Matter extends Model
     public function experts()
     {
         return $this->belongsToMany(Expert::class, 'matter_expert')
-        ->withPivot('type');
+            ->withPivot('type');
     }
 
     public function marketers()
@@ -132,7 +132,7 @@ class Matter extends Model
 
     public function parties()
     {
-        return $this->belongsToMany(Party::class)->withPivot(['type','parent_id']);
+        return $this->belongsToMany(Party::class)->withPivot(['type', 'parent_id']);
     }
 
     public function procedures()
@@ -161,11 +161,18 @@ class Matter extends Model
         return $this->hasMany(Note::class);
     }
 
-    public function isReported(){
-        return (! is_null($this->reported_date) ) ;
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
     }
 
-    public function isSubmitted(){
-        return $this->isReported() && (! is_null($this->submitted_date));
+    public function isReported()
+    {
+        return (!is_null($this->reported_date));
+    }
+
+    public function isSubmitted()
+    {
+        return $this->isReported() && (!is_null($this->submitted_date));
     }
 }

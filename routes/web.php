@@ -4,6 +4,7 @@ use App\Http\Controllers\CourtController;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\MatterController;
 use App\Http\Controllers\PartyController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -30,4 +31,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('expert', ExpertController::class);
     Route::resource('party', PartyController::class);
     Route::resource('court', CourtController::class);
+    Route::resource('user', UserController::class);
 });

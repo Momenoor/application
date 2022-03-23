@@ -147,6 +147,7 @@ class CreateDatabaseTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained();
             $table->timestamps();
         });
+
     }
 
     /**

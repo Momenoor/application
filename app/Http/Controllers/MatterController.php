@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\MatterDataTable;
-use App\Http\Requests\CreateMatterRequest;
-use App\Http\Requests\UpdateMatterRequest;
 use App\Models\Matter;
-use App\Models\Procedure;
 use App\Services\MatterService;
 
 class MatterController extends Controller

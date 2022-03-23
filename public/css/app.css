@@ -71,4 +71,19 @@
 body{
     font-family: "neotech", "ACNGESS" !important;
 }
+.timeline-label-100 {
+    width: 99px;
+    flex-shrink: 0;
+    position: relative;
+    color: #3F4254;
+}
+.timeline-label-100:before {
+    right: 100px;
+    content: "";
+    position: absolute;
+    width: 3px;
+    top: 0;
+    bottom: 0;
+    background-color: #EFF2F5;
+}
 

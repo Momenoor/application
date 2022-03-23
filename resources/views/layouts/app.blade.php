@@ -25,12 +25,17 @@ License: For each use you must have a valid license purchased only from above li
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
     <!--begin::Page Vendor Stylesheets(used by this page)-->
-    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle'.config('system.lang.' . app()->getLocale() . '.css').'.css') }}" rel="stylesheet"
-        type="text/css" />
+    <link
+        href="{{ asset('assets/plugins/custom/datatables/datatables.bundle' . config('system.lang.' . app()->getLocale() . '.css') . '.css') }}"
+        rel="stylesheet" type="text/css" />
     <!--end::Page Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
-    <link href="{{ asset('assets/plugins/global/plugins.bundle'.config('system.lang.' . app()->getLocale() . '.css').'.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/style.bundle'.config('system.lang.' . app()->getLocale() . '.css').'.css') }}" rel="stylesheet" type="text/css" />
+    <link
+        href="{{ asset('assets/plugins/global/plugins.bundle' . config('system.lang.' . app()->getLocale() . '.css') . '.css') }}"
+        rel="stylesheet" type="text/css" />
+    <link
+        href="{{ asset('assets/css/style.bundle' . config('system.lang.' . app()->getLocale() . '.css') . '.css') }}"
+        rel="stylesheet" type="text/css" />
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
     @livewireStyles
@@ -72,7 +77,7 @@ License: For each use you must have a valid license purchased only from above li
                             </div>
                             <!--end::Aside  toggle-->
                             <!--begin::Logo-->
-                            <a href="{{route('home')}}">
+                            <a href="{{ route('home') }}">
                                 <img alt="Logo" src="{{ asset('assets/media/logos/logo-white-trans-bg.png') }}"
                                     class="h-30px h-lg-40px" />
                             </a>
@@ -488,23 +493,7 @@ License: For each use you must have a valid license purchased only from above li
                                 <h1 class="d-flex text-dark fw-bolder my-1 fs-3">Offer a Deal</h1>
                                 <!--end::Title-->
                                 <!--begin::Breadcrumb-->
-                                <ul class="breadcrumb breadcrumb-dot fw-bold text-gray-600 fs-7 my-1">
-                                    <!--begin::Item-->
-                                    <li class="breadcrumb-item text-gray-600">
-                                        <a href="../../demo14/dist/index.html"
-                                            class="text-gray-600 text-hover-primary">Home</a>
-                                    </li>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
-                                    <li class="breadcrumb-item text-gray-600">Utilities</li>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
-                                    <li class="breadcrumb-item text-gray-600">Wizards</li>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
-                                    <li class="breadcrumb-item text-gray-500">Offer a Deal</li>
-                                    <!--end::Item-->
-                                </ul>
+                                {{-- {{ Breadcrumbs::render(Route::currentRouteName(),$matter) }} --}}
                                 <!--end::Breadcrumb-->
                             </div>
                             <!--end::Page title-->

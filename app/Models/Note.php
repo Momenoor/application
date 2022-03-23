@@ -15,4 +15,12 @@ class Note extends Model
         'text',
         'datetime'
     ];
+
+    protected $dates = [
+        'datetime'
+    ];
+
+    public function user(){
+       return  $this->belongsTo(User::class);
+    }
 }
