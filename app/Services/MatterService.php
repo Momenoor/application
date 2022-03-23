@@ -14,7 +14,6 @@ class MatterService
 
     public static function resolve($data): Collection
     {
-        dd($data);
         $matter = [];
 
         if (key_exists('matter', $data)) {
