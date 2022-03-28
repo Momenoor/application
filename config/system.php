@@ -138,8 +138,8 @@ return [
             'color' => 'warning',
             'display' => false,
             'values' => [
-                'no' => [
-                    'name' => 'No',
+                'none' => [
+                    'name' => 'None',
                     'color' => 'danger'
                 ],
                 'monthly' => [

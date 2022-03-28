@@ -20,6 +20,10 @@ class Claim extends Model
         'user_id',
     ];
 
+    protected $dates = [
+        'date'
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -49,5 +53,20 @@ class Claim extends Model
     public function setAmountAttribute($value)
     {
         $this->attributes['amount'] = app(NumberFormatterService::class)->getUnformattedNumber($value);
+    }
+
+    public function getClaimAmountAttribute()
+    {
+        return app(NumberFormatterService::class)->getFormattedNumber($this->amount);
+    }
+
+    public function getTypeColorAttribute()
+    {
+        return config('system.claims.' . $this->type . '.color');
+    }
+
+    public function getRecurringColorAttribute()
+    {
+        return config('system.claims.recurring.values.' . $this->recurring . '.color');
     }
 }

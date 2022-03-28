@@ -7,7 +7,10 @@
             <div class="col-lg-7 col-md-12">
                 <!--begin::Card-->
                 <div class="mb-5">
-                    @include('pages.matters.form.partials._show_parties')
+                    @include('pages.matters.form.partials._show_claims')
+                </div>
+                <div class="mb-5">
+                @include('pages.matters.form.partials._show_parties')
                 </div>
                 @if ($matter->attachments()->exists())
                     <div class="mb-5">

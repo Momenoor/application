@@ -43,7 +43,7 @@
                                 <a href="{{ route('matter.change-status', ['matter'=> $matter, 'status'=> 'submitted']) }}"
                                     class="btn btn-sm btn-bg-light btn-active-color-primary me-3">{{ __('app.mark-as-submitted') }}</a>
                             @endif
-                            <a href="#" class="btn btn-sm btn-success me-3">{{ __('app.collect-claim') }}</a>
+                            {{-- <a href="#" class="btn btn-sm btn-success me-3">{{ __('app.collect-claim') }}</a> --}}
                             <!--begin::Menu-->
                             <div class="me-0">
                                 <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
