@@ -2,7 +2,7 @@
     <!--begin::Header-->
     <div class="card-header align-items-center border-0 mt-4">
         <h3 class="card-title align-items-start flex-column">
-            <span class="fw-bolder mb-2 text-dark">{{ 'app.activities' }}</span>
+            <span class="fw-bolder mb-2 text-dark">{{ __('app.activities') }}</span>
             <span
                 class="text-muted fw-bold fs-7">{{ __(trans_choice('app.activity', $matter->procedures->count())) }}</span>
         </h3>
@@ -13,7 +13,7 @@
         <!--begin::Timeline-->
         <div class="timeline-label-100 timeline-label">
             <!--begin::Item-->
-            @foreach ($matter->procedures as $procedure)
+            @foreach ($matter->procedures->sortBy('datetime') as $procedure)
                 <div class="timeline-item">
                     <!--begin::Label-->
                     <div class="timeline-label-100 fw-bolder text-gray-800 fs-6">
