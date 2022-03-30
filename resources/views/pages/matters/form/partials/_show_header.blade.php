@@ -172,7 +172,6 @@
                                     <!--end::Label-->
                                 </div>
                             @endif
-
                             <!--end::Stat-->
                             @if ($matter->isReported())
                                 <div

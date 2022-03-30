@@ -1,25 +1,26 @@
-<div class="card" id="kt_chat_messenger">
-    <!--begin::Card header-->
-    <div class="card-header" id="kt_chat_messenger_header">
-        <!--begin::Title-->
-        <div class="card-title">
-            <!--begin::User-->
-            <div class="d-flex justify-content-center flex-column me-3">
-                <a href="#"
-                    class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1">{{ __('app.notes') }}</a>
+<div>
+    <div class="card" id="kt_chat_messenger">
+        <!--begin::Card header-->
+        <div class="card-header" id="kt_chat_messenger_header">
+            <!--begin::Title-->
+            <div class="card-title">
+                <!--begin::User-->
+                <div class="d-flex justify-content-center flex-column me-3">
+                    <a href="#"
+                        class="fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1">{{ __('app.notes') }}</a>
+                </div>
+                <!--end::User-->
             </div>
-            <!--end::User-->
+            <!--end::Title-->
         </div>
-        <!--end::Title-->
-    </div>
-    <!--end::Card header-->
-    <!--begin::Card body-->
-    <div class="card-body col-12 scroll-y h-300px">
+        <!--end::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body col-12 scroll-y h-300px">
 
-        <!--begin::Messages-->
-        <!--begin::Message(in)-->
-        @foreach ($notes as $note)
-            <div class="mb-10">
+            <!--begin::Messages-->
+            <!--begin::Message(in)-->
+            @foreach ($notes as $note)
+                <div class="mb-10">
                     <!--begin::User-->
                     <div class="d-flex mb-2">
                         <!--begin::Avatar-->
@@ -63,38 +64,64 @@
                             </button>
                         </div>
                     </div>
-                <!--end::Wrapper-->
-            </div>
-        @endforeach
-        <!--end::Message(in)-->
-    </div>
-    <!--end::Card body-->
-    <!--begin::Card footer-->
-    <div class="card-footer pt-4" id="kt_chat_messenger_footer">
-        <!--begin::Input-->
-        <textarea wire:model="note" class="form-control form-control-flush mb-3" rows="1" data-kt-element="input"
-            placeholder="{{ __('app.type-note') }}"></textarea>
-        <!--end::Input-->
-        <!--begin:Toolbar-->
-        <div class="d-flex flex-stack">
-            <!--begin::Actions-->
-            <div class="d-flex align-items-center me-2">
-                <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip"
-                    title="Coming soon">
-                    <i class="bi bi-paperclip fs-3"></i>
-                </button>
-                <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button" data-bs-toggle="tooltip"
-                    title="Coming soon">
-                    <i class="bi bi-upload fs-3"></i>
-                </button>
-            </div>
-            <!--end::Actions-->
-            <!--begin::Send-->
-            <button class="btn btn-primary" type="button" wire:click="send">{{ __('app.send') }}</button>
-            <!--end::Send-->
+                    <!--end::Wrapper-->
+                </div>
+            @endforeach
+            <!--end::Message(in)-->
         </div>
-        <!--end::Toolbar-->
+        <!--end::Card body-->
+        <!--begin::Card footer-->
+        <div class="card-footer pt-4" id="kt_chat_messenger_footer">
+            <!--begin::Input-->
+            <textarea wire:model="note" class="form-control form-control-flush mb-3" rows="1" data-kt-element="input"
+                placeholder="{{ __('app.type-note') }}"></textarea>
+            <!--end::Input-->
+            <!--begin:Toolbar-->
+            <div class="d-flex flex-stack">
+                <!--begin::Actions-->
+                <div class="d-flex align-items-center me-2">
+                    <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button"
+                        data-bs-toggle="tooltip" title="Coming soon">
+                        <i class="bi bi-paperclip fs-3"></i>
+                    </button>
+                    <button class="btn btn-sm btn-icon btn-active-light-primary me-1" type="button"
+                        data-bs-toggle="tooltip" title="Coming soon">
+                        <i class="bi bi-upload fs-3"></i>
+                    </button>
+                </div>
+                <!--end::Actions-->
+                <!--begin::Send-->
+                <button class="btn btn-primary" type="button" wire:click="send">{{ __('app.send') }}</button>
+                <!--end::Send-->
+            </div>
+            <!--end::Toolbar-->
+        </div>
+        <!--end::Card footer-->
     </div>
-    <!--end::Card footer-->
 </div>
 <!--end::Messenger-->
+@push('scripts')
+    <script>
+        window.addEventListener('swal:modal', event => {
+            swal.fire({
+                title: event.detail.title,
+                text: event.detail.text,
+                icon: event.detail.type,
+            });
+        });
+        window.addEventListener('swal:confirm', event => {
+            swal.fire({
+                    title: event.detail.title,
+                    text: event.detail.text,
+                    icon: event.detail.type,
+                    showCancelButton: true,
+                    reverseButtons: true
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.livewire.emit('delete', event.detail.id);
+                    }
+                });
+        });
+    </script>
+@endpush

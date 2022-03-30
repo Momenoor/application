@@ -14,6 +14,8 @@ class CreateMatterNote extends Component
 
     public $note;
 
+    protected $listeners = ['delete'];
+
     public function mount(Matter $matter)
     {
         $this->matter = $matter;
@@ -34,7 +36,18 @@ class CreateMatterNote extends Component
         $this->note = '';
     }
 
-    public function confirmDelete($id){
-        dd($id);
+    public function confirmDelete($id)
+    {
+        $this->dispatchBrowserEvent('swal:confirm', [
+            'type' => 'warning',
+            'title' => __('app.are_you_sure_to_delete') . '?',
+            'text' => '',
+            'id' => $id,
+        ]);
+    }
+
+    public function delete($id)
+    {
+        Note::where('id', $id)->delete();
     }
 }

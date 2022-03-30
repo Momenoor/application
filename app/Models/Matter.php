@@ -74,6 +74,11 @@ class Matter extends Model
         return app(NumberFormatterService::class)->getFormattedNumber($this->claims->sum('amount'));
     }
 
+    public function getCashSumAmountAttribute()
+    {
+        return app(NumberFormatterService::class)->getFormattedNumber($this->cashes->sum('amount'));
+    }
+
     public function court()
     {
         return $this->belongsTo(Court::class);
@@ -168,11 +173,11 @@ class Matter extends Model
 
     public function isReported()
     {
-        return (!is_null($this->reported_date));
+        return (!is_null($this->reported_date)) OR $this->status == 'reported';
     }
 
     public function isSubmitted()
     {
-        return $this->isReported() && (!is_null($this->submitted_date));
+        return $this->isReported() && (!is_null($this->submitted_date) OR $this->status == 'submitted');
     }
 }

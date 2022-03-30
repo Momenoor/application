@@ -34,22 +34,32 @@
                         <tr>
                             <td>
                                 <a href="#"
-                                    class="text-gray-800 fw-bolder text-hover-primary mb-1 fs-6">{{ $claim->date->format('Y-m-d') }}</a>
+                                    class="text-gray-800 fw-bolder text-hover-primary mb-1">{{ $claim->date->format('Y-m-d') }}</a>
                             </td>
                             <td class="text-center">
                                 <span
-                                    class="badge badge-light-{{$claim->type_color}} fs-7 fw-bolder">{{ __('app.' . $claim->type) }}</span>
+                                    class="badge badge-light-{{$claim->type_color}} fw-bolder">{{ __('app.' . $claim->type) }}</span>
                             </td>
                             <td class="text-center">
                                 <span
-                                    class="badge badge-light-{{$claim->recurring_color}} fs-7 fw-bolder">{{ __('app.' . $claim->recurring) }}</span>
+                                    class="badge badge-light-{{$claim->recurring_color}} fw-bolder">{{ __('app.' . $claim->recurring) }}</span>
                             </td>
                             <td class="text-center">
-                                <span class="text-gray-800 fw-bolder d-block fs-6">{{ $claim->claim_amount }} AED</span>
+                                <span class="text-gray-800 fw-bolder d-block">{{ $claim->claim_amount }} AED</span>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
+                <tfoot>
+                    <tr class="border-top">
+                        <th class="text-center text-gray-800 fw-bolder fs-6" colspan="3">{{__('app.total')}}</th>
+                        <th class="text-center text-gray-800 fw-bolder d-block fs-6">{{$matter->claims_sum_amount}} AED</th>
+                    </tr>
+                    <tr class="border-top">
+                        <th class="text-center text-gray-800 fw-bolder fs-6" colspan="3">{{__('app.collected')}}</th>
+                        <th class="text-center text-success fw-bolder d-block fs-6">{{$matter->cash_sum_amount}} AED</th>
+                    </tr>
+                </tfoot>
                 <!--end::Table body-->
             </table>
         </div>

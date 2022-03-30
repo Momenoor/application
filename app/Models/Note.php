@@ -20,6 +20,10 @@ class Note extends Model
         'datetime'
     ];
 
+    protected $with = [
+        'user'
+    ];
+
     protected static function boot()
     {
         parent::boot();
