@@ -4,48 +4,56 @@
     font-weight: 400;
     font-style: normal;
 }
+
 @font-face {
     font-family: naskh;
     src: url(/fonts/DroidNaskh-bold.ttf?6501a22599329555c3ca585c5a91f90f) format('truetype');
     font-weight: 700;
     font-style: normal;
 }
+
 @font-face {
     font-family: kufi;
     src: url(/fonts/DroidKufi-Regular.ttf?475efa448565fa19578b62bea2360ed3) format('truetype');
     font-weight: 400;
     font-style: normal;
 }
+
 @font-face {
     font-family: kufi;
     src: url(/fonts/DroidKufi-bold.ttf?9595f807a0a420e93302b0a14d45407c) format('truetype');
     font-weight: 700;
     font-style: normal;
 }
+
 @font-face {
     font-family: ACNGESS;
     src: url(/fonts/GESSTwoRegular.otf?580b91a80c190c806c047cfae41f6a97) format('otf'), url(/fonts/GESSTwoRegular.woff?17b1e48847d380db8480711723ad9bc0) format('woff'), url(/fonts/GESSTwoRegular.ttf?7728cb849e7659d9ba9d25f02e7f261a) format('truetype'), url(/fonts/GESSTwoRegular.svg?6442ba2fd8d0cdf03915134d6a504821#GESSTwoMedium-Medium) format('svg');
     font-weight: 300;
     font-style: normal;
 }
+
 @font-face {
     font-family: ACNGESS;
     src: url(/fonts/GE_SS_Two_Light.woff?c6f869dcf7c70d76fb0430f7198cae95) format("woff"), url(/fonts/GE_SS_Two_Light.ttf?97b99b55a9ac6f98a52b4b10a337e502) format("truetype"), url(/fonts/GE_SS_Two_Light.svg?8decad28ada8943ae1b729299af5902d#GESSTwoLight-Light) format("svg");
     font-weight: 400;
     font-style: light;
 }
+
 @font-face {
     font-family: ACNGESS;
     src: url(/fonts/GE_SS_Two_Medium.woff?978db6c03acf1f41ff77dbf121322f07) format("woff"), url(/fonts/GE_SS_Two_Medium.ttf?1dda1b34737ac9c27ecb6bed21aff7a5) format("truetype");
     font-weight: 700;
     font-style: bold;
 }
+
 @font-face {
     font-family: ACNGESS;
     src: url(/fonts/GE_SS_Two_Bold.woff?56c72a739073eb855d1314866478e399) format("woff"), url(/fonts/GE_SS_Two_Bold.ttf?9a985a4468c267e95bc6e7791a56c58d) format("truetype"), url(/fonts/GE_SS_Two_Bold.svg?a6f94e0285c3b2c321568d05b360f928#GESSTwoBold-Bold) format("svg");
     font-weight: 900;
     font-style: bolder;
 }
+
 @font-face {
     font-family: neotech;
     src: url(/fonts/neotech-light.eot?7e32d7232b46f6702ff0ebe4e9c3272b);
@@ -53,6 +61,7 @@
     font-weight: 300;
     font-style: normal;
 }
+
 @font-face {
     font-family: neotech;
     src: url(/fonts/neotech-medium.eot?d0bb85685f514c956aefc8319f5dfe01);
@@ -60,6 +69,7 @@
     font-weight: 700;
     font-style: normal;
 }
+
 @font-face {
     font-family: neotech;
     src: url(/fonts/neotech-regular.eot?f24d4a6bb627842e4e2a21cd1264ccd1);
@@ -68,15 +78,17 @@
     font-style: normal;
 }
 
-body{
+body {
     font-family: "neotech", "ACNGESS" !important;
 }
+
 .timeline-label-100 {
     width: 99px;
     flex-shrink: 0;
     position: relative;
     color: #3F4254;
 }
+
 .timeline-label-100:before {
     right: 100px;
     content: "";
@@ -87,3 +99,12 @@ body{
     background-color: #EFF2F5;
 }
 
+.activities.timeline-label:before {
+    right: 100px;
+    content: "";
+    position: absolute;
+    width: 3px;
+    top: 0;
+    bottom: 0;
+    background-color: #EFF2F5;
+}

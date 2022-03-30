@@ -10,7 +10,7 @@
                     @include('pages.matters.form.partials._show_claims')
                 </div>
                 <div class="mb-5">
-                @include('pages.matters.form.partials._show_parties')
+                    @include('pages.matters.form.partials._show_parties')
                 </div>
                 @if ($matter->attachments()->exists())
                     <div class="mb-5">
@@ -30,8 +30,8 @@
                 </div>
                 @if ($matter->notes()->exists())
                     <div class="mb-5">
-                        @include(
-                            'pages.matters.form.partials._show_notes'
+                        @livewire(
+                        'create-matter-note',['matter'=>$matter]
                         )
                     </div>
                 @endif

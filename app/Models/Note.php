@@ -20,7 +20,18 @@ class Note extends Model
         'datetime'
     ];
 
-    public function user(){
-       return  $this->belongsTo(User::class);
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($query) {
+            $query->user_id = auth()->id();
+            $query->datetime = now();
+        });
+    }
+
+    public function user()
+    {
+        return  $this->belongsTo(User::class);
     }
 }

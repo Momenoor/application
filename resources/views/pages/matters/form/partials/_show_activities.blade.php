@@ -11,7 +11,7 @@
     <!--begin::Body-->
     <div class="card-body pt-5">
         <!--begin::Timeline-->
-        <div class="timeline-label-100 timeline-label">
+        <div class="activities timeline-label">
             <!--begin::Item-->
             @foreach ($matter->procedures->sortBy('datetime') as $procedure)
                 <div class="timeline-item">
@@ -26,7 +26,7 @@
                     </div>
                     <!--end::Badge-->
                     <!--begin::Text-->
-                    <div class="fw-mormal timeline-content text-muted ps-3">{{ __('app.' . optional($procedure->description)) }}
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{ __('app.' . $procedure->description??$procedure->type) }}
                     </div>
                     <!--end::Text-->
                 </div>
