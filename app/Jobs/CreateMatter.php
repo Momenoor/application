@@ -4,13 +4,11 @@ namespace App\Jobs;
 
 use App\Models\Matter;
 use App\Services\MatterService;
-use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Throwable;
 
 class CreateMatter implements ShouldQueue
@@ -40,6 +38,7 @@ class CreateMatter implements ShouldQueue
      */
     public function handle()
     {
+
         try {
             \DB::transaction(function () {
 
@@ -59,6 +58,13 @@ class CreateMatter implements ShouldQueue
                     );
                 }
 
+                if ($this->data->has('experts')) {
+
+                    $this->matter->experts()->sync(
+                        $this->data->get('experts')
+                    );
+                }
+
                 if ($this->data->has('marketing')) {
 
                     $this->matter->marketers()->sync(
@@ -73,7 +79,7 @@ class CreateMatter implements ShouldQueue
                     );
                 }
             });
-            session()->flash('last_inserted_matter',$this->matter);
+            session()->flash('last_inserted_matter', $this->matter);
         } catch (Throwable $ex) {
 
             dd($ex);

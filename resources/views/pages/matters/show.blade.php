@@ -28,13 +28,11 @@
                         'pages.matters.form.partials._show_activities'
                     )
                 </div>
-                @if ($matter->notes()->exists())
-                    <div class="mb-5">
-                        @livewire(
-                        'create-matter-note',['matter'=>$matter]
-                        )
-                    </div>
-                @endif
+                <div class="mb-5">
+                    @livewire(
+                    'create-matter-note',['matter'=>$matter]
+                    )
+                </div>
                 <!--end::Card-->
             </div>
         </div>
@@ -123,4 +121,29 @@
         }
 
     </style>
+@endpush
+@push('scripts')
+    <script>
+        window.addEventListener('swal:modal', event => {
+            swal.fire({
+                title: event.detail.title,
+                text: event.detail.text,
+                icon: event.detail.type,
+            });
+        });
+        window.addEventListener('swal:confirm', event => {
+            swal.fire({
+                    title: event.detail.title,
+                    text: event.detail.text,
+                    icon: event.detail.type,
+                    showCancelButton: true,
+                    reverseButtons: true
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.livewire.emit(event.detail.callback, event.detail.id);
+                    }
+                });
+        });
+    </script>
 @endpush

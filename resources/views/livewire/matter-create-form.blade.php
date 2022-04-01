@@ -58,6 +58,10 @@
 
                         @this.set('matter.expert_id', $(this).select2("val"));
                     });
+                    $("select[name='committee']").on('change', function(e) {
+
+                        @this.set('matter.committee', $(this).select2("val"));
+                    });
                     $("select.party-type").on('change', function(e) {
 
                         @this.set('parties.' + $(this).data('row-index') + '.type', $(this).select2("val"));

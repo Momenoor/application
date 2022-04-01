@@ -100,28 +100,4 @@
     </div>
 </div>
 <!--end::Messenger-->
-@push('scripts')
-    <script>
-        window.addEventListener('swal:modal', event => {
-            swal.fire({
-                title: event.detail.title,
-                text: event.detail.text,
-                icon: event.detail.type,
-            });
-        });
-        window.addEventListener('swal:confirm', event => {
-            swal.fire({
-                    title: event.detail.title,
-                    text: event.detail.text,
-                    icon: event.detail.type,
-                    showCancelButton: true,
-                    reverseButtons: true
-                })
-                .then((result) => {
-                    if (result.isConfirmed) {
-                        window.livewire.emit('delete', event.detail.id);
-                    }
-                });
-        });
-    </script>
-@endpush
+

@@ -101,6 +101,7 @@ class MatterCreateForm extends Component
     public function mount()
     {
         $this->expertsList = Expert::whereIn('category', ['main', 'certified'])->get(['id', 'name'])->toArray();
+        $this->assistantsList = Expert::whereIn('category', ['main', 'certified', 'assistant'])->get(['id', 'name'])->toArray();
         $this->courtsList = Court::get(['id', 'name'])->toArray();
         $this->typesList = Type::get(['id', 'name'])->toArray();
         $this->advocatesList = Party::whereIn('type', ['office', 'advocate', 'advisor'])->get(['id', 'name'])->toArray();
@@ -190,17 +191,17 @@ class MatterCreateForm extends Component
 
     public function save()
     {
-        $validated = $this->validate();
+        $this->validate();
         $data = [
             'matter' => $this->matter,
             'claims' => $this->claims,
             'parties' => $this->parties,
-            'marketing' => $this->otherParties
+            'marketing' => $this->otherParties,
         ];
 
         /* dd($data); */
         $this->dispatchNow(new CreateMatter($data));
 
-        return redirect(route('matter.show',session('last_inserted_matter')))->with('toast_success',__('app.matter-successfully-added'));
+        return redirect(route('matter.show', session('last_inserted_matter')))->with('toast_success', __('app.matter-successfully-added'));
     }
 }

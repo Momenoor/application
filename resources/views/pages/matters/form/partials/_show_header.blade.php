@@ -36,13 +36,7 @@
                         <!--end::Details-->
                         <!--begin::Actions-->
                         <div class="d-flex mb-4">
-                            @if (!$matter->isReported())
-                                <a href="{{ route('matter.change-status', ['matter'=> $matter, 'status'=> 'reported']) }}"
-                                    class="btn btn-sm btn-bg-light btn-active-color-primary me-3">{{ __('app.mark-as-reported') }}</a>
-                            @elseif($matter->isReported() && !$matter->isSubmitted())
-                                <a href="{{ route('matter.change-status', ['matter'=> $matter, 'status'=> 'submitted']) }}"
-                                    class="btn btn-sm btn-bg-light btn-active-color-primary me-3">{{ __('app.mark-as-submitted') }}</a>
-                            @endif
+                            @livewire('matter-change-status', ['matter' => $matter])
                             {{-- <a href="#" class="btn btn-sm btn-success me-3">{{ __('app.collect-claim') }}</a> --}}
                             <!--begin::Menu-->
                             <div class="me-0">

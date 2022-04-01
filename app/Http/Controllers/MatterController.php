@@ -65,6 +65,7 @@ class MatterController extends Controller
 
     public function changeStatus(Matter $matter, $status)
     {
+
         $statuses = config('system.matter.status');
         if (!is_null($status)) {
             if (key_exists($status, $statuses)) {

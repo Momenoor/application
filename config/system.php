@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Expert;
+use App\Models\Party;
+
 return [
 
 
@@ -47,16 +50,22 @@ return [
                 'showAddPartyButton' => true,
                 'text' => 'plaintiff',
                 'color' => 'primary',
+                'model' => Party::class,
+                'type' => 'party',
             ],
             'defendant' => [
                 'showAddPartyButton' => true,
                 'text' => 'defendant',
                 'color' => 'danger',
+                'model' => Party::class,
+                'type' => 'party',
             ],
             'implicat-litigant' => [
                 'showAddPartyButton' => true,
                 'text' => 'implicat litigant',
                 'color' => 'warning',
+                'model' => Party::class,
+                'type' => 'party',
             ],
             /* 'expert' => [
                 'showAddPartyButton' => false,
@@ -66,21 +75,29 @@ return [
                 'showAddPartyButton' => false,
                 'text' => 'assistant',
                 'color' => 'info',
+                'model' => Expert::class,
+                'type' => 'assistant',
             ],
             'committee' => [
                 'showAddPartyButton' => false,
                 'text' => 'committee',
-                'color', 'info'
+                'color', 'info',
+                'model' => Expert::class,
+                'type' => 'committee',
             ],
             'marketer' => [
                 'showAddPartyButton' => false,
                 'text' => 'marketing',
                 'color' => 'dark',
+                'model' => Party::class,
+                'type' => 'marketer',
             ],
             'external_marketer' => [
                 'showAddPartyButton' => false,
                 'text' => 'third-party',
                 'color' => 'dark',
+                'model' => Party::class,
+                'type' => 'external_marketer',
             ],
         ],
     ],

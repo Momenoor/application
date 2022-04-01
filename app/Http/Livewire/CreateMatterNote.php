@@ -43,6 +43,7 @@ class CreateMatterNote extends Component
             'title' => __('app.are_you_sure_to_delete') . '?',
             'text' => '',
             'id' => $id,
+            'callback'=>'delete',
         ]);
     }
 
