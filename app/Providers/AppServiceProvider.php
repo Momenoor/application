@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\NumberFormatterService;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -67,6 +68,8 @@ class AppServiceProvider extends ServiceProvider
                 return;
             });
         }
+
+        Paginator::useBootstrap();
 
         Schema::defaultStringLength(191);
     }
