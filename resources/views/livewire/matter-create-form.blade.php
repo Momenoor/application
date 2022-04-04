@@ -40,6 +40,7 @@
 
                 function initSelection() {
 
+
                     $('[data-control="flatpickr"]').flatpickr({
                         altInput: !0,
                         altFormat: "d F, Y",

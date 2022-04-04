@@ -27,6 +27,8 @@ class MatterCreateForm extends Component
     public $hasExternalCommission;
     public $claims = [];
     public $claim;
+    public $isNew = true;
+
 
     // Indexes for clonable fields
     public $i = 1;
@@ -98,8 +100,20 @@ class MatterCreateForm extends Component
         'otherParties.marketer.id' => 'Marketer',
     ];
 
-    public function mount()
+    public function mount($id)
     {
+        if ($id) {
+            $matter = Matter::findOrFail($id);
+            if ($matter) {
+                $this->matter = $matter;
+                $this->claims = $matter->claims;
+                $this->parties = $matter->parties->each(function ($item) {
+                    $item->type = $item->pivot->type;
+                    $item->showAddSubPartyButton = $this->partyTypes[$item->name]['showAddPartyButton'];
+                    $item->subParties = [];
+                })->toArray();
+            }
+        }
         $this->expertsList = Expert::whereIn('category', ['main', 'certified'])->get(['id', 'name'])->toArray();
         $this->courtsList = Court::get(['id', 'name'])->toArray();
         $this->typesList = Type::get(['id', 'name'])->toArray();
@@ -201,6 +215,6 @@ class MatterCreateForm extends Component
         /* dd($data); */
         $this->dispatchNow(new CreateMatter($data));
 
-        return redirect(route('matter.show',session('last_inserted_matter')))->with('toast_success',__('app.matter-successfully-added'));
+        return redirect(route('matter.show', session('last_inserted_matter')))->with('toast_success', __('app.matter-successfully-added'));
     }
 }

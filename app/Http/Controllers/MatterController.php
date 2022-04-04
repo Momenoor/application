@@ -44,21 +44,22 @@ class MatterController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\matter  $matter
+     * @param  \App\Models\Matter  $matter
      * @return \Illuminate\Http\Response
      */
-    public function edit(matter $matter)
+    public function edit(Matter $matter)
     {
-        //
+        $id = $matter->id;
+        return view('pages.matters.form.update', compact('id'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\matter  $matter
+     * @param  \App\Models\Matter  $matter
      * @return \Illuminate\Http\Response
      */
-    public function destroy(matter $matter)
+    public function destroy(Matter $matter)
     {
         return redirect(route('matter.index'))->withToastSuccess('Matter Successfully Deleted');
     }

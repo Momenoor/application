@@ -1,7 +1,7 @@
 <div class="col-12">
     <div class="mb-10 row">
         <div class="col-5  mb-5 fv-plugins-bootstrap5-row-invalid">
-            <label class="required form-label">{{__('app.amount')}}</label>
+            <label class="required form-label">{{ __('app.amount') }}</label>
             <!--end::Label-->
             <!--begin::Input-->
             <div class="input-group input-group-solid">
@@ -19,7 +19,7 @@
             <!--begin::Description-->
         </div>
         <div class="col-4 mb-5">
-            <label class="required form-label">{{__('app.type')}}</label>
+            <label class="required form-label">{{ __('app.type') }}</label>
             <div>
                 <select id="claimType" class="form-select @error('claim.type') is-invalid @enderror form-select-solid"
                     wire:model="claim.type" data-hide-search="true" data-control="select2"
@@ -27,7 +27,7 @@
                     <option></option>
                     @foreach ($claimsTypes as $id => $type)
                         @if ($type['display'])
-                            <option value="{{ $id }}">{{ __('app.'.$id) }}</option>
+                            <option value="{{ $id }}">{{ __('app.' . $id) }}</option>
                         @endif
                     @endforeach
                 </select>
@@ -46,8 +46,8 @@
                     wire:model="claim.recurring" data-hide-search="true" data-control="select2"
                     data-placeholder="Select an option">
                     <option></option>
-                    @foreach ($claimsTypes['recurring']['values'] as $id => $recurring)
-                        <option value="{{ $id }}">{{ __('app.'.$id) }}</option>
+                    @foreach (data_get($claimsTypes, 'recurring.values') as $id => $recurring)
+                        <option value="{{ $id }}">{{ __('app.' . $id) }}</option>
                     @endforeach
                 </select>
             </div>
@@ -61,12 +61,14 @@
             <div>
                 <label
                     class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack mt-8 mb-5">
-                    <span class="form-check-label me-10 ms-0 fw-bolder fs-6 text-gray-700">{{__('app.taxable')}}?</span>
+                    <span
+                        class="form-check-label me-10 ms-0 fw-bolder fs-6 text-gray-700">{{ __('app.taxable') }}?</span>
                     <input class="form-check-input" wire:model="claim.taxable" type="checkbox">
                 </label>
             </div>
             <div>
-                <button type="button" wire:click="addClaim" class="btn btn-sm btn-primary">{{__('app.add-claim')}}</button>
+                <button type="button" wire:click="addClaim"
+                    class="btn btn-sm btn-primary">{{ __('app.add-claim') }}</button>
             </div>
         </div>
     </div>
@@ -79,9 +81,9 @@
             <thead>
                 <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                     <th class="min-w-70px">#</th>
-                    <th class="min-w-175px">{{__('app.amount')}}</th>
-                    <th class="min-w-100px">{{__('app.type')}}</th>
-                    <th class="min-w-100px">{{__('app.recurring')}}</th>
+                    <th class="min-w-175px">{{ __('app.amount') }}</th>
+                    <th class="min-w-100px">{{ __('app.type') }}</th>
+                    <th class="min-w-100px">{{ __('app.recurring') }}</th>
                 </tr>
             </thead>
             <!--end::Table head-->
@@ -114,12 +116,12 @@
                             {{ $claim['amount'] }}
                         </td>
                         <td>
-                            <div class="badge badge-{{ $claim['type']['color'] }}">
-                                {{ $claim['type']['name'] }}</div>
+                            <div class="badge badge-{{ data_get($claim, 'type.color') }}">
+                                {{ data_get($claim, 'type.name') }}</div>
                         </td>
                         <td>
-                            <div class="badge badge-light-{{ $claim['recurring']['color'] }}">
-                                {{ $claim['recurring']['name'] }}
+                            <div class="badge badge-light-{{ data_get($claim, 'recurring.color') }}">
+                                {{ data_get($claim, 'recurring.name') }}
                             </div>
                         </td>
                     </tr>
