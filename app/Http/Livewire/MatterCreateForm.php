@@ -10,6 +10,7 @@ use App\Models\Matter;
 use App\Models\Party;
 use App\Models\Type;
 use App\Models\User;
+use App\Services\Money;
 use App\Services\NumberFormatterService;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
@@ -181,17 +182,17 @@ class MatterCreateForm extends Component
             $vatRate = floatval(config('system.vat.rate'));
             $taxableData = [
                 'type' => $this->claimsTypes['vat'],
-                'amount' => NumberFormatterService::getFormattedNumber($validatedData['claim']['amount'] * $vatRate / 100),
-                'recurring' => $this->claimsTypes['recurring']['values'][$validatedData['claim']['recurring']]
+                'amount' => app(Money::class)->getFormattedNumber(data_get($validatedData, 'claim.amount') * $vatRate / 100),
+                'recurring' => $this->claimsTypes['recurring']['values'][data_get($validatedData, 'claim.recurring')]
             ];
             $this->claims[$this->n] = $taxableData;
             $this->n++;
         }
 
         $this->claims[$this->n] = [
-            'amount' => NumberFormatterService::getFormattedNumber($validatedData['claim']['amount']),
-            'type' => $this->claimsTypes[$validatedData['claim']['type']],
-            'recurring' => $this->claimsTypes['recurring']['values'][$validatedData['claim']['recurring']]
+            'amount' => app(Money::class)->getFormattedNumber(data_get($validatedData, 'claim.amount')),
+            'type' => $this->claimsTypes[data_get($validatedData, 'claim.type')],
+            'recurring' => $this->claimsTypes['recurring']['values'][data_get($validatedData, 'claim.recurring')]
         ];
 
         $this->n++;

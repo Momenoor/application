@@ -154,7 +154,7 @@ License: For each use you must have a valid license purchased only from above li
                                             <span
                                                 class="text-muted fs-8 fw-bold lh-1 mb-1">{{ Auth::user()->display_name }}</span>
                                             <span
-                                                class="text-white fs-8 fw-bolder lh-1">{{ Auth::user()->expert->field ?? '' }}</span>
+                                                class="text-white fs-8 fw-bolder lh-1">{{ optional(Auth::user()->expert)->field }}</span>
                                         </div>
                                         <!--end::Name-->
                                         <!--begin::Symbol-->
@@ -181,7 +181,7 @@ License: For each use you must have a valid license purchased only from above li
                                                     <div class="fw-bolder d-flex align-items-center fs-4">
                                                         {{ Auth::user()->display_name }}
                                                         <span
-                                                            class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">{{ Auth::user()->expert->category ?? '' }}</span>
+                                                            class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">{{ optional(Auth::user()->expert)->category }}</span>
                                                     </div>
                                                     <a href="#"
                                                         class="fw-bold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
@@ -406,53 +406,8 @@ License: For each use you must have a valid license purchased only from above li
                                 data-kt-scroll-wrappers="#kt_aside, #kt_aside_menu"
                                 data-kt-scroll-offset="{lg: '75px'}">
                                 <!--begin::Menu-->
-                                <div class="menu menu-column menu-rounded fw-bold fs-6" id="#kt_aside_menu"
-                                    data-kt-menu="true">
-                                    <div data-kt-menu-trigger="click"
-                                        class="menu-item menu-accordion {{ request()->is('matter/*') ? 'here show' : '' }}">
-                                        <span class="menu-link">
-                                            <span class="menu-icon">
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                                                <span class="svg-icon svg-icon-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none">
-                                                        <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                                        <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2"
-                                                            fill="black" />
-                                                        <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2"
-                                                            fill="black" />
-                                                        <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2"
-                                                            fill="black" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </span>
-                                            <span class="menu-title">Dashboards</span>
-                                            <span class="menu-arrow"></span>
-                                        </span>
-                                        <div
-                                            class="menu-sub menu-sub-accordion menu-active-bg {{ request()->is('matter/*') || request()->is('matter') ? 'here show' : '' }}">
-                                            <div class="menu-item">
-                                                <a class="menu-link {{ request()->is('matter') || request()->is('matter/index') ? 'active' : '' }}"
-                                                    href="{{ route('matter.index') }}">
-                                                    <span class="menu-bullet">
-                                                        <span class="bullet bullet-dot"></span>
-                                                    </span>
-                                                    <span class="menu-title">{{ __('Matters') }}</span>
-                                                </a>
-                                            </div>
-                                            <div class="menu-item">
-                                                <a class="menu-link {{ request()->is('matter/create') ? 'active' : '' }}"
-                                                    href="{{ route('matter.create') }}">
-                                                    <span class="menu-bullet">
-                                                        <span class="bullet bullet-dot"></span>
-                                                    </span>
-                                                    <span class="menu-title">{{ __('Create') }}</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @include('layouts.main_menu')
+                                <!--end::Menu-->
                                 <!--end::Menu-->
                             </div>
                         </div>

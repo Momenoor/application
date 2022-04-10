@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
-use App\Services\NumberFormatterService;
+use App\Services\ClaimCollectionStatus;
+use App\Services\Money;
+use App\Services\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use PDO;
@@ -19,8 +20,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(NumberFormatterService::class, function () {
-            return new NumberFormatterService();
+        $this->app->bind(Money::class, function () {
+            return new Money();
+        });
+
+        $this->app->bind(Permission::class, function () {
+            return new Permission();
         });
     }
 

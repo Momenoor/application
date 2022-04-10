@@ -12,12 +12,14 @@ return [
             'direction' => 'rtl',
             'style' => 'direction:rtl;',
             'css' => '.rtl',
+            'text' => 'العربية - Arabic',
         ],
         'en' => [
             'dir' => 'ltr',
             'direction' => 'ltr',
             'style' => 'direction:ltr;',
             'css' => '',
+            'text' => 'الأنجليزية - English',
         ]
     ],
 
@@ -34,6 +36,13 @@ return [
     'vat' => [
         'rate' => 5
     ],
+
+    'office_share' => [
+        'rate' => 15,
+        'excluded_expert' => [1],
+    ],
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -136,18 +145,24 @@ return [
             'name' => 'Main',
             'color' => 'success',
             'display' => true,
+            'condition' => '+',
+            'type' => 'income',
         ],
         'additional' => [
             'id' => 2,
             'name' => 'Additional',
             'color' => 'secondary',
             'display' => true,
+            'condition' => '+',
+            'type' => 'income',
         ],
         'penality' => [
             'id' => 3,
             'name' => 'Penality',
             'color' => 'danger',
             'display' => true,
+            'condition' => '-',
+            'type' => 'expense',
         ],
         'recurring' => [
             'id' => 4,
@@ -182,18 +197,24 @@ return [
             'name' => 'VAT',
             'color' => 'dark',
             'display' => false,
+            'condition' => '+',
+            'type' => 'income',
         ],
         'office_share' => [
             'id' => 6,
             'name' => 'Office Share',
             'color' => 'warning',
             'display' => true,
+            'condition' => '-',
+            'type' => 'expense',
         ],
         'commission' => [
             'id' => 6,
             'name' => 'Commission',
             'color' => 'primary',
             'display' => false,
+            'condition' => '-',
+            'type' => 'expense',
         ],
     ],
 

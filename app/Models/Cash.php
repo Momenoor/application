@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Money;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,7 +10,12 @@ class Cash extends Model
 {
     use HasFactory;
 
+    const PAID = 'paid';
+    const UNPAID = 'unpaid';
+    const PARTIAL = 'partial';
+
     protected $fillable = [
+        'datetime',
         'amount',
         'description',
         'type',
@@ -17,6 +23,16 @@ class Cash extends Model
         'claim_id',
         'user_id',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($query) {
+            $query->user_id = auth()->id();
+            $query->datetime = now();
+        });
+    }
 
     public function matter()
     {

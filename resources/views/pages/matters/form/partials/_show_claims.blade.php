@@ -8,7 +8,8 @@
         <!--end::Card title-->
         <!--begin::Card toolbar-->
         <div class="card-toolbar">
-            <a href="#" class="btn btn-bg-light btn-active-color-primary btn-sm">{{ __('app.collect') }}</a>
+            <button type="button" class="btn btn-bg-light btn-active-color-primary btn-sm" data-bs-toggle="modal"
+                data-bs-target="#collectionModal">{{ __('app.collect') }}</a>
         </div>
         <!--end::Card toolbar-->
     </div>
@@ -38,11 +39,11 @@
                             </td>
                             <td class="text-center">
                                 <span
-                                    class="badge badge-light-{{$claim->type_color}} fw-bolder">{{ __('app.' . $claim->type) }}</span>
+                                    class="badge badge-light-{{ $claim->type_color }} fw-bolder">{{ __('app.' . $claim->type) }}</span>
                             </td>
                             <td class="text-center">
                                 <span
-                                    class="badge badge-light-{{$claim->recurring_color}} fw-bolder">{{ __('app.' . $claim->recurring) }}</span>
+                                    class="badge badge-light-{{ $claim->recurring_color }} fw-bolder">{{ __('app.' . $claim->recurring) }}</span>
                             </td>
                             <td class="text-center">
                                 <span class="text-gray-800 fw-bolder d-block">{{ $claim->claim_amount }} AED</span>
@@ -52,12 +53,14 @@
                 </tbody>
                 <tfoot>
                     <tr class="border-top">
-                        <th class="text-center text-gray-800 fw-bolder fs-6" colspan="3">{{__('app.total')}}</th>
-                        <th class="text-center text-gray-800 fw-bolder d-block fs-6">{{$matter->claims_sum_amount}} AED</th>
+                        <th class="text-center text-gray-800 fw-bolder fs-6" colspan="3">{{ __('app.total') }}</th>
+                        <th class="text-center text-gray-800 fw-bolder d-block fs-6">{{ $matter->claims_sum_amount }}
+                            AED</th>
                     </tr>
                     <tr class="border-top">
-                        <th class="text-center text-gray-800 fw-bolder fs-6" colspan="3">{{__('app.collected')}}</th>
-                        <th class="text-center text-success fw-bolder d-block fs-6">{{$matter->cash_sum_amount}} AED</th>
+                        <th class="text-center text-gray-800 fw-bolder fs-6" colspan="3">{{ __('app.collected') }}</th>
+                        <th class="text-center text-success fw-bolder d-block fs-6">{{ $matter->cash_sum_amount }} AED
+                        </th>
                     </tr>
                 </tfoot>
                 <!--end::Table body-->

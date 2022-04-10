@@ -23,6 +23,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\setLocale::class,
         \App\Http\Middleware\SessionExpired::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \App\Http\Middleware\Authorizable::class,
     ];
 
     /**
@@ -40,6 +41,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \RealRashid\SweetAlert\ToSweetAlert::class,
+            \App\Http\Middleware\MainMenu::class,
         ],
 
         'api' => [

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Services\NumberFormatterService;
+use App\Services\Money;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -52,12 +52,12 @@ class Claim extends Model
 
     public function setAmountAttribute($value)
     {
-        $this->attributes['amount'] = app(NumberFormatterService::class)->getUnformattedNumber($value);
+        $this->attributes['amount'] = app(Money::class)->getUnformattedNumber($value);
     }
 
     public function getClaimAmountAttribute()
     {
-        return app(NumberFormatterService::class)->getFormattedNumber($this->amount);
+        return app(Money::class)->getFormattedNumber($this->amount);
     }
 
     public function getTypeColorAttribute()
@@ -68,5 +68,13 @@ class Claim extends Model
     public function getRecurringColorAttribute()
     {
         return config('system.claims.recurring.values.' . $this->recurring . '.color');
+    }
+
+    public function collect()
+    {
+    }
+
+    public function collectClaim()
+    {
     }
 }

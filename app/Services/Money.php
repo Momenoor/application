@@ -4,7 +4,7 @@ namespace App\Services;
 
 use NumberFormatter;
 
-class NumberFormatterService
+class Money
 {
     public static function getFormattedNumber(
         $value,

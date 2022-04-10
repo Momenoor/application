@@ -28,7 +28,7 @@ if ($model->status) {
         <!--end::Svg Icon-->
     </a>
     <form action="{{ route($modelLowerName . '.destroy', $modelId) }}" method="POST"
-        class="delete-{{ $modelName }}">
+        class="delete-row">
         @csrf
         @method("DELETE")
         <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
@@ -49,18 +49,18 @@ if ($model->status) {
         </button>
     </form>
     <script>
-        $('.delete-{{ $modelName }}').on('submit', function(e) {
+        $('.delete-row').on('submit', function(e) {
             e.preventDefault();
             Swal.fire({
-                text: "Here's a basic example of SweetAlert!",
+                text: "{{ __('app.are_you_sure_to_delete_record?') }}",
                 icon: "error",
                 buttonsStyling: false,
                 showCancelButton: true,
-                confirmButtonText: "Ok, got it!",
-                cancelButtonText: 'Nope, cancel it',
+                confirmButtonText: "{{ __('app.ok') }}",
+                cancelButtonText: "{{ __('app.cancel') }}",
                 customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: 'btn btn-danger',
+                    confirmButton: "btn btn-danger",
+                    cancelButton: 'btn btn-light',
                 }
             }).then(function(result) {
                 if (result.isConfirmed) {

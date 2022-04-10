@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Services\NumberFormatterService;
+use App\Services\Money;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 
@@ -71,12 +71,12 @@ class Matter extends Model
 
     public function getClaimsSumAmountAttribute()
     {
-        return app(NumberFormatterService::class)->getFormattedNumber($this->claims->sum('amount'));
+        return app(Money::class)->getFormattedNumber($this->claims->sum('amount'));
     }
 
     public function getCashSumAmountAttribute()
     {
-        return app(NumberFormatterService::class)->getFormattedNumber($this->cashes->sum('amount'));
+        return app(Money::class)->getFormattedNumber($this->cashes->sum('amount'));
     }
 
     public function court()

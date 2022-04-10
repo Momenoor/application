@@ -147,7 +147,7 @@
                                                 </svg>
                                             </span>
                                             <!--end::Svg Icon-->
-                                            <a href="#" class="text-muted text-hover-primary">{{ $user->phone }}</a>
+                                            <a href="#" class="text-muted text-hover-primary">{{ optional($user->expert)->phone }}</a>
                                         </div>
                                         <!--end::Phone-->
                                     </div>

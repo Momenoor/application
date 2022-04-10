@@ -8,6 +8,7 @@
                 <!--begin::Card-->
                 <div class="mb-5">
                     @include('pages.matters.form.partials._show_claims')
+                    @include('pages.matters.form.partials._collection_modal')
                 </div>
                 <div class="mb-5">
                     @include('pages.matters.form.partials._show_parties')
