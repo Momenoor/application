@@ -19,9 +19,13 @@ class ToolsController extends Controller
             $matter->save();
 
             $matter->claims->each(function ($claim) {
-                $amount = $claim->amount;
-                $collectedAmount = $claim->cashes->sum('amount');
-                $claim->status = $this->claimCollectionStatus($amount, $collectedAmount);
+                if ($claim->matter->claim_status == Cash::PAID) {
+                    $claim->status = Cash::PAID;
+                } else {
+                    $amount = $claim->amount;
+                    $collectedAmount = $claim->cashes->sum('amount');
+                    $claim->status = $this->claimCollectionStatus($amount, $collectedAmount);
+                }
                 $claim->save();
             });
         });
@@ -43,15 +47,8 @@ class ToolsController extends Controller
                             'type' => 'office_share',
                             'recurring' => 'none',
                         ]);
-                    } /* elseif (($dues * -1) == $total) {
-                        //dd($matter->cashes()->duplicates(['claim_id', 'amount', 'matter_id']));
-                    } else {
-                        $matter->claims()->create([
-                            'amount' => (-1 * $dues),
-                            'type' => 'additional',
-                            'recurring' => 'none',
-                        ]);
-                    } */
+                    }
+                } elseif ($matter->assistants->first() == 10) {
                 }
             }
         });
@@ -62,6 +59,7 @@ class ToolsController extends Controller
     protected function claimCollectionStatus($amount, $collected)
     {
         if ($collected > $amount) {
+
             return Cash::OVERPAID;
         }
 
