@@ -23,77 +23,82 @@
             </div>
         </div>
     </div>
-    @push('scripts')
-        <script>
-            document.addEventListener("livewire:load", () => {
+</div>
+@push('scripts')
+    <script>
+        document.addEventListener("livewire:load", () => {
 
+            initSelection();
+
+            Livewire.hook('message.processed', (message, component) => {
+                initSelect()
                 initSelection();
-
-                Livewire.hook('message.processed', (message, component) => {
-                    initSelect()
-                    initSelection();
-                })
-
-                function initSelect() {
-                    $('#MatterCreateForm').find('[data-control="select2"]').select2({});
-                }
-
-                function initSelection() {
-
-
-                    $('[data-control="flatpickr"]').flatpickr({
-                        altInput: !0,
-                        altFormat: "d F, Y",
-                        dateFormat: "Y-m-d"
-                    });
-
-                    $("select[name='type_id']").on('change', function(e) {
-
-                        @this.set('matter.type_id', $(this).select2("val"));
-                    });
-                    $("select[name='court_id']").on('change', function(e) {
-
-                        @this.set('matter.court_id', $(this).select2("val"));
-                    });
-                    $("select[name='expert_id']").on('change', function(e) {
-
-                        @this.set('matter.expert_id', $(this).select2("val"));
-                    });
-                    $("select[name='committee']").on('change', function(e) {
-
-                        @this.set('matter.committee', $(this).select2("val"));
-                    });
-                    $("select.party-type").on('change', function(e) {
-
-                        @this.set('parties.' + $(this).data('row-index') + '.type', $(this).select2("val"));
-                        Livewire.emit('showAddSubPartyButton', $(this).data('row-index'), $(this).select2(
-                            "val"));
-                    });
-                    $("select.sub-party-name").on('change', function(e) {
-
-                        @this.set('parties.' + $(this).data('row-parent-index') + '.subParties.' + $(this).data(
-                            'row-index'), $(this).select2("val"));
-                    });
-                    $("select#marketer").on('change', function(e) {
-
-                        @this.set('otherParties.marketer.id', $(this).select2("val"));
-                        @this.set('otherParties.marketer.type', 'marketer');
-                    });
-                    $("select#externalMarketer").on('change', function(e) {
-
-                        @this.set('otherParties.external_marketer.id', $(this).select2("val"));
-                        @this.set('otherParties.external_marketer.type', 'external_marketer');
-                    });
-                    $("select#claimRecurring").on('change', function(e) {
-
-                        @this.set('claim.recurring', $(this).select2("val"));
-                    });
-                    $("select#claimType").on('change', function(e) {
-
-                        @this.set('claim.type', $(this).select2("val"));
-                    });
-                    //$('select').trigger('change');
-                }
             })
-        </script>
-    @endpush
+
+            function initSelect() {
+                $('#MatterCreateForm').find('[data-control="select2"]').select2({});
+            }
+
+            function initSelection() {
+
+
+                $('[data-control="flatpickr"]').flatpickr({
+                    altInput: !0,
+                    altFormat: "d F, Y",
+                    dateFormat: "Y-m-d"
+                });
+
+                $("select[name='type_id']").on('change', function(e) {
+
+                    @this.set('matter.type_id', $(this).select2("val"));
+                });
+                $("select[name='court_id']").on('change', function(e) {
+
+                    @this.set('matter.court_id', $(this).select2("val"));
+                });
+                $("select[name='expert_id']").on('change', function(e) {
+
+                    @this.set('matter.expert_id', $(this).select2("val"));
+                });
+                $("select[name='assistant_id']").on('change', function(e) {
+
+                    @this.set('matter.assistant_id', $(this).select2("val"));
+                });
+                $("select[name='committee']").on('change', function(e) {
+
+                    @this.set('matter.committee', $(this).select2("val"));
+                });
+                $("select.party-type").on('change', function(e) {
+
+                    @this.set('parties.' + $(this).data('row-index') + '.type', $(this).select2("val"));
+                    Livewire.emit('showAddSubPartyButton', $(this).data('row-index'), $(this).select2(
+                        "val"));
+                });
+                $("select.sub-party-name").on('change', function(e) {
+
+                    @this.set('parties.' + $(this).data('row-parent-index') + '.subParties.' + $(this).data(
+                        'row-index'), $(this).select2("val"));
+                });
+                $("select#marketer").on('change', function(e) {
+
+                    @this.set('otherParties.marketer.id', $(this).select2("val"));
+                    @this.set('otherParties.marketer.type', 'marketer');
+                });
+                $("select#externalMarketer").on('change', function(e) {
+
+                    @this.set('otherParties.external_marketer.id', $(this).select2("val"));
+                    @this.set('otherParties.external_marketer.type', 'external_marketer');
+                });
+                $("select#claimRecurring").on('change', function(e) {
+
+                    @this.set('claim.recurring', $(this).select2("val"));
+                });
+                $("select#claimType").on('change', function(e) {
+
+                    @this.set('claim.type', $(this).select2("val"));
+                });
+                //$('select').trigger('change');
+            }
+        })
+    </script>
+@endpush

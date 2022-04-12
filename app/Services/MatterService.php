@@ -110,6 +110,20 @@ class MatterService
             unset($matter['committee']);
         }
 
+        if (key_exists('assistant', $matter['matter'])) {
+
+            $parties = [];
+
+            if (!is_array($matter['matter']['assistant'])) {
+                $matter['matter']['assistant'] = [$matter['matter']['assistant']];
+            }
+            foreach ($matter['matter']['assistant'] as $party) {
+                $parties[$party] = ['type' => 'assistant'];
+            }
+            array_push($matter['experts'], $parties);
+            unset($matter['assistant']);
+        }
+
         if (key_exists('marketing', $data)) {
 
             $marketing = [];

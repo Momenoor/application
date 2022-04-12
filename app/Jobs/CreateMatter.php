@@ -60,6 +60,7 @@ class CreateMatter implements ShouldQueue
 
                 if ($this->data->has('experts')) {
 
+                    dd($this->data->get('experts'));
                     $this->matter->experts()->sync(
                         $this->data->get('experts')
                     );

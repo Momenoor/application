@@ -40,6 +40,7 @@ class MatterCreateForm extends Component
     public $partyTypes;
     public $claimsTypes;
     public $expertsList;
+    public $assistantsList;
     public $courtsList;
     public $typesList;
     public $partiesList;
@@ -66,6 +67,7 @@ class MatterCreateForm extends Component
         'matter.type_id' => 'required|exists:types,id',
         'matter.expert_id' => 'required|exists:experts,id',
         'matter.committee' => 'required_if:matter.commissioning,committee',
+        'matter.assistant' => 'required|exists:experts,id',
         'parties.*.type' => 'required',
         'parties.*.name' => 'required',
         'parties.*.phone' => 'numeric',
@@ -91,6 +93,7 @@ class MatterCreateForm extends Component
         'matter.type_id' => 'Type',
         'matter.expert_id' => 'Expert',
         'matter.committee' => 'Committee',
+        'matter.assistant' => 'ASsistant',
         'parties.*.type' => 'Party Type',
         'parties.*.name' => 'Party Name',
         'parties.*.phone' => 'Party Phone',
