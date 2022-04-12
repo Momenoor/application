@@ -40,7 +40,7 @@ class Claim extends Model
         return $this->belongsTo(Matter::class);
     }
 
-    public function cash()
+    public function cashes()
     {
         return $this->hasMany(Cash::class);
     }

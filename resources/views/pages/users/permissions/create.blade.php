@@ -87,7 +87,6 @@
                     </button>
                 </div>
                 <!--end::Actions-->
-                <div></div>
             </form>
         </div>
     </div>

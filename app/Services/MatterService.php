@@ -7,10 +7,30 @@ use App\Models\Expert;
 use App\Models\Matter;
 use App\Models\Party;
 use App\Models\Procedure;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 class MatterService
 {
+
+    protected $with = [
+        'expert',
+        'claims',
+        'cashes',
+        'court',
+        'type',
+        'assistants',
+        'plaintiffs',
+        'defendants',
+        'cashes',
+    ];
+
+    protected $query;
+
+    public function __construct()
+    {
+        $this->query = Matter::query();
+    }
 
 
     public static function resolve($data): Collection
@@ -86,7 +106,7 @@ class MatterService
             foreach ($matter['matter']['committee'] as $party) {
                 $parties[$party] = ['type' => 'committee'];
             }
-            array_push( $matter['experts'], $parties);
+            array_push($matter['experts'], $parties);
             unset($matter['committee']);
         }
 
@@ -134,5 +154,70 @@ class MatterService
         }
 
         return $newPrties;
+    }
+
+    public static function getMatterWithRelations(Matter $matter, $related = null)
+    {
+        if (is_null($related)) {
+            $related = self::$with;
+        }
+        if (!is_array($related)) {
+            $related = [$related];
+        }
+        if (is_array($related) && count($related) > 0) {
+            $matter->with('');
+        }
+    }
+
+    public function setFilters($request)
+    {
+        if ($request->get('court') != null && $request->get('court') != 'all') {
+            $this->query->whereRelation('court', 'courts.id', '=', $request->get('court'));
+        }
+
+        if ($request->get('expert') != null && $request->get('expert') != 'all') {
+            $this->query->whereRelation('expert', 'experts.id', '=', $request->get('expert'));
+        }
+
+        if ($request->get('type') != null && $request->get('type') != 'all') {
+            $this->query->whereRelation('type', 'types.id', '=', $request->get('type'));
+        }
+
+        if ($request->get('assistant') != null && $request->get('assistant') != 'all') {
+            $this->query->whereRelation('assistants', 'experts.id', '=', $request->get('assistant'));
+        }
+
+        if ($request->get('start_date') != null) {
+            $this->query->where('matters.' . $request->get('start_date_type'), '>=', $request->get('start_date'));
+        }
+
+        if ($request->get('end_date') != null) {
+            $this->query->where('matters.' . $request->get('end_date_type'), '<=', $request->get('end_date'));
+        }
+
+        if (count($request->get('matterStatus')) > 0) {
+            $this->query->whereIn('matters.status', $request->get('matterStatus'));
+        }
+
+        if ($request->get('category') != null && $request->get('category') != 'all') {
+            $mainExpert = config('system.experts.main');
+            if ($request->get('category') == 'private') {
+                $this->query->whereNotIn('expert_id', $mainExpert);
+            } else if ($request->get('category') == 'office') {
+                $this->query->whereIn('expert_id', $mainExpert);
+            }
+        }
+
+        if (count($request->get('claimsCollectionStatus')) > 0) {
+        }
+
+        return $this;
+    }
+
+    public function getForExcel()
+    {
+        $this->query->with($this->with);
+
+        return $this->query;
     }
 }

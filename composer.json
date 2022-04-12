@@ -17,6 +17,7 @@
         "laravelcollective/html": "^6.3",
         "lavary/laravel-menu": "^1.8",
         "livewire/livewire": "^2.10",
+        "maatwebsite/excel": "^3.1",
         "realrashid/sweet-alert": "^5.0",
         "simplehtmldom/simplehtmldom": "^2.0@RC",
         "spatie/laravel-permission": "^5.5",

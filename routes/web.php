@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('home');
     Route::get('/matter/{matter}/change-status/{status}', [MatterController::class, 'changeStatus'])->name('matter.change-status');
+    Route::get('/matter/export', [MatterController::class, 'exportFilterForm'])->name('matter.export-form');
+    Route::post('/matter/export', [MatterController::class, 'export'])->name('matter.export');
     Route::resource('matter', MatterController::class)->except(['store', 'update']);
     Route::get('/expert/get-data/', [ExpertController::class, 'getExpertsDataFromUrlForm'])->name('expert.get-data');
     Route::post('expert/get-data/', [ExpertController::class, 'getExpertsDataFromUrl'])->name('expert.parse-data');

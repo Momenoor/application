@@ -10,6 +10,11 @@ class Expert extends Model implements MatterPartyContract
 {
     use HasFactory;
 
+    const MAIN = 'main';
+    const CERTIFIED = 'certified';
+    const ASSISTANT = 'assistant';
+    const EXTERNAL = 'external';
+
     protected $fillable = [
         'name',
         'phone',
@@ -59,10 +64,12 @@ class Expert extends Model implements MatterPartyContract
         }
         return 'expert';
     }
-    public function symbol(){
+    public function symbol()
+    {
         return 'E';
     }
-    public function color(){
+    public function color()
+    {
         if ($this->pivot) {
             return 'light';
         }

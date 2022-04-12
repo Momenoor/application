@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ClaimCollectionStatus;
 use App\Services\Money;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
@@ -71,12 +72,13 @@ class Matter extends Model
 
     public function getClaimsSumAmountAttribute()
     {
-        return app(Money::class)->getFormattedNumber($this->claims->sum('amount'));
+        //return $this->claims->sum('amount');
+        return ClaimCollectionStatus::make($this)->getSumTotalClaims();
     }
 
     public function getCashSumAmountAttribute()
     {
-        return app(Money::class)->getFormattedNumber($this->cashes->sum('amount'));
+        return ClaimCollectionStatus::make($this)->getSumCollectedClaims();
     }
 
     public function court()
@@ -173,11 +175,36 @@ class Matter extends Model
 
     public function isReported()
     {
-        return (!is_null($this->reported_date)) OR $this->status == 'reported';
+        return (!is_null($this->reported_date)) or $this->status == 'reported';
     }
 
     public function isSubmitted()
     {
-        return $this->isReported() && (!is_null($this->submitted_date) OR $this->status == 'submitted');
+        return $this->isReported() && (!is_null($this->submitted_date) or $this->status == 'submitted');
+    }
+
+    public function isPaid()
+    {
+        return Cash::PAID == ClaimCollectionStatus::make($this)->getClaimStatus();
+    }
+
+    public function isUnpaid()
+    {
+        return Cash::UNPAID == ClaimCollectionStatus::make($this)->getClaimStatus();
+    }
+
+    public function isPartial()
+    {
+        return Cash::PARTIAL == ClaimCollectionStatus::make($this)->getClaimStatus();
+    }
+
+    public function claimStatus()
+    {
+        return ClaimCollectionStatus::make($this)->getClaimStatus();
+    }
+
+    public function dueAmount()
+    {
+        return ClaimCollectionStatus::make($this)->getSumDueClaims();
     }
 }

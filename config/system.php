@@ -37,9 +37,12 @@ return [
         'rate' => 5
     ],
 
-    'office_share' => [
-        'rate' => 15,
-        'excluded_expert' => [1],
+    'experts' =>
+    [
+        'office_share' => [
+            'rate' => 15,
+        ],
+        'main' => [1],
     ],
 
 
