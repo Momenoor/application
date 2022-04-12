@@ -144,7 +144,9 @@ class MatterCreateForm extends Component
 
     public function showAddSubPartyButton($index, $value)
     {
-        $this->parties[$index]['showAddSubPartyButton'] = $this->partyTypes[$value]['showAddPartyButton'];
+        if (isset($index)) {
+            $this->parties[$index]['showAddSubPartyButton'] = $this->partyTypes[$value]['showAddPartyButton'];
+        }
     }
 
     public function removeParty($index)
