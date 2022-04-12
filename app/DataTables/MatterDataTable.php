@@ -31,16 +31,17 @@ class MatterDataTable extends DataTable
             ->filterColumn('number', function ($query, $keyword) {
                 $query->orWhere('matters.number', 'like', '%' . $keyword . '%')
                     ->orWhere('matters.year', 'like', '%' . $keyword . '%')
-                    ->orWhere('matters.status', 'like', '%' . $keyword . '%');
+                    ->orWhere('matters.status', 'like', '%' . $keyword . '%')
+                    ->orWhere('matters.claim_status', 'like', '%' . $keyword . '%');
             })
 
 
             ->editColumn('expert_id', function ($model) {
 
                 return '<div class="position-relative">
-                                ' . ($model->expert->name??null) . '
+                                ' . ($model->expert->name ?? null) . '
                                 ' . ((!$model->has('assistants')) ?:
-                    '<div class="fs-7 text-muted fw-bolder">' . ($model->assistant->name??null) . '</div>') . '
+                    '<div class="fs-7 text-muted fw-bolder">' . ($model->assistant->name ?? null) . '</div>') . '
                         </div>';
             })
 
@@ -55,8 +56,8 @@ class MatterDataTable extends DataTable
             ->editColumn('court_id', function ($model) {
 
                 return '<div class="position-relative">
-                                ' . ($model->court->name??null) . '
-                            <div class="fs-7 text-muted fw-bolder">' . ($model->type->name??null) . '</div>
+                                ' . ($model->court->name ?? null) . '
+                            <div class="fs-7 text-muted fw-bolder">' . ($model->type->name ?? null) . '</div>
                         </div>';
             })
 
@@ -72,8 +73,8 @@ class MatterDataTable extends DataTable
             ->editColumn('plaintiff_name', function ($model) {
 
                 return '<div class="position-relative">
-                                ' . (\Str::of($model->plaintiff->name??null)->limit(30)) . '
-                            <div class="text-danger">' . (\Str::of($model->defendant->name??null)->limit(30))  . '</div>
+                                ' . (\Str::of($model->plaintiff->name ?? null)->limit(30)) . '
+                            <div class="text-danger">' . (\Str::of($model->defendant->name ?? null)->limit(30))  . '</div>
                         </div>';
             })
 
@@ -86,7 +87,7 @@ class MatterDataTable extends DataTable
 
             ->editColumn('next_session_date', function ($model) {
                 return '<div class="position-relative">
-                                ' .  (($model->next_session_date instanceof Carbon)? $model->next_session_date->format('Y-m-d'):__('app.not-set')) . '
+                                ' .  (($model->next_session_date instanceof Carbon) ? $model->next_session_date->format('Y-m-d') : __('app.not-set')) . '
                             <div class="fs-7 text-muted fw-bolder">' .  $model->received_date->format('Y-m-d') . '</div>
                         </div>';
             })
@@ -131,6 +132,7 @@ class MatterDataTable extends DataTable
             'defendants',
             'type',
             'claims',
+            'cashes'
         ])->withSum('claims', 'amount')->newQuery();
     }
 
@@ -176,15 +178,15 @@ class MatterDataTable extends DataTable
 
             Column::make('number')
                 ->searchable(true)
-                ->title(__('app.no').'/'.__('app.year')),
+                ->title(__('app.no') . '/' . __('app.year')),
 
             Column::make('expert_id')
                 ->searchable(true)
-                ->title(__('app.expert').'/'.__('app.assistant')),
+                ->title(__('app.expert') . '/' . __('app.assistant')),
 
             Column::make('court_id')
                 ->searchable(true)
-                ->title(__('app.court').'/'.__('app.type')),
+                ->title(__('app.court') . '/' . __('app.type')),
 
             Column::make('plaintiff_name')
                 ->searchable(true)
@@ -194,7 +196,7 @@ class MatterDataTable extends DataTable
             Column::make('next_session_date')
                 ->searchable(true)
                 ->orderable(true)
-                ->title(__('app.session').'/'.__('app.receive')),
+                ->title(__('app.session') . '/' . __('app.receive')),
 
             Column::make('claims_sum_amount')
                 ->searchable(true)

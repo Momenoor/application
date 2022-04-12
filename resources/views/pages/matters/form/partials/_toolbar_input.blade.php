@@ -1,3 +1,6 @@
+@php
+$claimsStatus = ['paid', 'unpaid', 'partial', 'overpaid'];
+@endphp
 <div class="card-toolbar">
     <!--begin::Filter-->
     <div class="d-flex align-items-center">
@@ -69,6 +72,20 @@
                         </div>
                         <!--end::Options-->
                     </div>
+                    <div class="mb-10">
+                        <label for="" class="form-label fw-bolder">{{ __('app.claims_collection_status') }}</label>
+                        <div class="">
+                            @foreach ($claimsStatus as $status)
+                                <div class="mb-5 form-check form-check-sm form-check-custom form-check-solid me-5">
+                                    <input class="form-check-input" type="checkbox" name="claimsCollectionStatus[]"
+                                        value="{{ $status }}" id="{{ $status }}" checked />
+                                    <label class="form-check-label" for="{{ $status }}">
+                                        {{ __('app.' . $status) }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
                     {{-- <div class="mb-10">
@@ -102,7 +119,7 @@
         <!--end::Wrapper-->
         <!--end::Filter-->
         <!--begin::Export-->
-        <a href="{{route('matter.export-form')}}" class="btn btn-light-primary me-3">
+        <a href="{{ route('matter.export-form') }}" class="btn btn-light-primary me-3">
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
             <span class="svg-icon svg-icon-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

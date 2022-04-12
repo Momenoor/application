@@ -55,6 +55,11 @@
 
                 var status = statusSelectInput.select2('val');
                 var commissioning = $('#globalFilter input[name="commissioning"]:checked').val();
+                $('input[name="claimsCollectionStatus[]"]:checked').each(function() {
+                    console.log($(this).val());
+                    table.column(1).search($(this).val());
+                });
+                //table.column(1).search(claimStatus);
                 table.column(3).search(commissioning);
                 table.column(1).search(status).draw();
             });
