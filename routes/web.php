@@ -7,6 +7,7 @@ use App\Http\Controllers\MatterController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -40,4 +41,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('permission', PermissionController::class);
     Route::resource('role', RoleController::class);
     Route::post('/cash/{matter}/collect', [CashController::class, 'collect'])->name('cash.collect');
+    Route::get('tools/fix-claim-status',[ToolsController::class,'fixClaimsStatus'])->name('tools.fix-claim-status');
+    Route::get('tools/fix-claim-over-paid',[ToolsController::class,'fixClaimOverPaid'])->name('tools.fix-claim-over-paid');
 });

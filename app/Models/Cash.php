@@ -13,6 +13,7 @@ class Cash extends Model
     const PAID = 'paid';
     const UNPAID = 'unpaid';
     const PARTIAL = 'partial';
+    const OVERPAID = 'overpaid';
 
     protected $fillable = [
         'datetime',

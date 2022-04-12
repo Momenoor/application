@@ -100,6 +100,7 @@ class MatterController extends Controller
         $types = Type::pluck('name', 'id');
         $courts = Court::pluck('name', 'id');
         $claimsStatus = [
+            Cash::OVERPAID,
             Cash::PAID,
             Cash::UNPAID,
             Cash::PARTIAL,
@@ -122,4 +123,6 @@ class MatterController extends Controller
         return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus', 'result')); */
         return (new MattersExport($request))->download('matters-' . now() . '.xlsx');
     }
+
+
 }

@@ -30,7 +30,7 @@ class ClaimCollectionStatus
         $this->getDueClaims();
     }
 
-    public static function make(Matter $matter, Cash $collection = null)
+    public static function make(Matter $matter, ?Cash $collection = null)
     {
         return new static($matter, $collection);
     }
@@ -78,7 +78,11 @@ class ClaimCollectionStatus
     function getClaimStatus()
     {
 
-        if ($this->getSumCollectedClaims(false) >= $this->getSumTotalClaims(false)) {
+        if ($this->getSumCollectedClaims(false) > $this->getSumTotalClaims(false)) {
+            return Cash::OVERPAID;
+        }
+
+        if ($this->getSumCollectedClaims(false) == $this->getSumTotalClaims(false)) {
             return Cash::PAID;
         }
 

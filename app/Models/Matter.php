@@ -25,6 +25,7 @@ class Matter extends Model
         'level_id',
         'type_id',
         'parent_id',
+        'claim_status'
     ];
 
     protected $dates = [
@@ -183,6 +184,10 @@ class Matter extends Model
         return $this->isReported() && (!is_null($this->submitted_date) or $this->status == 'submitted');
     }
 
+    public function isOverPaid()
+    {
+        return Cash::OVERPAID == ClaimCollectionStatus::make($this)->getClaimStatus();
+    }
     public function isPaid()
     {
         return Cash::PAID == ClaimCollectionStatus::make($this)->getClaimStatus();
@@ -198,13 +203,23 @@ class Matter extends Model
         return Cash::PARTIAL == ClaimCollectionStatus::make($this)->getClaimStatus();
     }
 
-    public function claimStatus()
-    {
-        return ClaimCollectionStatus::make($this)->getClaimStatus();
-    }
-
     public function dueAmount()
     {
         return ClaimCollectionStatus::make($this)->getSumDueClaims();
+    }
+
+    public function isPrivate()
+    {
+        return $this->whereNotIn('experts.id', config('system.experts.main'));
+    }
+
+    public function isOffice()
+    {
+        return !$this->isPrivate();
+    }
+
+    public function isNotPrivate()
+    {
+        return $this->isOffice();
     }
 }

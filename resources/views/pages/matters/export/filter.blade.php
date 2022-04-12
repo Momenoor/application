@@ -154,7 +154,7 @@
                         </div>
                         <div class="mb-10">
                             <div class="mb-1">
-                                <label for="claims" class="form-label fw-bolder">{{ __('app.category') }}</label>
+                                <label for="category" class="form-label fw-bolder">{{ __('app.category') }}</label>
                             </div>
                             <!--begin::Radio group-->
                             <div class="btn-group w-100 w-lg-50" data-kt-buttons="true"

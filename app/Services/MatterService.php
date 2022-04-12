@@ -134,7 +134,6 @@ class MatterService
                 'discription' => 'next_session_date',
             ]),
         ];
-        dd($matter);
         return collect($matter);
     }
 
@@ -209,6 +208,7 @@ class MatterService
         }
 
         if (count($request->get('claimsCollectionStatus')) > 0) {
+            $this->query->whereIn('claim_status',  $request->get('claimsCollectionStatus'));
         }
 
         return $this;
