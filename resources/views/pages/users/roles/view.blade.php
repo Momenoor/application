@@ -30,7 +30,7 @@
                 <!--begin::Card footer-->
                 <div class="card-footer pt-0">
                     <a href="{{ route('role.edit', $role) }}"
-                        class="btn btn-light btn-active-primary">{{ 'app.edit_role' }}</a>
+                        class="btn btn-light btn-active-primary">{{ __('app.edit_role') }}</a>
                 </div>
                 <!--end::Card footer-->
             </div>
