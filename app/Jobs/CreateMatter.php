@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Arr;
 use Throwable;
 
 class CreateMatter implements ShouldQueue
@@ -18,7 +19,7 @@ class CreateMatter implements ShouldQueue
 
     protected $data;
     protected $matter;
-    protected $service;
+
 
     /**
      * Create a new job instance.
@@ -27,8 +28,7 @@ class CreateMatter implements ShouldQueue
      */
     public function __construct($data)
     {
-        $this->service = (new MatterService());
-        $this->data = $this->service->resolve($data);
+        $this->data = (new MatterService())->resolve($data);
     }
 
     /**
@@ -42,41 +42,40 @@ class CreateMatter implements ShouldQueue
         try {
             \DB::transaction(function () {
 
-                $this->matter = Matter::create($this->data->get('matter'));
+                $this->matter = Matter::create($this->data['matter']);
 
-                if ($this->data->has('claims')) {
+                if (Arr::has($this->data, 'claims')) {
 
                     $this->matter->claims()->saveMany(
-                        $this->data->get('claims')
+                        data_get($this->data, 'claims')
                     );
                 }
 
-                if ($this->data->has('parties')) {
+                if (Arr::has($this->data, 'parties')) {
 
                     $this->matter->parties()->sync(
-                        $this->data->get('parties')
+                        data_get($this->data, 'parties')
                     );
                 }
 
-                if ($this->data->has('experts')) {
+                if (Arr::has($this->data, 'experts')) {
 
-                    dd($this->data->get('experts'));
                     $this->matter->experts()->sync(
-                        $this->data->get('experts')
+                        data_get($this->data, 'experts')
                     );
                 }
 
-                if ($this->data->has('marketing')) {
+                if (Arr::has($this->data, 'marketing')) {
 
                     $this->matter->marketers()->sync(
-                        $this->data->get('marketing')
+                        data_get($this->data, 'marketing')
                     );
                 }
 
-                if ($this->data->has('procedures')) {
+                if (Arr::has($this->data, 'procedures')) {
 
                     $this->matter->procedures()->saveMany(
-                        $this->data->get('procedures')
+                        data_get($this->data, 'procedures')
                     );
                 }
             });

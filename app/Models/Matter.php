@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use App\Services\ClaimCollectionStatus;
-use App\Services\Money;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User;
+use App\Models\User;
 
 class Matter extends Model
 {
@@ -111,7 +110,7 @@ class Matter extends Model
 
     public function marketers()
     {
-        return $this->belongsToMany(User::class, 'matter_marketing');
+        return $this->belongsToMany(User::class, 'matter_marketing')->withPivot('type');
     }
 
     public function internalMarketers()

@@ -7,7 +7,7 @@
             <div class="input-group input-group-solid">
                 <input type="text" wire:model="claim.amount"
                     class="form-control @error('claim.amount') is-invalid @enderror form-control-solid"
-                    placeholder="Claim amount" />
+                    placeholder="{{__('app.claim_amount')}}" />
                 <!--end::Input-->
                 <span class="input-group-text">AED</span>
             </div>
@@ -23,7 +23,7 @@
             <div>
                 <select id="claimType" class="form-select @error('claim.type') is-invalid @enderror form-select-solid"
                     wire:model="claim.type" data-hide-search="true" data-control="select2"
-                    data-placeholder="Select an option">
+                    data-placeholder="{{__('app.select_a_type')}}">
                     <option></option>
                     @foreach ($claimsTypes as $id => $type)
                         @if ($type['display'])
@@ -44,7 +44,7 @@
                 <select id="claimRecurring"
                     class="form-select @error('claim.recurring') is-invalid @enderror form-select-solid"
                     wire:model="claim.recurring" data-hide-search="true" data-control="select2"
-                    data-placeholder="Select an option">
+                    data-placeholder="{{__('app.select_recurring')}}">
                     <option></option>
                     @foreach (data_get($claimsTypes, 'recurring.values') as $id => $recurring)
                         <option value="{{ $id }}">{{ __('app.' . $id) }}</option>

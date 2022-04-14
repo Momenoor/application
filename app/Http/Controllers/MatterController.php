@@ -67,7 +67,7 @@ class MatterController extends Controller
      */
     public function destroy(Matter $matter)
     {
-        return redirect(route('matter.index'))->withToastSuccess('Matter Successfully Deleted');
+        return redirect(route('matter.index'))->withToastSuccess(__('app.matter_successfully_deleted'));
     }
 
     public function changeStatus(Matter $matter, $status)

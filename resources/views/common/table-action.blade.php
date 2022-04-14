@@ -52,7 +52,7 @@ if ($model->status) {
         $('.delete-row').on('submit', function(e) {
             e.preventDefault();
             Swal.fire({
-                text: "{{ __('app.are_you_sure_to_delete_record?') }}",
+                text: "{{ __('app.are_you_sure_to_delete_record') }}",
                 icon: "error",
                 buttonsStyling: false,
                 showCancelButton: true,

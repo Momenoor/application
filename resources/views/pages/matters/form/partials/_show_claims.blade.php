@@ -39,11 +39,11 @@
                             </td>
                             <td class="text-center">
                                 <span
-                                    class="badge badge-light-{{ $claim->type_color }} fw-bolder">{{ __('app.' . $claim->type) }}</span>
+                                    class="badge badge-light-{{ $claim->type_color }} fw-bolder">{{ __('app.' . \Str::lower($claim->type)) }}</span>
                             </td>
                             <td class="text-center">
                                 <span
-                                    class="badge badge-light-{{ $claim->recurring_color }} fw-bolder">{{ __('app.' . $claim->recurring) }}</span>
+                                    class="badge badge-light-{{ $claim->recurring_color }} fw-bolder">{{ __('app.' . \Str::lower($claim->recurring)) }}</span>
                             </td>
                             <td class="text-center">
                                 <span class="text-gray-800 fw-bolder d-block">{{ $claim->claim_amount }} AED</span>

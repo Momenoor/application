@@ -1,11 +1,11 @@
 @if (isset($matter['commissioning']) && $matter['commissioning'] == $committeeChoiceValue)
     <div class="col-lg-12 mb-10">
-        <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.expert') }}</label>
+        <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.experts') }}</label>
         <!--end::Label-->
         <!--begin::Select-->
-        <select data-dir="rtl" name="committee" aria-label="Select a Matter Committee Expert @error('matter.committee') is-invalid @enderror " data-control="select2"
-            data-placeholder="Select Expert" wire:model="matter.committee" multiple
-            class="form-select form-select-solid">
+        <select data-dir="rtl" name="committee" aria-label="Select a Matter Committee Expert " data-control="select2"
+            data-placeholder="{{__('app.select_expert')}}" wire:model="experts.committee" multiple
+            class="form-select form-select-solid @error('experts.committee') is-invalid @enderror ">
             <option value=""></option>
             @foreach ($committeesList as $committee)
                 <option value="{{ $committee['id'] }}">{{ $committee['id'] }} -
@@ -13,7 +13,7 @@
                 </option>
             @endforeach
         </select>
-        @error('matter.committee')
+        @error('experts.committee')
         <div class="invalid-feedback fv-plugins-message-container">
             {{ $message }}
         </div>

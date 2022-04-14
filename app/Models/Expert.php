@@ -71,6 +71,9 @@ class Expert extends Model implements MatterPartyContract
     public function color()
     {
         if ($this->pivot) {
+            if ($this->pivotType() == 'assistant') {
+                return 'warning';
+            }
             return 'light';
         }
         return 'dark';

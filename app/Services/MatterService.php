@@ -33,15 +33,15 @@ class MatterService
     }
 
 
-    public static function resolve($data): Collection
+    public static function resolve($data): array
     {
         $matter = [];
-
-        if (key_exists('matter', $data)) {
+        $matter['experts'] = [];
+        if (Arr::has($data, 'matter')) {
             $matter['matter'] = $data['matter'];
         }
 
-        if (key_exists('claims', $data)) {
+        if (Arr::has($data, 'claims')) {
             $claims = [];
             foreach ($data['claims'] as $claim) {
                 $claims[] = new Claim([
@@ -54,74 +54,57 @@ class MatterService
         }
 
 
-        if (key_exists('parties', $data)) {
+        if (Arr::has($data, 'parties')) {
 
-
-            $matter['experts'] = [];
-
-            $partiesDef = config('system.parties.type');
             $parties = [];
             foreach ($data['parties'] as $party) {
 
-                if ($partiesDef[$party['type']]['model'] == Expert::class) {
-                    $matter['experts'][$party['name']] = ['type' => $party['type']];
-                } else {
+                $firstOrCreate = [
+                    'name' => $party['name'],
+                    'phone' => $party['phone'] ?? null,
+                    'email' => $party['email'] ?? null,
+                    'type' => 'party',
+                ];
 
-                    $firstOrCreate = [
-                        'name' => $party['name'],
-                        'phone' => $party['phone'] ?? null,
-                        'email' => $party['email'] ?? null,
-                        'type' => 'party',
-                    ];
+                $dbParty = Party::firstOrCreate($firstOrCreate);
 
-                    $dbParty = Party::firstOrCreate($firstOrCreate);
+                $parties[$dbParty->id] = ['type' => $party['type']];
+                if (Arr::has($party, 'subParties')) {
 
-                    $parties[$dbParty->id] = ['type' => $party['type']];
-                    if (key_exists('subParties', $party)) {
+                    if (!is_array($party['subParties'])) {
 
-                        if (!is_array($party['subParties'])) {
-
-                            return false;
-                        }
-
-                        foreach ($party['subParties'] as $subparty) {
-                            $parties[$subparty] = [
-                                'parent_id' => $dbParty->id,
-                                'type' => $party['type'] . '_advocate'
-                            ];
-                        }
+                        return false;
                     }
-                    $matter['parties'] = $parties;
+
+                    foreach ($party['subParties'] as $subparty) {
+                        $parties[$subparty] = [
+                            'parent_id' => $dbParty->id,
+                            'type' => $party['type'] . '_advocate'
+                        ];
+                    }
                 }
             }
+            $matter['parties'] = $parties;
         }
 
-        if (key_exists('committee', $matter['matter'])) {
+        if (Arr::has($data, 'experts')) {
 
-            $parties = [];
+            $experts = [];
 
-            if (!is_array($matter['matter']['committee'])) {
-                $matter['matter']['committee'] = [$matter['matter']['committee']];
+            foreach ($data['experts'] as $type => $expert) {
+
+                if (!is_array($expert)) {
+
+                    $expert = [$expert];
+                }
+
+                foreach ($expert as $ex) {
+
+                    $experts[$ex] = ['type' => $type];
+                }
             }
-            foreach ($matter['matter']['committee'] as $party) {
-                $parties[$party] = ['type' => 'committee'];
-            }
-            array_push($matter['experts'], $parties);
-            unset($matter['committee']);
-        }
 
-        if (key_exists('assistant', $matter['matter'])) {
-
-            $parties = [];
-
-            if (!is_array($matter['matter']['assistant'])) {
-                $matter['matter']['assistant'] = [$matter['matter']['assistant']];
-            }
-            foreach ($matter['matter']['assistant'] as $party) {
-                $parties[$party] = ['type' => 'assistant'];
-            }
-            array_push($matter['experts'], $parties);
-            unset($matter['assistant']);
+            $matter['experts'] = $experts;
         }
 
         if (key_exists('marketing', $data)) {
@@ -140,15 +123,16 @@ class MatterService
             new Procedure([
                 'type' => 'received_date',
                 'datetime' => $data['matter']['received_date'],
-                'discription' => 'received_date',
+                'description' => 'received_date',
             ]),
             new Procedure([
                 'type' => 'next_session_date',
                 'datetime' => $data['matter']['next_session_date'],
-                'discription' => 'next_session_date',
+                'description' => 'next_session_date',
             ]),
         ];
-        return collect($matter);
+
+        return $matter;
     }
 
     public static function partiesResolve(Matter $matter)

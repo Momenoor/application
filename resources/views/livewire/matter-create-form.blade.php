@@ -60,13 +60,13 @@
 
                     @this.set('matter.expert_id', $(this).select2("val"));
                 });
-                $("select[name='assistant_id']").on('change', function(e) {
+                $("select[name='assistant']").on('change', function(e) {
 
-                    @this.set('matter.assistant_id', $(this).select2("val"));
+                    @this.set('experts.assistant', $(this).select2("val"));
                 });
                 $("select[name='committee']").on('change', function(e) {
 
-                    @this.set('matter.committee', $(this).select2("val"));
+                    @this.set('experts.committee', $(this).select2("val"));
                 });
                 $("select.party-type").on('change', function(e) {
 
@@ -81,13 +81,13 @@
                 });
                 $("select#marketer").on('change', function(e) {
 
-                    @this.set('otherParties.marketer.id', $(this).select2("val"));
-                    @this.set('otherParties.marketer.type', 'marketer');
+                    @this.set('marketing.marketer.id', $(this).select2("val"));
+                    @this.set('marketing.marketer.type', 'marketer');
                 });
                 $("select#externalMarketer").on('change', function(e) {
 
-                    @this.set('otherParties.external_marketer.id', $(this).select2("val"));
-                    @this.set('otherParties.external_marketer.type', 'external_marketer');
+                    @this.set('marketing.external_marketer.id', $(this).select2("val"));
+                    @this.set('marketing.external_marketer.type', 'external_marketer');
                 });
                 $("select#claimRecurring").on('change', function(e) {
 

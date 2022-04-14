@@ -27,7 +27,7 @@ class MatterChangeStatus extends Component
         $this->newStatus = $newStatus;
         $this->dispatchBrowserEvent('swal:confirm', [
             'type' => 'warning',
-            'title' => __('app.are_you_sure_to_chnage_status') . '?',
+            'title' => __('app.are_you_sure_to_chnage_status') ,
             'text' => '',
             'id' => $this->matter->id,
             'callback' => 'changeStatus',

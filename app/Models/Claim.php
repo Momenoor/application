@@ -55,6 +55,27 @@ class Claim extends Model
         $this->attributes['amount'] = app(Money::class)->getUnformattedNumber($value);
     }
 
+    public function setTypeAttribute($value)
+    {
+        $this->attributes['type'] = \Str::lower($value);
+    }
+
+    public function setRecurringAttribute($value)
+    {
+        $this->attributes['recurring'] = \Str::lower($value);
+    }
+
+    /*     public function getTypeAttribute()
+    {
+        return $this->type;
+        return \Str::lower($this->type);
+    } */
+
+    /*  public function getRecurringAttribute()
+    {
+        return \Str::lower($this->recurring);
+    } */
+
     public function getClaimAmountAttribute()
     {
         return app(Money::class)->getFormattedNumber($this->amount);
@@ -62,12 +83,12 @@ class Claim extends Model
 
     public function getTypeColorAttribute()
     {
-        return config('system.claims.' . $this->type . '.color');
+        return config('system.claims.' . \Str::lower($this->type) . '.color');
     }
 
     public function getRecurringColorAttribute()
     {
-        return config('system.claims.recurring.values.' . $this->recurring . '.color');
+        return config('system.claims.recurring.values.' . \Str::lower($this->recurring) . '.color');
     }
 
     public function collect()

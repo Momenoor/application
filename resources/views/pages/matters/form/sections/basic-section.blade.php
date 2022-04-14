@@ -24,7 +24,7 @@
                         <input type="text" name="received_date" data-control="flatpickr"
                             wire:model="matter.received_date"
                             class="@error('matter.received_date') is-invalid @enderror form-control form-control-solid"
-                            placeholder="Matter Receive Date">
+                            placeholder="{{__('app.received_date')}}">
                         @error('matter.received_date')
                             <div class="invalid-feedback fv-plugins-message-container">
                                 {{ $message }}
@@ -38,7 +38,7 @@
                             <label
                                 class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.year') }}</label>
                             <input type="text" name="year" wire:model="matter.year"
-                                class="@error('matter.year') is-invalid @enderror form-control form-control-solid" placeholder="Matter Year">
+                                class="@error('matter.year') is-invalid @enderror form-control form-control-solid" placeholder="{{__('app.year')}}">
                                 @error('matter.year')
                             <div class="invalid-feedback fv-plugins-message-container">
                                 {{ $message }}
@@ -51,7 +51,7 @@
                             <label
                                 class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.number') }}</label>
                             <input type="text" name="number" wire:model="matter.number"
-                                class="@error('matter.number') is-invalid @enderror form-control form-control-solid" placeholder="Matter Number">
+                                class="@error('matter.number') is-invalid @enderror form-control form-control-solid" placeholder="{{__('app.number')}}">
                                 @error('matter.number')
                             <div class="invalid-feedback fv-plugins-message-container">
                                 {{ $message }}
@@ -125,9 +125,9 @@
                             <!--begin::Info-->
                             <span class="d-block fw-bold text-start">
                                 <span class="text-dark fw-bolder d-block fs-4 mb-2">{{ __('app.committee') }}</span>
-                                <span class="text-muted fw-bold fs-9">That's mean, you should add committee
+                                <span class="text-muted fw-bold fs-9">{{__('app.That\'s mean, you should add committee
                                     member
-                                    below.</span>
+                                    below.')}}</span>
                             </span>
                             <!--end::Info-->
                         </label>
@@ -150,7 +150,7 @@
                         <!--end::Label-->
                         <!--begin::Select-->
                         <select name="court_id" aria-label="Select a court" data-control="select2"
-                            data-placeholder="Select court" wire:model="matter.court_id"
+                            data-placeholder="{{__('app.select_a_court')}}" wire:model="matter.court_id"
                             class="@error('matter.court_id') is-invalid @enderror form-select form-select-solid">
                             <option value=""></option>
                             @foreach ($courtsList as $court)
@@ -168,8 +168,8 @@
                         <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.level') }}</label>
                         <!--end::Label-->
                         <!--begin::Select-->
-                        <select name="level_id" aria-label="Select a Matter Level" data-control="select2"
-                            data-placeholder="Select Level" wire:model="matter.level_id"
+                        <select name="level_id" aria-label="{{__('app.select_a_level')}}" data-control="select2"
+                            data-placeholder="{{__('app.select_a_level')}}" wire:model="matter.level_id"
                             class="@error('matter.level_id') is-invalid @enderror form-select form-select-solid">
                             <option value=""></option>
                         </select>
@@ -183,8 +183,8 @@
                         <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.type') }}</label>
                         <!--end::Label-->
                         <!--begin::Select-->
-                        <select name="type_id" aria-label="Select a Matter Type" data-control="select2"
-                            data-placeholder="Select Type" wire:model="matter.type_id"
+                        <select name="type_id" aria-label="{{__('app.select_a_type')}}" data-control="select2"
+                            data-placeholder="{{__('app.select_a_type')}}" wire:model="matter.type_id"
                             class="@error('matter.type_id') is-invalid @enderror form-select form-select-solid">
                             <option value=""></option>
                             @foreach ($typesList as $type)
@@ -202,7 +202,7 @@
                             class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.next-session-date') }}</label>
                         <input type="text" wire:model="matter.next_session_date" name="next_session_date"
                             data-control="flatpickr" class="@error('matter.next_session_date') is-invalid @enderror form-control form-control-solid"
-                            placeholder="Matter Next Session">
+                            placeholder="{{__('app.next_session_date')}}">
                             @error('matter.next_session_date')
                             <div class="invalid-feedback fv-plugins-message-container">
                                 {{ $message }}

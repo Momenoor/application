@@ -23,7 +23,8 @@ class MatterCreateForm extends Component
     // Main Model Definations
     public $matter;
     public $parties = [];
-    public $otherParties = [];
+    public $experts = [];
+    public $marketing = [];
     public $hasMarketingCommission;
     public $hasExternalCommission;
     public $claims = [];
@@ -66,16 +67,16 @@ class MatterCreateForm extends Component
         'matter.court_id' => 'required|exists:courts,id',
         'matter.type_id' => 'required|exists:types,id',
         'matter.expert_id' => 'required|exists:experts,id',
-        'matter.committee' => 'required_if:matter.commissioning,committee',
-        'matter.assistant' => 'required|exists:experts,id',
+        'experts.committee' => 'required_if:matter.commissioning,committee',
+        'experts.assistant' => 'required|exists:experts,id',
         'parties.*.type' => 'required',
         'parties.*.name' => 'required',
         'parties.*.phone' => 'numeric',
         'parties.*.email' => 'email',
         'parties.*.subParties.*' => 'required',
         'matter.external_commission_percent' => 'required_if:hasExternalCommission,1|numeric',
-        'otherParties.external_markter.id' => 'required_if:hasExternalCommission,1',
-        'otherParties.marketer.id' => 'required_if:hasMarketingCommission,1',
+        'marketing.external_markter.id' => 'required_if:hasExternalCommission,1',
+        'marketing.marketer.id' => 'required_if:hasMarketingCommission,1',
     ];
 
     protected $messages = [
@@ -92,32 +93,20 @@ class MatterCreateForm extends Component
         'matter.court_id' => 'Court',
         'matter.type_id' => 'Type',
         'matter.expert_id' => 'Expert',
-        'matter.committee' => 'Committee',
-        'matter.assistant' => 'ASsistant',
+        'experts.committee' => 'Committee',
+        'experts.assistant' => 'ASsistant',
         'parties.*.type' => 'Party Type',
         'parties.*.name' => 'Party Name',
         'parties.*.phone' => 'Party Phone',
         'parties.*.email' => 'Party Email',
         'parties.*.subParties.*' => 'Advocate',
         'matter.external_commission_percent' => 'Commission Rate',
-        'otherParties.external_markter.id' => 'External Marketer',
-        'otherParties.marketer.id' => 'Marketer',
+        'marketing.external_markter.id' => 'External Marketer',
+        'marketing.marketer.id' => 'Marketer',
     ];
 
     public function mount($id)
     {
-        if ($id) {
-            $matter = Matter::findOrFail($id);
-            if ($matter) {
-                $this->matter = $matter;
-                $this->claims = $matter->claims;
-                $this->parties = $matter->parties->each(function ($item) {
-                    $item->type = $item->pivot->type;
-                    $item->showAddSubPartyButton = $this->partyTypes[$item->name]['showAddPartyButton'];
-                    $item->subParties = [];
-                })->toArray();
-            }
-        }
         $this->expertsList = Expert::whereIn('category', ['main', 'certified'])->get(['id', 'name'])->toArray();
         $this->assistantsList = Expert::whereIn('category', ['main', 'certified', 'assistant'])->get(['id', 'name'])->toArray();
         $this->courtsList = Court::get(['id', 'name'])->toArray();
@@ -215,11 +204,13 @@ class MatterCreateForm extends Component
             'matter' => $this->matter,
             'claims' => $this->claims,
             'parties' => $this->parties,
-            'marketing' => $this->otherParties,
+            'experts'=> $this->experts,
+            'marketing' => $this->marketing,
         ];
 
+
         /* dd($data); */
-        $this->dispatchNow(new CreateMatter($data));
+        $this->dispatch(new CreateMatter($data));
 
         return redirect(route('matter.show', session('last_inserted_matter')))->with('toast_success', __('app.matter-successfully-added'));
     }

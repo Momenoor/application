@@ -58,4 +58,39 @@ class User extends Authenticatable
     {
         return $this->hasOne(Expert::class);
     }
+
+    public function marketers()
+    {
+
+        return $this->belongsToMany(User::class, 'matter_marketing')->withPivot('type');
+    }
+
+    public function symbol()
+    {
+        return 'M';
+    }
+    public function color()
+    {
+        if ($this->pivot) {
+            return 'info';
+        }
+        return 'warning';
+    }
+
+    public function category()
+    {
+        return $this->category;
+    }
+    public function field()
+    {
+        if ($this->pivot) {
+            return $this->pivot->type;
+        }
+        return 'user';
+    }
+
+    public function pivotType()
+    {
+        return 'marketing';
+    }
 }

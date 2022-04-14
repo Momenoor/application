@@ -26,7 +26,7 @@
                     </div>
                     <!--end::Badge-->
                     <!--begin::Text-->
-                    <div class="fw-mormal timeline-content text-muted ps-3">{{ __('app.' . $procedure->description??$procedure->type) }}
+                    <div class="fw-mormal timeline-content text-muted ps-3">{{ __('app.' . (empty($procedure->description)?$procedure->type:$procedure->description)) }}
                     </div>
                     <!--end::Text-->
                 </div>

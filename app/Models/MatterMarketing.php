@@ -38,7 +38,7 @@ class MatterMarketing extends Pivot implements MatterPartyContract
         return 'marketer';
     }
     public function symbol(){
-        return 'E';
+        return 'M';
     }
     public function color(){
         return 'info';

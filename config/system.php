@@ -82,7 +82,7 @@ return [
             /* 'expert' => [
                 'showAddPartyButton' => false,
                 'text' => 'expert',
-            ], */
+            ],
             'assistant' => [
                 'showAddPartyButton' => false,
                 'text' => 'assistant',
@@ -110,7 +110,7 @@ return [
                 'color' => 'dark',
                 'model' => Party::class,
                 'type' => 'external_marketer',
-            ],
+            ], */
         ],
     ],
 
