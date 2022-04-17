@@ -76,6 +76,16 @@ class Claim extends Model
         return \Str::lower($this->recurring);
     } */
 
+    public function getSumCash()
+    {
+        return $this->cashes->sum('amount');
+    }
+
+    public function getDueAmount()
+    {
+        return $this->amount - $this->getSumCash();
+    }
+
     public function getClaimAmountAttribute()
     {
         return app(Money::class)->getFormattedNumber($this->amount);

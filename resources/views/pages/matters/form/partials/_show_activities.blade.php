@@ -1,6 +1,6 @@
 <div class="card card-xl-stretch">
     <!--begin::Header-->
-    <div class="card-header align-items-center border-0 mt-4">
+    <div class="card-header border-bottom align-items-center mt-4">
         <h3 class="card-title align-items-start flex-column">
             <span class="fw-bolder mb-2 text-dark">{{ __('app.activities') }}</span>
             <span

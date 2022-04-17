@@ -172,6 +172,9 @@
                             data-placeholder="{{__('app.select_a_level')}}" wire:model="matter.level_id"
                             class="@error('matter.level_id') is-invalid @enderror form-select form-select-solid">
                             <option value=""></option>
+                            @foreach ($levelList as $level)
+                            <option value="{{ $level['id'] }}">{{ __('app.'.$level['name']) }}</option>
+                        @endforeach
                         </select>
                         @error('matter.level_id')
                             <div class="invalid-feedback fv-plugins-message-container">

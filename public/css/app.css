@@ -1,4 +1,16 @@
 @font-face {
+    font-family: "Janna LT";
+    src: url("//db.onlinewebfonts.com/t/15c14edcc44ce5f6b601206439e7eba2.eot");
+    src: url("//db.onlinewebfonts.com/t/15c14edcc44ce5f6b601206439e7eba2.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/15c14edcc44ce5f6b601206439e7eba2.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/15c14edcc44ce5f6b601206439e7eba2.woff") format("woff"), url("//db.onlinewebfonts.com/t/15c14edcc44ce5f6b601206439e7eba2.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/15c14edcc44ce5f6b601206439e7eba2.svg#Janna LT") format("svg");
+}
+
+@font-face {
+    font-family: "JannaLT-Regular";
+    src: url("//db.onlinewebfonts.com/t/dee436f274c410c23fc3de43367ef1ae.eot");
+    src: url("//db.onlinewebfonts.com/t/dee436f274c410c23fc3de43367ef1ae.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/dee436f274c410c23fc3de43367ef1ae.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/dee436f274c410c23fc3de43367ef1ae.woff") format("woff"), url("//db.onlinewebfonts.com/t/dee436f274c410c23fc3de43367ef1ae.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/dee436f274c410c23fc3de43367ef1ae.svg#JannaLT-Regular") format("svg");
+}
+
+@font-face {
     font-family: naskh;
     src: url(/fonts/DroidNaskh-Regular.ttf?51e724f6664b77347a556815916fa93d) format('truetype');
     font-weight: 400;
@@ -79,7 +91,7 @@
 }
 
 body {
-    font-family: "neotech", "ACNGESS" !important;
+    font-family: "JannaLT-Regular", "ACNGESS" !important;
 }
 
 .timeline-label-100 {

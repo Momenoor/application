@@ -219,6 +219,33 @@ return [
             'condition' => '-',
             'type' => 'expense',
         ],
+        'status' => [
+            'unpaid' => [
+                'color' => 'danger',
+            ],
+            'overpaid' => [
+                'color' => 'info',
+            ],
+            'paid' => [
+                'color' => 'success',
+            ],
+            'partial' => [
+                'color' => 'warning',
+            ],
+        ],
     ],
-
+    'level' => [
+        'first_istance' => [
+            'id' => '1',
+            'name' => 'first_instance'
+        ],
+        'appeal' => [
+            'id' => '2',
+            'name' => 'appeal'
+        ],
+        'cassation' => [
+            'id' => '3',
+            'name' => 'cassation'
+        ],
+    ],
 ];

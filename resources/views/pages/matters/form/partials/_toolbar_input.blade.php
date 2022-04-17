@@ -64,9 +64,42 @@ $claimsStatus = ['paid', 'unpaid', 'partial', 'overpaid'];
                             </label>
                             <!--end::Options-->
                             <!--begin::Options-->
-                            <label class="form-check form-check-sm form-check-custom form-check-solid">
+                            <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
                                 <input class="form-check-input" name="commissioning" type="radio" value="committee" />
                                 <span class="form-check-label">{{ __('app.committee') }}</span>
+                            </label>
+                            <!--end::Options-->
+                            <!--begin::Options-->
+                            <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
+                                <input class="form-check-input" name="commissioning" type="radio" value="" checked="checked" />
+                                <span class="form-check-label">{{ __('app.all') }}</span>
+                            </label>
+                            <!--end::Options-->
+                        </div>
+                        <!--end::Options-->
+                    </div>
+                    <div class="mb-10">
+                        <!--begin::Label-->
+                        <label class="form-label fw-bold">{{ __('app.category') }}:</label>
+                        <!--end::Label-->
+                        <!--begin::Options-->
+                        <div class="d-flex">
+                            <!--begin::Options-->
+                            <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
+                                <input class="form-check-input" name="category" type="radio" value="private" />
+                                <span class="form-check-label">{{ __('app.private') }}</span>
+                            </label>
+                            <!--end::Options-->
+                            <!--begin::Options-->
+                            <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
+                                <input class="form-check-input" name="category" type="radio" value="office" />
+                                <span class="form-check-label">{{ __('app.office') }}</span>
+                            </label>
+                            <!--end::Options-->
+                            <!--begin::Options-->
+                            <label class="form-check form-check-sm form-check-custom form-check-solid me-5">
+                                <input class="form-check-input" name="category" type="radio" value="" checked="checked" />
+                                <span class="form-check-label">{{ __('app.all') }}</span>
                             </label>
                             <!--end::Options-->
                         </div>
@@ -77,13 +110,20 @@ $claimsStatus = ['paid', 'unpaid', 'partial', 'overpaid'];
                         <div class="">
                             @foreach ($claimsStatus as $status)
                                 <div class="mb-5 form-check form-check-sm form-check-custom form-check-solid me-5">
-                                    <input class="form-check-input" type="checkbox" name="claimsCollectionStatus[]"
-                                        value="{{ $status }}" id="{{ $status }}" checked />
+                                    <input class="form-check-input" type="radio" name="claimsCollectionStatus"
+                                        value="{{ $status }}" id="{{ $status }}" />
                                     <label class="form-check-label" for="{{ $status }}">
                                         {{ __('app.' . $status) }}
                                     </label>
                                 </div>
                             @endforeach
+                            <div class="mb-5 form-check form-check-sm form-check-custom form-check-solid me-5">
+                                <input class="form-check-input" type="radio" name="claimsCollectionStatus" value=""
+                                    id="claimStatusAll" checked />
+                                <label class="form-check-label" for="claimStatusAll">
+                                    {{ __('app.all') }}
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <!--end::Input group-->
@@ -169,7 +209,7 @@ $claimsStatus = ['paid', 'unpaid', 'partial', 'overpaid'];
     </div>
     <!--end::Toolbar-->
     <!--begin::Modal - Adjust Balance-->
-    <div class="modal fade" id="export-datatable" tabindex="-1" aria-hidden="true">
+    {{-- <div class="modal fade" id="export-datatable" tabindex="-1" aria-hidden="true">
         <!--begin::Modal dialog-->
         <div class="modal-dialog modal-dialog-centered mw-650px">
             <!--begin::Modal content-->
@@ -235,6 +275,6 @@ $claimsStatus = ['paid', 'unpaid', 'partial', 'overpaid'];
             <!--end::Modal content-->
         </div>
         <!--end::Modal dialog-->
-    </div>
+    </div> --}}
     <!--end::Modal - New Card-->
 </div>

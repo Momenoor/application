@@ -27,7 +27,9 @@ class MatterClaimUpdateStatus
      */
     public function handle(MatterClaimCollected $event)
     {
-        $service = ClaimCollectionStatus::make($event->matter, $event->collection);
-        dd($service->getSumDueClaims());
+        $event->matter->refresh();
+        $service = ClaimCollectionStatus::make($event->matter);
+        $event->matter = $service->updateMatterClaimCollectionStatus();
+        return $event->matter;
     }
 }

@@ -24,10 +24,9 @@ class MatterClaimCollected
      *
      * @return void
      */
-    public function __construct(Matter $matter, Cash $collection)
+    public function __construct(Matter $matter)
     {
         $this->matter = $matter;
-        $this->collection = $collection;
     }
 
     /**

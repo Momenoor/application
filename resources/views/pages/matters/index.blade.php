@@ -33,7 +33,16 @@
                     var searchedStatus = table.state.loaded().columns[1].search.search;
                     statusSelectInput.val(searchedStatus).change();
                     var searchedCommissioning = table.state.loaded().columns[3].search.search;
+                    var searchedCommissioning = table.state.loaded().columns[2].search.search;
+                    var searchedCategory = table.state.loaded().search.search;
+                    var searchedClaimStatus = table.state.loaded().columns[6].search.search;
                     $('#globalFilter input[name="commissioning"][value="' + searchedCommissioning + '"]')
+                        .prop(
+                            'checked', 'checked');
+                    $('#globalFilter input[name="category"][value="' + searchedCategory + '"]')
+                        .prop(
+                            'checked', 'checked');
+                    $('#globalFilter input[name="claimsCollectionStatus"][value="' + searchedClaimStatus + '"]')
                         .prop(
                             'checked', 'checked');
                 }
@@ -48,20 +57,29 @@
 
             resetBtn.on('click', function() {
                 table.column(3).search('');
+                table.column(6).search('');
+                table.column(2).search('');
+                table.search('');
                 table.column(1).search('').draw();
+                statusSelectInput.val("").trigger('change');
+                $('input[name="commissioning"][value=""]').prop('checked', true);
+                $('input[name="category"][value=""]').prop('checked', true);
+                $('input[name="claimsCollectionStatus"][value=""]').prop('checked', true);
             });
 
             filterBtn.on('click', function() {
 
                 var status = statusSelectInput.select2('val');
                 var commissioning = $('#globalFilter input[name="commissioning"]:checked').val();
-                $('input[name="claimsCollectionStatus[]"]:checked').each(function() {
-                    console.log($(this).val());
-                    table.column(1).search($(this).val());
-                });
+                var category = $('#globalFilter input[name="category"]:checked').val();
                 //table.column(1).search(claimStatus);
+                var claimStatus = $('input[name="claimsCollectionStatus"]:checked').val();
+
                 table.column(3).search(commissioning);
+                table.column(2).search(category);
+                table.column(6).search(claimStatus);
                 table.column(1).search(status).draw();
+
             });
 
             var buttons = new $.fn.dataTable.Buttons(table, {

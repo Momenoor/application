@@ -202,9 +202,19 @@ class Matter extends Model
         return Cash::PARTIAL == ClaimCollectionStatus::make($this)->getClaimStatus();
     }
 
+    public function claimsOpen()
+    {
+        return $this->isUnpaid() or $this->isPartial();
+    }
+
     public function dueAmount()
     {
         return ClaimCollectionStatus::make($this)->getSumDueClaims();
+    }
+
+    public function dueClaims()
+    {
+        return ClaimCollectionStatus::make($this)->getDueClaims();
     }
 
     public function isPrivate()
@@ -220,5 +230,10 @@ class Matter extends Model
     public function isNotPrivate()
     {
         return $this->isOffice();
+    }
+
+    public function getClaimStatusColorAttribute()
+    {
+        return config('system.claims.status.' . $this->claim_status . '.color');
     }
 }

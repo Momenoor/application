@@ -67,6 +67,7 @@ class MatterCreateForm extends Component
         'matter.court_id' => 'required|exists:courts,id',
         'matter.type_id' => 'required|exists:types,id',
         'matter.expert_id' => 'required|exists:experts,id',
+        'matter.level_id' => 'required',
         'experts.committee' => 'required_if:matter.commissioning,committee',
         'experts.assistant' => 'required|exists:experts,id',
         'parties.*.type' => 'required',
@@ -115,6 +116,7 @@ class MatterCreateForm extends Component
         $this->externalMarketersList = Party::where('type', 'external_marketer')->get(['id', 'name'])->toArray();
         $this->committeesList = Expert::CommitteesList()->get(['id', 'name'])->toArray();
         $this->marketersList = User::where('category', 'staff')->get(['id', 'display_name'])->toArray();
+        $this->levelList = config('system.level');
         $this->committeeChoiceValue = Matter::COMMITTEE;
         $this->partyTypes = config('system.parties.type');
         $this->claimsTypes = config('system.claims');
@@ -182,6 +184,17 @@ class MatterCreateForm extends Component
             $this->n++;
         }
 
+        if (!in_array($this->matter['expert_id'], config('system.experts.main'))) {
+            $shareRate = floatval(config('system.experts.office_share.rate'));
+            $shareData = [
+                'type' => $this->claimsTypes['office_share'],
+                'amount' => app(Money::class)->getFormattedNumber(data_get($validatedData, 'claim.amount') * $shareRate / 100),
+                'recurring' => $this->claimsTypes['recurring']['values'][data_get($validatedData, 'claim.recurring')]
+            ];
+            $this->claims[$this->n] = $shareData;
+            $this->n++;
+        }
+
         $this->claims[$this->n] = [
             'amount' => app(Money::class)->getFormattedNumber(data_get($validatedData, 'claim.amount')),
             'type' => $this->claimsTypes[data_get($validatedData, 'claim.type')],
@@ -204,7 +217,7 @@ class MatterCreateForm extends Component
             'matter' => $this->matter,
             'claims' => $this->claims,
             'parties' => $this->parties,
-            'experts'=> $this->experts,
+            'experts' => $this->experts,
             'marketing' => $this->marketing,
         ];
 

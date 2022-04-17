@@ -26,22 +26,51 @@ class CashController extends Controller
      */
     public function collect(Matter $matter, Request $request)
     {
+        $collection = null;
         $validated = $request->validate([
             'amount' => 'required|numeric',
             'description' => 'string',
         ]);
 
-        $collection = Cash::make($validated);
+        /* $collection = Cash::make($validated);
 
         if ($request->has('claim')) {
             $collection->claim_id = $request->get('claim');
+        } */
+
+        $claims = $matter->dueClaims();
+
+        foreach ($claims as $claim) {
+            $collection = null;
+            $dueAmount = $claim->getDueAmount();
+            if ($validated['amount'] > 0) {
+
+
+
+                if ($validated['amount'] >= $dueAmount) {
+                    $collection = Cash::make([
+                        'amount' => $dueAmount,
+                        'description' => $validated['description'],
+                        'claim_id' => $claim->id,
+                    ]);
+                    $matter->cashes()->save($collection);
+                    $validated['amount'] = $validated['amount'] - $dueAmount;
+                } else if ($validated['amount'] < $dueAmount) {
+                    $collection = Cash::make([
+                        'amount' => $validated['amount'],
+                        'description' => $validated['description'],
+                        'claim_id' => $claim->id,
+                    ]);
+                    $matter->cashes()->save($collection);
+                    $validated['amount'] = 0;
+                }
+            }
         }
 
-        $matter->cashes()->save($collection);
 
-        MatterClaimCollected::dispatch($matter, $collection);
+        MatterClaimCollected::dispatch($matter);
 
-        return view('pages.matters.show', $matter);
+        return redirect()->to(route('matter.show', $matter))->withToastSuccess('app.claims_collected_successfully');
     }
 
     /**

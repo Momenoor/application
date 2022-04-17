@@ -41,7 +41,7 @@
                             <!--begin::Menu-->
                             <div class="me-0">
                                 <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
-                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start">
                                     <i class="bi bi-three-dots fs-3"></i>
                                 </button>
                                 <!--begin::Menu 3-->
@@ -50,78 +50,32 @@
                                     <!--begin::Heading-->
                                     <div class="menu-item px-3">
                                         <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">
-                                            Payments</div>
+                                            {{ __('app.update_matter_data') }}</div>
                                     </div>
                                     <!--end::Heading-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">Create Invoice</a>
+                                        <a href="#" class="menu-link px-3" data-bs-toggle="modal"
+                                            data-bs-target="#addNextSessionDateModal">{{ __('app.add_next_session_date') }}</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
-                                        <a href="#" class="menu-link flex-stack px-3">Create Payment
-                                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                                                title="Specify a target name for future usage and reference"></i></a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3">Generate Bill</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3" data-kt-menu-trigger="hover"
-                                        data-kt-menu-placement="right-end">
-                                        <a href="#" class="menu-link px-3">
-                                            <span class="menu-title">Subscription</span>
-                                            <span class="menu-arrow"></span>
+                                        <a href="#" class="menu-link flex-stack px-3" data-bs-toggle="modal"
+                                            data-bs-target="#addClaimModal">{{ __('app.add_claim') }}
                                         </a>
-                                        <!--begin::Menu sub-->
-                                        <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Plans</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Billing</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3">Statements</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu separator-->
-                                            <div class="separator my-2"></div>
-                                            <!--end::Menu separator-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <div class="menu-content px-3">
-                                                    <!--begin::Switch-->
-                                                    <label
-                                                        class="form-check form-switch form-check-custom form-check-solid">
-                                                        <!--begin::Input-->
-                                                        <input class="form-check-input w-30px h-20px" type="checkbox"
-                                                            value="1" checked="checked" name="notifications" />
-                                                        <!--end::Input-->
-                                                        <!--end::Label-->
-                                                        <span class="form-check-label text-muted fs-6">Recuring</span>
-                                                        <!--end::Label-->
-                                                    </label>
-                                                    <!--end::Switch-->
-                                                </div>
-                                            </div>
-                                            <!--end::Menu item-->
-                                        </div>
-                                        <!--end::Menu sub-->
+                                    </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
+                                        <a href="#" class="menu-link px-3" data-bs-toggle="modal"
+                                            data-bs-target="#addActivityModal">{{ __('app.add_activity') }}</a>
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3 my-1">
-                                        <a href="#" class="menu-link px-3">Settings</a>
+                                        <a href="#" class="menu-link px-3" data-bs-toggle="modal"
+                                            data-bs-target="#addPartyModal">{{ __('app.add_party') }}</a>
                                     </div>
                                     <!--end::Menu item-->
                                 </div>
@@ -222,3 +176,59 @@
         </div>
     </div>
 </div>
+<div class="modal fade" tabindex="-1" id="addNextSessionDateModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('procedure.next-session', $matter) }}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ __('app.add_next_session_date') }}</h5>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <span class="svg-icon svg-icon-2x"></span>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <div class="modal-body">
+                    <div class="row mb-10">
+                        <div class="col-12">
+                            <label class="required form-label">{{ __('app.next-session-date') }}</label>
+                            <!--end::Label-->
+                            <input type="text" name="datetime" data-control="flatpickr"
+                                class="form-control  form-control-solid"
+                                placeholder="{{ __('app.next-session-date') }}">
+                            <!--end::Input-->
+                        </div>
+                    </div>
+                    <div class="row mb-10">
+                        <div class="col-12">
+                            <label class="required form-label">البيان</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <textarea name="description" class="form-control  form-control-solid"
+                                placeholder="{{ __('app.description') }}"></textarea>
+                            <!--end::Input-->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-light"
+                        data-bs-dismiss="modal">{{ __('app.cancel') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('app.add') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@push('scripts')
+    <script>
+        $('[data-control="flatpickr"]').flatpickr({
+            altInput: !0,
+            altFormat: "d F, Y",
+            dateFormat: "Y-m-d"
+        });
+    </script>
+@endpush

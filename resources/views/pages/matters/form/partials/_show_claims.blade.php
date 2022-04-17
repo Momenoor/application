@@ -1,17 +1,15 @@
 <div class="card card-flush">
     <!--begin::Card header-->
-    <div class="card-header mt-6">
+    <div class="card-header border-bottom mt-6 ribbon ribbon-end ribbon-clip">
+        <div class="ribbon-label">
+            {{ __('app.' . $matter->claim_status) }}
+            <span class="ribbon-inner bg-{{ $matter->claim_status_color }}"></span>
+        </div>
         <!--begin::Card title-->
         <div class="card-title flex-column">
             <h3 class="fw-bolder mb-1">{{ __('app.claims') }}</h3>
         </div>
         <!--end::Card title-->
-        <!--begin::Card toolbar-->
-        <div class="card-toolbar">
-            <button type="button" class="btn btn-bg-light btn-active-color-primary btn-sm" data-bs-toggle="modal"
-                data-bs-target="#collectionModal">{{ __('app.collect') }}</a>
-        </div>
-        <!--end::Card toolbar-->
     </div>
     <!--end::Card header-->
     <!--begin::Card body-->
@@ -58,10 +56,20 @@
                             AED</th>
                     </tr>
                     <tr class="border-top">
-                        <th class="text-center text-gray-800 fw-bolder fs-6" colspan="3">{{ __('app.collected') }}</th>
-                        <th class="text-center text-success fw-bolder d-block fs-6">{{ $matter->cash_sum_amount }} AED
+                        <th class="text-center text-gray-800 fw-bolder fs-6" colspan="3">{{ __('app.collected') }}
+                        </th>
+                        <th class="text-center text-success fw-bolder d-block fs-6">{{ $matter->cash_sum_amount }}
+                            AED
                         </th>
                     </tr>
+                    @if ($matter->claimsOpen())
+                        <tr>
+                            <td colspan="4" class="text-end">
+                                <button type="button" class="btn btn-success btn-sm w-25" data-bs-toggle="modal"
+                                    data-bs-target="#collectionModal">{{ __('app.collect') }}</button>
+                            </td>
+                        </tr>
+                    @endif
                 </tfoot>
                 <!--end::Table body-->
             </table>

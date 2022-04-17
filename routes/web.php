@@ -6,6 +6,7 @@ use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\MatterController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ProcedureController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\UserController;
@@ -39,6 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('court', CourtController::class);
     Route::resource('user', UserController::class);
     Route::resource('permission', PermissionController::class);
+    Route::post('procedure/{matter}/next-session', [ProcedureController::class,'addNextSessionDate'])->name('procedure.next-session');
+    Route::resource('procedure', ProcedureController::class);
     Route::resource('role', RoleController::class);
     Route::post('/cash/{matter}/collect', [CashController::class, 'collect'])->name('cash.collect');
     Route::get('tools/fix-claim-status',[ToolsController::class,'fixClaimsStatus'])->name('tools.fix-claim-status');

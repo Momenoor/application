@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\Cash;
 use App\Models\Matter;
 use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
@@ -31,25 +32,30 @@ class MatterDataTable extends DataTable
             ->filterColumn('number', function ($query, $keyword) {
                 $query->orWhere('matters.number', 'like', '%' . $keyword . '%')
                     ->orWhere('matters.year', 'like', '%' . $keyword . '%')
-                    ->orWhere('matters.status', 'like', '%' . $keyword . '%')
-                    ->orWhere('matters.claim_status', 'like', '%' . $keyword . '%');
+                    ->orWhere('matters.status', 'like', '%' . $keyword . '%');
             })
 
 
             ->editColumn('expert_id', function ($model) {
 
                 return '<div class="position-relative">
-                                ' . ($model->expert->name ?? null) . '
-                                ' . ((!$model->has('assistants')) ?:
-                    '<div class="fs-7 text-muted fw-bolder">' . ($model->assistant->name ?? null) . '</div>') . '
+                                ' . (optional($model->expert)->name) .
+                    '<div class="fs-7 text-muted fw-bolder">' . optional($model->assistant)->name . '</div>
                         </div>';
             })
 
 
             ->filterColumn('expert_id', function ($query, $keyword) {
 
-                $query->whereRelation('expert', 'experts.name', 'like', '%' . $keyword . '%')
-                    ->orWhereRelation('assistants', 'experts.name', 'like', '%' . $keyword . '%');
+                $mainExperts = config('system.experts.main');
+                if ($keyword == 'private') {
+                    $query->whereNotIn('matters.expert_id', $mainExperts);
+                } else if ($keyword == 'office') {
+                    $query->whereIn('matters.expert_id', $mainExperts);
+                } else {
+                    $query->whereRelation('expert', 'experts.name', 'like', '%' . $keyword . '%')
+                        ->orWhereRelation('assistants', 'experts.name', 'like', '%' . $keyword . '%');
+                }
             })
 
 
@@ -80,7 +86,7 @@ class MatterDataTable extends DataTable
 
 
             ->filterColumn('plaintiff_name', function ($query, $keyword) {
-
+                $mainExperts = config('system.experts.main');
                 $query->whereRelation('parties', 'parties.name', 'like', '%' . $keyword . '%');
             })
 
@@ -104,6 +110,7 @@ class MatterDataTable extends DataTable
                 $query->whereHas('claims', function ($query) use ($keyword) {
                     $query->having(\DB::raw('SUM(claims.amount)'), 'like', '%' . $keyword . '%')->groupBy('claims.matter_id');
                 });
+                $query->orWhere('matters.claim_status', $keyword);
             })
 
 
@@ -111,7 +118,6 @@ class MatterDataTable extends DataTable
 
                 return view('common.table-action')->with('model', $model);
             })
-
 
             ->rawColumns(['number', 'expert_id', 'court_id', 'plaintiff_name', 'next_session_date']);
     }

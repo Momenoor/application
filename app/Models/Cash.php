@@ -49,4 +49,14 @@ class Cash extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public static function statusList()
+    {
+        return [
+            self::PAID,
+            self::UNPAID,
+            self::OVERPAID,
+            self::PARTIAL,
+        ];
+    }
 }

@@ -73,7 +73,7 @@
     <div class="separator separator-dashed my-5"></div>
     <div class="form-group">
         <a href="javascript:;" class="btn btn-sm btn-block btn-warning col-12" wire:click="addParty">
-            <i class="la la-plus"></i>{{ __('add') }}
+            <i class="la la-plus"></i>{{ __('app.add') }}
         </a>
     </div>
 </div>
