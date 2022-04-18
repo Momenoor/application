@@ -119,7 +119,7 @@ class MatterCreateForm extends Component
         $this->levelList = config('system.level');
         $this->committeeChoiceValue = Matter::COMMITTEE;
         $this->partyTypes = config('system.parties.type');
-        $this->claimsTypes = config('system.claims');
+        $this->claimsTypes = config('system.claims.types');
         $this->addParty();
     }
     public function render()
