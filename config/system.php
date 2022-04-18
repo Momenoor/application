@@ -143,81 +143,83 @@ return [
 
 
     'claims' => [
-        'main' => [
-            'id' => 1,
-            'name' => 'Main',
-            'color' => 'success',
-            'display' => true,
-            'condition' => '+',
-            'type' => 'income',
-        ],
-        'additional' => [
-            'id' => 2,
-            'name' => 'Additional',
-            'color' => 'secondary',
-            'display' => true,
-            'condition' => '+',
-            'type' => 'income',
-        ],
-        'penality' => [
-            'id' => 3,
-            'name' => 'Penality',
-            'color' => 'danger',
-            'display' => true,
-            'condition' => '-',
-            'type' => 'expense',
-        ],
-        'recurring' => [
-            'id' => 4,
-            'name' => 'Recurring',
-            'color' => 'warning',
-            'display' => false,
-            'values' => [
-                'none' => [
-                    'name' => 'None',
-                    'color' => 'danger'
-                ],
-                'monthly' => [
-                    'name' => 'Monthly',
-                    'color' => 'success'
-                ],
-                'quartely' => [
-                    'name' => 'Quartely',
-                    'color' => 'primary'
-                ],
-                'half-yearly' => [
-                    'name' => 'Half-yearly',
-                    'color' => 'warning'
-                ],
-                'yearly' => [
-                    'name' => 'Yearly',
-                    'color' => 'info'
-                ],
-            ]
-        ],
-        'vat' => [
-            'id' => 5,
-            'name' => 'VAT',
-            'color' => 'dark',
-            'display' => false,
-            'condition' => '+',
-            'type' => 'income',
-        ],
-        'office_share' => [
-            'id' => 6,
-            'name' => 'Office Share',
-            'color' => 'warning',
-            'display' => true,
-            'condition' => '-',
-            'type' => 'expense',
-        ],
-        'commission' => [
-            'id' => 6,
-            'name' => 'Commission',
-            'color' => 'primary',
-            'display' => false,
-            'condition' => '-',
-            'type' => 'expense',
+        'types' => [
+            'main' => [
+                'id' => 1,
+                'name' => 'Main',
+                'color' => 'success',
+                'active' => true,
+                'condition' => '+',
+                'type' => 'income',
+            ],
+            'additional' => [
+                'id' => 2,
+                'name' => 'Additional',
+                'color' => 'secondary',
+                'active' => true,
+                'condition' => '+',
+                'type' => 'income',
+            ],
+            'penality' => [
+                'id' => 3,
+                'name' => 'Penality',
+                'color' => 'danger',
+                'active' => true,
+                'condition' => '-',
+                'type' => 'expense',
+            ],
+            'recurring' => [
+                'id' => 4,
+                'name' => 'Recurring',
+                'color' => 'warning',
+                'active' => false,
+                'values' => [
+                    'none' => [
+                        'name' => 'None',
+                        'color' => 'danger'
+                    ],
+                    'monthly' => [
+                        'name' => 'Monthly',
+                        'color' => 'success'
+                    ],
+                    'quartely' => [
+                        'name' => 'Quartely',
+                        'color' => 'primary'
+                    ],
+                    'half-yearly' => [
+                        'name' => 'Half-yearly',
+                        'color' => 'warning'
+                    ],
+                    'yearly' => [
+                        'name' => 'Yearly',
+                        'color' => 'info'
+                    ],
+                ]
+            ],
+            'vat' => [
+                'id' => 5,
+                'name' => 'VAT',
+                'color' => 'dark',
+                'active' => false,
+                'condition' => '+',
+                'type' => 'income',
+            ],
+            'office_share' => [
+                'id' => 6,
+                'name' => 'Office Share',
+                'color' => 'warning',
+                'active' => true,
+                'condition' => '-',
+                'type' => 'expense',
+            ],
+            'commission' => [
+                'id' => 6,
+                'name' => 'Commission',
+                'color' => 'primary',
+                'active' => false,
+                'condition' => '-',
+                'type' => 'expense',
+            ],
         ],
         'status' => [
             'unpaid' => [

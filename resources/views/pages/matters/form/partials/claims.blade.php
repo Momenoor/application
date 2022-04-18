@@ -26,7 +26,7 @@
                     data-placeholder="{{__('app.select_a_type')}}">
                     <option></option>
                     @foreach ($claimsTypes as $id => $type)
-                        @if ($type['display'])
+                        @if ($type['actice'])
                             <option value="{{ $id }}">{{ __('app.' . $id) }}</option>
                         @endif
                     @endforeach
