@@ -21,6 +21,9 @@ class MatterController extends Controller
      */
     public function index(MatterDataTable $dataTable)
     {
+
+        abort_unless(auth()->user()->canAny(['matter-view', 'matter-only-own-view']), '403');
+
         return $dataTable->render('pages.matters.index');
     }
 
@@ -31,6 +34,7 @@ class MatterController extends Controller
      */
     public function create()
     {
+        abort_unless(auth()->user()->can('matter-create'), '403');
         return view('pages.matters.form.create');
     }
 
@@ -43,6 +47,13 @@ class MatterController extends Controller
      */
     public function show(Matter $matter)
     {
+
+        abort_unless(auth()->user()->canAny(['matter-view','matter-only-own-view']), '403');
+
+        if (auth()->user()->can('matter-only-own-view') && $matter->assistant->id != auth()->user()->expert->id) {
+            abort('403');
+        }
+
         $parties = MatterService::partiesResolve($matter);
         return view('pages.matters.show', compact('matter', 'parties'));
     }
@@ -55,6 +66,7 @@ class MatterController extends Controller
      */
     public function edit(Matter $matter)
     {
+        abort_unless(auth()->user()->can('matter-edit'), '403');
         $id = $matter->id;
         return view('pages.matters.form.update', compact('id'));
     }
@@ -67,12 +79,13 @@ class MatterController extends Controller
      */
     public function destroy(Matter $matter)
     {
+        abort_unless(auth()->user()->can('matter-delete'), '403');
         return redirect(route('matter.index'))->withToastSuccess(__('app.matter_successfully_deleted'));
     }
 
     public function changeStatus(Matter $matter, $status)
     {
-
+        abort_unless(auth()->user()->can('matter-change-status'), '403');
         $statuses = config('system.matter.status');
         if (!is_null($status)) {
             if (key_exists($status, $statuses)) {
@@ -95,6 +108,7 @@ class MatterController extends Controller
 
     public function exportFilterForm()
     {
+        abort_unless(auth()->user()->can('matter-export'), '403');
         $experts = Expert::whereIn('category', [Expert::MAIN, Expert::CERTIFIED])->pluck('name', 'id');
         $assistants = Expert::whereIn('category', [Expert::MAIN, Expert::CERTIFIED, Expert::ASSISTANT])->pluck('name', 'id');
         $types = Type::pluck('name', 'id');
@@ -123,6 +137,4 @@ class MatterController extends Controller
         return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus', 'result')); */
         return (new MattersExport($request))->download('matters-' . now() . '.xlsx');
     }
-
-
 }

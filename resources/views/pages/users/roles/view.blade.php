@@ -46,7 +46,7 @@
                     <!--begin::Card title-->
                     <div class="card-title">
                         <h2 class="d-flex align-items-center">{{ __('app.users_assigned') }}
-                            <span class="text-gray-600 fs-6 ms-1">({{ $role->users_count }})</span>
+                            <span class="text-gray-600 fs-6 ms-1">({{ $role->users->count() }})</span>
                         </h2>
                     </div>
                     <!--end::Card title-->
@@ -76,7 +76,8 @@
                         <!--end::Table head-->
                         <!--begin::Table body-->
                         <tbody class="fw-bold text-gray-600">
-                            @if ($role->user_count > 0)
+
+                            @if ($role->users->count() > 0)
                                 @foreach ($role->users as $user)
                                     <tr>
                                         <!--begin::ID-->
@@ -88,7 +89,7 @@
                                             <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                                 <a href="/seven-html-pro/?page=apps/user-management/users/view">
                                                     <div class="symbol-label">
-                                                        <img src="{{ asset('assets/media/avatars/300-6.jpg') }}"
+                                                        <img src="{{ asset('assets/media/avatars/300-7.jpg') }}"
                                                             alt="{{ $user->name }}" class="w-100" />
                                                     </div>
                                                 </a>

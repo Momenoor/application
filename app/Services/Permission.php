@@ -14,6 +14,9 @@ class Permission
         'edit',
         'create',
         'delete',
+        'export',
+        'change-status',
+        'only-own',
     ];
 
     public static function resolve($permissions)

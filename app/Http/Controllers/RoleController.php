@@ -60,7 +60,7 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        $role->withCount('users');
+        $role->with('users');
         return view('pages.users.roles.view', compact('role'));
     }
 

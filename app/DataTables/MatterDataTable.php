@@ -130,16 +130,32 @@ class MatterDataTable extends DataTable
      */
     public function query(Matter $model)
     {
-        return $model->with([
-            'court',
-            'expert',
-            'assistants',
-            'plaintiffs',
-            'defendants',
-            'type',
-            'claims',
-            'cashes'
-        ])->withSum('claims', 'amount')->newQuery();
+
+
+        if (auth()->user()->can('matter-only-own-view')) {
+            return $model->with([
+                'court',
+                'expert',
+                'assistants',
+                'plaintiffs',
+                'defendants',
+                'type',
+                'claims',
+                'cashes'
+            ])->withSum('claims', 'amount')->whereRelation('assistants', 'experts.id', '=', auth()->user()->expert->id)->newQuery();
+        }
+        if (auth()->user()->can('matter-view')) {
+            return  $model->with([
+                'court',
+                'expert',
+                'assistants',
+                'plaintiffs',
+                'defendants',
+                'type',
+                'claims',
+                'cashes'
+            ])->withSum('claims', 'amount')->newQuery();
+        }
     }
 
     /**

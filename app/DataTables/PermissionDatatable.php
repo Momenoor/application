@@ -21,6 +21,12 @@ class PermissionDatatable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('role',function($model){
+                return $model->roles->map(function($item){
+                    return $item->name;
+                })->all();
+
+            })
             ->addColumn('action', 'common.table-action');
     }
 
