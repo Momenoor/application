@@ -105,6 +105,9 @@ class MatterDataTable extends DataTable
                     ->orWhere('matters.received_date', 'like', '%' . $keyword . '%');
             }) */
 
+            ->editColumn('claims_sum_amount', function ($model) {
+                return '<span class="text-' . $model->getClaimStatusColorAttribute() . '"></span>';
+            })
 
             ->filterColumn('claims_sum_amount', function ($query, $keyword) {
                 $query->whereHas('claims', function ($query) use ($keyword) {
