@@ -56,6 +56,10 @@
 
                     @this.set('matter.court_id', $(this).select2("val"));
                 });
+                $("select[name='level_id']").on('change', function(e) {
+
+                    @this.set('matter.level_id', $(this).select2("val"));
+                });
                 $("select[name='expert_id']").on('change', function(e) {
 
                     @this.set('matter.expert_id', $(this).select2("val"));
