@@ -106,7 +106,7 @@ class MatterDataTable extends DataTable
             }) */
 
             ->editColumn('claims_sum_amount', function ($model) {
-                return '<span class="text-' . $model->getClaimStatusColorAttribute() . '">' . $model->claim_status . '</span>';
+                return '<div class="text-' . $model->getClaimStatusColorAttribute() . '">' . $model->claim_sum_amount . '</div>';
             })
 
             ->filterColumn('claims_sum_amount', function ($query, $keyword) {
