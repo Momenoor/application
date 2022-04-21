@@ -94,6 +94,7 @@ class MatterCreateForm extends Component
         'matter.court_id' => 'Court',
         'matter.type_id' => 'Type',
         'matter.expert_id' => 'Expert',
+        'matter.level_id' => 'Level',
         'experts.committee' => 'Committee',
         'experts.assistant' => 'ASsistant',
         'parties.*.type' => 'Party Type',

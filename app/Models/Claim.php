@@ -93,12 +93,12 @@ class Claim extends Model
 
     public function getTypeColorAttribute()
     {
-        return config('system.claims.' . \Str::lower($this->type) . '.color');
+        return config('system.claims.types.' . \Str::lower($this->type) . '.color');
     }
 
     public function getRecurringColorAttribute()
     {
-        return config('system.claims.recurring.values.' . \Str::lower($this->recurring) . '.color');
+        return config('system.claims.types.recurring.values.' . \Str::lower($this->recurring) . '.color');
     }
 
     public function collect()
