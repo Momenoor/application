@@ -40,7 +40,7 @@ class MatterDataTable extends DataTable
 
                 return '<div class="position-relative">
                                 ' . (optional($model->expert)->name) .
-                    '<div class="fs-7 text-muted fw-bolder">' . optional($model->assistant)->name . '</div>
+                    '<div class="fs-7 text-muted ">' . optional($model->assistant)->name . '</div>
                         </div>';
             })
 
@@ -63,7 +63,7 @@ class MatterDataTable extends DataTable
 
                 return '<div class="position-relative">
                                 ' . ($model->court->name ?? null) . '
-                            <div class="fs-7 text-muted fw-bolder">' . ($model->type->name ?? null) . '</div>
+                            <div class="fs-7 text-muted">' . ($model->type->name ?? null) . '</div>
                         </div>';
             })
 
@@ -94,7 +94,7 @@ class MatterDataTable extends DataTable
             ->editColumn('next_session_date', function ($model) {
                 return '<div class="position-relative">
                                 ' .  (($model->next_session_date instanceof Carbon) ? $model->next_session_date->format('Y-m-d') : __('app.not-set')) . '
-                            <div class="fs-7 text-muted fw-bolder">' .  $model->received_date->format('Y-m-d') . '</div>
+                            <div class="fs-7 text-muted">' .  $model->received_date->format('Y-m-d') . '</div>
                         </div>';
             })
 
@@ -106,11 +106,7 @@ class MatterDataTable extends DataTable
             }) */
 
             ->editColumn('claims_sum_amount', function ($model) {
-                return '<div class="text-
-                ' . $model->getClaimStatusColorAttribute() . '
-                ">
-                ' . $model->claims_sum_amount . '
-                </div>';
+                return '<div class="text-' . $model->getClaimStatusColorAttribute() . '" data-bs-toggle="tooltip" data-bs-placement="top" title="' . __('app.' . $model->claim_status) . '">' . $model->claims_sum_amount . '</div>';
             })
 
             ->filterColumn('claims_sum_amount', function ($query, $keyword) {
@@ -126,7 +122,7 @@ class MatterDataTable extends DataTable
                 return view('common.table-action')->with('model', $model);
             })
 
-            ->rawColumns(['number', 'expert_id', 'court_id', 'plaintiff_name', 'next_session_date']);
+            ->rawColumns(['number', 'expert_id', 'court_id', 'plaintiff_name', 'next_session_date', 'claims_sum_amount']);
     }
 
     /**
@@ -229,8 +225,7 @@ class MatterDataTable extends DataTable
 
             Column::make('claims_sum_amount')
                 ->searchable(true)
-                ->title(__('app.claims'))
-                ->class('text-end pe-3'),
+                ->title(__('app.claims')),
 
         ];
     }

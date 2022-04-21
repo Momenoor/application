@@ -526,7 +526,7 @@ License: For each use you must have a valid license purchased only from above li
     <!--begin::Page Vendors Javascript(used by this page)-->
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <!--end::Page Vendors Javascript-->
-    <!--begin::Page Custom Javascript(used by this page)-->
+{{--     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
     <script src="{{ asset('assets/js/custom/apps/chat/chat.js') }}"></script>
@@ -537,7 +537,7 @@ License: For each use you must have a valid license purchased only from above li
     <script src="{{ asset('assets/js/custom/utilities/modals/offer-a-deal/complete.js') }}"></script>
     <script src="{{ asset('assets/js/custom/utilities/modals/offer-a-deal/main.js') }}"></script>
     <script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
-    <!--end::Page Custom Javascript-->
+    <!--end::Page Custom Javascript--> --}}
     @livewireScripts
     @include('sweetalert::alert')
     @stack('scripts')

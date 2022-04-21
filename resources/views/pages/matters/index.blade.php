@@ -42,10 +42,13 @@
                     $('#globalFilter input[name="category"][value="' + searchedCategory + '"]')
                         .prop(
                             'checked', 'checked');
-                    $('#globalFilter input[name="claimsCollectionStatus"][value="' + searchedClaimStatus + '"]')
+                    $('#globalFilter input[name="claimsCollectionStatus"][value="' + searchedClaimStatus +
+                            '"]')
                         .prop(
                             'checked', 'checked');
                 }
+
+                $('[data-bs-toggle="tooltip"]').tooltip();
 
             });
 
