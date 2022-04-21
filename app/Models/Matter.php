@@ -39,15 +39,6 @@ class Matter extends Model
     public const INDIVIDUAL = 'individual';
     public const COMMITTEE = 'committee';
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($query) {
-            $query->user_id = auth()->id();
-            $query->status = 'current';
-        });
-    }
 
     public function getAssistantAttribute()
     {

@@ -48,7 +48,7 @@ class MatterController extends Controller
     public function show(Matter $matter)
     {
 
-        abort_unless(auth()->user()->canAny(['matter-view','matter-only-own-view']), '403');
+        abort_unless(auth()->user()->canAny(['matter-view', 'matter-only-own-view']), '403');
 
         if (auth()->user()->can('matter-only-own-view') && $matter->assistant->id != auth()->user()->expert->id) {
             abort('403');
@@ -80,6 +80,7 @@ class MatterController extends Controller
     public function destroy(Matter $matter)
     {
         abort_unless(auth()->user()->can('matter-delete'), '403');
+        $matter->delete();
         return redirect(route('matter.index'))->withToastSuccess(__('app.matter_successfully_deleted'));
     }
 

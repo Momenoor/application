@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Events\MatterClaimCollected;
 use App\Listeners\MatterClaimUpdateStatus;
+use App\Models\Matter;
+use App\Observers\MatterObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -32,6 +34,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Matter::observe(MatterObserver::class);
     }
 }
