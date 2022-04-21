@@ -48,9 +48,11 @@
                             'checked', 'checked');
                 }
 
-                $('[data-bs-toggle="tooltip"]').tooltip();
-
             });
+
+            table.on('draw', function() {
+                $('[data-bs-toggle="tooltip"]').tooltip();
+            })
 
             searchInput.on('search', function() {
 
