@@ -445,7 +445,7 @@ License: For each use you must have a valid license purchased only from above li
                             <!--begin::Page title-->
                             <div class="page-title d-flex flex-column me-3">
                                 <!--begin::Title-->
-                                <h1 class="d-flex text-dark fw-bolder my-1 fs-3">Offer a Deal</h1>
+                                <h1 class="d-flex text-dark fw-bolder my-1 fs-3">{{__('app.matters-management-system')}}</h1>
                                 <!--end::Title-->
                                 <!--begin::Breadcrumb-->
                                 {{-- {{ Breadcrumbs::render(Route::currentRouteName(),$matter) }} --}}

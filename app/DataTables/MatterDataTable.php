@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\Cash;
 use App\Models\Matter;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
@@ -30,6 +31,11 @@ class MatterDataTable extends DataTable
 
 
             ->filterColumn('number', function ($query, $keyword) {
+                if (Str::contains($keyword, '/')) {
+                    $keywords = Str::of($keyword)->explode('/');
+                    $query->whereIn('matters.number', $keywords)
+                        ->whereIn('matters.year', $keywords);
+                }
                 $query->orWhere('matters.number', 'like', '%' . $keyword . '%')
                     ->orWhere('matters.year', 'like', '%' . $keyword . '%')
                     ->orWhere('matters.status', 'like', '%' . $keyword . '%');
