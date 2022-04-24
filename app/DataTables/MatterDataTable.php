@@ -141,7 +141,7 @@ class MatterDataTable extends DataTable
     {
 
 
-        if (auth()->user()->can('matter-only-own-view')) {
+        if (auth()->user()->can('matter-only-own-view') && auth()->user()->cannot('matter-view')) {
             return $model->with([
                 'court',
                 'expert',

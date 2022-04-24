@@ -3,6 +3,7 @@ $n = 1;
 @endphp
 @if (count($items) > 0)
     @foreach ($items as $item)
+
         <tr>
             <td>
                 <div class="symbol symbol-45px me-2">
@@ -13,6 +14,7 @@ $n = 1;
                 </div>
             </td>
             <td>
+
                 <a href="#"
                     class="text-dark fw-bold text-hover-{{ $item['color'] }} mb-1 fs-6">{{ $item['name'] }}</a>
 

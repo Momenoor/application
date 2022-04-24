@@ -20,13 +20,13 @@
                             <!--end::Label-->
                             <!--begin::Input-->
                             <div class="input-group input-group-solid">
-                                <input type="text" name="amount"
-                                    class="form-control @error('amount') is-invalid @enderror form-control-solid"
-                                    placeholder="Amount" />
+                                <input type="text" name="cash[amount]"
+                                    class="form-control @error('cash.amount') is-invalid @enderror form-control-solid"
+                                    placeholder="{{__('app.enter').' '.__('app.amount')}}" value="{{old('cash.amount')}}"/>
                                 <!--end::Input-->
                                 <span class="input-group-text">AED</span>
                             </div>
-                            @error('amount')
+                            @error('cash.amount')
                                 <div class="fv-plugins-message-container invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -38,11 +38,11 @@
                             <label class="required form-label">{{ __('app.description') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <textarea name="description" class="form-control @error('amount') is-invalid @enderror form-control-solid"
-                                placeholder="Description"></textarea>
+                            <textarea name="cash[description]" class="form-control @error('cash.description') is-invalid @enderror form-control-solid"
+                                placeholder="{{__('app.enter').' '.__('app.description')}}">{{old('cash.description')}}</textarea>
                             <!--end::Input-->
                         </div>
-                        @error('description')
+                        @error('cash.description')
                             <div class="fv-plugins-message-container invalid-feedback">
                                 {{ $message }}
                             </div>

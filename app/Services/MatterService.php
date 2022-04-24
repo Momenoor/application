@@ -27,12 +27,19 @@ class MatterService
 
     protected $query;
 
-    public function __construct()
+    public function __construct(Matter $matter)
     {
-        $this->query = Matter::query();
+        if ($matter instanceof Matter) {
+            $this->query = $matter;
+        } else {
+            $this->query = Matter::query();
+        }
     }
 
-
+    public static function make(Matter $matter)
+    {
+        return new static($matter);
+    }
     public static function resolve($data): array
     {
         $matter = [];
@@ -140,11 +147,11 @@ class MatterService
         $newPrties = [];
         $parties = $matter->parties;
         foreach ($parties as $party) {
-
-            $party->color = config('system.parties.type.' . $party->pivot->type . '.color');
+            $partyType = \Str::replace('_advocate', '', $party->pivot->type);
+            $party->color = config('system.parties.type.' . $partyType . '.color');
             $newPrties[$party->id] = $party->toArray();
-            if ($party->pivot->parent_id != 0) {
 
+            if ($party->pivot->parent_id != 0) {
                 $newPrties[$party->pivot->parent_id]['subparty'][$party->id] = $party;
                 unset($newPrties[$party->id]);
             }
@@ -162,7 +169,7 @@ class MatterService
             $related = [$related];
         }
         if (is_array($related) && count($related) > 0) {
-            $matter->with('');
+            $matter->with($related);
         }
     }
 
@@ -217,5 +224,12 @@ class MatterService
         $this->query->with($this->with);
 
         return $this->query;
+    }
+
+    public function getPartyType($id)
+    {
+
+        $party = $this->query->parties()->wherePivot('party_id', $id)->first();
+        return $party->pivot->type;
     }
 }

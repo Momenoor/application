@@ -8,6 +8,7 @@ use App\Models\Cash;
 use App\Models\Court;
 use App\Models\Expert;
 use App\Models\Matter;
+use App\Models\Party;
 use App\Models\Type;
 use App\Services\MatterService;
 use Illuminate\Http\Request;
@@ -47,15 +48,18 @@ class MatterController extends Controller
      */
     public function show(Matter $matter)
     {
-
         abort_unless(auth()->user()->canAny(['matter-view', 'matter-only-own-view']), '403');
 
-        if (auth()->user()->can('matter-only-own-view') && $matter->assistant->id != auth()->user()->expert->id) {
+        if (auth()->user()->can('matter-only-own-view') && auth()->user()->cannot('matter-view') && ($matter->assistant->id != auth()->user()->expert->id or $matter->expert_id != auth()->user()->expert->id)) {
             abort('403');
         }
 
+        $claimsTypes = config('system.claims.types');
+        $partiesTypes = config('system.parties.type');
         $parties = MatterService::partiesResolve($matter);
-        return view('pages.matters.show', compact('matter', 'parties'));
+        $assistants = Expert::where('category', 'assistant')->get(['id', 'name']);
+        $subParties = Party::whereIn('type', ['office', 'advocate', 'advisor'])->get(['id', 'name']);
+        return view('pages.matters.show', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties','assistants'));
     }
 
     /**

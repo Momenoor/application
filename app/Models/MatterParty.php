@@ -15,6 +15,7 @@ class MatterParty extends Pivot
         'type',
     ];
 
+    public $timestamps = true;
 
     public function subParties(){
 

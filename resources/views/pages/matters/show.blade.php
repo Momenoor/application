@@ -8,7 +8,9 @@
                 <!--begin::Card-->
                 <div class="mb-5">
                     @include('pages.matters.form.partials._show_claims')
-                    @include('pages.matters.form.partials._collection_modal')
+                    @include(
+                        'pages.cashes._collection_modal'
+                    )
                 </div>
                 <div class="mb-5">
                     @include('pages.matters.form.partials._show_parties')
@@ -147,4 +149,39 @@
                 });
         });
     </script>
+
+    @if ($errors->hasAny(['procedure.datetime', 'procedure.description']))
+        <script>
+            new bootstrap.Modal($('#addNextSessionDateModal')).show();
+        </script>
+    @endif
+
+    @if ($errors->hasAny(['claim.amount', 'claim.type', 'claim.recurring']))
+        <script>
+            new bootstrap.Modal($('#addClaimModal')).show();
+        </script>
+    @endif
+
+    @if ($errors->hasAny(['party.type', 'party.name', 'party.phone', 'party.email']))
+        <script>
+            new bootstrap.Modal($('#addPartyModal')).show();
+        </script>
+    @endif
+    @if ($errors->hasAny(['party.id', 'party.subparty']))
+        <script>
+            new bootstrap.Modal($('#addAdvocateModal')).show();
+        </script>
+    @endif
+
+    @if ($errors->hasAny(['expert.assistant']))
+        <script>
+            new bootstrap.Modal($('#addAssistantModal')).show();
+        </script>
+    @endif
+    @if ($errors->hasAny(['cash.amount','cash.description']))
+        <script>
+            new bootstrap.Modal($('#collectionModal')).show();
+        </script>
+    @endif
+
 @endpush

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\MatterClaimCollected;
+use App\Events\MatterClaimChanged;
 use App\Models\Cash;
 use App\Models\Matter;
 use Illuminate\Http\Request;
@@ -28,8 +28,8 @@ class CashController extends Controller
     {
         $collection = null;
         $validated = $request->validate([
-            'amount' => 'required|numeric',
-            'description' => 'string',
+            'cash.amount' => 'required|numeric',
+            'cash.description' => 'string|nullable',
         ]);
 
         /* $collection = Cash::make($validated);
@@ -39,7 +39,7 @@ class CashController extends Controller
         } */
 
         $claims = $matter->dueClaims();
-
+        $validated = $validated['cash'];
         foreach ($claims as $claim) {
             $collection = null;
             $dueAmount = $claim->getDueAmount();
@@ -68,7 +68,7 @@ class CashController extends Controller
         }
 
 
-        MatterClaimCollected::dispatch($matter);
+        MatterClaimChanged::dispatch($matter);
 
         return redirect()->to(route('matter.show', $matter))->withToastSuccess('app.claims_collected_successfully');
     }

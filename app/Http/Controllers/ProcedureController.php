@@ -88,14 +88,13 @@ class ProcedureController extends Controller
     {
 
         $validate = $this->validate($request, [
-            'datetime' => 'required',
-            'description' => 'string|nullable',
+            'procedure.datetime' => 'required',
+            'procedure.description' => 'string|nullable',
         ]);
-        if (empty($validate['description'])) {
-            $validate['description'] = 'next_session_date';
-        }
-        $validate['type'] = 'next_session_date';
 
+        $validate = $validate['procedure'];
+
+        $validate['type'] = 'next_session_date';
         $matter->next_session_date = $validate['datetime'];
         $matter->procedures()->create($validate);
         $matter->save();

@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Events\MatterClaimCollected;
+use App\Events\MatterClaimChanged;
 use App\Listeners\MatterClaimUpdateStatus;
 use App\Models\Matter;
 use App\Observers\MatterObserver;
@@ -22,7 +22,7 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        MatterClaimCollected::class => [
+        MatterClaimChanged::class => [
             MatterClaimUpdateStatus::class,
         ],
     ];

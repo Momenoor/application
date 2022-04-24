@@ -12,7 +12,7 @@ class Procedure extends Model
     protected $fillable = [
         'type',
         'datetime',
-        'descrtiption',
+        'description',
         'link',
         'link_type',
         'matter_id',

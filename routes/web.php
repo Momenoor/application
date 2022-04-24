@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CashController;
+use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\CourtController;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\MatterController;
@@ -32,18 +33,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/matter/{matter}/change-status/{status}', [MatterController::class, 'changeStatus'])->name('matter.change-status');
     Route::get('/matter/export', [MatterController::class, 'exportFilterForm'])->name('matter.export-form');
     Route::post('/matter/export', [MatterController::class, 'export'])->name('matter.export');
+    Route::post('matter/{matter}/add-claim', [ClaimController::class, 'addFromMatter'])->name('claims.add-from-matter');
     Route::resource('matter', MatterController::class)->except(['store', 'update']);
     Route::get('/expert/get-data/', [ExpertController::class, 'getExpertsDataFromUrlForm'])->name('expert.get-data');
     Route::post('expert/get-data/', [ExpertController::class, 'getExpertsDataFromUrl'])->name('expert.parse-data');
+    Route::post('expert/{matter}/assign-assistant/', [ExpertController::class, 'assignAssistant'])->name('expert.assign-assistant');
     Route::resource('expert', ExpertController::class);
     Route::resource('party', PartyController::class);
     Route::resource('court', CourtController::class);
     Route::resource('user', UserController::class);
     Route::resource('permission', PermissionController::class);
-    Route::post('procedure/{matter}/next-session', [ProcedureController::class,'addNextSessionDate'])->name('procedure.next-session');
+    Route::post('procedure/{matter}/next-session', [ProcedureController::class, 'addNextSessionDate'])->name('procedure.next-session');
     Route::resource('procedure', ProcedureController::class);
     Route::resource('role', RoleController::class);
     Route::post('/cash/{matter}/collect', [CashController::class, 'collect'])->name('cash.collect');
-    Route::get('tools/fix-claim-status',[ToolsController::class,'fixClaimsStatus'])->name('tools.fix-claim-status');
-    Route::get('tools/fix-claim-over-paid',[ToolsController::class,'fixClaimOverPaid'])->name('tools.fix-claim-over-paid');
+    Route::get('tools/fix-claim-status', [ToolsController::class, 'fixClaimsStatus'])->name('tools.fix-claim-status');
+    Route::get('tools/fix-claim-over-paid', [ToolsController::class, 'fixClaimOverPaid'])->name('tools.fix-claim-over-paid');
+    Route::post('/party/{matter}/link-subparty', [PartyController::class, 'linkSubPartyToMatter'])->name('party.link-subparty');
+    Route::post('/party/{matter}/add-party', [PartyController::class, 'addPartyToMatter'])->name('party.add-party');
+    Route::resource('/party', PartyController::class);
 });

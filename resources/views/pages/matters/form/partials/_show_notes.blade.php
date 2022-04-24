@@ -32,7 +32,8 @@
                         <div class="ms-3">
                             <a href="{{ route('user.show', $note->user) }}"
                                 class="fs-5 fw-bolder text-gray-900 text-hover-primary me-1">{{ $note->user->name }}</a>
-                            <span class="text-muted fs-7 mb-1">{{ $note->datetime->diffForHumans() }}</span>
+                            <span class="text-muted fs-7 mb-1" data-bs-toggle="tooltip"
+                                title="{{ $note->datetime }}">{{ $note->datetime->diffForHumans() }}</span>
                         </div>
                         <!--end::Details-->
                     </div>
@@ -73,8 +74,13 @@
         <!--begin::Card footer-->
         <div class="card-footer pt-4" id="kt_chat_messenger_footer">
             <!--begin::Input-->
-            <textarea wire:model="note" class="form-control form-control-flush mb-3" rows="1" data-kt-element="input"
-                placeholder="{{ __('app.type-note') }}"></textarea>
+            <textarea wire:model="note" class="@error('note') is-invalid @enderror form-control form-control-flush mb-3" rows="1"
+                data-kt-element="input" placeholder="{{ __('app.type-note') }}"></textarea>
+            @error('note')
+                <div class="fv-plugins-message-container invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
             <!--end::Input-->
             <!--begin:Toolbar-->
             <div class="d-flex flex-stack">

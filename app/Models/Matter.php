@@ -32,9 +32,11 @@ class Matter extends Model
         'next_session_date',
         'reported_date',
         'submitted_date',
+        'created_at',
+        'updated_at',
     ];
 
-
+    public $timestamps = true;
 
     public const INDIVIDUAL = 'individual';
     public const COMMITTEE = 'committee';
@@ -90,47 +92,52 @@ class Matter extends Model
     public function assistants()
     {
         return $this->belongsToMany(Expert::class, 'matter_expert')
-            ->wherePivot('type', '=', 'assistant');
+            ->wherePivot('type', '=', 'assistant')->withTimestamps();;
     }
 
     public function experts()
     {
         return $this->belongsToMany(Expert::class, 'matter_expert')
-            ->withPivot('type');
+            ->withPivot('type')->withTimestamps();;
     }
 
     public function marketers()
     {
-        return $this->belongsToMany(User::class, 'matter_marketing')->withPivot('type');
+        return $this->belongsToMany(User::class, 'matter_marketing')->withPivot('type')->withTimestamps();;
     }
 
     public function internalMarketers()
     {
         return $this->belongsToMany(User::class, 'matter_marketing')
-            ->wherePivot('type', '=', 'marketer');
+            ->wherePivot('type', '=', 'marketer')->withTimestamps();;
     }
 
     public function externalMarketers()
     {
         return $this->belongsToMany(Party::class, 'matter_party')
-            ->wherePivot('type', '=', 'external_marketer');
+            ->wherePivot('type', '=', 'external_marketer')->withTimestamps();;
     }
 
     public function plaintiffs()
     {
         return $this->belongsToMany(Party::class)
-            ->wherePivot('type', '=', 'plaintiff');
+            ->wherePivot('type', '=', 'plaintiff')->withTimestamps();;
     }
 
     public function defendants()
     {
         return $this->belongsToMany(Party::class)
-            ->wherePivot('type', '=', 'defendant');
+            ->wherePivot('type', '=', 'defendant')->withTimestamps();;
     }
 
     public function parties()
     {
-        return $this->belongsToMany(Party::class)->withPivot(['type', 'parent_id']);
+        return $this->belongsToMany(Party::class)->withPivot(['type', 'parent_id'])->withTimestamps();;
+    }
+
+    public function onlyParties()
+    {
+        return $this->belongsToMany(Party::class)->withPivot(['type', 'parent_id'])->wherePivotIn('type', ['defendant', 'plaintiff', 'implicat-litigant'])->withTimestamps();;
     }
 
     public function procedures()

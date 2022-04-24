@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Matter;
+use Exception;
 
 class MatterObserver
 {
@@ -14,12 +15,17 @@ class MatterObserver
 
     public function deleting(Matter $model)
     {
-        $model->parties()->detach();
-        $model->experts()->detach();
-        $model->procedures()->delete();
-        $model->claims()->delete();
-        $model->cashes()->delete();
-        $model->notes()->delete();
-        $model->attachments()->delete();
+        try {
+            $model->parties()->detach();
+            $model->experts()->detach();
+            $model->marketers()->detach();
+            $model->procedures()->delete();
+            $model->cashes()->delete();
+            $model->claims()->delete();
+            $model->notes()->delete();
+            $model->attachments()->delete();
+        } catch (Exception $ex) {
+            return $ex->getMessage();
+        }
     }
 }

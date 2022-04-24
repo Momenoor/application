@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\MatterClaimCollected;
+use App\Events\MatterClaimChanged;
 use App\Services\ClaimCollectionStatus;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -25,7 +25,7 @@ class MatterClaimUpdateStatus
      * @param  object  $event
      * @return void
      */
-    public function handle(MatterClaimCollected $event)
+    public function handle(MatterClaimChanged $event)
     {
         $event->matter->refresh();
         $service = ClaimCollectionStatus::make($event->matter);

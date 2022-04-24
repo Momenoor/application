@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expert;
+use App\Models\Matter;
 use Illuminate\Http\Request;
 use simplehtmldom\HtmlWeb;
 
@@ -33,11 +34,11 @@ class ExpertController extends Controller
         $html = $doc->load($url);
 
         foreach ($html->find('table') as $table) {
-            foreach($table->find('tr') as $index => $row){
-                $data[$index]['name'] = $row->find('td',0)->plaintext??null;
-                $data[$index]['phone'] = $row->find('td',2)->plaintext??null;
-                $data[$index]['email'] = $row->find('td',3)->plaintext??null;
-                $data[$index]['address'] = $row->find('td',4)->plaintext??null;
+            foreach ($table->find('tr') as $index => $row) {
+                $data[$index]['name'] = $row->find('td', 0)->plaintext ?? null;
+                $data[$index]['phone'] = $row->find('td', 2)->plaintext ?? null;
+                $data[$index]['email'] = $row->find('td', 3)->plaintext ?? null;
+                $data[$index]['address'] = $row->find('td', 4)->plaintext ?? null;
             }
         }
 
@@ -110,5 +111,18 @@ class ExpertController extends Controller
     public function destroy(Expert $expert)
     {
         //
+    }
+
+    public function assignAssistant(Request $request, Matter $matter)
+    {
+        $validated = $request->validate([
+            'expert.assistant' => 'required|exists:experts,id',
+        ]);
+
+        $assistant[data_get($validated, 'expert.assistant')] = ['type' => 'assistant'];
+        $matter->experts()->detach(data_get($validated, 'expert.assistant'));
+        $matter->experts()->attach($assistant);
+
+        return redirect()->route('matter.show', $matter)->withToastSuccess(__('app.assistant-assigned-successfully'));
     }
 }

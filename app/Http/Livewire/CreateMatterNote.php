@@ -14,6 +14,10 @@ class CreateMatterNote extends Component
 
     public $note;
 
+    protected $rules = [
+        'note' => 'required',
+    ];
+
     protected $listeners = ['delete'];
 
     public function mount(Matter $matter)
@@ -30,6 +34,7 @@ class CreateMatterNote extends Component
 
     public function send()
     {
+        $this->validate();
         $this->matter->notes()->create([
             'text' => $this->note,
         ]);
@@ -40,10 +45,10 @@ class CreateMatterNote extends Component
     {
         $this->dispatchBrowserEvent('swal:confirm', [
             'type' => 'warning',
-            'title' => __('app.are_you_sure_to_delete') . '?',
+            'title' => __('app.are_you_sure_to_delete'),
             'text' => '',
             'id' => $id,
-            'callback'=>'delete',
+            'callback' => 'delete',
         ]);
     }
 

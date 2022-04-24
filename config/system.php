@@ -75,7 +75,7 @@ return [
             'implicat-litigant' => [
                 'showAddPartyButton' => true,
                 'text' => 'implicat litigant',
-                'color' => 'warning',
+                'color' => 'info',
                 'model' => Party::class,
                 'type' => 'party',
             ],
@@ -155,7 +155,7 @@ return [
             'additional' => [
                 'id' => 2,
                 'name' => 'Additional',
-                'color' => 'secondary',
+                'color' => 'info',
                 'active' => true,
                 'condition' => '+',
                 'type' => 'income',
