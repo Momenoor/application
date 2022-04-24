@@ -25,6 +25,8 @@ class Cash extends Model
         'user_id',
     ];
 
+
+
     protected static function boot()
     {
         parent::boot();
