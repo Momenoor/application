@@ -19,6 +19,7 @@ class Permission
         'change-status',
         'only-own',
         'add-to-matter',
+        'link-to-party',
     ];
 
     public static function resolve($permissions)
@@ -38,11 +39,13 @@ class Permission
     public static function getKeyName(ModelsPermission $item, $shouldReplacement = false, $format = true): string
     {
         $replacement = ['-', '_', '*', '=', '+', '/', '\\', '|'];
-        $key = Str::replace(self::$abilities, '', $item->name);
+        //$key = Str::replace(self::$abilities, '', $item->name);
+        $key = $item->name;
         if ($shouldReplacement) {
-            $key = Str::replace($replacement, '', $key);
+            $key = Str::replace($replacement, '-', $key);
         }
-        $key = trim($key);
+        $key = Str::of($key)->explode('-');
+        $key = trim($key[0]);
         $key = self::checkFomat($key, $format);
         return $key;
     }
@@ -51,6 +54,7 @@ class Permission
     {
         $key = self::getKeyName($item, false, false);
         $value = Str::replace($key, '', $item->name);
+        $value = trim($value,'-');
         $value = self::checkFomat($value, $format);
         return $value;
     }
