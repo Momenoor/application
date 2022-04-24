@@ -15,8 +15,10 @@ class Permission
         'create',
         'delete',
         'export',
+        'collect',
         'change-status',
         'only-own',
+        'add-to-matter',
     ];
 
     public static function resolve($permissions)
