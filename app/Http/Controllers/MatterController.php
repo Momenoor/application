@@ -57,7 +57,7 @@ class MatterController extends Controller
         $claimsTypes = config('system.claims.types');
         $partiesTypes = config('system.parties.type');
         $parties = MatterService::partiesResolve($matter);
-        $assistants = Expert::where('category', 'assistant')->get(['id', 'name']);
+        $assistants = Expert::whereIn('category', ['certified','assistant'])->get(['id', 'name']);
         $subParties = Party::whereIn('type', ['office', 'advocate', 'advisor'])->get(['id', 'name']);
         return view('pages.matters.show', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants'));
     }
