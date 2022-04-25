@@ -27,7 +27,7 @@ class MatterService
 
     protected $query;
 
-    public function __construct(Matter $matter)
+    public function __construct(Matter $matter = null)
     {
         if ($matter instanceof Matter) {
             $this->query = $matter;
