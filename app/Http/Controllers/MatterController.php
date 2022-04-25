@@ -50,7 +50,7 @@ class MatterController extends Controller
     {
         abort_unless(auth()->user()->canAny(['matter-view', 'matter-only-own-view']), '403');
 
-        if (auth()->user()->can('matter-only-own-view') && auth()->user()->cannot('matter-view') && ($matter->assistant->id != auth()->user()->expert->id or $matter->expert_id != auth()->user()->expert->id)) {
+        if (auth()->user()->can('matter-only-own-view') && auth()->user()->cannot('matter-view') && ($matter->assistants->contains(auth()->user()->expert->id) or $matter->expert_id != auth()->user()->expert->id)) {
             abort('403');
         }
 
@@ -59,7 +59,7 @@ class MatterController extends Controller
         $parties = MatterService::partiesResolve($matter);
         $assistants = Expert::where('category', 'assistant')->get(['id', 'name']);
         $subParties = Party::whereIn('type', ['office', 'advocate', 'advisor'])->get(['id', 'name']);
-        return view('pages.matters.show', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties','assistants'));
+        return view('pages.matters.show', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants'));
     }
 
     /**
