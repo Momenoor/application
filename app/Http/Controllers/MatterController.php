@@ -139,7 +139,7 @@ class MatterController extends Controller
             Cash::UNPAID,
             Cash::PARTIAL,
         ];
-        return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus', 'result'));
+        /* return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus', 'result')); */
         return (new MattersExport($request))->download('matters-' . now() . '.xlsx');
     }
 }
