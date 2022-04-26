@@ -96,10 +96,11 @@ class MatterController extends Controller
             if (key_exists($status, $statuses)) {
                 $matter->status = $status;
                 $matter->{$status . '_date'} = now();
+                $matter->procedures()->where('type', $status . '_date')->delete();
                 $matter->procedures()->create([
                     'type' => $status . '_date',
                     'datetime' => now(),
-                    'description' => $status . '_date',
+                    'description' => __($status . '_date'),
 
                 ]);
                 $matter->save();
