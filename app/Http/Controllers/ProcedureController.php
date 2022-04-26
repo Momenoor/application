@@ -101,4 +101,22 @@ class ProcedureController extends Controller
 
         return redirect()->to(route('matter.show', $matter))->withToastSuccess(__('app.next-session-date-set-successfully'));
     }
+
+    public function changeDate(Request $request, Matter $matter)
+    {
+        $validate = $this->validate($request, [
+            'procedure.datetime' => 'required',
+            'procedure.type' => 'required',
+        ]);
+
+        $validate = $validate['procedure'];
+
+        $matter->{$validate['type']} = $validate['datetime'];
+        $procedure = $matter->procedures()->where('type', $validate['type'])->first();
+        $procedure->datetime = $validate['datetime'];
+        $procedure->save();
+        $matter->save();
+
+        return redirect()->to(route('matter.show', $matter))->withToastSuccess(__('app.date-set-successfully'));
+    }
 }

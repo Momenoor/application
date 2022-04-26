@@ -145,6 +145,12 @@
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
+                                        <a href="#" class="menu-link px-3" data-bs-toggle="modal"
+                                            data-bs-target="#changeDatesModal">{{ __('app.change_date') }}</a>
+                                    </div>
+                                    <!--end::Menu item-->
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3">
                                         <a href="#" class="menu-link flex-stack px-3" data-bs-toggle="modal"
                                             data-bs-target="#addClaimModal">{{ __('app.add_claim') }}
                                         </a>
@@ -281,6 +287,7 @@
     </div>
 </div>
 @include('pages.procedures.add-next-session-date-modal')
+@include('pages.procedures.change-dates-modal')
 @include('pages.claims.add-claim-modal')
 @include('pages.experts.add-assistant-modal')
 @include('pages.experts.add-external-expert-modal')

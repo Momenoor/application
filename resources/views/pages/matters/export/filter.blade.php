@@ -241,7 +241,7 @@
                             <td>{{ optional($matter->received_date)->format('Y-m-d') }}</td>
                             <td>{{ optional($matter->reported_date)->format('Y-m-d') }}</td>
                             <td>{{ optional($matter->submitted_date)->format('Y-m-d') }}</td>
-                            <td>{{ $matter->claimStatus() }}</td>
+                            <td>{{ $matter->claim_status}}</td>
                             <td>{{ $matter->claims_sum_amount }}</td>
                             <td>{{ $matter->dueAmount() }}</td>
                             <td>{{ $matter->cash_sum_amount }}</td>

@@ -27,7 +27,7 @@ class MattersExport implements FromQuery, WithStrictNullComparison, ShouldQueue,
 
     public function query()
     {
-        return app(MatterService::class)->setFilters($this->request)->getForExcel();
+        return (new MatterService())->setFilters($this->request)->getForExcel();
     }
 
     public function headings(): array

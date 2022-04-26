@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('court', CourtController::class);
     Route::resource('user', UserController::class);
     Route::resource('permission', PermissionController::class);
+    Route::post('procedure/{matter}/change-date', [ProcedureController::class, 'changeDate'])->name('procedure.change-date');
     Route::post('procedure/{matter}/next-session', [ProcedureController::class, 'addNextSessionDate'])->name('procedure.next-session');
     Route::resource('procedure', ProcedureController::class);
     Route::resource('role', RoleController::class);

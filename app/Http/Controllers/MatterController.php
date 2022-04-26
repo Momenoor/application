@@ -129,7 +129,8 @@ class MatterController extends Controller
 
     public function export(Request $request)
     {
-        $result = app(MatterService::class)->setFilters($request)->getForExcel()->get();
+
+        $result = (new MatterService())->setFilters($request)->getForExcel();
         $experts = Expert::whereIn('category', [Expert::MAIN, Expert::CERTIFIED])->pluck('name', 'id');
         $assistants = Expert::whereIn('category', [Expert::MAIN, Expert::CERTIFIED, Expert::ASSISTANT])->pluck('name', 'id');
         $types = Type::pluck('name', 'id');
@@ -139,7 +140,8 @@ class MatterController extends Controller
             Cash::UNPAID,
             Cash::PARTIAL,
         ];
-        /* return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus', 'result')); */
+
+        /*return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus', 'result')); */
         return (new MattersExport($request))->download('matters-' . now() . '.xlsx');
     }
 }
