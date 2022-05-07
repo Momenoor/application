@@ -146,11 +146,11 @@ body {
 }
 
 .header-background-light {
-    background-image: url("http://application.mie/assets/media/patterns/header-bg.jpg");
+    background-image: url("../assets/media/patterns/header-bg.jpg");
 }
 
 .header-background-dark {
-    background-image: url("http://application.mie/assets/media/patterns/header-bg-dark.png");
+    background-image: url("../assets/media/patterns/header-bg-dark.png");
 }
 
 @media (min-width: 992px) {
