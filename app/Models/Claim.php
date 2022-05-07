@@ -5,10 +5,26 @@ namespace App\Models;
 use App\Services\Money;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Claim extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
+
+    const OFFICE_SHARE = 'office_share';
+
+    protected static $logAttributes = [
+        'date',
+        'amount',
+        'status',
+        'type',
+        'recurring',
+        'matter_id',
+        'user_id',
+    ];
+    protected static $logOnlyDirty = true;
+
+    protected static $submitEmptyLogs = false;
 
     protected $fillable = [
         'date',

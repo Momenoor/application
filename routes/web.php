@@ -29,7 +29,7 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
 
     Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('home');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/matter/{matter}/change-status/{status}', [MatterController::class, 'changeStatus'])->name('matter.change-status');
     Route::get('/matter/export', [MatterController::class, 'exportFilterForm'])->name('matter.export-form');
     Route::post('/matter/export', [MatterController::class, 'export'])->name('matter.export');
@@ -53,4 +53,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/party/{matter}/link-subparty', [PartyController::class, 'linkSubPartyToMatter'])->name('party.link-subparty');
     Route::post('/party/{matter}/add-party', [PartyController::class, 'addPartyToMatter'])->name('party.add-party');
     Route::resource('/party', PartyController::class);
+    Route::delete('claim/{claim}', [ClaimController::class, 'destroy'])->name('claim.destroy');
 });

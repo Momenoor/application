@@ -8,18 +8,32 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasPermissions, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasPermissions, HasRoles,LogsActivity;
+
+    protected static $logOnlyDirty = true;
+
+    protected static $submitEmptyLogs = false;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+    protected $logAttributes  = [
+        'name',
+        'email',
+        'password',
+        'display_name',
+        'language',
+        'gender',
+        'avatar',
+    ];
     protected $fillable = [
         'name',
         'email',

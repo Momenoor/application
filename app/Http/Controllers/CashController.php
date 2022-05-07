@@ -70,7 +70,7 @@ class CashController extends Controller
 
         MatterClaimChanged::dispatch($matter);
 
-        return redirect()->to(route('matter.show', $matter))->withToastSuccess('app.claims_collected_successfully');
+        return redirect()->to(route('matter.show', $matter))->withToastSuccess(__('app.claims_collected_successfully'));
     }
 
     /**

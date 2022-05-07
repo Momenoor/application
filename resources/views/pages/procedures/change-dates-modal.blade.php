@@ -26,12 +26,16 @@
                                 <option value="received_date" @if ('received_date' == old('procedure.type')) selected @endif>
                                     {{ __('app.received_date') }}
                                 </option>
-                                <option value="reported_date" @if ('reported_date' == old('procedure.type')) selected @endif>
-                                    {{ __('app.reported_date') }}
-                                </option>
-                                <option value="submitted_date" @if ('submitted_date' == old('procedure.type')) selected @endif>
-                                    {{ __('app.submitted_date') }}
-                                </option>
+                                @if ($matter->isReported())
+                                    <option value="reported_date" @if ('reported_date' == old('procedure.type')) selected @endif>
+                                        {{ __('app.reported_date') }}
+                                    </option>
+                                @endif
+                                @if ($matter->isSubmitted())
+                                    <option value="submitted_date" @if ('submitted_date' == old('procedure.type')) selected @endif>
+                                        {{ __('app.submitted_date') }}
+                                    </option>
+                                @endif
                             </select>
                         </div>
                     </div>

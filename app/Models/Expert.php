@@ -5,16 +5,29 @@ namespace App\Models;
 use App\Contracts\MatterPartyContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Expert extends Model implements MatterPartyContract
 {
-    use HasFactory;
+    use HasFactory,LogsActivity;
 
     const MAIN = 'main';
     const CERTIFIED = 'certified';
     const ASSISTANT = 'assistant';
     const EXTERNAL = 'external';
 
+    protected static $logOnlyDirty = true;
+
+    protected static $submitEmptyLogs = false;
+
+    protected $logAttributes  = [
+        'name',
+        'phone',
+        'email',
+        'catgeory',
+        'field',
+        'user_id',
+    ];
     protected $fillable = [
         'name',
         'phone',

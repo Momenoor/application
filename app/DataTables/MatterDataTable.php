@@ -21,9 +21,10 @@ class MatterDataTable extends DataTable
     public function dataTable($query)
     {
         return datatables()
+
             ->eloquent($query)
 
-
+            ->addIndexColumn()
             ->editColumn('number', function ($model) {
 
                 return '<a class="text-' . config('system.matter.status.' . $model->status . '.color') . '" href="' . route('matter.show', $model) . '">' . $model->year . '/' . $model->number . '</a>';
@@ -46,7 +47,7 @@ class MatterDataTable extends DataTable
 
                 return '<div class="position-relative">
                                 ' . (optional($model->expert)->name) .
-                    '<div class="fs-7 text-muted ">' . optional($model->assistant)->name . '</div>
+                    '<div class="text-primary">' . optional($model->assistant)->name . '</div>
                         </div>';
             })
 
@@ -68,8 +69,8 @@ class MatterDataTable extends DataTable
             ->editColumn('court_id', function ($model) {
 
                 return '<div class="position-relative">
-                                ' . ($model->court->name ?? null) . '
-                            <div class="fs-7 text-muted">' . ($model->type->name ?? null) . '</div>
+                                ' . optional($model->court)->name . '
+                            <div class="fs-7">' . optional($model->type)->name . '</div>
                         </div>';
             })
 
@@ -85,8 +86,8 @@ class MatterDataTable extends DataTable
             ->editColumn('plaintiff_name', function ($model) {
 
                 return '<div class="position-relative">
-                                ' . (\Str::of($model->plaintiff->name ?? null)->limit(30)) . '
-                            <div class="text-danger">' . (\Str::of($model->defendant->name ?? null)->limit(30))  . '</div>
+                                ' . (\Str::of(optional($model->plaintiff)->name)->limit(30)) . '
+                            <div class="text-danger">' . (\Str::of(optional($model->defendant)->name)->limit(30))  . '</div>
                         </div>';
             })
 
@@ -100,7 +101,7 @@ class MatterDataTable extends DataTable
             ->editColumn('next_session_date', function ($model) {
                 return '<div class="position-relative">
                                 ' .  (($model->next_session_date instanceof Carbon) ? $model->next_session_date->format('Y-m-d') : __('app.not-set')) . '
-                            <div class="fs-7 text-muted">' .  $model->received_date->format('Y-m-d') . '</div>
+                            <div class="fs-7">' .  $model->received_date->format('Y-m-d') . '</div>
                         </div>';
             })
 
@@ -176,8 +177,9 @@ class MatterDataTable extends DataTable
     {
         return $this->builder()
             ->setTableId('matter-table')
+
             ->addIndex()
-            ->setTableAttributes(['class' => 'table table-striped table-row-dashed table-row-gray-200 align-middle gs-0 gy-4'])
+            ->setTableAttributes(['class' => 'table table-striped table-row-bordered border-gray-300 border table-hover table-row-gray-300 align-middle'])
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Brtip')
@@ -201,6 +203,11 @@ class MatterDataTable extends DataTable
     protected function getColumns()
     {
         return [
+            Column::make('DT_RowIndex')
+            ->title('#')
+            ->searchable(false)
+            ->orderable(false)
+            ->addClass('text-center ps-2'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

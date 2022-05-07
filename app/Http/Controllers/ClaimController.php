@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\MatterClaimChanged;
+use App\Models\Claim;
 use App\Models\Matter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -32,7 +33,7 @@ class ClaimController extends Controller
 
         $mainExperts = config('system.experts.main');
 
-        if (!in_array($matter->expert_id, $mainExperts)) {
+        if (!in_array($matter->expert_id, $mainExperts) && data_get($validated, 'claim.type') != Claim::OFFICE_SHARE) {
             $officeShareRate = config('system.experts.office_share.rate');
             $officeShareClaim = [
                 'amount' => floatval((data_get($claim, 'main.amount') * $officeShareRate) / 100),
@@ -47,5 +48,15 @@ class ClaimController extends Controller
         MatterClaimChanged::dispatch($matter);
 
         return redirect()->route('matter.show', $matter)->withToastSuccess(__('app.claim-added-successfully'));
+    }
+
+    public function destroy(Claim $claim)
+    {
+        abort_unless(auth()->user()->can('claim-delete'), 403);
+        $matter = $claim->matter;
+        $claim->cashes()->delete();
+        $claim->delete();
+        MatterClaimChanged::dispatch($matter);
+        return redirect()->route('matter.edit', $matter)->withToastSuccess(__('app.claim-deleted-successfully'));
     }
 }

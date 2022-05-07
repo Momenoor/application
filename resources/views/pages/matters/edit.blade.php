@@ -124,3 +124,64 @@
         }
 
     </style>
+@endpush
+@push('scripts')
+    <script>
+        window.addEventListener('swal:modal', event => {
+            swal.fire({
+                title: event.detail.title,
+                text: event.detail.text,
+                icon: event.detail.type,
+            });
+        });
+        window.addEventListener('swal:confirm', event => {
+            swal.fire({
+                    title: event.detail.title,
+                    text: event.detail.text,
+                    icon: event.detail.type,
+                    showCancelButton: true,
+                    reverseButtons: true
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.livewire.emit(event.detail.callback, event.detail.id);
+                    }
+                });
+        });
+    </script>
+
+    @if ($errors->hasAny(['procedure.datetime', 'procedure.description']))
+        <script>
+            new bootstrap.Modal($('#addNextSessionDateModal')).show();
+        </script>
+    @endif
+
+    @if ($errors->hasAny(['claim.amount', 'claim.type', 'claim.recurring']))
+        <script>
+            new bootstrap.Modal($('#addClaimModal')).show();
+        </script>
+    @endif
+
+    @if ($errors->hasAny(['party.type', 'party.name', 'party.phone', 'party.email']))
+        <script>
+            new bootstrap.Modal($('#addPartyModal')).show();
+        </script>
+    @endif
+    @if ($errors->hasAny(['party.id', 'party.subparty']))
+        <script>
+            new bootstrap.Modal($('#addAdvocateModal')).show();
+        </script>
+    @endif
+
+    @if ($errors->hasAny(['expert.assistant']))
+        <script>
+            new bootstrap.Modal($('#addAssistantModal')).show();
+        </script>
+    @endif
+    @if ($errors->hasAny(['cash.amount','cash.description']))
+        <script>
+            new bootstrap.Modal($('#collectionModal')).show();
+        </script>
+    @endif
+
+@endpush

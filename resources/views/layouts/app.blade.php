@@ -44,7 +44,7 @@ License: For each use you must have a valid license purchased only from above li
 <!--end::Head-->
 <!--begin::Body-->
 
-<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed">
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed header-background-light">
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
@@ -53,11 +53,11 @@ License: For each use you must have a valid license purchased only from above li
             <!--begin::Wrapper-->
             <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
                 <!--begin::Header-->
-                <div id="kt_header" class="header">
+                <div id="kt_header" class="header bg-transparent header-background-light">
                     <!--begin::Container-->
                     <div class="container-fluid d-flex flex-stack">
                         <!--begin::Brand-->
-                        <div class="d-flex align-items-center me-5">
+                        <div class="d-flex align-items-center me-5 ms-3">
                             <!--begin::Aside toggle-->
                             <div class="d-lg-none btn btn-icon btn-active-color-white w-30px h-30px ms-n2 me-3"
                                 id="kt_aside_toggle">
@@ -152,9 +152,9 @@ License: For each use you must have a valid license purchased only from above li
                                             class="d-none d-md-flex flex-column align-items-end justify-content-center me-2 me-md-4">
 
                                             <span
-                                                class="text-muted fs-8 fw-bold lh-1 mb-1">{{ Auth::user()->display_name }}</span>
+                                                class="text-white fs-8 fw-bold lh-1 mb-1">{{ Auth::user()->display_name }}</span>
                                             <span
-                                                class="text-white fs-8 fw-bolder lh-1">{{ optional(Auth::user()->expert)->field }}</span>
+                                                class="text-white fs-8 lh-1">{{ optional(Auth::user()->expert)->field }}</span>
                                         </div>
                                         <!--end::Name-->
                                         <!--begin::Symbol-->
@@ -178,7 +178,7 @@ License: For each use you must have a valid license purchased only from above li
                                                 <!--end::Avatar-->
                                                 <!--begin::Username-->
                                                 <div class="d-flex flex-column">
-                                                    <div class="fw-bolder d-flex align-items-center fs-4">
+                                                    <div class="fw-bolder d-flex align-items-center fs-5">
                                                         {{ Auth::user()->display_name }}
                                                         <span
                                                             class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">{{ optional(Auth::user()->expert)->category }}</span>
@@ -193,7 +193,7 @@ License: For each use you must have a valid license purchased only from above li
                                         <!--begin::Menu separator-->
                                         <div class="separator my-2"></div>
                                         <!--end::Menu separator-->
-                                        <!--begin::Menu item-->
+                                        {{-- <!--begin::Menu item-->
                                         <div class="menu-item px-5">
                                             <a href="../../demo14/dist/account/overview.html" class="menu-link px-5">My
                                                 Profile</a>
@@ -350,14 +350,14 @@ License: For each use you must have a valid license purchased only from above li
                                         <div class="menu-item px-5 my-1">
                                             <a href="../../demo14/dist/account/settings.html" class="menu-link px-5">Account
                                                 Settings</a>
-                                        </div>
+                                        </div> --}}
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5">
                                             <form action="{{ route('logout') }}" method="POST">
                                                 @csrf
                                                 <button type="submit"
-                                                    class="menu-link btn w-100 ps-5 px-5">{{ __('sign out') }}</button>
+                                                    class="menu-link btn w-100 ps-5 px-5">{{ __('app.sign_out') }}</button>
                                             </form>
                                         </div>
                                         <!--end::Menu item-->
@@ -367,14 +367,12 @@ License: For each use you must have a valid license purchased only from above li
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-5">
                                             <div class="menu-content px-5">
-                                                <label
-                                                    class="form-check form-switch form-check-custom form-check-solid pulse pulse-success"
+                                                <label class="form-check form-switch form-check-custom form-check-solid"
                                                     for="kt_user_menu_dark_mode_toggle">
-                                                    <input class="form-check-input w-30px h-20px" type="checkbox" value="1"
-                                                        name="mode" id="kt_user_menu_dark_mode_toggle"
-                                                        data-kt-url="../../demo14/dist/index.html" />
-                                                    <span class="pulse-ring ms-n1"></span>
-                                                    <span class="form-check-label text-gray-600 fs-7">Dark Mode</span>
+                                                    <input class="form-check-input w-30px h-20px" type="checkbox"
+                                                        id="darkMode" value="dark" name="mode" />
+                                                    <span
+                                                        class="form-check-label fw-bolder text-gray-600 fs-7">{{ __('app.dark-mode') }}</span>
                                                 </label>
                                             </div>
                                         </div>
@@ -445,7 +443,7 @@ License: For each use you must have a valid license purchased only from above li
                             <!--begin::Page title-->
                             <div class="page-title d-flex flex-column me-3">
                                 <!--begin::Title-->
-                                <h1 class="d-flex text-dark fw-bolder my-1 fs-3">
+                                <h1 class="d-flex text-white my-1 fs-3">
                                     {{ __('app.matters-management-system') }}</h1>
                                 <!--end::Title-->
                                 <!--begin::Breadcrumb-->
@@ -551,6 +549,94 @@ License: For each use you must have a valid license purchased only from above li
                     })
                 })
             })
+        });
+
+        var setThemeMode = function(mode, cb) {
+
+            localStorage.setItem('theme', mode);
+            // Load css file
+            var loadCssFile = function(fileName, newFileName) {
+                return new Promise(function(resolve, reject) {
+                    var oldLink = document.querySelector("link[href*='" + fileName + "']");
+                    var link = document.createElement('link');
+                    var href = oldLink.href.replace(fileName, newFileName);
+
+                    link.rel = 'stylesheet';
+                    link.type = 'text/css';
+                    link.href = href;
+                    document.head.insertBefore(link, oldLink);
+
+                    // Important success and error for the promise
+                    link.onload = function() {
+                        resolve(href);
+                        oldLink.remove();
+                    };
+
+                    link.onerror = function() {
+                        reject(href);
+                    };
+                });
+            };
+
+            // Set page loading state
+            document.body.classList.add('page-loading');
+
+            if (mode === 'dark') {
+                Promise.all([
+                    loadCssFile('plugins.bundle.rtl.css', 'plugins.dark.bundle.rtl.css'),
+                    loadCssFile('style.bundle.rtl.css', 'style.dark.bundle.rtl.css')
+                ]).then(function() {
+                    // Set dark mode class
+                    document.body.classList.add("dark-mode");
+                    document.body.classList.add("header-background-dark");
+                    document.body.classList.remove("header-background-light");
+                    $('#kt_header').addClass('header-background-dark');
+                    $('#kt_header').removeClass('header-background-light');
+                    // Remove page loading srate
+                    document.body.classList.remove('page-loading');
+
+                    if (cb instanceof Function) {
+                        cb();
+                    }
+                }).catch(function() {
+                    // error
+                });
+            } else if (mode === 'light') {
+                Promise.all([
+                    loadCssFile('plugins.dark.bundle.rtl.css', 'plugins.bundle.rtl.css'),
+                    loadCssFile('style.dark.bundle.rtl.css', 'style.bundle.rtl.css')
+                ]).then(function() {
+                    // Remove dark mode class
+                    document.body.classList.remove("dark-mode");
+                    document.body.classList.remove("header-background-dark");
+                    document.body.classList.add("header-background-light");
+                    $('#kt_header').addClass('header-background-light');
+                    $('#kt_header').removeClass('header-background-dark');
+                    // Remove page loading srate
+                    document.body.classList.remove('page-loading');
+
+                    // Callback
+                    if (cb instanceof Function) {
+                        cb();
+                    }
+                }).catch(function() {
+                    // error
+                });
+            }
+        }
+
+        $mode = localStorage.getItem('theme');
+        if ($mode == 'dark') {
+            $('#darkMode').prop('checked', true);
+        }
+        setThemeMode($mode);
+
+        $('#darkMode').on('change', function() {
+            if ($(this).is(':checked')) {
+                setThemeMode('dark');
+            } else {
+                setThemeMode('light');
+            }
         });
     </script>
     @stack('scripts')

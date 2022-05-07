@@ -24,6 +24,11 @@
                         <th class="min-w-140px text-center pt-3">{{ __('app.type') }}</th>
                         <th class="min-w-140px text-center pt-3">{{ __('app.recurring') }}</th>
                         <th class="pe-0 text-center min-w-120px pt-3">{{ __('app.amount') }}</th>
+                        @if ($source == 'edit')
+                            @can('claim-delete')
+                                <th class="pe-0 text-center pt-3">#</th>
+                            @endcan
+                        @endif
                     </tr>
                 </thead>
                 <!--end::Table head-->
@@ -46,6 +51,57 @@
                             <td class="text-center">
                                 <span class="text-gray-800 fw-bolder d-block">{{ $claim->claim_amount }} AED</span>
                             </td>
+                            @if ($source == 'edit')
+                                @can('claim-delete')
+                                    <td class="text-center">
+                                        <form id="delete" action="{{ route('claim.destroy', $claim) }}" method="POST">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-sm btn-icon btn-danger btn-active-danger me-2"
+                                                type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                data-bs-original-title="{{ __('app.delete') }}">
+                                                <span class="svg-icon svg-icon-3">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <path
+                                                            d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
+                                                            fill="black" />
+                                                        <path opacity="0.5"
+                                                            d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
+                                                            fill="black" />
+                                                        <path opacity="0.5"
+                                                            d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
+                                                            fill="black" />
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                        </form>
+                                        @push('scripts')
+                                            <script>
+                                                $('#delete').on('submit', function(e) {
+                                                    e.preventDefault();
+                                                    Swal.fire({
+                                                        text: "{{ __('app.are_you_sure_to_delete_record') }}",
+                                                        icon: "error",
+                                                        buttonsStyling: false,
+                                                        showCancelButton: true,
+                                                        confirmButtonText: "{{ __('app.ok') }}",
+                                                        cancelButtonText: "{{ __('app.cancel') }}",
+                                                        customClass: {
+                                                            confirmButton: "btn btn-danger",
+                                                            cancelButton: 'btn btn-light',
+                                                        }
+                                                    }).then(function(result) {
+                                                        if (result.isConfirmed) {
+                                                            e.target.submit();
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                        @endpush
+                                    </td>
+                                @endcan
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

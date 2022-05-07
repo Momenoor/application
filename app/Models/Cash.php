@@ -5,16 +5,30 @@ namespace App\Models;
 use App\Services\Money;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Cash extends Model
 {
-    use HasFactory;
+    use HasFactory,LogsActivity;
 
     const PAID = 'paid';
     const UNPAID = 'unpaid';
     const PARTIAL = 'partial';
     const OVERPAID = 'overpaid';
 
+    protected static $logOnlyDirty = true;
+
+    protected static $submitEmptyLogs = false;
+
+    protected $logAttributes  = [
+        'datetime',
+        'amount',
+        'description',
+        'type',
+        'matter_id',
+        'claim_id',
+        'user_id',
+    ];
     protected $fillable = [
         'datetime',
         'amount',

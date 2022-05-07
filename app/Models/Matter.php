@@ -5,9 +5,36 @@ namespace App\Models;
 use App\Services\ClaimCollectionStatus;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Matter extends Model
 {
+
+    use LogsActivity;
+
+    protected static $logOnlyDirty = true;
+
+    protected static $submitEmptyLogs = false;
+
+    protected static $logAttributes = [
+        'year',
+        'number',
+        'status',
+        'commissioning',
+        'external_marketing_rate',
+        'received_date',
+        'next_session_date',
+        'reported_date',
+        'submitted_date',
+        'user_id',
+        'expert_id',
+        'court_id',
+        'level_id',
+        'type_id',
+        'parent_id',
+        'claim_status'
+    ];
+
     protected $fillable = [
         'year',
         'number',

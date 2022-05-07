@@ -36,70 +36,93 @@
                         <!--end::Details-->
                         <!--begin::Actions-->
                         <div class="d-flex mb-4">
+
                             <div class="d-flex align-self-center">
-                                @can('matter-delete')
-                                    <form id="delete" action="{{ route('matter.destroy', $matter) }}" method="POST">
-                                        @method('delete')
-                                        @csrf
-                                        <button class="btn btn-sm btn-icon btn-danger btn-active-danger me-2" type="submit"
+                                @if ($source == 'edit')
+                                    @can('matter-delete')
+                                        <form id="delete" action="{{ route('matter.destroy', $matter) }}" method="POST">
+                                            @method('delete')
+                                            @csrf
+                                            <button class="btn btn-sm btn-icon btn-danger btn-active-danger me-2"
+                                                type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                data-bs-original-title="{{ __('app.delete') }}">
+                                                <span class="svg-icon svg-icon-3">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none">
+                                                        <path
+                                                            d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
+                                                            fill="black" />
+                                                        <path opacity="0.5"
+                                                            d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
+                                                            fill="black" />
+                                                        <path opacity="0.5"
+                                                            d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
+                                                            fill="black" />
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                        </form>
+                                        @push('scripts')
+                                            <script>
+                                                $('#delete').on('submit', function(e) {
+                                                    e.preventDefault();
+                                                    Swal.fire({
+                                                        text: "{{ __('app.are_you_sure_to_delete_record') }}",
+                                                        icon: "error",
+                                                        buttonsStyling: false,
+                                                        showCancelButton: true,
+                                                        confirmButtonText: "{{ __('app.ok') }}",
+                                                        cancelButtonText: "{{ __('app.cancel') }}",
+                                                        customClass: {
+                                                            confirmButton: "btn btn-danger",
+                                                            cancelButton: 'btn btn-light',
+                                                        }
+                                                    }).then(function(result) {
+                                                        if (result.isConfirmed) {
+                                                            e.target.submit();
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+                                        @endpush
+                                    @endcan
+                                    @can('matter-create')
+                                        <a href="#" class="btn btn-sm btn-icon btn-primary btn-active-primary me-2"
                                             data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                            data-bs-original-title="{{ __('app.delete') }}">
-                                            <span class="svg-icon svg-icon-3">
+                                            data-bs-original-title="{{ __('app.copy') }}">
+                                            <!--begin::Svg Icon | path: icons/duotune/general/gen028.svg-->
+                                            <span class="svg-icon svg-icon-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none">
-                                                    <path
-                                                        d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
-                                                        fill="black" />
-                                                    <path opacity="0.5"
-                                                        d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
-                                                        fill="black" />
-                                                    <path opacity="0.5"
-                                                        d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
-                                                        fill="black" />
+                                                    <rect opacity="0.5" x="7" y="2" width="14" height="16" rx="3"
+                                                        fill="currentColor"></rect>
+                                                    <rect x="3" y="6" width="14" height="16" rx="3" fill="currentColor">
+                                                    </rect>
                                                 </svg>
                                             </span>
-                                        </button>
-                                    </form>
-                                    @push('scripts')
-                                        <script>
-                                            $('#delete').on('submit', function(e) {
-                                                e.preventDefault();
-                                                Swal.fire({
-                                                    text: "{{ __('app.are_you_sure_to_delete_record') }}",
-                                                    icon: "error",
-                                                    buttonsStyling: false,
-                                                    showCancelButton: true,
-                                                    confirmButtonText: "{{ __('app.ok') }}",
-                                                    cancelButtonText: "{{ __('app.cancel') }}",
-                                                    customClass: {
-                                                        confirmButton: "btn btn-danger",
-                                                        cancelButton: 'btn btn-light',
-                                                    }
-                                                }).then(function(result) {
-                                                    if (result.isConfirmed) {
-                                                        e.target.submit();
-                                                    }
-                                                });
-                                            });
-                                        </script>
-                                    @endpush
-                                @endcan
-                                @can('matter-create')
-                                    <a href="#" class="btn btn-sm btn-icon btn-primary btn-active-primary me-2"
-                                        data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                        data-bs-original-title="{{ __('app.copy') }}">
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen028.svg-->
-                                        <span class="svg-icon svg-icon-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none">
-                                                <rect opacity="0.5" x="7" y="2" width="14" height="16" rx="3"
-                                                    fill="currentColor"></rect>
-                                                <rect x="3" y="6" width="14" height="16" rx="3" fill="currentColor"></rect>
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                    </a>
-                                @endcan
+                                            <!--end::Svg Icon-->
+                                        </a>
+                                    @endcan
+                                @endif
+                                @if ($source == 'show')
+                                    @can('matter-edit')
+                                        <a href="{{ route('matter.edit', $matter) }}"
+                                            class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary btn-sm me-2">
+                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr076.svg-->
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                    <path fill-rule="evenodd"
+                                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                </svg>
+                                                {{ __('app.edit') }}
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                        </a>
+                                    @endcan
+                                @endif
                                 <a href="{{ url()->previous() }}"
                                     class="btn btn-sm btn-icon btn-primary btn-active-primary me-2"
                                     data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('app.back') }}">
@@ -120,76 +143,80 @@
                                     <!--end::Svg Icon-->
                                 </a>
                             </div>
-                            @livewire('matter-change-status', ['matter' => $matter])
+                            @can('matter-change-status')
+                                @livewire('matter-change-status', ['matter' => $matter])
+                            @endcan
                             {{-- <a href="#" class="btn btn-sm btn-success me-3">{{ __('app.collect-claim') }}</a> --}}
                             <!--begin::Menu-->
-                            <div class="me-0">
-                                <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
-                                    data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start">
-                                    <i class="bi bi-three-dots fs-3"></i>
-                                </button>
-                                <!--begin::Menu 3-->
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3"
-                                    data-kt-menu="true">
-                                    <!--begin::Heading-->
-                                    <div class="menu-item px-3">
-                                        <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">
-                                            {{ __('app.update_matter_data') }}</div>
-                                    </div>
-                                    <!--end::Heading-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3" data-bs-toggle="modal"
-                                            data-bs-target="#addNextSessionDateModal">{{ __('app.add_next_session_date') }}</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link px-3" data-bs-toggle="modal"
-                                            data-bs-target="#changeDatesModal">{{ __('app.change_date') }}</a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <a href="#" class="menu-link flex-stack px-3" data-bs-toggle="modal"
-                                            data-bs-target="#addClaimModal">{{ __('app.add_claim') }}
-                                        </a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    {{-- <div class="menu-item px-3">
+                            @if ($source != 'show')
+                                <div class="me-0">
+                                    <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
+                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start">
+                                        <i class="bi bi-three-dots fs-3"></i>
+                                    </button>
+                                    <!--begin::Menu 3-->
+                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3"
+                                        data-kt-menu="true">
+                                        <!--begin::Heading-->
+                                        <div class="menu-item px-3">
+                                            <div class="menu-content text-muted pb-2 px-3 fs-7 text-uppercase">
+                                                {{ __('app.update_matter_data') }}</div>
+                                        </div>
+                                        <!--end::Heading-->
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3">
+                                            <a href="#" class="menu-link px-3" data-bs-toggle="modal"
+                                                data-bs-target="#addNextSessionDateModal">{{ __('app.add_next_session_date') }}</a>
+                                        </div>
+                                        <!--end::Menu item-->
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3">
+                                            <a href="#" class="menu-link px-3" data-bs-toggle="modal"
+                                                data-bs-target="#changeDatesModal">{{ __('app.change_date') }}</a>
+                                        </div>
+                                        <!--end::Menu item-->
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3">
+                                            <a href="#" class="menu-link flex-stack px-3" data-bs-toggle="modal"
+                                                data-bs-target="#addClaimModal">{{ __('app.add_claim') }}
+                                            </a>
+                                        </div>
+                                        <!--end::Menu item-->
+                                        <!--begin::Menu item-->
+                                        {{-- <div class="menu-item px-3">
                                         <a href="#" class="menu-link px-3" data-bs-toggle="modal"
                                             data-bs-target="#addActivityModal">{{ __('app.add_activity') }}</a>
                                     </div> --}}
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3 my-1">
-                                        <a href="#" class="menu-link px-3" data-bs-toggle="modal"
-                                            data-bs-target="#addAssistantModal">{{ __('app.assign_assistant') }}</a>
-                                    </div>
-                                    @if ($matter->commissioning == Matter::COMMITTEE)
+                                        <!--end::Menu item-->
+                                        <!--begin::Menu item-->
                                         <div class="menu-item px-3 my-1">
                                             <a href="#" class="menu-link px-3" data-bs-toggle="modal"
-                                                data-bs-target="#addExternlExpertModal">{{ __('app.add_external_expert') }}</a>
+                                                data-bs-target="#addAssistantModal">{{ __('app.assign_assistant') }}</a>
                                         </div>
-                                    @endif
+                                        @if ($matter->commissioning == Matter::COMMITTEE)
+                                            <div class="menu-item px-3 my-1">
+                                                <a href="#" class="menu-link px-3" data-bs-toggle="modal"
+                                                    data-bs-target="#addExternlExpertModal">{{ __('app.add_external_expert') }}</a>
+                                            </div>
+                                        @endif
 
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3 my-1">
-                                        <a href="#" class="menu-link px-3" data-bs-toggle="modal"
-                                            data-bs-target="#addPartyModal">{{ __('app.add_party') }}</a>
+                                        <!--end::Menu item-->
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3 my-1">
+                                            <a href="#" class="menu-link px-3" data-bs-toggle="modal"
+                                                data-bs-target="#addPartyModal">{{ __('app.add_party') }}</a>
+                                        </div>
+                                        <!--end::Menu item-->
+                                        <!--begin::Menu item-->
+                                        <div class="menu-item px-3 my-1">
+                                            <a href="#" class="menu-link px-3" data-bs-toggle="modal"
+                                                data-bs-target="#addAdvocateModal">{{ __('app.add_advocate') }}</a>
+                                        </div>
+                                        <!--end::Menu item-->
                                     </div>
-                                    <!--end::Menu item-->
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3 my-1">
-                                        <a href="#" class="menu-link px-3" data-bs-toggle="modal"
-                                            data-bs-target="#addAdvocateModal">{{ __('app.add_advocate') }}</a>
-                                    </div>
-                                    <!--end::Menu item-->
+                                    <!--end::Menu 3-->
                                 </div>
-                                <!--end::Menu 3-->
-                            </div>
+                            @endif
                             <!--end::Menu-->
                         </div>
                         <!--end::Actions-->
@@ -286,19 +313,21 @@
         </div>
     </div>
 </div>
-@include('pages.procedures.add-next-session-date-modal')
-@include('pages.procedures.change-dates-modal')
-@include('pages.claims.add-claim-modal')
-@include('pages.experts.add-assistant-modal')
-@include('pages.experts.add-external-expert-modal')
-@include('pages.parties.add-party-modal')
-@include('pages.parties.add-advocate-modal')
-@push('scripts')
-    <script>
-        $('[data-control="flatpickr"]').flatpickr({
-            altInput: !0,
-            altFormat: "d F, Y",
-            dateFormat: "Y-m-d"
-        });
-    </script>
-@endpush
+@if ($source != 'show')
+    @include('pages.procedures.add-next-session-date-modal')
+    @include('pages.procedures.change-dates-modal')
+    @include('pages.claims.add-claim-modal')
+    @include('pages.experts.add-assistant-modal')
+    @include('pages.experts.add-external-expert-modal')
+    @include('pages.parties.add-party-modal')
+    @include('pages.parties.add-advocate-modal')
+    @push('scripts')
+        <script>
+            $('[data-control="flatpickr"]').flatpickr({
+                altInput: !0,
+                altFormat: "d F, Y",
+                dateFormat: "Y-m-d"
+            });
+        </script>
+    @endpush
+@endif

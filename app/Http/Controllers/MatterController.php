@@ -54,12 +54,10 @@ class MatterController extends Controller
             abort('403');
         }
 
-        $claimsTypes = config('system.claims.types');
-        $partiesTypes = config('system.parties.type');
+
         $parties = MatterService::partiesResolve($matter);
-        $assistants = Expert::whereIn('category', ['certified', 'assistant'])->get(['id', 'name']);
-        $subParties = Party::whereIn('type', ['office', 'advocate', 'advisor'])->get(['id', 'name']);
-        return view('pages.matters.show', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants'));
+        $source = 'show';
+        return view('pages.matters.show', compact('matter', 'parties', 'source'));
     }
 
     /**
@@ -71,8 +69,13 @@ class MatterController extends Controller
     public function edit(Matter $matter)
     {
         abort_unless(auth()->user()->can('matter-edit'), '403');
-        $id = $matter->id;
-        return view('pages.matters.form.update', compact('id'));
+        $claimsTypes = config('system.claims.types');
+        $partiesTypes = config('system.parties.type');
+        $parties = MatterService::partiesResolve($matter);
+        $assistants = Expert::whereIn('category', ['certified', 'assistant'])->get(['id', 'name']);
+        $subParties = Party::whereIn('type', ['office', 'advocate', 'advisor'])->get(['id', 'name']);
+        $source = 'edit';
+        return view('pages.matters.edit', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants', 'source'));
     }
 
     /**

@@ -6,7 +6,7 @@
         </div>
         <div class="card-body align-center">
             <div class="row">
-                <div class="col-lg-7 col-md-10 col-sm-12 ms-auto me-auto">
+                <div class="col-lg-8 col-md-10 col-sm-12 ms-auto me-auto">
                     <form action="{{ route('matter.export') }}" method="POST">
                         @csrf
                         <div class="mb-10 row">

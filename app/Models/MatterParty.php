@@ -4,10 +4,12 @@ namespace App\Models;
 
 use App\Contracts\MatterPartyContract;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class MatterParty extends Pivot
 {
     //
+    use LogsActivity;
     protected $fillable = [
         'matter_id',
         'party_id',

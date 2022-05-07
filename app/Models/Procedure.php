@@ -4,11 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Procedure extends Model
 {
-    use HasFactory;
+    use HasFactory,LogsActivity;
 
+    protected static $logOnlyDirty = true;
+
+    protected static $submitEmptyLogs = false;
+
+    protected $logAttributes  = [
+        'type',
+        'datetime',
+        'description',
+        'link',
+        'link_type',
+        'matter_id',
+    ];
     protected $fillable = [
         'type',
         'datetime',
