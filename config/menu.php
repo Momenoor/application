@@ -6,6 +6,11 @@ return [
             'title' => 'matters',
             'link' => '#',
             'class' => '',
+            'permission' => [
+                'matter-view',
+                'matter-only-own-view',
+                'matter-create',
+            ],
             'submenu' => [
                 [
                     'title' => 'matters_list',
@@ -28,6 +33,12 @@ return [
         ],
         [
             'title' => 'users',
+            'permisison' => [
+                'user-view',
+                'user-create',
+                'permission-view',
+                'role-view',
+            ],
             'submenu' => [
                 [
                     'title' => 'users_list',

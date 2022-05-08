@@ -5,40 +5,45 @@ $menu = config('menu.main');
     data-kt-menu="true">
     <!--begin::Menu item-->
     @foreach ($menu as $item)
-        <div class="menu-item menu-accordion" data-kt-menu-trigger="click">
-            <!--begin::Menu link-->
-            <a href="{{ $item['link'] ?? '#' }}" data-route="{{ $item['link'] ?? '#' }}"
-                class="menu-link py-3 {{ $item['class'] ?? '' }}">
-                <span class="menu-icon">
-                    <i class="bi bi-bar-chart fs-3"></i>
-                </span>
-                <span class="menu-title">{{ __('app.' . $item['title']) }}</span>
-                @if (key_exists('submenu', $item))
-                    <span class="menu-arrow"></span>
-                @endif
-            </a>
-            <!--end::Menu link-->
-            @if (key_exists('submenu', $item))
-                <!--begin::Menu sub-->
-                <div class="menu-sub menu-sub-accordion pt-3">
-                    <!--begin::Menu item-->
-                    @foreach ($item['submenu'] as $subItem)
-                        <div class="menu-item">
-                            <a href="{{ route($subItem['link']) ?? '#' }}" data-route="{{ $subItem['link'] ?? '#' }}"
-                                class="menu-link py-3 {{ $subItem['class'] ?? '' }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">{{ __('app.' . $subItem['title']) }}</span>
-                            </a>
+        @if (key_exists('permisison', $item))
+            @canany(data_get($item, 'permisison'))
+                <div class="menu-item menu-accordion" data-kt-menu-trigger="click">
+                    <!--begin::Menu link-->
+                    <a href="{{ $item['link'] ?? '#' }}" data-route="{{ $item['link'] ?? '#' }}"
+                        class="menu-link py-3 {{ $item['class'] ?? '' }}">
+                        <span class="menu-icon">
+                            <i class="bi bi-bar-chart fs-3"></i>
+                        </span>
+                        <span class="menu-title">{{ __('app.' . $item['title']) }}</span>
+                        @if (key_exists('submenu', $item))
+                            <span class="menu-arrow"></span>
+                        @endif
+                    </a>
+                    <!--end::Menu link-->
+                    @if (key_exists('submenu', $item))
+                        <!--begin::Menu sub-->
+                        <div class="menu-sub menu-sub-accordion pt-3">
+                            <!--begin::Menu item-->
+                            @foreach ($item['submenu'] as $subItem)
+                                <div class="menu-item">
+                                    <a href="{{ route($subItem['link']) ?? '#' }}"
+                                        data-route="{{ $subItem['link'] ?? '#' }}"
+                                        class="menu-link py-3 {{ $subItem['class'] ?? '' }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">{{ __('app.' . $subItem['title']) }}</span>
+                                    </a>
+                                </div>
+                            @endforeach
+                            <!--end::Menu item-->
                         </div>
-                    @endforeach
-                    <!--end::Menu item-->
+                    @endif
+                    <!--end::Menu sub-->
                 </div>
-            @endif
-            <!--end::Menu sub-->
-        </div>
-        <!--end::Menu item-->
+            @endcan
+            <!--end::Menu item-->
+        @endif
     @endforeach
 </div>
 @push('scripts')

@@ -30,12 +30,12 @@
                     searchInput.val(searchedText);
                 }
                 if (table.state.loaded() !== null) {
-                    var searchedStatus = table.state.loaded().columns[1].search.search;
+                    var searchedStatus = table.state.loaded().columns[2].search.search;
                     statusSelectInput.val(searchedStatus).change();
+                    var searchedCommissioning = table.state.loaded().columns[4].search.search;
                     var searchedCommissioning = table.state.loaded().columns[3].search.search;
-                    var searchedCommissioning = table.state.loaded().columns[2].search.search;
                     var searchedCategory = table.state.loaded().search.search;
-                    var searchedClaimStatus = table.state.loaded().columns[6].search.search;
+                    var searchedClaimStatus = table.state.loaded().columns[7].search.search;
                     $('#globalFilter input[name="commissioning"][value="' + searchedCommissioning + '"]')
                         .prop(
                             'checked', 'checked');
@@ -80,10 +80,10 @@
                 //table.column(1).search(claimStatus);
                 var claimStatus = $('input[name="claimsCollectionStatus"]:checked').val();
 
-                table.column(3).search(commissioning);
-                table.column(2).search(category);
-                table.column(6).search(claimStatus);
-                table.column(1).search(status).draw();
+                table.column(4).search(commissioning);
+                table.column(3).search(category);
+                table.column(7).search(claimStatus);
+                table.column(2).search(status).draw();
 
             });
 
