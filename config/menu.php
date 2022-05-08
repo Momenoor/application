@@ -33,7 +33,7 @@ return [
         ],
         [
             'title' => 'users',
-            'permisison' => [
+            'permission' => [
                 'user-view',
                 'user-create',
                 'permission-view',

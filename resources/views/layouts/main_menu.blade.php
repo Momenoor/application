@@ -5,8 +5,8 @@ $menu = config('menu.main');
     data-kt-menu="true">
     <!--begin::Menu item-->
     @foreach ($menu as $item)
-        @if (key_exists('permisison', $item))
-            @canany(data_get($item, 'permisison'))
+        @if (key_exists('permission', $item))
+            @canany(data_get($item, 'permission'))
                 <div class="menu-item menu-accordion" data-kt-menu-trigger="click">
                     <!--begin::Menu link-->
                     <a href="{{ $item['link'] ?? '#' }}" data-route="{{ $item['link'] ?? '#' }}"
