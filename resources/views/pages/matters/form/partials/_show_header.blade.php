@@ -104,7 +104,7 @@
                                         </a>
                                     @endcan
                                 @endif
-                                @if ($source == 'show')
+                                @if ($source == 'show' && ! $matter->isSubmitted())
                                     @can('matter-edit')
                                         <a href="{{ route('matter.edit', $matter) }}"
                                             class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary btn-sm me-2">
@@ -123,7 +123,7 @@
                                         </a>
                                     @endcan
                                 @endif
-                                <a href="{{ url()->previous() }}"
+                                <a href="{{ route('matter.index') }}"
                                     class="btn btn-sm btn-icon btn-primary btn-active-primary me-2"
                                     data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('app.back') }}">
                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr076.svg-->
@@ -144,7 +144,7 @@
                                 </a>
                             </div>
                             @can('matter-change-status')
-                                @livewire('matter-change-status', ['matter' => $matter])
+                                @include('pages.matters.form.partials._change_status_form')
                             @endcan
                             {{-- <a href="#" class="btn btn-sm btn-success me-3">{{ __('app.collect-claim') }}</a> --}}
                             <!--begin::Menu-->

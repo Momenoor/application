@@ -103,7 +103,7 @@ class PartyController extends Controller
         ];
         $matter->parties()->attach($subparty);
 
-        return redirect()->route('matter.show', $matter)->withToastSuccess('app.party_added_successfully');
+        return redirect()->to(url()->previous())->withToastSuccess(__('app.party_added_successfully'));
     }
 
     public function addPartyToMatter(Request $request, Matter $matter)
@@ -124,6 +124,6 @@ class PartyController extends Controller
         $matter->parties()->detach($party->id);
         $matter->parties()->attach($linkedParty);
 
-        return redirect()->route('matter.show', $matter)->withToastSuccess('app.party_added_successfully');
+        return redirect()->to(url()->previous())->withToastSuccess(__('app.party_added_successfully'));
     }
 }

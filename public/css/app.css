@@ -176,3 +176,7 @@ body {
     background-position: left top;
     background: url('../assets/media/svg/shapes/abstract-4.svg') 0 0 no-repeat;
 }
+
+.badge {
+    font-weight: 500 !important;
+}

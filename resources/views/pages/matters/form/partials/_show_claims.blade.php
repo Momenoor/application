@@ -54,7 +54,7 @@
                             @if ($source == 'edit')
                                 @can('claim-delete')
                                     <td class="text-center">
-                                        <form id="delete" action="{{ route('claim.destroy', $claim) }}" method="POST">
+                                        <form class="delete" action="{{ route('claim.destroy', $claim) }}" method="POST">
                                             @method('delete')
                                             @csrf
                                             <button class="btn btn-sm btn-icon btn-danger btn-active-danger me-2"
@@ -78,7 +78,7 @@
                                         </form>
                                         @push('scripts')
                                             <script>
-                                                $('#delete').on('submit', function(e) {
+                                                $('.delete').on('submit', function(e) {
                                                     e.preventDefault();
                                                     Swal.fire({
                                                         text: "{{ __('app.are_you_sure_to_delete_record') }}",

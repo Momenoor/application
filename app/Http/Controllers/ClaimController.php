@@ -47,7 +47,7 @@ class ClaimController extends Controller
 
         MatterClaimChanged::dispatch($matter);
 
-        return redirect()->route('matter.show', $matter)->withToastSuccess(__('app.claim-added-successfully'));
+        return redirect()->to(url()->previous())->withToastSuccess(__('app.claim-added-successfully'));
     }
 
     public function destroy(Claim $claim)
@@ -57,6 +57,6 @@ class ClaimController extends Controller
         $claim->cashes()->delete();
         $claim->delete();
         MatterClaimChanged::dispatch($matter);
-        return redirect()->route('matter.edit', $matter)->withToastSuccess(__('app.claim-deleted-successfully'));
+        return redirect()->to(url()->previous())->withToastSuccess(__('app.claim-deleted-successfully'));
     }
 }

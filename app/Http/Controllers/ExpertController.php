@@ -123,6 +123,6 @@ class ExpertController extends Controller
         $matter->experts()->detach(data_get($validated, 'expert.assistant'));
         $matter->experts()->attach($assistant);
 
-        return redirect()->route('matter.show', $matter)->withToastSuccess(__('app.assistant-assigned-successfully'));
+        return redirect()->to(url()->previous())->withToastSuccess(__('app.assistant-assigned-successfully'));
     }
 }

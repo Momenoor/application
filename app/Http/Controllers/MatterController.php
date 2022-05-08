@@ -69,6 +69,9 @@ class MatterController extends Controller
     public function edit(Matter $matter)
     {
         abort_unless(auth()->user()->can('matter-edit'), '403');
+        if ($matter->isSubmitted()) {
+            return $this->show($matter);
+        }
         $claimsTypes = config('system.claims.types');
         $partiesTypes = config('system.parties.type');
         $parties = MatterService::partiesResolve($matter);
@@ -107,12 +110,12 @@ class MatterController extends Controller
 
                 ]);
                 $matter->save();
-                return redirect()->to(route('matter.show', $matter))->withToastSuccess(__('app.matter-status-changed-successfuly'));
+                return redirect()->to(url()->previous())->withToastSuccess(__('app.matter-status-changed-successfuly'));
             }
-            return redirect()->to(route('matter.show', $matter))->withToastError(__('app.matter-status-cannot-be-changed'));;
+            return redirect()->to(url()->previous())->withToastError(__('app.matter-status-cannot-be-changed'));;
         }
 
-        return redirect()->to(route('matter.show', $matter))->withToastError(__('app.matter-status-cannot-be-changed'));;
+        return redirect()->to(url()->previous())->withToastError(__('app.matter-status-cannot-be-changed'));;
     }
 
     public function exportFilterForm()
@@ -147,5 +150,16 @@ class MatterController extends Controller
 
         /*return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus', 'result')); */
         return (new MattersExport($request))->download('matters-' . now() . '.xlsx');
+    }
+
+    public function partyUnlink(Matter $matter, $party, Request $request)
+    {
+        $validated = $request->validate([
+            'type' => 'required|in:expert,party',
+        ]);
+        $type = data_get($validated, 'type');
+        $type = \Str::plural($type, 2);
+        $matter->{$type}()->detach($party);
+        return redirect(url()->previous())->withToastSuccess(__('app.party-deleted-successfully'));
     }
 }
