@@ -122,20 +122,14 @@ body {
 }
 
 .form-select-solid,
-.form-control-solid {
+.form-control-solid,
+.input-group.input-group-solid span,
+.input-group a {
     border: 1px solid #3F42545a !important;
-}
-
-table.dataTable.table-striped>tbody>tr.odd {
-    --bs-table-accent-bg: var(--bs-primary) !important;
 }
 
 .container-fluid {
     padding: 0 15px !important;
-}
-
-.aside {
-    right: 15px !important;
 }
 
 #kt_header,

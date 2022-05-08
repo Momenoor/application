@@ -3,24 +3,27 @@
         @if (count($party['subParties']) > 0)
             <a href="javascript:;" wire:click="removeAllSubPartyItem({{ $index }})"
                 class="btn btn-sm btn-link mt-3 text-danger">
-                {{ __('app.remove-party') }}
+                {{ __('app.remove-subparty') }}
             </a>
         @else
             <a href="javascript:;" wire:click="addSubParty({{ $index }})" class="btn btn-sm btn-link mt-3">
-                {{ __('app.add-party') }}
+                {{ __('app.add_subparty') }}
             </a>
         @endif
         <div class="mt-5 mb-10 ms-10">
             @foreach ($party['subParties'] as $subIndex => $subPartyitem)
                 @if ($loop->first)
-                    <label class="form-label">{{ __('app.party-name') }}:</label>
+                    <label class="form-label w-100">{{ __('app.subparty-name') }}:
+                        <a href="javascript:;" class="fw-light text-active-dark float-end" data-bs-toggle="modal"
+                            data-bs-target="#addSubPartyLivewireModal">إضافة جديد</a></label>
+                    @include('pages.parties.add-advocate-form-modal')
                 @endif
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="input-group flex-nowrap">
                             <div class="overflow-hidden flex-grow-1">
                                 <select name="parties[{{ $index }}][sub-party][{{ $subIndex }}]"
-                                    aria-label="Select a Type" data-placeholder="{{__('app.select_party')}}"
+                                    aria-label="Select a Type" data-placeholder="{{ __('app.select_subparty') }}"
                                     class="form-select @error('parties.' . $index . '.subParties.' . $subIndex) is-invalid @enderror  sub-party-name form-select-solid rounded-end-0 border-end"
                                     data-row-index="{{ $subIndex }}" data-row-parent-index="{{ $index }}"
                                     data-control="select2"

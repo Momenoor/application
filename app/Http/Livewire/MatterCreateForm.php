@@ -51,6 +51,8 @@ class MatterCreateForm extends Component
     public $externalMarketersList;
     public $committeeChoiceValue;
 
+    // new subparty form
+    public $newsubparty = [];
 
     // Events Listners
     protected $listeners = [
@@ -107,7 +109,7 @@ class MatterCreateForm extends Component
         'marketing.marketer.id' => 'Marketer',
     ];
 
-    public function mount($id)
+    public function mount()
     {
         $this->expertsList = Expert::whereIn('category', ['main', 'certified'])->get(['id', 'name'])->toArray();
         $this->assistantsList = Expert::whereIn('category', ['main', 'certified', 'assistant'])->get(['id', 'name'])->toArray();
@@ -125,6 +127,7 @@ class MatterCreateForm extends Component
     }
     public function render()
     {
+
         return view('livewire.matter-create-form');
     }
 
@@ -227,5 +230,10 @@ class MatterCreateForm extends Component
         $this->dispatch(new CreateMatter($data));
 
         return redirect(route('matter.show', session('last_inserted_matter')))->with('toast_success', __('app.matter-successfully-added'));
+    }
+
+    public function addNewSubparty()
+    {
+        dd($this->newsubparty);
     }
 }

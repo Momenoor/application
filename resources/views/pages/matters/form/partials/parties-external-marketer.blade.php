@@ -34,7 +34,7 @@
         <div class="input-group input-group-solid">
             <input type="text" name="matter[external_commission_percent]"
                 wire:model="matter.external_commission_percent"
-                class="@error('matter.external_commission_percent') pe-5  is-invalid @enderror form-control">
+                class="@error('matter.external_commission_percent') pe-5  is-invalid @enderror form-control form-control-solid">
             <span class="input-group-text" id="basic-addon2">%</span>
         </div>
         @error('matter.external_commission_percent')
