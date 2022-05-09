@@ -10,7 +10,7 @@
 </div>
 
 <div class="modal-body">
-    <div class="row mb-10">
+    <div class="row">
         <div class="col-md-8 mb-5">
             <label class="form-label">{{ __('app.name') }}:</label>
             <input name="newsubparty[name]" type="text" wire:model="newsubparty.name"
@@ -32,21 +32,27 @@
             <div class="d-flex mt-4">
                 <!--begin::Buttons-->
                 <div class="form-check form-check-custom form-check-solid form-check-lg me-10">
-                    <input  wire.ignore class="form-check-input" wire:model="newsubparty.type" name="newsubparty[type]" type="radio" value="office"
-                        />
+                    <input wire.ignore class="form-check-input" wire:model="newsubparty.type" name="newsubparty[type]"
+                        type="radio" value="office" />
                     <label class="form-check-label" for="flexCheckboxLg">
                         {{ __('app.office') }}
                     </label>
                 </div>
                 <div class="form-check form-check-custom form-check-solid form-check-lg me-10">
-                    <input  wire.ignore class="form-check-input" wire:model="newsubparty.type" type="radio" name="newsubparty[type]" value="advocate"
-                        />
-                    <label class="form-check-label" for="flexCheckboxLg" >
+                    <input wire.ignore class="form-check-input" wire:model="newsubparty.type" type="radio"
+                        name="newsubparty[type]" value="advocate" />
+                    <label class="form-check-label" for="flexCheckboxLg">
                         {{ __('app.advocate') }}
                     </label>
                 </div>
+
                 <!--end::Input wrapper-->
             </div>
+            @error('newsubparty.type')
+                <div class=" invalid-feedback fv-plugins-message-container">
+                    {{ $message }}
+                </div>
+            @enderror
             <!--end::Radio group-->
         </div>
         <div class="col-md-3 mb-5">
@@ -82,7 +88,7 @@
                 </div>
             @enderror
         </div>
-        <div class="col-md-12 mb-5">
+        <div class="col-md-12">
             <label class="form-label">{{ __('app.address') }}:</label>
             <textarea name="newsubparty[address]" type="text" wire:model="newsubparty.address"
                 class="form-control @error('newsubparty.address') is-invalid @enderror form-control-solid mb-2 mb-md-0"

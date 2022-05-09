@@ -36,6 +36,15 @@ class Party extends Model
         'user_id',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($query) {
+            $query->user_id = auth()->id();
+        });
+    }
+
     public function scopeNotBlackList()
     {
         return $this->where('black_list', false);

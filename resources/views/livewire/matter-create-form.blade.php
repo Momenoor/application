@@ -12,7 +12,10 @@
                         <!--end::Separator-->
                         <div class="d-flex justify-content-end">
                             <!--begin::Button-->
-                            <button wire:click="reset" class="btn btn-light me-3">{{ __('app.cancel') }}</button>
+                            <a href="{{ route('matter.index') }}" class="btn btn-light me-3">{{ __('app.back') }}</a>
+                            <!--end::Button-->
+                            <!--begin::Button-->
+                            <button wire:click="resetForm" class="btn btn-light me-3">{{ __('app.cancel') }}</button>
                             <!--end::Button-->
                             <!--begin::Button-->
                             <button wire:click="save" class="btn btn-primary"> {{ __('app.save') }} </button>

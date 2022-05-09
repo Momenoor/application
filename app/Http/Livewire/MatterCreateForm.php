@@ -80,6 +80,7 @@ class MatterCreateForm extends Component
         'matter.external_commission_percent' => 'required_if:hasExternalCommission,1|numeric',
         'marketing.external_markter.id' => 'required_if:hasExternalCommission,1',
         'marketing.marketer.id' => 'required_if:hasMarketingCommission,1',
+
     ];
 
     protected $messages = [
@@ -234,6 +235,37 @@ class MatterCreateForm extends Component
 
     public function addNewSubparty()
     {
-        dd($this->newsubparty);
+        $validatedData = $this->validate([
+            'newsubparty.name' => 'required|unique:parties,parties.name',
+            'newsubparty.phone' => 'required',
+            'newsubparty.email' => 'required|email',
+            'newsubparty.fax' => 'required',
+            'newsubparty.type' => 'required|in:office,advocate',
+            'newsubparty.address' => 'required',
+        ]);
+
+        Party::create($validatedData['newsubparty']);
+        $this->advocatesList = Party::whereIn('type', ['office', 'advocate', 'advisor'])->get(['id', 'name'])->toArray();
+        $this->resetNewSubparty();
+        $this->emit('closeModal');
+    }
+
+    public function resetNewSubparty()
+    {
+        $this->resetValidation();
+        $this->newsubparty = [];
+    }
+
+    public function resetForm()
+    {
+        $this->resetValidation();
+        $this->matter = null;
+        $this->parties = [];
+        $this->experts = [];
+        $this->marketing = [];
+        $this->hasMarketingCommission = null;
+        $this->hasExternalCommission = null;
+        $this->claims = [];
+        $this->claim = null;
     }
 }
