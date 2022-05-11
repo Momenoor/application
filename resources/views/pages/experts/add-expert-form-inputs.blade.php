@@ -46,8 +46,8 @@
         </div>
         <div class="col-md-6">
             <label class="form-label">{{ __('app.type') }}:</label>
-            <select name="newexpert[type]" wire:model="newexpert.type" data-control="select2"
-                class="form-select @error('newexpert.type') is-invalid @enderror form-select-solid mb-2 mb-md-0"
+            <select name="newexpert[category]" wire:model="newexpert.category" data-control="select2"
+                class="form-select @error('newexpert.category') is-invalid @enderror form-select-solid mb-2 mb-md-0"
                 data-placeholder="{{ __('app.select_expert_type') }}">
                 <option></option>
                 <option value="main">{{ __('app.main') }}</option>
@@ -56,7 +56,7 @@
                 <option value="external">{{ __('app.external-expert') }}</option>
                 <option value="external-assistant">{{ __('app.external-assistant') }}</option>
             </select>
-            @error('newexpert.type')
+            @error('newexpert.category')
                 <div class=" invalid-feedback fv-plugins-message-container">
                     {{ $message }}
                 </div>

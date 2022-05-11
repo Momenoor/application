@@ -24,7 +24,7 @@ class Expert extends Model implements MatterPartyContract
         'name',
         'phone',
         'email',
-        'catgeory',
+        'category',
         'field',
         'user_id',
     ];
@@ -32,7 +32,7 @@ class Expert extends Model implements MatterPartyContract
         'name',
         'phone',
         'email',
-        'catgeory',
+        'category',
         'field',
         'user_id',
     ];

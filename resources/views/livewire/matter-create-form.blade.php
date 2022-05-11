@@ -108,9 +108,9 @@
 
                     @this.set('newexpert.field', $(this).select2("val"));
                 });
-                $("select[name='newexpert[type]']").on('change', function(e) {
+                $("select[name='newexpert[category]']").on('change', function(e) {
 
-                    @this.set('newexpert.type', $(this).select2("val"));
+                    @this.set('newexpert.category', $(this).select2("val"));
                 });
                 //$('select').trigger('change');
             }

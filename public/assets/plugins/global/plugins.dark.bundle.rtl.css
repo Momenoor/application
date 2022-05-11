@@ -28647,6 +28647,7 @@ readers do not read off random characters that represent icons */
     border: 0;
     transition: color 0.2s ease, background-color 0.2s ease;
     top: 50%;
+    left: 0.3rem;
 }
 
 .select2-container--bootstrap5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice .select2-selection__choice__remove span {
@@ -31625,3 +31626,5 @@ body {
     border: 1px solid #1b1b29 !important;
     border-radius: 0.475rem;
 }
+
+;

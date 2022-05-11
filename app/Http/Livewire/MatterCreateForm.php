@@ -264,7 +264,7 @@ class MatterCreateForm extends Component
             'newexpert.phone' => 'required',
             'newexpert.email' => 'required|email',
             'newexpert.field' => 'required',
-            'newexpert.type' => 'required|in:main,certified,assistant,external,external-assistant',
+            'newexpert.category' => 'required|in:main,certified,assistant,external,external-assistant',
         ]);
 
         Expert::create($validatedData['newexpert']);
