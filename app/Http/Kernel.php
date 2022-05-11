@@ -21,7 +21,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \App\Http\Middleware\setLocale::class,
-        \App\Http\Middleware\SessionExpired::class,
+        //\App\Http\Middleware\SessionExpired::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\Authorizable::class,
     ];

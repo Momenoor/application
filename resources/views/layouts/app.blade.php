@@ -31,10 +31,10 @@ License: For each use you must have a valid license purchased only from above li
     <!--end::Page Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link
-        href="{{ asset('assets/plugins/global/plugins.bundle' . config('system.lang.' . app()->getLocale() . '.css') . '.css') }}"
+        href="{{ asset('assets/plugins/global/plugins' . $themeMode . '.bundle' . config('system.lang.' . app()->getLocale() . '.css') . '.css') }}"
         rel="stylesheet" type="text/css" />
     <link
-        href="{{ asset('assets/css/style.bundle' . config('system.lang.' . app()->getLocale() . '.css') . '.css') }}"
+        href="{{ asset('assets/css/style' . $themeMode . '.bundle' . config('system.lang.' . app()->getLocale() . '.css') . '.css') }}"
         rel="stylesheet" type="text/css" />
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
@@ -44,7 +44,7 @@ License: For each use you must have a valid license purchased only from above li
 <!--end::Head-->
 <!--begin::Body-->
 
-<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed header-background-light">
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed header-background-{{$imageMode}}">
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
@@ -53,7 +53,7 @@ License: For each use you must have a valid license purchased only from above li
             <!--begin::Wrapper-->
             <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
                 <!--begin::Header-->
-                <div id="kt_header" class="header bg-transparent header-background-light">
+                <div id="kt_header" class="header bg-transparent header-background-{{$imageMode}}">
                     <!--begin::Container-->
                     <div class="container-fluid d-flex flex-stack">
                         <!--begin::Brand-->
@@ -554,6 +554,12 @@ License: For each use you must have a valid license purchased only from above li
         var setThemeMode = function(mode, cb) {
 
             localStorage.setItem('theme', mode);
+            var date = new Date(Date.now() + 5 * 12 * 30 * 24 * 60 * 60 * 1000); // +2 day from now
+            var options = {
+                expires: date
+            };
+            KTCookie.set("themeMode", mode, options);
+
             // Load css file
             var loadCssFile = function(fileName, newFileName) {
                 return new Promise(function(resolve, reject) {
@@ -629,7 +635,6 @@ License: For each use you must have a valid license purchased only from above li
         if ($mode == 'dark') {
             $('#darkMode').prop('checked', true);
         }
-        setThemeMode($mode);
 
         $('#darkMode').on('change', function() {
             if ($(this).is(':checked')) {

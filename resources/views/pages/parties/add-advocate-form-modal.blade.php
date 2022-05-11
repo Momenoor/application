@@ -15,7 +15,6 @@
 </div>
 <script>
     var modal = new bootstrap.Modal(document.getElementById('addSubPartyLivewireModal'));
-    console.log(modal);
     window.livewire.on('closeModal', () => {
         modal.hide();
     });

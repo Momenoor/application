@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use PDO;
 
 class AppServiceProvider extends ServiceProvider
@@ -77,5 +78,19 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrap();
 
         Schema::defaultStringLength(191);
+
+        View::composer('*', function ($view) {
+            $cookie = request()->cookie('themeMode');
+            $imageName = 'light';
+            if ($cookie == 'dark') {
+                $cookie = '.dark';
+                $imageName = 'dark';
+            } else {
+                $cookie = null;
+                $imageName = 'light';
+            }
+
+            $view->with(['themeMode'=> $cookie,'imageMode' => $imageName]);
+        });
     }
 }

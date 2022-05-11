@@ -42,7 +42,7 @@
                     </div>
                 @enderror
             </div>
-            <div class="col-md-4">
+            <div class="col-md-8">
                 <label class="form-label">{{ __('app.email') }}:</label>
                 <input name="parties.{{ $index }}.email" wire:model="parties.{{ $index }}.email"
                     type="text" class="form-control @error('parties.'. $index .'.email') is-invalid @enderror form-control-solid mb-2 mb-md-0"

@@ -53,6 +53,7 @@ class MatterCreateForm extends Component
 
     // new subparty form
     public $newsubparty = [];
+    public $newexpert = [];
 
     // Events Listners
     protected $listeners = [
@@ -254,6 +255,28 @@ class MatterCreateForm extends Component
     {
         $this->resetValidation();
         $this->newsubparty = [];
+    }
+
+    public function addNewExpert()
+    {
+        $validatedData = $this->validate([
+            'newexpert.name' => 'required|unique:experts,experts.name',
+            'newexpert.phone' => 'required',
+            'newexpert.email' => 'required|email',
+            'newexpert.field' => 'required',
+            'newexpert.type' => 'required|in:main,certified,assistant,external,external-assistant',
+        ]);
+
+        Expert::create($validatedData['newexpert']);
+        $this->committeesList = Expert::CommitteesList()->get(['id', 'name'])->toArray();
+        $this->resetNewExpert();
+        $this->emit('closeModal');
+    }
+
+    public function resetNewExpert()
+    {
+        $this->resetValidation();
+        $this->newexpert = [];
     }
 
     public function resetForm()

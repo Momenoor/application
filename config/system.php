@@ -43,6 +43,13 @@ return [
             'rate' => 15,
         ],
         'main' => [1],
+        'fields' => [
+            'accounting' => 'accounting',
+            'engineering' => 'engineering',
+            'banking' => 'banking',
+            'technology' => 'technology',
+            'realestate' => 'realestate',
+        ]
     ],
 
 
