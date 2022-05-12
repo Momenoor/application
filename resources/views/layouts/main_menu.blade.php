@@ -7,10 +7,10 @@ $menu = config('menu.main');
     @foreach ($menu as $item)
         @if (key_exists('permission', $item))
             @canany(data_get($item, 'permission'))
-                <div class="menu-item menu-accordion" data-kt-menu-trigger="click">
+                <div class="menu-item menu-accordion" {{ !data_get($item, 'submenu') ?: 'data-kt-menu-trigger="click"' }}>
                     <!--begin::Menu link-->
-                    <a href="{{ $item['link'] ?? '#' }}" data-route="{{ $item['link'] ?? '#' }}"
-                        class="menu-link py-3 {{ $item['class'] ?? '' }}">
+                    <a href="{{ data_get($item, 'link') ? route($item['link']) : '#' }}"
+                        data-route="{{ $item['link'] ?? '#' }}" class="menu-link py-3 {{ $item['class'] ?? '' }}">
                         <span class="menu-icon">
                             <i class="bi bi-bar-chart fs-3"></i>
                         </span>
@@ -26,7 +26,7 @@ $menu = config('menu.main');
                             <!--begin::Menu item-->
                             @foreach ($item['submenu'] as $subItem)
                                 <div class="menu-item">
-                                    <a href="{{ route($subItem['link']) ?? '#' }}"
+                                    <a href="{{ data_get($subItem, 'link') ? route($subItem['link']) : '#' }}"
                                         data-route="{{ $subItem['link'] ?? '#' }}"
                                         class="menu-link py-3 {{ $subItem['class'] ?? '' }}">
                                         <span class="menu-bullet">

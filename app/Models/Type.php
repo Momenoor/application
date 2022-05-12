@@ -8,7 +8,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Type extends Model
 {
-    use HasFactory,LogsActivity;
+    use HasFactory, LogsActivity;
 
     protected static $logOnlyDirty = true;
 
@@ -22,4 +22,9 @@ class Type extends Model
         'name',
         'active'
     ];
+
+    public function matters()
+    {
+        return $this->hasMany(Matter::class);
+    }
 }

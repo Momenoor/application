@@ -4,7 +4,6 @@ return [
     'main' => [
         [
             'title' => 'matters',
-            'link' => '#',
             'class' => '',
             'permission' => [
                 'matter-view',
@@ -30,6 +29,13 @@ return [
                     ],
                 ],
             ]
+        ],
+        [
+            'title' => 'matter_types',
+            'link' => 'type.index',
+            'permission' => [
+                'type-view'
+            ],
         ],
         [
             'title' => 'users',

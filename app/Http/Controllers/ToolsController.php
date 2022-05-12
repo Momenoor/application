@@ -10,6 +10,26 @@ use PDO;
 
 class ToolsController extends Controller
 {
+
+    private $tables = [
+        'types' => [
+            'Matter' => 'type_id'
+        ],
+        'courts' => [
+            'Matter' => 'court_id',
+        ],
+        'experts' => [
+            'Matter' => 'expert_id',
+            'MatterExpert' => 'expert_id',
+        ],
+        'parties' => [
+            'MatterParty' => [
+                'party_id',
+                'parent_id',
+            ],
+        ],
+    ];
+
     public function fixClaimsStatus()
     {
         $matters = Matter::with(['claims', 'cashes'])->get();
@@ -74,5 +94,40 @@ class ToolsController extends Controller
         if ($collected <= 0) {
             return Cash::UNPAID;
         }
+    }
+
+    public function removeDuplicatedForm()
+    {
+        $tables = array_keys($this->tables);
+        return view('pages.tools.remove-duplicated-form', compact('tables'));
+    }
+
+    public function removeDuplicatedRecord(Request $request)
+    {
+        $n = 0;
+        $tableName = \Str::of($request->input('tableName'))->singular()->ucfirst();
+        $model = "App\\Models\\" . $tableName;
+        $duplicated = $model::select('name', \DB::raw('COUNT(name) as duplicated'))->groupBy('name')->having('duplicated', '>', 1)->get();
+        foreach ($duplicated as $duplicate) {
+            $first = $model::where('name', $duplicate->name)->first();
+            $otherIds = $model::where('name', $duplicate->name)->where('id', '!=', $first->id)->get();
+
+            $otherIds->each(function ($item) use ($request, $first) {
+                $relationArray = $this->tables[$request->get('tableName')];
+                foreach ($relationArray as $table => $column) {
+                    if (is_string($column)) {
+                        $column = [$column];
+                    }
+                    foreach ($column as $col) {
+                        $relatedModel = $model = "App\\Models\\" . $table;
+                        $relatedModel::where($col, $item->id)->update([$col => $first->id]);
+                    }
+                }
+            });
+            $model::where('name', $duplicate->name)->where('id', '!=', $first->id)->delete();
+            $n++;
+        }
+
+        return redirect()->to(route('tools.remove-duplicated'))->withToastSuccess(__('app.deuplicated-rows-deleted, :count effected-rows', ['count' => $n]));
     }
 }

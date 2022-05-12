@@ -177,7 +177,6 @@ class MatterDataTable extends DataTable
     {
         return $this->builder()
             ->setTableId('matter-table')
-
             ->addIndex()
             ->setTableAttributes(['class' => 'table table-striped table-row-bordered border-gray-300 border table-hover table-row-gray-300 align-middle'])
             ->columns($this->getColumns())

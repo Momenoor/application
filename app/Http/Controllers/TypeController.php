@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\TypeDatatable;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,10 @@ class TypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(TypeDatatable $dataTable)
     {
-        //
+        abort_unless(auth()->user()->can('type-view'), '403');
+        return $dataTable->render('pages.types.index');
     }
 
     /**
@@ -24,7 +26,8 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+        abort_unless(auth()->user()->can('type-create'), '403');
+        return view('pages.types.create');
     }
 
     /**
@@ -35,7 +38,12 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|unique:types,name',
+        ]);
+
+        Type::create($validated);
+        return redirect(route('type.index'));
     }
 
     /**
@@ -46,7 +54,7 @@ class TypeController extends Controller
      */
     public function show(Type $type)
     {
-        //
+        abort_unless(auth()->user()->can('type-view'), '403');
     }
 
     /**
@@ -57,7 +65,8 @@ class TypeController extends Controller
      */
     public function edit(Type $type)
     {
-        //
+        abort_unless(auth()->user()->can('type-edit'), '403');
+        return view('pages.types.edit', compact('type'));
     }
 
     /**
@@ -69,7 +78,19 @@ class TypeController extends Controller
      */
     public function update(Request $request, Type $type)
     {
-        //
+
+        $validated = $request->validate([
+            'name' => 'required|unique:types,name,' . $type->id . ',id',
+            'active' => 'nullable',
+        ]);
+
+        if (!data_get($validated, 'active')) {
+            $validated['active'] = 'false';
+        }
+
+        $type->fill($validated);
+        $type->saveOrFail();
+        return redirect(route('type.index'));
     }
 
     /**
@@ -80,6 +101,8 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        //
+        abort_unless(auth()->user()->can('type-delete'), '403');
+        $type->delete();
+        return redirect(route('type.index'))->withToastSuccess(__('app.record_deleted_successfully'));
     }
 }

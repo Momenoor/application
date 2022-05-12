@@ -8,12 +8,12 @@ if ($model->status) {
 }
 @endphp
 
-<div class="d-flex justify-content-end flex-shrink-0">
+<div class="d-flex justify-content-center flex-shrink-0">
     @if ($color)
         <span class="bullet bullet-vertical h-40px bg-{{ $color }} me-2"></span>
     @endif
     <a href="{{ route($modelLowerName . '.edit', $modelId) }}"
-        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+        class="btn btn-icon btn-light-primary btn-sm me-1">
         <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
         <span class="svg-icon svg-icon-3">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -31,7 +31,7 @@ if ($model->status) {
         class="delete-row">
         @csrf
         @method("DELETE")
-        <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
+        <button class="btn btn-icon btn-light-danger btn-sm">
             <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
             <span class="svg-icon svg-icon-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

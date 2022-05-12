@@ -10,6 +10,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProcedureController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ToolsController;
+use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
 use App\Models\Matter;
 use Illuminate\Support\Facades\Auth;
@@ -57,6 +58,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('user', UserController::class);
 
 
+    Route::resource('type', TypeController::class);
+
+
     Route::resource('permission', PermissionController::class);
 
 
@@ -73,6 +77,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('tools/fix-claim-status', [ToolsController::class, 'fixClaimsStatus'])->name('tools.fix-claim-status');
     Route::get('tools/fix-claim-over-paid', [ToolsController::class, 'fixClaimOverPaid'])->name('tools.fix-claim-over-paid');
+    Route::get('tools/remove-duplicated', [ToolsController::class, 'removeDuplicatedForm'])->name('tools.remove-duplicated');
+    Route::post('tools/remove-duplicated', [ToolsController::class, 'removeDuplicatedRecord'])->name('tools.remove-duplicated');
 
 
     Route::delete('claim/{claim}', [ClaimController::class, 'destroy'])->name('claim.destroy');
