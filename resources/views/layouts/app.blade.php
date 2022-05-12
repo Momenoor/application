@@ -37,6 +37,10 @@ License: For each use you must have a valid license purchased only from above li
         href="{{ asset('assets/css/style' . $themeMode . '.bundle' . config('system.lang.' . app()->getLocale() . '.css') . '.css') }}"
         rel="stylesheet" type="text/css" />
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet" type="text/css" />
+    @if ($themeMode == 'dark')
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css" />
+    @endif
+
     <!--end::Global Stylesheets Bundle-->
     @livewireStyles
     @stack('style')
@@ -44,7 +48,7 @@ License: For each use you must have a valid license purchased only from above li
 <!--end::Head-->
 <!--begin::Body-->
 
-<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed header-background-{{$imageMode}}">
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed header-background-{{ $imageMode }}">
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
@@ -53,7 +57,7 @@ License: For each use you must have a valid license purchased only from above li
             <!--begin::Wrapper-->
             <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
                 <!--begin::Header-->
-                <div id="kt_header" class="header bg-transparent header-background-{{$imageMode}}">
+                <div id="kt_header" class="header bg-transparent header-background-{{ $imageMode }}">
                     <!--begin::Container-->
                     <div class="container-fluid d-flex flex-stack">
                         <!--begin::Brand-->
