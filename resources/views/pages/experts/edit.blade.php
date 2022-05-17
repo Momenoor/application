@@ -8,7 +8,7 @@
             <form action="{{ route('expert.update', $expert) }}" method="POST">
                 @csrf
                 @method('PATCH')
-                @include('pages.experts.create-expert-form')
+                @include('pages.experts.edit-expert-form')
                 <div class="d-flex flex-stack w-lg-50">
                     <!--begin::Label-->
                     <div class="me-5">
