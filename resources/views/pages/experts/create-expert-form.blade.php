@@ -75,5 +75,3 @@
         @enderror
     </div>
 </div>
-git config --global user.email "momen.noor@gmail.com"
-  git config --global user.name "Your Name"
