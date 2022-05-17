@@ -204,6 +204,16 @@ class Matter extends Model
         return $this->hasMany(Attachment::class);
     }
 
+    public function scopeCurrent($query)
+    {
+        return $query->where('matters.status', 'current');
+    }
+
+    public function scopeFinished($query)
+    {
+        return $query->whereIn('matters.status', ['reported', 'submitted']);
+    }
+
     public function isReported()
     {
         return (!is_null($this->reported_date)) or $this->status == 'reported';

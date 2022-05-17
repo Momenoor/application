@@ -51,7 +51,7 @@ class Expert extends Model implements MatterPartyContract
     }
     public function asAssistantAsFinished()
     {
-        return $this->belongsToMany(Matter::class, 'matter_expert')->wherePivot('type', '=', 'assistant')->whereIn('matters.status', ['reported', 'submitted']);
+        return $this->asAssistant()->finished();
     }
 
     public function claims()

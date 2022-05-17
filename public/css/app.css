@@ -108,7 +108,7 @@ body {
     width: 3px;
     top: 0;
     bottom: 0;
-    background-color: #EFF2F5;
+    background-color: #d5d8db;
 }
 
 .activities.timeline-label:before {
@@ -118,7 +118,7 @@ body {
     width: 3px;
     top: 0;
     bottom: 0;
-    background-color: #EFF2F5;
+    background-color: #d5d8db;
 }
 
 .form-select-solid,

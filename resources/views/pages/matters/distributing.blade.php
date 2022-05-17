@@ -7,10 +7,10 @@
         </div>
         <div class="card-body">
             <div class="accordion" id="kt_accordion_1">
-                <div class="p-2">
-                    <table class="table table-sm mb-0">
+                <div class="accordion-item p-2">
+                    <table class="table fw-bolder table-sm mb-0">
                         <tr>
-                            <td class="w-300px">{{ __('app.name') }}</td>
+                            <td class="w-300px ps-15">{{ __('app.name') }}</td>
                             <td class="w-300px ps-15">{{ __('app.current_matters') }}</td>
                             <td class="w-300px ps-15">{{ __('app.matters_closed_during_month') }}</td>
                         </tr>
@@ -18,19 +18,19 @@
                 </div>
                 </button>
                 @foreach ($assistants as $assistant)
-                    <div class="accordion-item">
+                    <div class="accordion-item ">
                         <h2 class="accordion-header" id="kt_accordion_1_header_{{ $assistant->id }}">
                             <button class="accordion-button py-2 collapsed fw-bold" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#kt_accordion_1_body_{{ $assistant->id }}" aria-expanded="true"
                                 aria-controls="kt_accordion_1_body_{{ $assistant->id }}">
                                 <table class="table table-sm mb-0">
                                     <tr>
-                                        <td class="w-300px">{{ $assistant->name }}</td>
-                                        <td class="w-100px">{{ $assistant->current_count }}</td>
-                                        <td class="w-200px">
+                                        <td class="w-300px border-right-1">{{ $assistant->name }}</td>
+                                        <td class="w-100px text-primary ps-5">{{ $assistant->current_count }}</td>
+                                        <td class="w-200px border-right-1">
                                             {{ format_amount($assistant->asAssistant->sum('claims_sum_amount_unformatted')) }}
                                         </td>
-                                        <td class="w-100px">{{ $assistant->finished_count }}</td>
+                                        <td class="w-100px text-success ps-5">{{ $assistant->finished_count }}</td>
                                         <td class="w-200px">
                                             {{ format_amount($assistant->asAssistantAsFinished->sum('claims_sum_amount_unformatted')) }}
                                         </td>
@@ -41,23 +41,77 @@
                         <div id="kt_accordion_1_body_{{ $assistant->id }}" class="accordion-collapse collapse "
                             aria-labelledby="kt_accordion_1_header_{{ $assistant->id }}"
                             data-bs-parent="#kt_accordion_1">
-                            <div class="accordion-body">
-                                <table class="table table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th>1</th>
-                                            <th>2</th>
-                                            <th>3</th>
-                                            <th>4</th>
-                                            <th>5</th>
-                                            <th>6</th>
-                                            <th>7</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
+                            <div class="accordion-body table-responsive">
+                                <div class="py-5">
+                                    <div class="d-flex align-items-center text-primary me-15 mb-5">
+                                        <span class="bullet bg-primary h-5px w-15px me-5"></span>
+                                        {{ __('app.office') }}
+                                    </div>
+                                    <table class="table table-sm table table-row-dashed table-row-gray-300">
+                                        <thead>
+                                            <tr class="fw-bolder text-gray-800">
+                                                <th>{{ __('app.number') . '/' . __('app.year') }}</th>
+                                                <th>{{ __('app.court') }}</th>
+                                                <th>{{ __('app.type') }}</th>
+                                                <th>{{ __('app.claims') }}</th>
+                                                <th>{{ __('app.commissioning') }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($assistant->asAssistant as $matter)
+                                                <tr class="">
+                                                    <td>{{ $matter->number . '/' . $matter->year }}</td>
+                                                    <td>{{ $matter->court->name }}</td>
+                                                    <td>{{ $matter->type->name }}</td>
+                                                    <td>{{ $matter->claims_sum_amount }}</td>
+                                                    <td>{{ __('app.' . $matter->commissioning) }}</td>
+                                                </tr>
+                                            @endforeach
+                                            <tr class="fw-bolder">
+                                                <td colspan="3" class="text-center">{{ __('app.total') }}</td>
+                                                <td>
+                                                    {{ format_amount($assistant->asAssistant->sum('claims_sum_amount_unformatted')) }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @if (count($assistant->matters) > 0)
+                                    <div class="py-5">
+                                        <div class="d-flex align-items-center text-primary me-15 mb-5">
+                                            <span class="bullet bg-primary h-5px w-15px me-5"></span>
+                                            {{ __('app.private') }}
+                                        </div>
+                                        <table class="table table-sm table table-row-dashed table-row-gray-300">
+                                            <thead>
+                                                <tr class="fw-bolder text-gray-800">
+                                                    <th>{{ __('app.number') . '/' . __('app.year') }}</th>
+                                                    <th>{{ __('app.court') }}</th>
+                                                    <th>{{ __('app.type') }}</th>
+                                                    <th>{{ __('app.claims') }}</th>
+                                                    <th>{{ __('app.commissioning') }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($assistant->matters as $matter)
+                                                    <tr class="">
+                                                        <td>{{ $matter->number . '/' . $matter->year }}</td>
+                                                        <td>{{ $matter->court->name }}</td>
+                                                        <td>{{ $matter->type->name }}</td>
+                                                        <td>{{ $matter->claims_sum_amount }}</td>
+                                                        <td>{{ __('app.' . $matter->commissioning) }}</td>
+                                                    </tr>
+                                                @endforeach
+                                                <tr class="fw-bolder">
+                                                    <td colspan="3" class="text-center">{{ __('app.total') }}</td>
+                                                    <td>
+                                                        {{ format_amount($assistant->matters->sum('claims_sum_amount_unformatted')) }}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

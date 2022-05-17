@@ -48,7 +48,7 @@ License: For each use you must have a valid license purchased only from above li
 <!--end::Head-->
 <!--begin::Body-->
 
-<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed header-background-{{ $imageMode }}">
+<body id="kt_body" class="scroll-y header-fixed header-tablet-and-mobile-fixed header-background-{{ $imageMode }}">
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
@@ -647,6 +647,8 @@ License: For each use you must have a valid license purchased only from above li
                 setThemeMode('light');
             }
         });
+/*         var customScroll = new slimScroll();
+        window.onresize = customScroll.resetValues; */
     </script>
     @stack('scripts')
     <!--end::Javascript-->

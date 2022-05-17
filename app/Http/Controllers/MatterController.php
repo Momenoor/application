@@ -170,7 +170,7 @@ class MatterController extends Controller
         $assistants = Expert::assistantsList()
             ->active()
             ->withCount(['asAssistant as current_count' => function ($query) {
-                return $query->where('matters.status', 'current');
+                return $query->current();
             }])
             ->withCount(['asAssistantAsFinished as finished_count' => function ($query) {
                 return $query->where('reported_date', '>=', now()->subMonth(1))->where('reported_date', '<=', now());
@@ -181,8 +181,9 @@ class MatterController extends Controller
             ->with('asAssistant', function ($query) {
                 return $query->where('matters.status', 'current')->with('claims');
             })
-            ->with('matters')
-
+            ->with('matters', function ($query) {
+                return $query->current();
+            })
             ->get();
         return view('pages.matters.distributing', compact('assistants'));
     }
