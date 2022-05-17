@@ -63,7 +63,7 @@
                                                     <td>{{ $matter->number . '/' . $matter->year }}</td>
                                                     <td>{{ $matter->court->name }}</td>
                                                     <td>{{ $matter->type->name }}</td>
-                                                    <td>{{ $matter->claims_sum_amount }}</td>
+                                                    <td>{{ format_amount($matter->claims->sum('amount')) }}</td>
                                                     <td>{{ __('app.' . $matter->commissioning) }}</td>
                                                 </tr>
                                             @endforeach
@@ -98,7 +98,7 @@
                                                         <td>{{ $matter->number . '/' . $matter->year }}</td>
                                                         <td>{{ $matter->court->name }}</td>
                                                         <td>{{ $matter->type->name }}</td>
-                                                        <td>{{ $matter->claims_sum_amount }}</td>
+                                                        <td>{{ format_amount($matter->claims->sum('amount')) }}</td>
                                                         <td>{{ __('app.' . $matter->commissioning) }}</td>
                                                     </tr>
                                                 @endforeach

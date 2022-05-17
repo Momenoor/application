@@ -1,11 +1,13 @@
-@php
+@include('laravel-menu::metronic-navbar')
+{{-- @php
 $menu = config('menu.main');
 @endphp
 <div class="menu menu-rounded menu-column menu-title-gray-700 menu-icon-gray-400 menu-arrow-gray-400 menu-bullet-gray-400 menu-arrow-gray-400 menu-state-bg fw-bold"
     data-kt-menu="true">
     <!--begin::Menu item-->
     @foreach ($menu as $item)
-        @if (key_exists('permission', $item) && Auth()->user()->canAny(data_get($item, 'permission')) or ! key_exists('permission', $item))
+        @if (key_exists('permission', $item) &&
+        Auth()->user()->canAny(data_get($item, 'permission')) or !key_exists('permission', $item))
             <div class="menu-item menu-accordion" {{ !data_get($item, 'submenu') ?: 'data-kt-menu-trigger="click"' }}>
                 <!--begin::Menu link-->
                 <a href="{{ data_get($item, 'link') ? route($item['link']) : '#' }}"
@@ -53,4 +55,4 @@ $menu = config('menu.main');
             }
         })
     </script>
-@endpush
+@endpush --}}

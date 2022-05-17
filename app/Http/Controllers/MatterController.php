@@ -179,10 +179,10 @@ class MatterController extends Controller
                 return $query->where('reported_date', '>=', now()->subMonth(1))->where('reported_date', '<=', now())->with('claims');
             })
             ->with('asAssistant', function ($query) {
-                return $query->where('matters.status', 'current')->with('claims');
+                return $query->where('matters.status', 'current')->with(['court', 'type', 'claims']);
             })
             ->with('matters', function ($query) {
-                return $query->current();
+                return $query->current()->with(['court', 'type','claims']);
             })
             ->get();
         return view('pages.matters.distributing', compact('assistants'));
