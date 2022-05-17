@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Expert;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -51,5 +52,20 @@ class UserController extends Controller
     public function show(User $user)
     {
         return view('pages.users.view', compact('user'));
+    }
+
+    public function forceChangePassowrd()
+    {
+        return view('auth.passwords.force-change');
+    }
+
+    public function changePassowrd(Request $request)
+    {
+        $validated = $request->validate([
+            'password' => 'required|confirmed|min:8|not_in:' . User::DEFAULT_PASSWORD,
+        ]);
+        $request->user()->password = Hash::make($validated['password']);
+        $request->user()->save();
+        return redirect()->route('home')->withToastInfo(__('app.password_changed_successfully.'));
     }
 }

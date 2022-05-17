@@ -16,6 +16,11 @@ class MatterExpert extends Pivot implements MatterPartyContract
         'expert_id',
         'type',
     ];
+    protected $logAttributes = [
+        'matter_id',
+        'expert_id',
+        'type',
+    ];
 
     public function type()
     {

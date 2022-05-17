@@ -2,14 +2,11 @@
 
 namespace App\DataTables;
 
-use App\Models\Type;
-use Yajra\DataTables\Html\Button;
+use App\Models\Expert;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class TypeDatatable extends DataTable
+class ExpertDatatable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -22,30 +19,55 @@ class TypeDatatable extends DataTable
         return datatables()
             ->eloquent($query)
             ->addIndexColumn()
+            ->editColumn('name', function ($model) {
+
+                return '<div class="position-relative"><span class="fw-bolder">
+                ' .  $model->name . '</span>
+                <div class="fs-7 text-primary">' .  __('app.' . $model->field) . '</div>
+                </div>';
+            })
+            ->editColumn('email', function ($model) {
+
+                $email = $model->email ?: optional($model->user)->email;
+                $phone = $model->phone ?: optional($model->user)->phone;
+
+                return '<div class="position-relative">
+                ' .  $email . '
+                <div class="fs-7">' .   $phone . '</div>
+                </div>';
+            })
+            ->editColumn('field', function ($model) {
+                return '<span class="badge fs-8 badge-light-' . $model->categoryColor() . '">' . __('app.' . $model->category) . '</span>';
+            })
             ->editColumn('active', function ($model) {
-                if ($model->active == 'true') {
-                    return '<i class="bi fs-2 bi-check-square-fill text-success"></i>';
+                if ($model->active == 'active') {
+                    return '<i class="bi bi-check-square-fill fs-1 text-success"></i>';
                 } else {
-                    return '<i class="bi fs-2 bi-x-square-fill text-danger"></i>';
+                    return '<i class="bi bi-x-square-fill fs-1 text-danger"></i>';
                 }
+            })
+            ->editColumn('as_assistant_count', function ($model) {
+                return $model->as_assistant_count . ' (<span class="text-primary">' . $model->as_assistant_current_count . '</span>)';
             })
             ->addColumn('action', function ($model) {
 
                 return view('common.table-action')->with('model', $model);
             })
 
-            ->rawColumns(['active']);
+            ->rawColumns(['active', 'name', 'email', 'as_assistant_count', 'field']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\TypeDatatable $model
+     * @param \App\Models\ExpertsDatatable $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Type $model)
+    public function query(Expert $model)
     {
-        return $model->withCount('matters')->newQuery();
+        return $model->with('user')->withCount(['matters', 'asAssistant', 'asAssistant as as_assistant_current_count' => function ($query) {
+            return $query->where('matters.status', 'current');
+        }])->newQuery();
     }
 
     /**
@@ -56,7 +78,7 @@ class TypeDatatable extends DataTable
     public function html()
     {
         return $this->builder()
-            ->setTableId('type-table')
+            ->setTableId('expert-table')
             ->addIndex()
             ->setTableAttributes(['class' => 'table table-striped table-row-bordered border-gray-300 border table-hover table-row-gray-300 align-middle'])
             ->columns($this->getColumns())
@@ -65,7 +87,7 @@ class TypeDatatable extends DataTable
             ->stateSave(true)
             ->orderBy(1)
             ->dom("<'row'<'col-sm-12'tr>> +
-    <'row'<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'li><'col-sm-7col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>>'")
+<'row'<'col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start'li><'col-sm-7col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end'p>>'")
             ->parameters([
                 'scrollX' => true,
                 'searchDelay' => 50,
@@ -89,10 +111,15 @@ class TypeDatatable extends DataTable
                 ->addClass('text-center ps-2'),
 
             Column::make('name')->title(__('app.name')),
+            Column::make('email')->title(__('app.contact')),
+            Column::make('field')->title(__('app.field')),
             Column::make('active')->title(__('app.active')),
             Column::make('matters_count')->title(__('app.matters'))
                 ->searchable(false),
-            Column::computed('action')->title(__('app.action'))
+            Column::make('as_assistant_count')->title(__('app.as_assistants') . ' (' . __('app.current') . ')')
+                ->searchable(false),
+            Column::computed('action')
+                ->title(__('app.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->width(100)
@@ -107,6 +134,6 @@ class TypeDatatable extends DataTable
      */
     protected function filename()
     {
-        return 'Type_' . date('YmdHis');
+        return 'Experts_' . date('YmdHis');
     }
 }

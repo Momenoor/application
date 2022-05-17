@@ -96,6 +96,12 @@ class Matter extends Model
         return ClaimCollectionStatus::make($this)->getSumTotalClaims();
     }
 
+    public function getClaimsSumAmountUnformattedAttribute()
+    {
+        //return $this->claims->sum('amount');
+        return $this->claims->sum('amount');
+    }
+
     public function getCashSumAmountAttribute()
     {
         return ClaimCollectionStatus::make($this)->getSumCollectedClaims();

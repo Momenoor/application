@@ -84,32 +84,8 @@ class MatterCreateForm extends Component
 
     ];
 
-    protected $messages = [
-        'matter.year.required' => 'The :attribute cannot be empty.',
-        'email.email' => 'The :attribute format is not valid.',
-    ];
 
-    protected $validationAttributes = [
-        'matter.year' => 'Year',
-        'matter.number' => 'Number',
-        'matter.received_date' => 'Receive Date',
-        'matter.next_session_date' => 'Next Session',
-        'matter.commissioning' => 'Commissioning',
-        'matter.court_id' => 'Court',
-        'matter.type_id' => 'Type',
-        'matter.expert_id' => 'Expert',
-        'matter.level_id' => 'Level',
-        'experts.committee' => 'Committee',
-        'experts.assistant' => 'ASsistant',
-        'parties.*.type' => 'Party Type',
-        'parties.*.name' => 'Party Name',
-        'parties.*.phone' => 'Party Phone',
-        'parties.*.email' => 'Party Email',
-        'parties.*.subParties.*' => 'Advocate',
-        'matter.external_commission_percent' => 'Commission Rate',
-        'marketing.external_markter.id' => 'External Marketer',
-        'marketing.marketer.id' => 'Marketer',
-    ];
+
 
     public function mount()
     {

@@ -73,7 +73,11 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $selectedPermissions = $role->permissions->pluck('id')->toArray();
+
+
+        $order = [1, 2, 3, 4, 5];
         $permissions = ServicesPermission::resolve(Permission::all());
+
         return view('pages.users.roles.edit', compact('role', 'selectedPermissions', 'permissions'));
     }
 
@@ -87,7 +91,7 @@ class RoleController extends Controller
     public function update(Request $request, Role $role)
     {
         $validated = $request->validate([
-            'name' => 'required|unique:roles,name,'.$role->id.',id',
+            'name' => 'required|unique:roles,name,' . $role->id . ',id',
         ]);
 
         $permissions = array_values($request->permissions);

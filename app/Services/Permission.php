@@ -20,7 +20,18 @@ class Permission
     {
 
         return $permissions->mapToGroups(function ($item) {
-            $key = self::getKeyName($item, true);
+            if (\Str::contains($item->name, 'create')) {
+                $item->order = 1;
+            } elseif (\Str::contains($item->name, 'edit')) {
+                $item->order = 2;
+            } elseif (\Str::contains($item->name, 'view')) {
+                $item->order = 3;
+            } elseif (\Str::contains($item->name, 'delete')) {
+                $item->order = 4;
+            } else {
+                $item->order = 5;
+            }
+            $key = self::getModelKeyName($item, true);
             return [$key => $item];
         });
     }
@@ -30,7 +41,7 @@ class Permission
         return Str::slug($value);
     }
 
-    public static function getKeyName(ModelsPermission $item, $shouldReplacement = false, $format = true): string
+    public static function getModelKeyName(ModelsPermission $item, $shouldReplacement = false, $format = true): string
     {
         $replacement = ['-', '_', '*', '=', '+', '/', '\\', '|'];
         //$key = Str::replace(self::$abilities, '', $item->name);
@@ -44,11 +55,25 @@ class Permission
         return $key;
     }
 
+    public static function getKeyName($item, $shouldReplacement = false, $format = true): string
+    {
+        $replacement = [' ','-', '_', '*', '=', '+', '/', '\\', '|'];
+        //$key = Str::replace(self::$abilities, '', $item->name);
+        $key = $item;
+        if ($shouldReplacement) {
+            $key = Str::replace($replacement, '-', $key);
+        }
+        $key = Str::of($key)->explode('-');
+        $key = trim($key[0]);
+        $key = self::checkFomat($key, $format);
+        return $key;
+    }
+
     public static function getValueName(ModelsPermission $item, $format = false): string
     {
-        $key = self::getKeyName($item, false, false);
+        $key = self::getModelKeyName($item, false, false);
         $value = Str::replace($key, '', $item->name);
-        $value = trim($value,'-');
+        $value = trim($value, '-');
         $value = self::checkFomat($value, $format);
         return $value;
     }

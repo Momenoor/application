@@ -14,11 +14,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasPermissions, HasRoles,LogsActivity;
+    use HasApiTokens, HasFactory, Notifiable, HasPermissions, HasRoles, LogsActivity;
 
     protected static $logOnlyDirty = true;
 
     protected static $submitEmptyLogs = false;
+
+    public const DEFAULT_PASSWORD = 123456;
 
     /**
      * The attributes that are mass assignable.

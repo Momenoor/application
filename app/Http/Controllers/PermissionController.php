@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\PermissionDatatable;
 use App\Services\Permission as ServicesPermission;
+use Spatie\Permission\Guard;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
 
@@ -39,16 +40,36 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        $request->merge([
-            'name' => app(ServicesPermission::class)->setName($request->name),
-        ]);
 
-        $validated = $request->validate([
-            'name' => 'required|unique:permissions,name'
-        ]);
+        if (\Str::contains($request->get('name'), 'resource')) {
+            $model =  app(ServicesPermission::class)->getKeyName($request->get('name'), true, 'lower');
+            $abililties = [
+                'create',
+                'edit',
+                'view',
+                'delete',
+            ];
+            foreach ($abililties as $abililtie) {
+                $name = $model . '-' . $abililtie;
+                $guardName = $guardName ?? Guard::getDefaultName(Permission::class);
+                $perm = Permission::getPermission(['name' => $name, 'guard_name' => $guardName]);
+                if (!$perm) {
+                    $permissions[] = ['name' => $name, 'guard_name' => $guardName];
+                }
+            }
+            Permission::insert($permissions);
+        } else {
+            $request->merge([
+                'name' => app(ServicesPermission::class)->setName($request->name),
+            ]);
 
-        $permission = Permission::make($validated);
-        $permission->saveOrFail();
+            $validated = $request->validate([
+                'name' => 'required|unique:permissions,name'
+            ]);
+
+            $permission = Permission::make($validated);
+            $permission->saveOrFail();
+        }
 
         return redirect()->to(route('permission.index'))->withToastSuccess(__('app.permission_added_successfully'));
     }

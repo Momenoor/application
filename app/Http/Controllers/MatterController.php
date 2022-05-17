@@ -11,7 +11,9 @@ use App\Models\Matter;
 use App\Models\Party;
 use App\Models\Type;
 use App\Services\MatterService;
+use App\Services\Money;
 use Illuminate\Http\Request;
+use PDO;
 
 class MatterController extends Controller
 {
@@ -161,5 +163,27 @@ class MatterController extends Controller
         $type = \Str::plural($type, 2);
         $matter->{$type}()->detach($party);
         return redirect(url()->previous())->withToastSuccess(__('app.party-deleted-successfully'));
+    }
+
+    public function distributing()
+    {
+        $assistants = Expert::assistantsList()
+            ->active()
+            ->withCount(['asAssistant as current_count' => function ($query) {
+                return $query->where('matters.status', 'current');
+            }])
+            ->withCount(['asAssistantAsFinished as finished_count' => function ($query) {
+                return $query->where('reported_date', '>=', now()->subMonth(1))->where('reported_date', '<=', now());
+            }])
+            ->with('asAssistantAsFinished', function ($query) {
+                return $query->where('reported_date', '>=', now()->subMonth(1))->where('reported_date', '<=', now())->with('claims');
+            })
+            ->with('asAssistant', function ($query) {
+                return $query->where('matters.status', 'current')->with('claims');
+            })
+            ->with('matters')
+
+            ->get();
+        return view('pages.matters.distributing', compact('assistants'));
     }
 }

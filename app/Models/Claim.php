@@ -40,9 +40,9 @@ class Claim extends Model
         'date'
     ];
 
-    protected $with = [
+    /* protected $with = [
         'cashes'
-    ];
+    ]; */
 
     protected static function boot()
     {

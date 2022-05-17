@@ -9,12 +9,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Expert extends Model implements MatterPartyContract
 {
-    use HasFactory,LogsActivity;
+    use HasFactory, LogsActivity;
 
     const MAIN = 'main';
     const CERTIFIED = 'certified';
     const ASSISTANT = 'assistant';
     const EXTERNAL = 'external';
+    const EXTERNAL_ASSISTANT = 'external-assistant';
 
     protected static $logOnlyDirty = true;
 
@@ -27,6 +28,7 @@ class Expert extends Model implements MatterPartyContract
         'category',
         'field',
         'user_id',
+        'active',
     ];
     protected $fillable = [
         'name',
@@ -35,6 +37,7 @@ class Expert extends Model implements MatterPartyContract
         'category',
         'field',
         'user_id',
+        'active',
     ];
 
     public function matters()
@@ -44,7 +47,16 @@ class Expert extends Model implements MatterPartyContract
 
     public function asAssistant()
     {
-        return $this->morphByMany(Matter::class, 'partiable', 'matter_party')->wherePivot('type', '=', 'assistant');
+        return $this->belongsToMany(Matter::class, 'matter_expert')->wherePivot('type', '=', 'assistant');
+    }
+    public function asAssistantAsFinished()
+    {
+        return $this->belongsToMany(Matter::class, 'matter_expert')->wherePivot('type', '=', 'assistant')->whereIn('matters.status', ['reported', 'submitted']);
+    }
+
+    public function claims()
+    {
+        return $this->hasManyThrough(Claim::class, Matter::class);
     }
 
     public function scopeCommitteesList()
@@ -52,6 +64,15 @@ class Expert extends Model implements MatterPartyContract
         return $this->where('category', 'external');
     }
 
+    public function scopeAssistantsList($query)
+    {
+        return $query->whereIn('category', [self::CERTIFIED, self::ASSISTANT]);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', 'active');
+    }
 
     public function user()
     {
@@ -90,5 +111,22 @@ class Expert extends Model implements MatterPartyContract
             return 'light';
         }
         return 'dark';
+    }
+
+    public function categoryColor()
+    {
+        if ($this->category() == static::MAIN) {
+            return 'success';
+        } elseif ($this->category() == static::CERTIFIED) {
+            return 'primary';
+        } elseif ($this->category() == static::ASSISTANT) {
+            return 'warning';
+        } elseif ($this->category() == static::EXTERNAL) {
+            return 'info';
+        } elseif ($this->category() == static::EXTERNAL_ASSISTANT) {
+            return 'info';
+        } else {
+            return 'danger';
+        }
     }
 }

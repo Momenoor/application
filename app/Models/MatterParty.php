@@ -16,6 +16,12 @@ class MatterParty extends Pivot
         'parent_id',
         'type',
     ];
+    protected $logAttributes = [
+        'matter_id',
+        'party_id',
+        'parent_id',
+        'type',
+    ];
 
     public $timestamps = true;
 

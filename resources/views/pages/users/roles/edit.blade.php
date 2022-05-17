@@ -59,6 +59,7 @@
                                     @foreach ($permissions as $key => $permission)
                                         <tr>
                                             <!--begin::Label-->
+
                                             <td class="text-gray-800">{{ $key }}</td>
                                             <!--end::Label-->
                                             <!--begin::Options-->
@@ -66,6 +67,7 @@
                                                 <!--begin::Wrapper-->
                                                 <div class="d-flex">
                                                     <!--begin::Checkbox-->
+                                                    @php $permission = $permission->sortBy('order'); @endphp
                                                     @foreach ($permission as $perm)
                                                         @include(
                                                             'pages.users.roles._permission',

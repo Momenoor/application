@@ -38,6 +38,40 @@ return [
             ],
         ],
         [
+            'title' => 'experts',
+            'permission' => ['expert-view', 'expert-create'],
+            'submenu' => [
+                [
+                    'title' => 'experts-list',
+                    'link' => 'expert.index',
+                    'permission' => 'expert-view',
+                ],
+                [
+                    'title' => 'create-expert',
+                    'link' => 'expert.create',
+                    'permission' => 'expert-create',
+                ],
+
+            ]
+        ],
+        [
+            'title' => 'courts',
+            'permission' => ['court-view', 'court-create'],
+            'submenu' => [
+                [
+                    'title' => 'courts-list',
+                    'link' => 'court.index',
+                    'permission' => 'court-view',
+                ],
+                [
+                    'title' => 'create-court',
+                    'link' => 'court.create',
+                    'permission' => 'court-create',
+                ],
+
+            ]
+        ],
+        [
             'title' => 'users',
             'permission' => [
                 'user-view',
@@ -75,6 +109,10 @@ return [
                     ],
                 ],
             ]
+        ],
+        [
+            'title' => 'matter-distributing',
+            'link' => 'matter.distributing',
         ]
     ]
 ];
