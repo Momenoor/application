@@ -1,8 +1,3 @@
-@php
-if (!isset($expert)) {
-    $expert = [];
-}
-@endphp
 <div class="row">
     <div class="col-md-12 mb-5">
         <label class="form-label">{{ __('app.name') }}:</label>

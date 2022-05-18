@@ -18,8 +18,10 @@ class MainMenu
     {
 
         \Menu::make('mainMenu', function ($menu) {
-            $menu->add(__('app.matters'), '#')->data('icon','bi bi-bar-chart')->nickname('matters');
-            $menu->matters->add(__('app.matters_list'), ['route' => 'matter.index']);
+            $menu->add(__('app.matters'), '#')->data('icon', 'bi bi-bar-chart')
+                ->data('permission', ['matter-view', 'matter-create'])
+                ->nickname('matters');
+            $menu->matters->add(__('app.matters_list'), ['route' => 'matter.index'])->data('permission','matter-view');
             $menu->matters->add(__('app.create_matter'), ['route' => 'matter.create']);
         });
 
