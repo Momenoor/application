@@ -10,9 +10,11 @@
                 <div class="accordion-item p-2">
                     <table class="table fw-bolder table-sm mb-0">
                         <tr>
-                            <td class="w-300px ps-15">{{ __('app.name') }}</td>
-                            <td class="w-300px ps-15">{{ __('app.current_matters') }}</td>
-                            <td class="w-300px ps-15">{{ __('app.matters_closed_during_month') }}</td>
+                            <td class="w-200px px-5 text-center">{{ __('app.name') }}</td>
+                            <td class="w-200px px-5 text-center">{{ __('app.current_matters') }}</td>
+                            <td class="w-200px px-5 text-center">{{ __('app.matters_closed_during_month') }}</td>
+                            <td class="w-200px px-5 text-center">
+                                {{ __('app.matters_last_activity_month') .' ' .now()->subMonth(1)->day('23')->format('Y/m/d') }}</td>
                         </tr>
                     </table>
                 </div>
@@ -25,14 +27,18 @@
                                 aria-controls="kt_accordion_1_body_{{ $assistant->id }}">
                                 <table class="table table-sm mb-0">
                                     <tr>
-                                        <td class="w-300px border-right-1">{{ $assistant->name }}</td>
-                                        <td class="w-100px text-primary ps-5">{{ $assistant->current_count }}</td>
-                                        <td class="w-200px border-right-1">
+                                        <td class="w-200px border-right-1">{{ $assistant->name }}</td>
+                                        <td class="w-75px text-primary ps-5">{{ $assistant->current_count }}</td>
+                                        <td class="w-125px border-right-1">
                                             {{ format_amount($assistant->asAssistant->sum('claims_sum_amount_unformatted')) }}
                                         </td>
-                                        <td class="w-100px text-success ps-5">{{ $assistant->finished_count }}</td>
-                                        <td class="w-200px">
+                                        <td class="w-75px text-success ps-5">{{ $assistant->finished_count }}</td>
+                                        <td class="w-125px border-right-1">
                                             {{ format_amount($assistant->asAssistantAsFinished->sum('claims_sum_amount_unformatted')) }}
+                                        </td>
+                                        <td class="w-75px text-success ps-5">{{ $assistant->last_activity_count }}</td>
+                                        <td class="w-125px ">
+                                            {{ format_amount($assistant->asAssistantLastActivityMonth->sum('claims_sum_amount_unformatted')) }}
                                         </td>
                                     </tr>
                                 </table>

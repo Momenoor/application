@@ -25,7 +25,7 @@ License: For each use you must have a valid license purchased only from above li
     <meta property="og:type" content="article" />
     <meta property="og:title"
         content="Metronic - Bootstrap 5 HTML, VueJS, React, Angular &amp; Laravel Admin Dashboard Theme" />
-{{--     <meta property="og:url" content="https://keenthemes.com/metronic" />
+    {{-- <meta property="og:url" content="https://keenthemes.com/metronic" />
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" /> --}}
     <link rel="shortcut icon" href="{{ asset('assets/media/logos/favicon.ico') }}" />
@@ -33,8 +33,13 @@ License: For each use you must have a valid license purchased only from above li
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
     <!--end::Fonts-->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
-    <link href="{{ asset('assets/plugins/global/plugins' . $themeMode . '.bundle' . config('system.lang.' . app()->getLocale() . '.css') . '.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/style' . $themeMode . '.bundle' . config('system.lang.' . app()->getLocale() . '.css') . '.css') }}" rel="stylesheet" type="text/css" />
+    <link
+        href="{{ asset('assets/plugins/global/plugins' . $themeMode . '.bundle' . config('system.lang.' . app()->getLocale() . '.css') . '.css') }}"
+        rel="stylesheet" type="text/css" />
+    <link
+        href="{{ asset('assets/css/style' . $themeMode . '.bundle' . config('system.lang.' . app()->getLocale() . '.css') . '.css') }}"
+        rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
 </head>
 <!--end::Head-->
@@ -61,7 +66,8 @@ License: For each use you must have a valid license purchased only from above li
                         </a>
                         <!--end::Logo-->
                         <!--begin::Title-->
-                        <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #00A0B0;">{{__('app.welcome-to')}} {{config('app.name')}}</h1>
+                        <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #00A0B0;">{{ __('app.welcome-to') }}
+                            {{ config('app.name') }}</h1>
                         <!--end::Title-->
                         <!--begin::Description-->
                         <p class="fw-bold fs-2" style="color: #00346D;">Discover Amazing Features
@@ -72,7 +78,8 @@ License: For each use you must have a valid license purchased only from above li
                     <!--end::Content-->
                     <!--begin::Illustration-->
                     <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
-                        style="background-image: url({{ asset('assets/media/illustrations/sketchy-1/13.png') }}"></div>
+                        style="background-image: url({{ asset('assets/media/illustrations/sketchy-1/13.png') }}">
+                    </div>
                     <!--end::Illustration-->
                 </div>
                 <!--end::Wrapper-->

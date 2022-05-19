@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Contracts\MatterPartyContract;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -52,6 +53,13 @@ class Expert extends Model implements MatterPartyContract
     public function asAssistantAsFinished()
     {
         return $this->asAssistant()->finished();
+    }
+
+    public function asAssistantLastActivityMonth()
+    {
+        $startDate = Carbon::now();
+        $startDate->subMonth(1)->day('23');
+        return $this->asAssistant()->where('reported_date', '>=', $startDate)->where('reported_date', '<=', now());
     }
 
     public function claims()

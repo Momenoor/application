@@ -187,7 +187,7 @@ return [
         'newexpert.email' => 'البريد الاليكتروني',
         'newexpert.field' => 'المجال',
         'newexpert.category' => 'النوع',
-        '' => '',
+        'name' => 'الاسم',
         '' => '',
     ],
 

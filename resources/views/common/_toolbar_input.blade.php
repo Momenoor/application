@@ -22,7 +22,7 @@
         </button> --}}
         <!--end::Export-->
         <!--begin::Add user-->
-        <a type="button" class="btn btn-light-primary" href="{{ route(Route::getCurrentRoute()->uri() . '.create') }}">
+        <a class="btn btn-light-primary" href="{{ route(Route::getCurrentRoute()->uri() . '.create') }}">
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
             <span class="svg-icon svg-icon-3">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

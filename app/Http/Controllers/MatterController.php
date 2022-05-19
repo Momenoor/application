@@ -182,8 +182,12 @@ class MatterController extends Controller
                 return $query->where('matters.status', 'current')->with(['court', 'type', 'claims']);
             })
             ->with('matters', function ($query) {
-                return $query->current()->with(['court', 'type','claims']);
+                return $query->current()->with(['court', 'type', 'claims']);
             })
+            ->with('asAssistantLastActivityMonth', function ($query) {
+                return $query->with('claims');
+            })
+            ->withCount('asAssistantLastActivityMonth as last_activity_count')
             ->get();
         return view('pages.matters.distributing', compact('assistants'));
     }
