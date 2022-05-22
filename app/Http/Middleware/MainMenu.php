@@ -30,6 +30,12 @@ class MainMenu
             $menu->add(__('app.matter_types'), ['route' => 'type.index'])->data('icon', 'bi bi-bar-chart')
                 ->data('permission', ['type-view']);
 
+            $menu->add(__('app.vacations'), '#')->data('icon', 'bi bi-bar-chart')
+                ->data('permission', ['vacation-view', 'vacation-create'])
+                ->nickname('vacations');
+            $menu->vacations->add(__('app.vacations-list'), ['route' => 'vacation.index'])->data('permission', 'vacation-view');
+            $menu->vacations->add(__('app.create-vacation'), ['route' => 'vacation.create']);
+
             $menu->add(__('app.experts'), '#')->data('icon', 'bi bi-bar-chart')
                 ->data('permission', ['expert-view', 'expert-create'])
                 ->nickname('experts');

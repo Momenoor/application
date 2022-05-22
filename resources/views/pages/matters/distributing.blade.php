@@ -6,7 +6,7 @@
             <div class="card-title">{{ __('app.matter-distributing') }}</div>
         </div>
         <div class="card-body">
-            <div class="accordion" id="kt_accordion_1">
+            <div class="accordion p-5" id="kt_accordion_1">
                 <div class="accordion-item p-2">
                     <table class="table fw-bolder table-sm mb-0">
                         <tr>
@@ -14,7 +14,7 @@
                             <td class="w-200px px-5 text-center">{{ __('app.current_matters') }}</td>
                             <td class="w-200px px-5 text-center">{{ __('app.matters_closed_during_month') }}</td>
                             <td class="w-200px px-5 text-center">
-                                {{ __('app.matters_last_activity_month') .' ' .now()->subMonth(1)->day('23')->format('Y/m/d') }}</td>
+                                {{ __('app.matters_last_activity_month') . ' ' . $last_activity_start_date }}</td>
                         </tr>
                     </table>
                 </div>
@@ -26,8 +26,13 @@
                                 data-bs-target="#kt_accordion_1_body_{{ $assistant->id }}" aria-expanded="true"
                                 aria-controls="kt_accordion_1_body_{{ $assistant->id }}">
                                 <table class="table table-sm mb-0">
-                                    <tr>
-                                        <td class="w-200px border-right-1">{{ $assistant->name }}</td>
+                                    <tr class="align-middle">
+                                        <td class="w-200px border-right-1">{{ $assistant->name }}
+                                            <div class="progress mt-3 me-5">
+                                                <div class="progress-bar bg-warning bg-gradient" role="progressbar" style="width: {{($assistant->current_count/$countCurrent) * 100}}%"
+                                                    aria-valuenow="{{($assistant->current_count/$countCurrent) * 100}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </td>
                                         <td class="w-75px text-primary ps-5">{{ $assistant->current_count }}</td>
                                         <td class="w-125px border-right-1">
                                             {{ format_amount($assistant->asAssistant->sum('claims_sum_amount_unformatted')) }}

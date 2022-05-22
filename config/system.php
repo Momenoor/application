@@ -33,6 +33,10 @@ return [
     |
     */
 
+    'last_activity' => [
+        'start_day' => '23',
+    ],
+
     'vat' => [
         'rate' => 5
     ],

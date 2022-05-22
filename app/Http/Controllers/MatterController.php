@@ -167,6 +167,8 @@ class MatterController extends Controller
 
     public function distributing()
     {
+        $last_activity_start_date = now()->subMonth(1)->day(config('system.last_activity.start_day'))->format('Y/m/d');
+        $countCurrent = Matter::Current()->count();
         $assistants = Expert::assistantsList()
             ->active()
             ->withCount(['asAssistant as current_count' => function ($query) {
@@ -189,6 +191,6 @@ class MatterController extends Controller
             })
             ->withCount('asAssistantLastActivityMonth as last_activity_count')
             ->get();
-        return view('pages.matters.distributing', compact('assistants'));
+        return view('pages.matters.distributing', compact('assistants','last_activity_start_date','countCurrent'));
     }
 }

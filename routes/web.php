@@ -3,6 +3,7 @@
 use App\Http\Controllers\CashController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\CourtController;
+use App\Http\Controllers\EventsController;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\MatterController;
 use App\Http\Controllers\PartyController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VacationController;
 use App\Models\Matter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -79,7 +81,12 @@ Route::middleware('auth')->group(function () {
         Route::resource('role', RoleController::class);
 
 
+        Route::resource('vacation', VacationController::class);
+
+
         Route::post('/cash/{matter}/collect', [CashController::class, 'collect'])->name('cash.collect');
+
+        Route::post('events', EventsController::class)->name('events');
 
 
         Route::get('tools/fix-claim-status', [ToolsController::class, 'fixClaimsStatus'])->name('tools.fix-claim-status');
