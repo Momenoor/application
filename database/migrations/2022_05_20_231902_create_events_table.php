@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVacationsTable extends Migration
+class CreateEventsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateVacationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vacations', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->date('start_date');
             $table->date('end_date');
             $table->enum('all_day', ['true', 'false'])->default('true');
             $table->text('title')->nullable();
-            $table->string('type')->default('public_holiday');
+            $table->text('url')->nullable();
+            $table->string('type')->default('public_holiday')->comment('vacation or public holiday or session or any other event');
             $table->unsignedBigInteger('request_by');
             $table->foreign('request_by')->references('id')->on('users');
             $table->dateTime('request_at');
@@ -37,6 +38,6 @@ class CreateVacationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vacations');
+        Schema::dropIfExists('events');
     }
 }

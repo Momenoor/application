@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Vacation extends Model
+class Event extends Model
 {
     use HasFactory, LogsActivity;
 
@@ -17,6 +17,7 @@ class Vacation extends Model
         'all_day',
         'title',
         'type',
+        'url',
         'request_by',
         'request_at',
         'approved_by',
@@ -29,6 +30,7 @@ class Vacation extends Model
         'all_day',
         'title',
         'type',
+        'url',
         'request_by',
         'request_at',
         'approved_by',

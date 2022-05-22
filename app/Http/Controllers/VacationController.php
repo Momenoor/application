@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\vacation;
+use App\Models\Event;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -49,7 +49,7 @@ class VacationController extends Controller
             'title' => 'required',
         ]);
 
-        Vacation::create($validated);
+        Event::create($validated);
 
         return redirect(route('vacation.index'))->withToastSuccess(__('app.record-added-successfully'));
     }

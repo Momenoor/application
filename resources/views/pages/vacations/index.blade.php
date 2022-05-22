@@ -46,7 +46,7 @@
                     url: '{{ route('events') }}',
                     method: 'POST',
                     extraParams: {
-                        model: '\\App\\Models\\Vacation',
+                        model: '\\App\\Models\\Event',
                     },
                     failure: function() {
                         alert('there was an error while fetching events!');

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vacation;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventsController extends Controller
@@ -16,9 +16,9 @@ class EventsController extends Controller
     public function __invoke(Request $request)
     {
         $where = [];
-        $model = $request->get('model') ?: Vacation::class;
+        $model = $request->get('model') ?: Event::class;
 
-        $query = $model::select(['start_date as start', 'end_date as end', 'title', 'type', 'all_day as allDay']);
+        $query = $model::select(['start_date as start', 'end_date as end', 'title', 'type', 'all_day as allDay','url']);
 
         if ($request->has('from')) {
             $where['from'] = $request->get('from');
