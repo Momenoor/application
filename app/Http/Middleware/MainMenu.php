@@ -34,7 +34,8 @@ class MainMenu
                 ->data('permission', ['vacation-view', 'vacation-create'])
                 ->nickname('vacations');
             $menu->vacations->add(__('app.vacations-list'), ['route' => 'vacation.index'])->data('permission', 'vacation-view');
-            $menu->vacations->add(__('app.create-vacation'), ['route' => 'vacation.create']);
+            $menu->vacations->add(__('app.create-public-holiday'), ['route' => ['vacation.create','type'=>'public_holiday']]);
+            $menu->vacations->add(__('app.create-annual-leave'), ['route' => ['vacation.create','type'=>'annual_leave']]);
 
             $menu->add(__('app.experts'), '#')->data('icon', 'bi bi-bar-chart')
                 ->data('permission', ['expert-view', 'expert-create'])

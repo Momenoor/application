@@ -20,6 +20,7 @@
         "livewire/livewire": "^2.10",
         "maatwebsite/excel": "^3.1",
         "microsoft/microsoft-graph": "^1.62",
+        "momenoor/laravel-fullcalendar": "dev-main",
         "realrashid/sweet-alert": "^5.0",
         "simplehtmldom/simplehtmldom": "^2.0@RC",
         "spatie/laravel-activitylog": "^3.17",

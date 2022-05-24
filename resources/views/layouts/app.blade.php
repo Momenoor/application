@@ -37,7 +37,7 @@ License: For each use you must have a valid license purchased only from above li
         href="{{ asset('assets/css/style' . $themeMode . '.bundle' . config('system.lang.' . app()->getLocale() . '.css') . '.css') }}"
         rel="stylesheet" type="text/css" />
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet" type="text/css" />
-    @if ($themeMode == 'dark')
+     @if ($themeMode == '.dark')
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css" />
     @endif
 
@@ -48,7 +48,7 @@ License: For each use you must have a valid license purchased only from above li
 <!--end::Head-->
 <!--begin::Body-->
 
-<body id="kt_body" class="scroll-y header-fixed header-tablet-and-mobile-fixed header-background-{{ $imageMode }}">
+<body id="kt_body" class="scroll-y header-fixed header-tablet-and-mobile-fixed  @if ($themeMode == '.dark') dark-mode @endif header-background-{{ $imageMode }}">
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="d-flex flex-column flex-root">
@@ -594,7 +594,8 @@ License: For each use you must have a valid license purchased only from above li
             if (mode === 'dark') {
                 Promise.all([
                     loadCssFile('plugins.bundle.rtl.css', 'plugins.dark.bundle.rtl.css'),
-                    loadCssFile('style.bundle.rtl.css', 'style.dark.bundle.rtl.css')
+                    loadCssFile('style.bundle.rtl.css', 'style.dark.bundle.rtl.css'),
+                    //loadCssFile('fullcalendar.bundle.rtl.css', 'fullcalendar.dark.bundle.rtl.css'),
                 ]).then(function() {
                     // Set dark mode class
                     document.body.classList.add("dark-mode");
@@ -614,7 +615,8 @@ License: For each use you must have a valid license purchased only from above li
             } else if (mode === 'light') {
                 Promise.all([
                     loadCssFile('plugins.dark.bundle.rtl.css', 'plugins.bundle.rtl.css'),
-                    loadCssFile('style.dark.bundle.rtl.css', 'style.bundle.rtl.css')
+                    loadCssFile('style.dark.bundle.rtl.css', 'style.bundle.rtl.css'),
+                    //loadCssFile('fullcalendar.dark.bundle.rtl.css', 'fullcalendar.bundle.rtl.css'),
                 ]).then(function() {
                     // Remove dark mode class
                     document.body.classList.remove("dark-mode");

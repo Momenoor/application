@@ -8,15 +8,21 @@
             </div>
         </div>
         <div class="card-body">
-            <div id="vacation_calendar"></div>
+            <div class="row">
+                <div class="col-12">
+                    {{-- <div id="vacation_calendar"></div> --}}
+                    {!! $calendar->calendar() !!}
+                </div>
+            </div>
         </div>
     </div>
 @endsection
 @push('scripts')
     <link href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
     <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+
     <script>
-        var initialLocaleCode = "{{ app()->getLocale() }}";
+        /* var initialLocaleCode = "{{ app()->getLocale() }}";
         var calendarEl = document.getElementById("vacation_calendar");
         var calendar = new FullCalendar.Calendar(calendarEl, {
             headerToolbar: {
@@ -34,7 +40,7 @@
 
             locale: initialLocaleCode,
 
-            initialView: "dayGridMonth",
+            initialView: "listWeek",
             initialDate: "{{ now() }}",
 
             dayMaxEvents: true, // allow "more" link when too many events
@@ -78,7 +84,7 @@
 
         });
 
-        calendar.render();
-        console.log(calendar);
+        calendar.render(); */
     </script>
+    {!! $calendar->script() !!}
 @endpush

@@ -15,27 +15,17 @@ class EventsController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $where = [];
+
         $model = $request->get('model') ?: Event::class;
 
-        $query = $model::select(['start_date as start', 'end_date as end', 'title', 'type', 'all_day as allDay','url']);
+        $query = $model::select(['id', 'start_date as start', 'end_date as end', 'title', 'type', 'all_day as allDay', 'url']);
 
         if ($request->has('from')) {
-            $where['from'] = $request->get('from');
+            $query->whereDate('start_date', '>=', $request->get('from'));
         }
 
         if ($request->has('to')) {
-            $where['to'] = $request->get('to');
-        }
-
-        if (count($where) > 0) {
-            if (key_exists('from', $where)) {
-                $query->where('start_date', '>=', $where['from']);
-            }
-
-            if (key_exists('to', $where)) {
-                $query->where('end_date', '<=', $where['to']);
-            }
+            $query->whereDate('end_date', '<=',  $request->get('to'));
         }
 
         $data = $query->get()->toArray();

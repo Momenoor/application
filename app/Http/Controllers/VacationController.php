@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+
 
 class VacationController extends Controller
 {
@@ -16,7 +18,8 @@ class VacationController extends Controller
      */
     public function index()
     {
-        return view('pages.vacations.index');
+        $calendar = \Calendar::addEvents(Event::all())->setOptions(['locale' => app()->getLocale()]);
+        return view('pages.vacations.index', compact('calendar'));
     }
 
     /**
@@ -26,7 +29,16 @@ class VacationController extends Controller
      */
     public function create()
     {
-        return view('pages.vacations.create');
+        $type = request()->get('type');
+
+        abort_unless(in_array($type, config('system.events.types')), 404);
+
+        $data = [];
+        if ($type == 'annual_leave') {
+            $data['users'] = User::all();
+        }
+
+        return view('pages.vacations.' . $type . '.create', compact('data'));
     }
 
     /**
@@ -47,9 +59,19 @@ class VacationController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'title' => 'required',
+            'type' => 'required',
+            'request_by' => 'nullable',
         ]);
 
-        Event::create($validated);
+        if ($validated['type'] == 'annual_leave') {
+            $request_by = User::findOrFail($validated['request_by']);
+            $validated['title'] = $validated['title'] . ' ( ' . $request_by->display_name . ' )';
+        }
+
+        $event = Event::create($validated);
+        $event->url = route('vacation.show', $event->id);
+        $event->all_day = 'true';
+        $event->save();
 
         return redirect(route('vacation.index'))->withToastSuccess(__('app.record-added-successfully'));
     }
@@ -57,10 +79,10 @@ class VacationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\vacation  $vacation
+     * @param  \App\Models\ُEvent  $ُEvent
      * @return \Illuminate\Http\Response
      */
-    public function show(vacation $vacation)
+    public function show(Event $ُevent)
     {
         //
     }
@@ -68,10 +90,10 @@ class VacationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\vacation  $vacation
+     * @param  \App\Models\ُEvent  $ُevent
      * @return \Illuminate\Http\Response
      */
-    public function edit(vacation $vacation)
+    public function edit(Event $ُevent)
     {
         //
     }
@@ -80,10 +102,10 @@ class VacationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\vacation  $vacation
+     * @param  \App\Models\ُEvent  $ُevent
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, vacation $vacation)
+    public function update(Request $request, Event $ُevent)
     {
         //
     }
@@ -91,10 +113,10 @@ class VacationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\vacation  $vacation
+     * @param  \App\Models\Event  $ُevent
      * @return \Illuminate\Http\Response
      */
-    public function destroy(vacation $vacation)
+    public function destroy(Event $ُevent)
     {
         //
     }
