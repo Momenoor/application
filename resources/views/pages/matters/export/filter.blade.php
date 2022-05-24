@@ -127,7 +127,7 @@
                             </div>
                         </div>
                         <div class="mb-10">
-                            <label for="" class="form-label fw-bolder">{{ __('app.claims_collection_status') }}</label>
+                            <label for="" class="form-label fw-bolder">{{ __('app.matter_status') }}</label>
                             <div class="d-flex">
                                 <div class="form-check form-check-custom form-check-solid me-5">
                                     <input class="form-check-input" type="checkbox" name="matterStatus[]" value="current"
