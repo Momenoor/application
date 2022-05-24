@@ -64,7 +64,7 @@
                                     data-control="select2" data-placeholder="{{ __('app.please_select_a_court') }}"
                                     class="@error('matter.court') is-invalid @enderror form-select form-select-solid">
                                     <option value=""></option>
-                                    <option value="0">{{ __('app.all') }}</option>
+                                    <option value="all">{{ __('app.all') }}</option>
                                     @foreach ($courts as $id => $court)
                                         <option value="{{ $id }}">
                                             {{ $court }}</option>
@@ -77,7 +77,7 @@
                                     data-control="select2" data-placeholder="{{ __('app.please_select_a_type') }}"
                                     class="@error('matter.type') is-invalid @enderror form-select form-select-solid">
                                     <option value=""></option>
-                                    <option value="0">{{ __('app.all') }}</option>
+                                    <option value="all">{{ __('app.all') }}</option>
                                     @foreach ($types as $id => $type)
                                         <option value="{{ $id }}">
                                             {{ $type }}</option>
@@ -91,7 +91,7 @@
                                 data-control="select2" data-placeholder="{{ __('app.please_select_an_expert') }}"
                                 class="@error('matter.expert') is-invalid @enderror form-select form-select-solid">
                                 <option value=""></option>
-                                <option value="0">{{ __('app.all') }}</option>
+                                <option value="all">{{ __('app.all') }}</option>
                                 @foreach ($experts as $id => $expert)
                                     <option value="{{ $id }}">
                                         {{ $expert }}</option>
@@ -105,7 +105,7 @@
                                 data-placeholder="{{ __('app.please_select_an_assistant') }}"
                                 class="@error('matter.assistant') is-invalid @enderror form-select form-select-solid">
                                 <option value=""></option>
-                                <option value="0">{{ __('app.all') }}</option>
+                                <option value="all">{{ __('app.all') }}</option>
                                 @foreach ($assistants as $id => $assistant)
                                     <option value="{{ $id }}">
                                         {{ $assistant }}</option>

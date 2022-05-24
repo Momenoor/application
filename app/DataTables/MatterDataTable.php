@@ -151,7 +151,8 @@ class MatterDataTable extends DataTable
                 'defendants',
                 'type',
                 'claims',
-                'cashes'
+                'cashes',
+                'claims.cashes'
             ])->withSum('claims', 'amount')->whereRelation('assistants', 'experts.id', '=', auth()->user()->expert->id)->newQuery();
         }
         if (auth()->user()->can('matter-view')) {
@@ -163,7 +164,8 @@ class MatterDataTable extends DataTable
                 'defendants',
                 'type',
                 'claims',
-                'cashes'
+                'cashes',
+                'claims.cashes',
             ])->withSum('claims', 'amount')->newQuery();
         }
     }
