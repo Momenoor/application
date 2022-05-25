@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use App\Models\Cash;
+use App\Models\Expert;
 use App\Models\Matter;
+use App\Models\User;
 use App\Services\ClaimCollectionStatus;
+use Exception;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
-use PDO;
+use Illuminate\Support\Facades\Schema;
 
 class ToolsController extends Controller
 {
@@ -129,5 +134,25 @@ class ToolsController extends Controller
         }
 
         return redirect()->to(route('tools.remove-duplicated'))->withToastSuccess(__('app.deuplicated-rows-deleted, :count effected-rows', ['count' => $n]));
+    }
+
+    public function fixAccountsData()
+    {
+        $experts = Expert::all();
+        $users = User::all();
+
+        foreach ($experts as $expert) {
+            $account = new Account([
+                'name' => $expert->name,
+                'phone' => $expert->phone,
+                'email' => $expert->email,
+            ]);
+            $account->save();
+            $expert->user()->associate($account);
+
+            $expert->account()->save($account);
+        }
+
+        return redirect(route('matter.index'))->withToastSuccess('account added successfully');
     }
 }

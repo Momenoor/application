@@ -93,6 +93,7 @@ Route::middleware('auth')->group(function () {
         Route::get('tools/fix-claim-over-paid', [ToolsController::class, 'fixClaimOverPaid'])->name('tools.fix-claim-over-paid');
         Route::get('tools/remove-duplicated', [ToolsController::class, 'removeDuplicatedForm'])->name('tools.remove-duplicated-form');
         Route::post('tools/remove-duplicated', [ToolsController::class, 'removeDuplicatedRecord'])->name('tools.remove-duplicated');
+        Route::get('tools/create-accounts', [ToolsController::class, 'fixAccountsData'])->name('tools.create-accounts');
 
 
         Route::delete('claim/{claim}', [ClaimController::class, 'destroy'])->name('claim.destroy');

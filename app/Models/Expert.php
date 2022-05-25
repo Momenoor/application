@@ -121,6 +121,11 @@ class Expert extends Model implements MatterPartyContract
         return 'dark';
     }
 
+    public function account()
+    {
+        return $this->morphOne(Account::class, 'accountable');
+    }
+
     public function categoryColor()
     {
         if ($this->category() == static::MAIN) {
@@ -137,4 +142,6 @@ class Expert extends Model implements MatterPartyContract
             return 'danger';
         }
     }
+
+
 }

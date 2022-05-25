@@ -72,7 +72,7 @@ class User extends Authenticatable
 
     public function expert()
     {
-        return $this->hasOne(Expert::class);
+        return optional($this->account)->expert;
     }
 
     public function marketers()
@@ -108,5 +108,10 @@ class User extends Authenticatable
     public function pivotType()
     {
         return 'marketing';
+    }
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class, 'accountable');
     }
 }

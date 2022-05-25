@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "abd09a714b62a1c1a448087ccac7d20c",
+    "content-hash": "002e7d1002feb4d1e2c902e76e6a2404",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1387,16 +1387,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.83.13",
+            "version": "v8.83.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "1eed68ec70c98d1a7a6f0fcedbea10cb6dd69a20"
+                "reference": "141cf126f1746c7264f59aa78c923a84eaab501e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/1eed68ec70c98d1a7a6f0fcedbea10cb6dd69a20",
-                "reference": "1eed68ec70c98d1a7a6f0fcedbea10cb6dd69a20",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/141cf126f1746c7264f59aa78c923a84eaab501e",
+                "reference": "141cf126f1746c7264f59aa78c923a84eaab501e",
                 "shasum": ""
             },
             "require": {
@@ -1556,7 +1556,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-05-17T14:08:01+00:00"
+            "time": "2022-05-24T14:04:02+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -1752,16 +1752,16 @@
         },
         {
             "name": "laravel/ui",
-            "version": "v3.4.5",
+            "version": "v3.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/ui.git",
-                "reference": "f11d295de1508c5bb56206a620b00b6616de414c"
+                "reference": "65ec5c03f7fee2c8ecae785795b829a15be48c2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/ui/zipball/f11d295de1508c5bb56206a620b00b6616de414c",
-                "reference": "f11d295de1508c5bb56206a620b00b6616de414c",
+                "url": "https://api.github.com/repos/laravel/ui/zipball/65ec5c03f7fee2c8ecae785795b829a15be48c2c",
+                "reference": "65ec5c03f7fee2c8ecae785795b829a15be48c2c",
                 "shasum": ""
             },
             "require": {
@@ -1807,9 +1807,9 @@
                 "ui"
             ],
             "support": {
-                "source": "https://github.com/laravel/ui/tree/v3.4.5"
+                "source": "https://github.com/laravel/ui/tree/v3.4.6"
             },
-            "time": "2022-02-21T14:59:16+00:00"
+            "time": "2022-05-20T13:38:08+00:00"
         },
         {
             "name": "laravelcollective/html",
@@ -2651,16 +2651,16 @@
         },
         {
             "name": "microsoft/microsoft-graph",
-            "version": "1.65.0",
+            "version": "1.66.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/microsoftgraph/msgraph-sdk-php.git",
-                "reference": "86fa6bb35e61905e51061fde06dc7c60cd2142ae"
+                "reference": "cfd885c161d27f1e13814c6084a601e7dbb17858"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/microsoftgraph/msgraph-sdk-php/zipball/86fa6bb35e61905e51061fde06dc7c60cd2142ae",
-                "reference": "86fa6bb35e61905e51061fde06dc7c60cd2142ae",
+                "url": "https://api.github.com/repos/microsoftgraph/msgraph-sdk-php/zipball/cfd885c161d27f1e13814c6084a601e7dbb17858",
+                "reference": "cfd885c161d27f1e13814c6084a601e7dbb17858",
                 "shasum": ""
             },
             "require": {
@@ -2696,29 +2696,28 @@
             "homepage": "https://developer.microsoft.com/en-us/graph",
             "support": {
                 "issues": "https://github.com/microsoftgraph/msgraph-sdk-php/issues",
-                "source": "https://github.com/microsoftgraph/msgraph-sdk-php/tree/1.65.0"
+                "source": "https://github.com/microsoftgraph/msgraph-sdk-php/tree/1.66.0"
             },
-            "time": "2022-05-18T07:24:13+00:00"
+            "time": "2022-05-24T18:08:36+00:00"
         },
         {
             "name": "momenoor/laravel-fullcalendar",
-            "version": "dev-main",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Momenoor/laravel-fullcalendar.git",
-                "reference": "8751d5229d80cad66615ba6163b0a9a292dc210c"
+                "reference": "3ae863f05992a9792027f7537ae40d8605b7a124"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Momenoor/laravel-fullcalendar/zipball/8751d5229d80cad66615ba6163b0a9a292dc210c",
-                "reference": "8751d5229d80cad66615ba6163b0a9a292dc210c",
+                "url": "https://api.github.com/repos/Momenoor/laravel-fullcalendar/zipball/3ae863f05992a9792027f7537ae40d8605b7a124",
+                "reference": "3ae863f05992a9792027f7537ae40d8605b7a124",
                 "shasum": ""
             },
             "require": {
                 "illuminate/support": "5.8.*|^6|^7|^8|^9",
                 "php": ">=5.4.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -2748,9 +2747,9 @@
             "description": "Laravel helper for FullCalendar.io",
             "support": {
                 "issues": "https://github.com/Momenoor/laravel-fullcalendar/issues",
-                "source": "https://github.com/Momenoor/laravel-fullcalendar/tree/main"
+                "source": "https://github.com/Momenoor/laravel-fullcalendar/tree/v1.0.0"
             },
-            "time": "2022-05-24T02:01:50+00:00"
+            "time": "2022-05-24T19:19:48+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -7874,16 +7873,16 @@
         },
         {
             "name": "laravel/sail",
-            "version": "v1.14.6",
+            "version": "v1.14.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/sail.git",
-                "reference": "f00f3a8f83e71436d473cda7700ae7b4b68d26cc"
+                "reference": "c049316f9bcb02598607307f18b514b66202b639"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/sail/zipball/f00f3a8f83e71436d473cda7700ae7b4b68d26cc",
-                "reference": "f00f3a8f83e71436d473cda7700ae7b4b68d26cc",
+                "url": "https://api.github.com/repos/laravel/sail/zipball/c049316f9bcb02598607307f18b514b66202b639",
+                "reference": "c049316f9bcb02598607307f18b514b66202b639",
                 "shasum": ""
             },
             "require": {
@@ -7930,7 +7929,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-            "time": "2022-05-18T15:56:59+00:00"
+            "time": "2022-05-21T17:14:14+00:00"
         },
         {
             "name": "maximebf/debugbar",
@@ -10061,7 +10060,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "momenoor/laravel-fullcalendar": 20,
         "simplehtmldom/simplehtmldom": 5
     },
     "prefer-stable": true,
