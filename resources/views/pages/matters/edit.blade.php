@@ -4,6 +4,7 @@
         @include('pages.matters.form.partials._show_header')
         @include('pages.matters.form.partials._show_main_data')
         <div class="row">
+
             <div class="col-lg-7 col-md-12">
                 <!--begin::Card-->
                 <div class="mb-5">

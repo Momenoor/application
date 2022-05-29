@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Services\ClaimCollectionStatus;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Services\ClaimsService;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Matter extends Model
@@ -67,6 +68,17 @@ class Matter extends Model
 
     public const INDIVIDUAL = 'individual';
     public const COMMITTEE = 'committee';
+
+
+    public static function boot()
+    {
+
+        parent::boot();
+
+        static::retrieved(function ($matter) {
+            (new ClaimsService($matter));
+        });
+    }
 
 
     public function getAssistantAttribute()

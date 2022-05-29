@@ -156,7 +156,7 @@ License: For each use you must have a valid license purchased only from above li
                                             class="d-none d-md-flex flex-column align-items-end justify-content-center me-2 me-md-4">
 
                                             <span
-                                                class="text-white fs-8 fw-bold lh-1 mb-1">{{ Auth::user()->display_name }}</span>
+                                                class="text-white fs-8 fw-bold lh-1 mb-1">{{ Auth::user()->name }}</span>
                                             <span
                                                 class="text-white fs-8 lh-1">{{ optional(Auth::user()->expert)->field }}</span>
                                         </div>

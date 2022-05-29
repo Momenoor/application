@@ -13,20 +13,20 @@ class Account extends Model
         'name',
         'phone',
         'email',
-        'accountable_id',
-        'accountable_type',
+        'gender',
+        'avatar',
     ];
     protected $fillable = [
         'name',
         'phone',
         'email',
-        'accountable_id',
-        'accountable_type',
+        'gender',
+        'avatar',
     ];
 
-    public function accountable()
+    public function expert()
     {
-        return $this->morphTo();
+        return $this->hasOne(Expert::class);
     }
 
     public function user()

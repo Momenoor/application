@@ -77,7 +77,7 @@ class MatterController extends Controller
         $claimsTypes = config('system.claims.types');
         $partiesTypes = config('system.parties.type');
         $parties = MatterService::partiesResolve($matter);
-        $assistants = Expert::whereIn('category', ['certified', 'assistant'])->get(['id', 'name']);
+        $assistants = Expert::whereIn('category', ['certified', 'assistant'])->get();
         $subParties = Party::whereIn('type', ['office', 'advocate', 'advisor'])->get(['id', 'name']);
         $source = 'edit';
         return view('pages.matters.edit', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants', 'source'));
@@ -140,8 +140,8 @@ class MatterController extends Controller
     {
 
         $result = (new MatterService())->setFilters($request)->getForExcel();
-        $experts = Expert::whereIn('category', [Expert::MAIN, Expert::CERTIFIED])->pluck('name', 'id');
-        $assistants = Expert::whereIn('category', [Expert::MAIN, Expert::CERTIFIED, Expert::ASSISTANT])->pluck('name', 'id');
+        $experts = Expert::whereIn('category', [Expert::MAIN, Expert::CERTIFIED])->pluck('account.name', 'id');
+        $assistants = Expert::whereIn('category', [Expert::MAIN, Expert::CERTIFIED, Expert::ASSISTANT])->pluck('account.name', 'id');
         $types = Type::pluck('name', 'id');
         $courts = Court::pluck('name', 'id');
         $claimsStatus = [
@@ -191,6 +191,6 @@ class MatterController extends Controller
             })
             ->withCount('asAssistantLastActivityMonth as last_activity_count')
             ->get();
-        return view('pages.matters.distributing', compact('assistants','last_activity_start_date','countCurrent'));
+        return view('pages.matters.distributing', compact('assistants', 'last_activity_start_date', 'countCurrent'));
     }
 }

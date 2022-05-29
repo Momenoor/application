@@ -47,7 +47,7 @@ class User extends Authenticatable
     ];
 
     protected $with = [
-        'expert',
+        'account',
         'roles',
     ];
 
@@ -70,7 +70,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function expert()
+    public function getExpertAttribute()
     {
         return optional($this->account)->expert;
     }

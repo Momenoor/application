@@ -146,13 +146,31 @@ class ToolsController extends Controller
                 'name' => $expert->name,
                 'phone' => $expert->phone,
                 'email' => $expert->email,
+                'gender' => $expert->gender,
+                'avatar' => $expert->avatar,
             ]);
             $account->save();
-            $expert->user()->associate($account);
-
-            $expert->account()->save($account);
+            $account->expert()->save($expert);
         }
 
         return redirect(route('matter.index'))->withToastSuccess('account added successfully');
+    }
+
+    public function alterTables()
+    {
+        Schema::table('users', function (Blueprint $table) {
+            /* $table->dropIndex('users_email_unique');
+            $table->dropColumn('email');
+            $table->dropColumn('avatar');
+            $table->dropColumn('display_name');
+            $table->dropColumn('gender'); */
+        });
+        Schema::table('experts', function (Blueprint $table) {
+            $table->dropIndex('experts_name_unique');
+            $table->dropConstrainedForeignId('user_id');
+            $table->dropColumn('email');
+            $table->dropColumn('phone');
+            $table->dropColumn('name');
+        });
     }
 }

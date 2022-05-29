@@ -26,6 +26,7 @@
                                     data-placeholder="{{ __('app.select_assistant') }}">
                                     <option></option>
                                     @foreach ($assistants as $assistant)
+
                                         <option value="{{ $assistant->id }}"
                                             {{ old('expert.assistant') == $assistant->id ? 'selected' : '' }}>
                                             {{ $assistant->name }}

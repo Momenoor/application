@@ -7,8 +7,8 @@
         class=" @error('matter.expert_id') is-invalid @enderror form-select form-select-solid">
         <option value=""></option>
         @foreach ($expertsList as $expert)
-            <option value="{{ $expert['id'] }}">
-                {{ $expert['name'] }}</option>
+            <option value="{{ $expert->id }}">
+                {{ $expert->name }}</option>
         @endforeach
     </select>
     @error('matter.expert_id')
@@ -26,8 +26,8 @@
         class=" @error('experts.assistant') is-invalid @enderror form-select form-select-solid">
         <option value=""></option>
         @foreach ($assistantsList as $assistant)
-            <option value="{{ $assistant['id'] }}">
-                {{ $assistant['name'] }}</option>
+            <option value="{{ $assistant->id }}">
+                {{ $assistant->name }}</option>
         @endforeach
     </select>
     @error('experts.assistant')

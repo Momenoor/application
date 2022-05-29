@@ -44,7 +44,6 @@ class MatterDataTable extends DataTable
 
 
             ->editColumn('expert_id', function ($model) {
-
                 return '<div class="position-relative">
                                 ' . (optional($model->expert)->name) .
                     '<div class="text-primary">' . optional($model->assistant)->name . '</div>
@@ -60,8 +59,12 @@ class MatterDataTable extends DataTable
                 } else if ($keyword == 'office') {
                     $query->whereIn('matters.expert_id', $mainExperts);
                 } else {
-                    $query->whereRelation('expert', 'experts.name', 'like', '%' . $keyword . '%')
-                        ->orWhereRelation('assistants', 'experts.name', 'like', '%' . $keyword . '%');
+                    $query->whereHas('expert', function ($q) use ($keyword) {
+                        $q->whereRelation('account', 'name', 'like', '%' . $keyword . '%');
+                    })
+                        ->orWhereHas('assistants', function ($q) use ($keyword) {
+                            $q->whereRelation('account', 'name', 'like', '%' . $keyword . '%');
+                        });
                 }
             })
 
@@ -205,10 +208,10 @@ class MatterDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')
-            ->title('#')
-            ->searchable(false)
-            ->orderable(false)
-            ->addClass('text-center ps-2'),
+                ->title('#')
+                ->searchable(false)
+                ->orderable(false)
+                ->addClass('text-center ps-2'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

@@ -18,13 +18,15 @@ class CreateAccountsTable extends Migration
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->morphs('accountable');
+            $table->string('gender')->nullable();
+            $table->string('avatar')->nullable();
             $table->timestamps();
-            $table->index(['accountable_id', 'accountable_type']);
         });
 
         Schema::create('marketers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('account_id')->nullable();
+            $table->foreign('account_id')->references('id')->on('accounts');
             $table->string('rate')->nullable();
             $table->string('bank_name')->nullable();
             $table->string('bank_account_name')->nullable();
@@ -33,7 +35,12 @@ class CreateAccountsTable extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('account_id')->nullable();
+            $table->foreignId('account_id')->nullable();
+            $table->foreign('account_id')->references('id')->on('accounts');
+        });
+        Schema::table('experts', function (Blueprint $table) {
+            $table->string('rate');
+            $table->foreignId('account_id')->nullable();
             $table->foreign('account_id')->references('id')->on('accounts');
         });
     }

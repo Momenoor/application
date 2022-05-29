@@ -65,7 +65,7 @@ class ExpertDatatable extends DataTable
      */
     public function query(Expert $model)
     {
-        return $model->with('user')->withCount(['matters', 'asAssistant', 'asAssistant as as_assistant_current_count' => function ($query) {
+        return $model->with(['user', 'account'])->withCount(['matters', 'asAssistant', 'asAssistant as as_assistant_current_count' => function ($query) {
             return $query->where('matters.status', 'current');
         }])->newQuery();
     }
@@ -110,7 +110,7 @@ class ExpertDatatable extends DataTable
                 ->orderable(false)
                 ->addClass('text-center ps-2'),
 
-            Column::make('name')->title(__('app.name')),
+            Column::make('name')->title(__('app.name'))->orderable(false),
             Column::make('email')->title(__('app.contact')),
             Column::make('field')->title(__('app.field')),
             Column::make('active')->title(__('app.active')),

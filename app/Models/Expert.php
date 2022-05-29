@@ -23,23 +23,35 @@ class Expert extends Model implements MatterPartyContract
     protected static $submitEmptyLogs = false;
 
     protected $logAttributes  = [
-        'name',
-        'phone',
-        'email',
         'category',
         'field',
-        'user_id',
         'active',
     ];
     protected $fillable = [
-        'name',
-        'phone',
-        'email',
         'category',
         'field',
-        'user_id',
         'active',
     ];
+
+    protected $with = [
+        'account',
+    ];
+
+    protected static function booted()
+    {
+
+    }
+
+    public function getNameAttribute()
+    {
+        //$this->join('accounts', 'accounts.id', 'experts.account_id');
+        return optional($this->account)->name;
+    }
+
+    public function account()
+    {
+        return $this->belongsTo(Account::class);
+    }
 
     public function matters()
     {
@@ -121,11 +133,6 @@ class Expert extends Model implements MatterPartyContract
         return 'dark';
     }
 
-    public function account()
-    {
-        return $this->morphOne(Account::class, 'accountable');
-    }
-
     public function categoryColor()
     {
         if ($this->category() == static::MAIN) {
@@ -142,6 +149,4 @@ class Expert extends Model implements MatterPartyContract
             return 'danger';
         }
     }
-
-
 }

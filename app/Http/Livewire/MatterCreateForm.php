@@ -10,6 +10,7 @@ use App\Models\Matter;
 use App\Models\Party;
 use App\Models\Type;
 use App\Models\User;
+use App\Services\ExpertService;
 use App\Services\Money;
 use App\Services\NumberFormatterService;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -89,13 +90,13 @@ class MatterCreateForm extends Component
 
     public function mount()
     {
-        $this->expertsList = Expert::whereIn('category', ['main', 'certified'])->get(['id', 'name'])->toArray();
-        $this->assistantsList = Expert::whereIn('category', ['main', 'certified', 'assistant'])->get(['id', 'name'])->toArray();
+        $this->expertsList = Expert::whereIn('category', ['main', 'certified'])->get();
+        $this->assistantsList = Expert::whereIn('category', ['main', 'certified', 'assistant'])->get();
         $this->courtsList = Court::get(['id', 'name'])->toArray();
         $this->typesList = Type::get(['id', 'name'])->toArray();
         $this->advocatesList = Party::whereIn('type', ['office', 'advocate', 'advisor'])->get(['id', 'name'])->toArray();
         $this->externalMarketersList = Party::where('type', 'external_marketer')->get(['id', 'name'])->toArray();
-        $this->committeesList = Expert::CommitteesList()->get(['id', 'name'])->toArray();
+        $this->committeesList = Expert::CommitteesList()->get();
         $this->marketersList = User::where('category', 'staff')->get(['id', 'display_name'])->toArray();
         $this->levelList = config('system.level');
         $this->committeeChoiceValue = Matter::COMMITTEE;
@@ -235,7 +236,9 @@ class MatterCreateForm extends Component
 
     public function addNewExpert()
     {
-        $validatedData = $this->validate([
+        request()->merge($this->newexpert);
+        (new ExpertService())->save(request());
+        /* $validatedData = $this->validate([
             'newexpert.name' => 'required|unique:experts,experts.name',
             'newexpert.phone' => 'required',
             'newexpert.email' => 'required|email',
@@ -243,8 +246,8 @@ class MatterCreateForm extends Component
             'newexpert.category' => 'required|in:main,certified,assistant,external,external-assistant',
         ]);
 
-        Expert::create($validatedData['newexpert']);
-        $this->committeesList = Expert::CommitteesList()->get(['id', 'name'])->toArray();
+        Expert::create($validatedData['newexpert']); */
+        $this->committeesList = Expert::CommitteesList()->get();
         $this->resetNewExpert();
         $this->emit('closeModal');
     }

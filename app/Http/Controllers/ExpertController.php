@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\ExpertDatatable;
 use App\Models\Expert;
 use App\Models\Matter;
+use App\Services\ExpertService;
 use Illuminate\Http\Request;
 use simplehtmldom\HtmlWeb;
 
@@ -67,21 +68,7 @@ class ExpertController extends Controller
      */
     public function store(Request $request)
     {
-        $createUser = $request->has('create_user');
-
-        $validated = $request->validate(
-            [
-                'newexpert.name' => 'required|unique:experts,experts.name',
-                'newexpert.phone' => 'required',
-                'newexpert.email' => 'required|email',
-                'newexpert.field' => 'required',
-                'newexpert.category' => 'required|in:main,certified,assistant,external,external-assistant',
-            ]
-        );
-
-        $data = $validated['newexpert'];
-
-        Expert::create($data);
+        (new ExpertService)->save($request);
         return redirect(route('expert.index'))->withToastSuccess(__('app.record-added-successfully'));
     }
 
@@ -149,8 +136,8 @@ class ExpertController extends Controller
     public function destroy(Expert $expert)
     {
 
-        if ($expert->matters()->exists() OR $expert->asAssistant()->exists()) {
-            return redirect(route('expert.index'))->with('warning',__('app.record_can\'t_be_deleted'));
+        if ($expert->matters()->exists() or $expert->asAssistant()->exists()) {
+            return redirect(route('expert.index'))->with('warning', __('app.record_can\'t_be_deleted'));
         }
 
         $expert->delete();
