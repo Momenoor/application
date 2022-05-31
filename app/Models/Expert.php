@@ -42,11 +42,11 @@ class Expert extends Model implements MatterPartyContract
 
     }
 
-    public function getNameAttribute()
+/*     public function getNameAttribute()
     {
         //$this->join('accounts', 'accounts.id', 'experts.account_id');
         return optional($this->account)->name;
-    }
+    } */
 
     public function account()
     {
