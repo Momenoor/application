@@ -66,14 +66,15 @@ class MatterService
             $parties = [];
             foreach ($data['parties'] as $party) {
 
-                $firstOrCreate = [
+                $where  = ['name' => $party['name']];
+                $updateOrCreate = [
                     'name' => $party['name'],
                     'phone' => $party['phone'] ?? null,
                     'email' => $party['email'] ?? null,
                     'type' => 'party',
                 ];
 
-                $dbParty = Party::firstOrCreate($firstOrCreate);
+                $dbParty = Party::updateOrCreate($where,$updateOrCreate);
 
                 $parties[$dbParty->id] = ['type' => $party['type']];
                 if (Arr::has($party, 'subParties')) {

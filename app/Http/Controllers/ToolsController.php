@@ -142,6 +142,7 @@ class ToolsController extends Controller
         $users = User::all();
 
         foreach ($experts as $expert) {
+
             $account = new Account([
                 'name' => $expert->name,
                 'phone' => $expert->phone,
