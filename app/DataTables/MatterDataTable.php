@@ -20,6 +20,7 @@ class MatterDataTable extends DataTable
      */
     public function dataTable($query)
     {
+
         return datatables()
 
             ->eloquent($query)
@@ -143,7 +144,6 @@ class MatterDataTable extends DataTable
      */
     public function query(Matter $model)
     {
-
 
         if (auth()->user()->can('matter-only-own-view') && auth()->user()->cannot('matter-view')) {
             return $model->with([

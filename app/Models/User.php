@@ -29,21 +29,13 @@ class User extends Authenticatable
      */
     protected $logAttributes  = [
         'name',
-        'email',
         'password',
-        'display_name',
         'language',
-        'gender',
-        'avatar',
     ];
     protected $fillable = [
         'name',
-        'email',
         'password',
-        'display_name',
         'language',
-        'gender',
-        'avatar',
     ];
 
     protected $with = [
@@ -112,6 +104,6 @@ class User extends Authenticatable
 
     public function account()
     {
-        return $this->belongsTo(Account::class, 'accountable');
+        return $this->belongsTo(Account::class);
     }
 }
