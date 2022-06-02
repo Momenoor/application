@@ -123,8 +123,8 @@ class MatterController extends Controller
     public function exportFilterForm()
     {
         abort_unless(auth()->user()->can('matter-export'), '403');
-        $experts = Expert::whereIn('category', [Expert::MAIN, Expert::CERTIFIED])->pluck('name', 'id');
-        $assistants = Expert::whereIn('category', [Expert::MAIN, Expert::CERTIFIED, Expert::ASSISTANT])->pluck('name', 'id');
+        $experts = Expert::join('accounts', 'accounts.id', 'experts.account_id')->whereIn('category', [Expert::MAIN, Expert::CERTIFIED])->pluck('accounts.name', 'experts.id');
+        $assistants = Expert::join('accounts', 'accounts.id', 'experts.account_id')->whereIn('category', [Expert::MAIN, Expert::CERTIFIED, Expert::ASSISTANT])->pluck('accounts.name', 'experts.id');
         $types = Type::pluck('name', 'id');
         $courts = Court::pluck('name', 'id');
         $claimsStatus = [
@@ -138,13 +138,14 @@ class MatterController extends Controller
 
     public function export(Request $request)
     {
-
+        abort_unless(auth()->user()->can('matter-export'), '403');
         $result = (new MatterService())->setFilters($request)->getForExcel();
-        $experts = Expert::whereIn('category', [Expert::MAIN, Expert::CERTIFIED])->pluck('account.name', 'id');
-        $assistants = Expert::whereIn('category', [Expert::MAIN, Expert::CERTIFIED, Expert::ASSISTANT])->pluck('account.name', 'id');
+        $experts = Expert::join('accounts', 'accounts.id', 'experts.account_id')->whereIn('category', [Expert::MAIN, Expert::CERTIFIED])->pluck('accounts.name', 'experts.id');
+        $assistants = Expert::join('accounts', 'accounts.id', 'experts.account_id')->whereIn('category', [Expert::MAIN, Expert::CERTIFIED, Expert::ASSISTANT])->pluck('accounts.name', 'experts.id');
         $types = Type::pluck('name', 'id');
         $courts = Court::pluck('name', 'id');
         $claimsStatus = [
+            Cash::OVERPAID,
             Cash::PAID,
             Cash::UNPAID,
             Cash::PARTIAL,
