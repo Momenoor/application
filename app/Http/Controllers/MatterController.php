@@ -50,6 +50,7 @@ class MatterController extends Controller
      */
     public function show(Matter $matter)
     {
+
         abort_unless(auth()->user()->canAny(['matter-view', 'matter-only-own-view']), '403');
 
         if (auth()->user()->can('matter-only-own-view') && auth()->user()->cannot('matter-view') && (!$matter->assistants->contains('id', auth()->user()->expert->id) && $matter->expert_id != auth()->user()->expert->id)) {
