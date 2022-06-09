@@ -104,11 +104,11 @@
 
                     @this.set('claim.type', $(this).select2("val"));
                 });
-                $("select[name='newexpert[field]']").on('change', function(e) {
+                $("select[name='field']").on('change', function(e) {
 
                     @this.set('newexpert.field', $(this).select2("val"));
                 });
-                $("select[name='newexpert[category]']").on('change', function(e) {
+                $("select[name='category']").on('change', function(e) {
 
                     @this.set('newexpert.category', $(this).select2("val"));
                 });
