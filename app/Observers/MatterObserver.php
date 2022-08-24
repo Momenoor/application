@@ -9,8 +9,8 @@ class MatterObserver
 {
     public function creating(Matter $model)
     {
-        $model->user_id = auth()->id();
-        $model->status = 'current';
+        //$model->user_id = auth()->id();
+        //$model->status = 'current';
     }
 
     public function deleting(Matter $model)

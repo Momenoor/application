@@ -230,8 +230,16 @@ return [
                 'condition' => '-',
                 'type' => 'expense',
             ],
-            'commission' => [
+            'office share' => [
                 'id' => 6,
+                'name' => 'Office Share',
+                'color' => 'warning',
+                'active' => true,
+                'condition' => '-',
+                'type' => 'expense',
+            ],
+            'commission' => [
+                'id' => 7,
                 'name' => 'Commission',
                 'color' => 'primary',
                 'active' => false,

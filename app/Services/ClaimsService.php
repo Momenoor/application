@@ -7,6 +7,7 @@ use App\Models\Matter;
 class ClaimsService
 {
     private $matter;
+    private $claims = [];
     public function __construct(Matter $matter)
     {
         $this->matter = $matter;
@@ -21,7 +22,6 @@ class ClaimsService
     {
         return $this->matter->claims->where('type', 'office_share');
         if ($this->matter->isPrivate()) {
-
         }
     }
 }

@@ -113,6 +113,7 @@ class Claim extends Model
 
     public function getTypeColorAttribute()
     {
+
         return config('system.claims.types.' . \Str::lower($this->type) . '.color');
     }
 
