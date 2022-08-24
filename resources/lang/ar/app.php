@@ -327,7 +327,7 @@ return [
     'request-page-not-found' => 'الصفحة المطلوبة غير موجودة.',
     'request_by' => 'مقدم الطلب',
     'annual-leave' => 'إجازة سنوية',
-    '' => '',
+    'arrbitrator' => 'محكم',
     '' => '',
     '' => '',
     '' => '',
