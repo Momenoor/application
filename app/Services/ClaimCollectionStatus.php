@@ -27,7 +27,7 @@ class ClaimCollectionStatus
         } else {
             $this->collection = $collection;
         }
-        $this->claims = $matter->claims;
+        $this->claims = ClaimsService::make($matter)->getClaims();
         $this->getDueClaims();
     }
 
@@ -50,6 +50,13 @@ class ClaimCollectionStatus
 
     public function getSumCollectedClaims($format = true)
     {
+        $this->collection->each(function ($item) {
+            $condition = config('system.claims.types.' . $item->claim3->type . '.condition');
+            if ($condition == -1 && $item->amount > 0) {
+                $item->amount = $condition * $item->amount;
+            }
+            return $item;
+        });
         if ($format) {
 
             return app(Money::class)->getFormattedNumber($this->collection->sum('amount'));
