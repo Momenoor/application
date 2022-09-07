@@ -60,6 +60,7 @@ return [
             'banking' => 'banking',
             'technology' => 'technology',
             'realestate' => 'realestate',
+            'arrbitrator' => 'arrbitrator',
         ]
     ],
 
