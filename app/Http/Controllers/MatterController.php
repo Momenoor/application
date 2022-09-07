@@ -10,6 +10,7 @@ use App\Models\Expert;
 use App\Models\Matter;
 use App\Models\Party;
 use App\Models\Type;
+use App\Services\ClaimsService;
 use App\Services\MatterService;
 use App\Services\Money;
 use Illuminate\Http\Request;
@@ -59,8 +60,9 @@ class MatterController extends Controller
 
 
         $parties = MatterService::partiesResolve($matter);
+        $claims = ClaimsService::make($matter)->getClaims();
         $source = 'show';
-        return view('pages.matters.show', compact('matter', 'parties', 'source'));
+        return view('pages.matters.show', compact('matter', 'parties', 'source', 'claims'));
     }
 
     /**

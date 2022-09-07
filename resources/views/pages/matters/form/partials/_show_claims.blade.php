@@ -34,7 +34,8 @@
                 <!--end::Table head-->
                 <!--begin::Table body-->
                 <tbody>
-                    @foreach ($matter->claims as $claim)
+
+                    @foreach ($claims as $claim)
                         <tr>
                             <td>
                                 <a href="#"
@@ -58,8 +59,8 @@
                                             @method('delete')
                                             @csrf
                                             <button class="btn btn-sm btn-icon btn-danger btn-active-danger me-2"
-                                                type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                                data-bs-original-title="{{ __('app.delete') }}">
+                                                type="submit" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                title="" data-bs-original-title="{{ __('app.delete') }}">
                                                 <span class="svg-icon svg-icon-3">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none">

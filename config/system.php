@@ -167,7 +167,7 @@ return [
                 'name' => 'Main',
                 'color' => 'success',
                 'active' => true,
-                'condition' => '+',
+                'condition' => +1,
                 'type' => 'income',
             ],
             'additional' => [
@@ -175,7 +175,7 @@ return [
                 'name' => 'Additional',
                 'color' => 'info',
                 'active' => true,
-                'condition' => '+',
+                'condition' => +1,
                 'type' => 'income',
             ],
             'penality' => [
@@ -183,7 +183,7 @@ return [
                 'name' => 'Penality',
                 'color' => 'danger',
                 'active' => true,
-                'condition' => '-',
+                'condition' => -1,
                 'type' => 'expense',
             ],
             'recurring' => [
@@ -219,7 +219,7 @@ return [
                 'name' => 'VAT',
                 'color' => 'dark',
                 'active' => false,
-                'condition' => '+',
+                'condition' => +1,
                 'type' => 'income',
             ],
             'office_share' => [
@@ -227,7 +227,7 @@ return [
                 'name' => 'Office Share',
                 'color' => 'warning',
                 'active' => true,
-                'condition' => '-',
+                'condition' => -1,
                 'type' => 'expense',
             ],
             'office share' => [
@@ -235,7 +235,7 @@ return [
                 'name' => 'Office Share',
                 'color' => 'warning',
                 'active' => true,
-                'condition' => '-',
+                'condition' => -1,
                 'type' => 'expense',
             ],
             'commission' => [
@@ -243,7 +243,7 @@ return [
                 'name' => 'Commission',
                 'color' => 'primary',
                 'active' => false,
-                'condition' => '-',
+                'condition' => -1,
                 'type' => 'expense',
             ],
         ],
