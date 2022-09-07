@@ -51,7 +51,7 @@ class ClaimCollectionStatus
     public function getSumCollectedClaims($format = true)
     {
         $this->collection->each(function ($item) {
-            $condition = config('system.claims.types.' . $item->claim3->type . '.condition');
+            $condition = config('system.claims.types.' . $item->claim->type . '.condition');
             if ($condition == -1 && $item->amount > 0) {
                 $item->amount = $condition * $item->amount;
             }
