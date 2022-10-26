@@ -1,4 +1,4 @@
-@if ($matter->isSubmitted())
+{{-- @if ($matter->isSubmitted())
     <div class="row">
         <div class="col-12">
             <div class="alert alert-dismissible border border-info bg-light-info d-flex flex-column flex-sm-row p-5 mb-10">
@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-@endif
+@endif --}}
 <div class="card mb-5 mb-xl-10">
     <div class="card-header border-0 cursor-pointer">
         <!--begin::Card title-->

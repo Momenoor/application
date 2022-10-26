@@ -74,9 +74,9 @@ class MatterController extends Controller
     public function edit(Matter $matter)
     {
         abort_unless(auth()->user()->can('matter-edit'), '403');
-        if ($matter->isSubmitted()) {
+/*         if ($matter->isSubmitted()) {
             return $this->show($matter);
-        }
+        } */
         $claimsTypes = config('system.claims.types');
         $partiesTypes = config('system.parties.type');
         $parties = MatterService::partiesResolve($matter);
