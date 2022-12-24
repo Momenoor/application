@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 class Party extends Model
 {
@@ -44,7 +45,10 @@ class Party extends Model
             $query->user_id = auth()->id();
         });
     }
-
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
     public function scopeNotBlackList()
     {
         return $this->where('black_list', false);

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Contracts\MatterPartyContract;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class MatterMarketing extends Pivot implements MatterPartyContract
@@ -27,6 +28,11 @@ class MatterMarketing extends Pivot implements MatterPartyContract
         if ($this->pivot) {
             return \Str::of($this->pivot->type)->replace('_marketer','');
         }
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
     }
     public function field()
     {

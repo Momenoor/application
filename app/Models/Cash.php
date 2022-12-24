@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Services\Money;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Cash extends Model
@@ -50,7 +51,10 @@ class Cash extends Model
             $query->datetime = now();
         });
     }
-
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
     public function matter()
     {
         return $this->belongsTo(Matter::class);

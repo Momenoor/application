@@ -6,6 +6,7 @@ use App\Contracts\MatterPartyContract;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Expert extends Model implements MatterPartyContract
@@ -40,6 +41,11 @@ class Expert extends Model implements MatterPartyContract
     protected static function booted()
     {
 
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
     }
 
     public function getNameAttribute()

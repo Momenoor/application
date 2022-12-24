@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Contracts\MatterPartyContract;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class MatterExpert extends Pivot implements MatterPartyContract
@@ -22,6 +23,10 @@ class MatterExpert extends Pivot implements MatterPartyContract
         'type',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
     public function type()
     {
         return $this->type;

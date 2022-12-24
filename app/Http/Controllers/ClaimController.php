@@ -6,7 +6,6 @@ use App\Events\MatterClaimChanged;
 use App\Models\Claim;
 use App\Models\Matter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 
 class ClaimController extends Controller
 {

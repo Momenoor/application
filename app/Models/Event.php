@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Momenoor\LaravelFullcalendar\Event as LaravelFullcalendarEvent;
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Event extends Model implements LaravelFullcalendarEvent
@@ -57,6 +58,10 @@ class Event extends Model implements LaravelFullcalendarEvent
         });
     }
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
     /**
      * Get the event's id number
      *

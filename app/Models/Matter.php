@@ -6,6 +6,7 @@ use App\Services\ClaimCollectionStatus;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Services\ClaimsService;
+use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Matter extends Model
@@ -80,6 +81,10 @@ class Matter extends Model
         });
     }
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
 
     public function getAssistantAttribute()
     {
@@ -137,52 +142,52 @@ class Matter extends Model
     public function assistants()
     {
         return $this->belongsToMany(Expert::class, 'matter_expert')
-            ->wherePivot('type', '=', 'assistant')->withTimestamps();;
+            ->wherePivot('type', '=', 'assistant')->withTimestamps();
     }
 
     public function experts()
     {
         return $this->belongsToMany(Expert::class, 'matter_expert')
-            ->withPivot('type')->withTimestamps();;
+            ->withPivot('type')->withTimestamps();
     }
 
     public function marketers()
     {
-        return $this->belongsToMany(User::class, 'matter_marketing')->withPivot('type')->withTimestamps();;
+        return $this->belongsToMany(User::class, 'matter_marketing')->withPivot('type')->withTimestamps();
     }
 
     public function internalMarketers()
     {
         return $this->belongsToMany(User::class, 'matter_marketing')
-            ->wherePivot('type', '=', 'marketer')->withTimestamps();;
+            ->wherePivot('type', '=', 'marketer')->withTimestamps();
     }
 
     public function externalMarketers()
     {
         return $this->belongsToMany(Party::class, 'matter_party')
-            ->wherePivot('type', '=', 'external_marketer')->withTimestamps();;
+            ->wherePivot('type', '=', 'external_marketer')->withTimestamps();
     }
 
     public function plaintiffs()
     {
         return $this->belongsToMany(Party::class)
-            ->wherePivot('type', '=', 'plaintiff')->withTimestamps();;
+            ->wherePivot('type', '=', 'plaintiff')->withTimestamps();
     }
 
     public function defendants()
     {
         return $this->belongsToMany(Party::class)
-            ->wherePivot('type', '=', 'defendant')->withTimestamps();;
+            ->wherePivot('type', '=', 'defendant')->withTimestamps();
     }
 
     public function parties()
     {
-        return $this->belongsToMany(Party::class)->withPivot(['type', 'parent_id'])->withTimestamps();;
+        return $this->belongsToMany(Party::class)->withPivot(['type', 'parent_id'])->withTimestamps();
     }
 
     public function onlyParties()
     {
-        return $this->belongsToMany(Party::class)->withPivot(['type', 'parent_id'])->wherePivotIn('type', ['defendant', 'plaintiff', 'implicat-litigant'])->withTimestamps();;
+        return $this->belongsToMany(Party::class)->withPivot(['type', 'parent_id'])->wherePivotIn('type', ['defendant', 'plaintiff', 'implicat-litigant'])->withTimestamps();
     }
 
     public function procedures()
