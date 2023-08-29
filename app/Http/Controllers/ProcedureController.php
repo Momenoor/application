@@ -112,7 +112,7 @@ class ProcedureController extends Controller
         $validate = $validate['procedure'];
 
         $matter->{$validate['type']} = $validate['datetime'];
-        $procedure = $matter->procedures()->where('type', $validate['type'])->first();
+        $procedure = $matter->procedures()->where('type', $validate['type'])->firstOrNew();
         $procedure->datetime = $validate['datetime'];
         $procedure->save();
         $matter->save();

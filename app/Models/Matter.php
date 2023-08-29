@@ -34,7 +34,8 @@ class Matter extends Model
         'level_id',
         'type_id',
         'parent_id',
-        'claim_status'
+        'claim_status',
+        'last_action_date',
     ];
 
     protected $fillable = [
@@ -53,7 +54,9 @@ class Matter extends Model
         'level_id',
         'type_id',
         'parent_id',
-        'claim_status'
+        'claim_status',
+        'last_action_date',
+        'last_action_date',
     ];
 
     protected $dates = [
@@ -63,6 +66,7 @@ class Matter extends Model
         'submitted_date',
         'created_at',
         'updated_at',
+        'last_action_date',
     ];
 
     public $timestamps = true;

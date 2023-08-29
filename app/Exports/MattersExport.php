@@ -44,12 +44,14 @@ class MattersExport implements FromQuery, WithStrictNullComparison, ShouldQueue,
             __('app.defendant'),
             __('app.status'),
             __('app.received_date'),
+            __('app.last_action_date'),
             __('app.reported_date'),
             __('app.submitted_date'),
             __('app.claim_status'),
             __('app.claim_amount'),
             __('app.claim_dues'),
             __('app.claim_collected'),
+            __('app.notes'),
         ];
     }
 
@@ -67,12 +69,14 @@ class MattersExport implements FromQuery, WithStrictNullComparison, ShouldQueue,
             optional($row->defendant)->name,
             __('app.' . $row->status),
             optional($row->received_date)->format('Y-m-d'),
+            optional($row->last_action_date)->format('Y-m-d'),
             optional($row->reported_date)->format('Y-m-d'),
             optional($row->submitted_date)->format('Y-m-d'),
             __('app.' .$row->claim_status),
             $row->claims_sum_amount,
             $row->dueAmount(),
             $row->cash_sum_amount,
+            $row->notes()->implode('text',' / / / / '),
         ];
     }
 }

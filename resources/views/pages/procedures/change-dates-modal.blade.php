@@ -36,6 +36,9 @@
                                         {{ __('app.submitted_date') }}
                                     </option>
                                 @endif
+                                <option value="last_action_date" @if ('received_date' == old('procedure.type')) selected @endif>
+                                    {{ __('app.last_action_date') }}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -45,7 +48,7 @@
                             <!--end::Label-->
                             <input type="text" name="procedure[datetime]" data-control="flatpickr"
                                 class="form-control @error('procedure.datetime') is-invalid @enderror form-control-solid"
-                                placeholder="{{ __('app.please_select') . ' ' . __('app.next-session-date') }}"
+                                placeholder="{{ __('app.please_select') . ' ' . __('app.date') }}"
                                 value="{{ old('procedure.datetime') }}">
                             @error('procedure.datetime')
                                 <div class="fv-plugins-message-container invalid-feedback">

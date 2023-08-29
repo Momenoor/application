@@ -287,6 +287,21 @@
                                     <!--end::Label-->
                                 </div>
                             @endif
+                            @if ($matter->last_action_date)
+                                <div
+                                    class="border text-white bg-warning border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                    <!--begin::Number-->
+                                    <div class="d-flex align-items-center">
+                                        <div class="fs-4 fw-bolder">
+                                            {{ $matter->last_action_date->format('d, M Y') }}
+                                        </div>
+                                    </div>
+                                    <!--end::Number-->
+                                    <!--begin::Label-->
+                                    <div class="fw-bold fs-6 text-white">{{ __('app.last_action_date') }}</div>
+                                    <!--end::Label-->
+                                </div>
+                            @endif
                             <!--begin::Stat-->
                             <div class="border text-white bg-{{ $matter->claim_status_color }} border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3"
                                 data-bs-toggle="tooltip" title="{{ __('app.' . $matter->claim_status) }}">

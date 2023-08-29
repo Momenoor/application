@@ -328,7 +328,7 @@ return [
     'request_by' => 'مقدم الطلب',
     'annual-leave' => 'إجازة سنوية',
     'arrbitrator' => 'محكم',
-    '' => '',
+    'last_action_date' => 'تاريخ أخر إجراء',
     '' => '',
     '' => '',
     '' => '',

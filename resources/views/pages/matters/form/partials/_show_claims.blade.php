@@ -24,6 +24,7 @@
                         <th class="min-w-140px text-center pt-3">{{ __('app.type') }}</th>
                         <th class="min-w-140px text-center pt-3">{{ __('app.recurring') }}</th>
                         <th class="pe-0 text-center min-w-120px pt-3">{{ __('app.amount') }}</th>
+                        <th class="pe-0 text-center min-w-120px pt-3">{{ __('app.description') }}</th>
                         @if ($source == 'edit')
                             @can('claim-delete')
                                 <th class="pe-0 text-center pt-3">#</th>
@@ -51,6 +52,16 @@
                             </td>
                             <td class="text-center">
                                 <span class="text-gray-800 fw-bolder d-block">{{ $claim->claim_amount }} AED</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="text-gray-800 fw-bolder d-block">
+                                    
+                                    @if($claim->cashes)
+                                    @foreach($claim->cashes as $cash)
+                                     * {{$cash->description}} *</br>
+                                    @endforeach
+                                    @endif
+                                    </span>
                             </td>
                             @if ($source == 'edit')
                                 @can('claim-delete')
