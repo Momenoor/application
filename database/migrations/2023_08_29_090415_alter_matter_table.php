@@ -25,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('matters', function (Blueprint $table) {
+            $table->drop('last_action_date');
+        });
     }
 };
