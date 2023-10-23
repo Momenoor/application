@@ -112,7 +112,8 @@
                                         <!--begin::Name-->
                                         <div class="flex-row d-flex">
                                             <h3 class="d-flex mb-0">{{ $user->name }}</h3>
-                                            <a class="d-flex ms-auto" href="{{ route('user.edit', ['user' => $user]) }}">
+                                            <a class="d-flex ms-auto"
+                                               href="{{ route('user.edit', ['user' => $user]) }}">
                                                 {{ __('app.edit') }}</a>
                                         </div>
                                         <!--end::Name-->
@@ -121,10 +122,10 @@
                                             <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
                                             <span class="svg-icon svg-icon-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none">
+                                                     viewBox="0 0 24 24" fill="none">
                                                     <path opacity="0.3"
-                                                        d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z"
-                                                        fill="currentColor"></path>
+                                                          d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z"
+                                                          fill="currentColor"></path>
                                                     <path
                                                         d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z"
                                                         fill="currentColor"></path>
@@ -139,7 +140,7 @@
                                             <!--begin::Svg Icon | path: icons/duotune/electronics/elc003.svg-->
                                             <span class="svg-icon svg-icon-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none">
+                                                     viewBox="0 0 24 24" fill="none">
                                                     <path
                                                         d="M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z"
                                                         fill="currentColor"></path>
@@ -147,7 +148,15 @@
                                                 </svg>
                                             </span>
                                             <!--end::Svg Icon-->
-                                            <a href="#" class="text-muted text-hover-primary">{{ optional($user->expert)->phone }}</a>
+                                            <a href="#"
+                                               class="text-muted text-hover-primary">{{ optional($user->expert)->phone }}</a>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <form action="{{route('password.default',$user)}}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-link text-danger">Reset Password
+                                                </button>
+                                            </form>
                                         </div>
                                         <!--end::Phone-->
                                     </div>

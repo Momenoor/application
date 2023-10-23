@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('user/force-change-password', [UserController::class, 'forceChangePassowrd'])->name('user.force-change-password');
     Route::post('user/force-change-password', [UserController::class, 'changePassowrd'])->name('password.change');
+    Route::post('/user/{user}/reset-default-password',[UserController::class,'resetDefaultPassword'])->name('password.default');
 
     Route::middleware('password.force-change')->group(function () {
         Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');

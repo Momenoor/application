@@ -6,6 +6,7 @@ use App\Models\Expert;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -67,5 +68,18 @@ class UserController extends Controller
         $request->user()->password = Hash::make($validated['password']);
         $request->user()->save();
         return redirect()->route('home')->withToastInfo(__('app.password_changed_successfully.'));
+    }
+
+    public function resetDefaultPassword(User $user = null)
+    {
+        if (!$user) {
+            return redirect()->route('user.index')->with(['error' => 'We have to select user first.']);
+        }
+
+        $user->password = Hash::make('123456');
+        if ($user->save()) {
+            return redirect()->route('user.index')->with(['success' => 'Password reset done.']);
+        }
+
     }
 }
