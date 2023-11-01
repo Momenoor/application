@@ -83,6 +83,8 @@ class MatterController extends Controller
         $assistants = Expert::whereIn('category', ['certified', 'assistant'])->get();
         $subParties = Party::whereIn('type', ['office', 'advocate', 'advisor'])->get(['id', 'name']);
         $claims = ClaimsService::make($matter)->getClaims();
+        $courts = Court::all();
+        $matterTypes = Type::all();
         $source = 'edit';
         return view('pages.matters.edit', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants', 'source','claims'));
     }
@@ -197,5 +199,9 @@ class MatterController extends Controller
             ->withCount('asAssistantLastActivityMonth as last_activity_count')
             ->get();
         return view('pages.matters.distributing', compact('assistants', 'last_activity_start_date', 'countCurrent'));
+    }
+
+    public function updateBasicDate(Matter $matter, Request $request){
+
     }
 }
