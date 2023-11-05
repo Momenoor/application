@@ -12,9 +12,8 @@ use App\Models\Party;
 use App\Models\Type;
 use App\Services\ClaimsService;
 use App\Services\MatterService;
-use App\Services\Money;
 use Illuminate\Http\Request;
-use PDO;
+
 
 class MatterController extends Controller
 {
@@ -34,7 +33,7 @@ class MatterController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
@@ -46,8 +45,8 @@ class MatterController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\matter  $matter
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\matter $matter
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(Matter $matter)
     {
@@ -68,31 +67,32 @@ class MatterController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Matter  $matter
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Matter $matter
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Matter $matter)
     {
         abort_unless(auth()->user()->can('matter-edit'), '403');
-/*         if ($matter->isSubmitted()) {
-            return $this->show($matter);
-        } */
+        /*         if ($matter->isSubmitted()) {
+                    return $this->show($matter);
+                } */
         $claimsTypes = config('system.claims.types');
         $partiesTypes = config('system.parties.type');
         $parties = MatterService::partiesResolve($matter);
         $assistants = Expert::whereIn('category', ['certified', 'assistant'])->get();
         $subParties = Party::whereIn('type', ['office', 'advocate', 'advisor'])->get(['id', 'name']);
         $claims = ClaimsService::make($matter)->getClaims();
-        $courts = Court::all();
-        $matterTypes = Type::all();
+        $courtsList = Court::all();
+        $levelList = config('system.level');
+        $typesList = Type::all();
         $source = 'edit';
-        return view('pages.matters.edit', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants', 'source','claims'));
+        return view('pages.matters.edit', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants', 'source', 'claims', 'courtsList', 'levelList', 'typesList'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Matter  $matter
+     * @param \App\Models\Matter $matter
      * @return \Illuminate\Http\Response
      */
     public function destroy(Matter $matter)
@@ -120,25 +120,16 @@ class MatterController extends Controller
                 $matter->save();
                 return redirect()->to(url()->previous())->withToastSuccess(__('app.matter-status-changed-successfuly'));
             }
-            return redirect()->to(url()->previous())->withToastError(__('app.matter-status-cannot-be-changed'));;
+            return redirect()->to(url()->previous())->withToastError(__('app.matter-status-cannot-be-changed'));
         }
 
-        return redirect()->to(url()->previous())->withToastError(__('app.matter-status-cannot-be-changed'));;
+        return redirect()->to(url()->previous())->withToastError(__('app.matter-status-cannot-be-changed'));
     }
 
     public function exportFilterForm()
     {
         abort_unless(auth()->user()->can('matter-export'), '403');
-        $experts = Expert::join('accounts', 'accounts.id', 'experts.account_id')->whereIn('category', [Expert::MAIN, Expert::CERTIFIED])->pluck('accounts.name', 'experts.id');
-        $assistants = Expert::join('accounts', 'accounts.id', 'experts.account_id')->whereIn('category', [Expert::MAIN, Expert::CERTIFIED, Expert::ASSISTANT])->pluck('accounts.name', 'experts.id');
-        $types = Type::pluck('name', 'id');
-        $courts = Court::pluck('name', 'id');
-        $claimsStatus = [
-            Cash::OVERPAID,
-            Cash::PAID,
-            Cash::UNPAID,
-            Cash::PARTIAL,
-        ];
+        list($experts, $assistants, $types, $courts, $claimsStatus) = $this->getExperts();
         return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus'));
     }
 
@@ -146,16 +137,7 @@ class MatterController extends Controller
     {
         abort_unless(auth()->user()->can('matter-export'), '403');
         $result = (new MatterService())->setFilters($request)->getForExcel();
-        $experts = Expert::join('accounts', 'accounts.id', 'experts.account_id')->whereIn('category', [Expert::MAIN, Expert::CERTIFIED])->pluck('accounts.name', 'experts.id');
-        $assistants = Expert::join('accounts', 'accounts.id', 'experts.account_id')->whereIn('category', [Expert::MAIN, Expert::CERTIFIED, Expert::ASSISTANT])->pluck('accounts.name', 'experts.id');
-        $types = Type::pluck('name', 'id');
-        $courts = Court::pluck('name', 'id');
-        $claimsStatus = [
-            Cash::OVERPAID,
-            Cash::PAID,
-            Cash::UNPAID,
-            Cash::PARTIAL,
-        ];
+        list($experts, $assistants, $types, $courts, $claimsStatus) = $this->getExperts();
 
         /*return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus', 'result')); */
         return (new MattersExport($request))->download('matters-' . now() . '.xlsx');
@@ -201,7 +183,35 @@ class MatterController extends Controller
         return view('pages.matters.distributing', compact('assistants', 'last_activity_start_date', 'countCurrent'));
     }
 
-    public function updateBasicDate(Matter $matter, Request $request){
+    public function updateBasicDate(Matter $matter, Request $request)
+    {
+        $validated = $request->validate([
+            'year' => 'required|min:4|max:4|date_format:Y',
+            'number' => 'required',
+            'court_id' => 'required|exists:courts,id',
+            'level_id' => 'required',
+            'type_id' => 'required|exists:types,id',
+        ]);
+        $matter->fill($validated);
+        $matter->save();
+        return redirect(url()->previous())->withToastSuccess(__('app.record-updated-successfully'));
+    }
 
+    /**
+     * @return array
+     */
+    private function getExperts(): array
+    {
+        $experts = Expert::join('accounts', 'accounts.id', 'experts.account_id')->whereIn('category', [Expert::MAIN, Expert::CERTIFIED])->pluck('accounts.name', 'experts.id');
+        $assistants = Expert::join('accounts', 'accounts.id', 'experts.account_id')->whereIn('category', [Expert::MAIN, Expert::CERTIFIED, Expert::ASSISTANT])->pluck('accounts.name', 'experts.id');
+        $types = Type::pluck('name', 'id');
+        $courts = Court::pluck('name', 'id');
+        $claimsStatus = [
+            Cash::OVERPAID,
+            Cash::PAID,
+            Cash::UNPAID,
+            Cash::PARTIAL,
+        ];
+        return array($experts, $assistants, $types, $courts, $claimsStatus);
     }
 }

@@ -48,63 +48,142 @@
         <div class="card-title m-0">
             <h3 class="fw-bolder m-0">{{ __('app.matter-data') }}</h3>
         </div>
-
-
         <!--end::Card title-->
     </div>
     <div class="card-body pt-0">
-        <div class="separator"></div>
-        <div class="row mt-10">
-            <div class="col-6">
-                <div class="row mb-10">
-                    <!--begin::Label-->
-                    <label class="col-lg-4 fw-bold text-muted">{{ __('app.court') }}</label>
-                    <!--end::Label-->
-                    <!--begin::Col-->
-                    <div class="col-lg-8">
+        <form action="{{route('matter.update.basic-data',$matter)}}" method="POST">
+            @csrf
 
-                        <span class="fw-bolder fs-6 text-gray-800">{{ $matter->court->name }}</span>
-                        @include('common.external-link', [
-                            'href' => route('court.show', $matter->court),
-                        ])
+            <div class="separator"></div>
+            <div class="row pt-5">
+                <div class="col-lg-4">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="fv-row -ml-1mb-5">
+                                <label for="year"
+                                       class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.year') }}</label>
+                                <input type="text" name="year" id="year"
+                                       class="@error('matter.year') is-invalid @enderror form-control form-control-solid"
+                                       placeholder="{{__('app.year')}}" value="{{old('year',$matter->year)}}">
+                                @error('year')
+                                <div class="invalid-feedback fv-plugins-message-container">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="fv-row mb-5">
+                                <label for="number"
+                                       class="form-label fs-6 fw-bolder text-gray-700 mb-3">{{ __('app.number') }}</label>
+                                <input id="number" type="text" name="number" value="{{old('number',$matter->number)}}"
+                                       class="@error('matter.number') is-invalid @enderror form-control form-control-solid"
+                                       placeholder="{{__('app.number')}}">
+                                @error('number')
+                                <div class="invalid-feedback fv-plugins-message-container">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
-                    <!--end::Col-->
                 </div>
-                <div class="row mb-10">
-                    <!--begin::Label-->
-                    <label class="col-lg-4 fw-bold text-muted">{{ __('app.type') }}</label>
-                    <!--end::Label-->
-                    <!--begin::Col-->
-                    <div class="col-lg-8">
-                        <span class="fw-bolder fs-6 text-gray-800">{{ $matter->type->name }}</span>
+                <div class="col-lg-9">
+                    <div class="row pt-5">
+                        <div class="col-lg-4">
+                            <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.court') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Select-->
+                            <select name="court_id" aria-label="Select a court" data-control="select2"
+                                    data-placeholder="{{__('app.select_a_court')}}" wire:model="matter.court_id"
+                                    class="@error('matter.court_id') is-invalid @enderror form-select form-select-solid">
+                                <option value=""></option>
+                                @foreach ($courtsList as $court)
+                                    <option
+                                        @selected(old('court_id',$matter->court_id) == $court['id']) value="{{ $court['id'] }}">
+                                        {{ $court['name'] }}</option>
+                                @endforeach
+                            </select>
+                            @error('court_id')
+                            <div class="invalid-feedback fv-plugins-message-container">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.level') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Select-->
+                            <select name="level_id" aria-label="{{__('app.select_a_level')}}" data-control="select2"
+                                    data-placeholder="{{__('app.select_a_level')}}" wire:model="level_id"
+                                    class="@error('level_id') is-invalid @enderror form-select form-select-solid">
+                                <option value=""></option>
+                                @foreach ($levelList as $level)
+                                    <option
+                                        @selected(old('level_id',$matter->level_id) == $level['id']) value="{{ $level['id'] }}">{{ __('app.'.$level['name']) }}</option>
+                                @endforeach
+                            </select>
+                            @error('level_id')
+                            <div class="invalid-feedback fv-plugins-message-container">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.type') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Select-->
+                            <select name="type_id" aria-label="{{__('app.select_a_type')}}" data-control="select2"
+                                    data-placeholder="{{__('app.select_a_type')}}" wire:model="matter.type_id"
+                                    class="@error('matter.type_id') is-invalid @enderror form-select form-select-solid">
+                                <option value=""></option>
+                                @foreach ($typesList as $type)
+                                    <option
+                                        @selected(old('type_id',$matter->type_id) == $type['id']) value="{{ $type['id'] }}">{{ $type['name'] }}</option>
+                                @endforeach
+                            </select>
+                            @error('type_id')
+                            <div class="invalid-feedback fv-plugins-message-container">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
                     </div>
-                    <!--end::Col-->
                 </div>
             </div>
-            <div class="col-6">
-                <div class="row mb-10">
-                    <label class="col-4 fw-bold text-muted">{{ __('app.commissioning') }}</label>
-                    <!--end::Label-->
-                    <!--begin::Col-->
-                    <div class="col-8">
-                        <span class="fw-bolder fs-6 text-gray-800">{{ __('app.' . $matter->commissioning) }}</span>
+            <div class="separator separator-dashed my-10"></div>
+            <div class="row mt-10">
+                <div class="col-6">
+                    <div class="row mb-10">
+                        <label class="col-4 fw-bold text-muted">{{ __('app.commissioning') }}</label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-8">
+                            <span class="fw-bolder fs-6 text-gray-800">{{ __('app.' . $matter->commissioning) }}</span>
+                        </div>
                     </div>
-                </div>
-                <div class="row mb-10">
-                    <label class="col-4 fw-bold text-muted">{{ __('app.status') }}</label>
-                    <!--end::Label-->
-                    <!--begin::Col-->
-                    <div class="col-8">
+                    <div class="row mb-10">
+                        <label class="col-4 fw-bold text-muted">{{ __('app.status') }}</label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-8">
                         <span
                             class="fw-bolder fs-6 text-gray-800">{{ $matter->parent_id > 0 ? __('app.supplementary') : __('app.basic') }}</span>
-                        @if ($matter->parent_id > 0)
-                            @include('common.external-link', [
-                                'href' => route('matter.show', $matter->parent_id),
-                            ])
-                        @endif
+                            @if ($matter->parent_id > 0)
+                                @include('common.external-link', [
+                                    'href' => route('matter.show', $matter->parent_id),
+                                ])
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="row pt-5">
+                <div class="col-lg-9">
+                    <a class="btn btn-light-primary" href="{{route('matter.index')}}">{{__('app.cancel')}}</a>
+                    <button class="btn btn-success">{{__('app.save')}}</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>

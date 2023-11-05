@@ -2,7 +2,7 @@
 @section('content')
     <div class="">
         @include('pages.matters.form.partials._show_header')
-        @include('pages.matters.form.partials._show_main_data')
+        @include('pages.matters.form.partials._edit_main_data')
         <div class="row">
 
             <div class="col-lg-7 col-md-12">
@@ -119,8 +119,8 @@
             color: #369;
             border: none;
             background: transparent;
-            margin: 0px 0px 0px 0px;
-            padding: 0px 0px 0px 0px;
+            margin: 0 0 0 0;
+            padding: 0 0 0 0;
             outline: 0;
         }
 

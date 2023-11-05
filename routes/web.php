@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
         Route::post('matter/{matter}/add-claim', [ClaimController::class, 'addFromMatter'])->name('claims.add-from-matter');
         Route::delete('matter/{matter}/party-unlink/{party}', [MatterController::class, 'partyUnlink'])->name('matter.party-unlink');
         Route::get('matter/distributing', [MatterController::class, 'distributing'])->name('matter.distributing');
+        Route::post('matter/basic-date/{matter}/update', [MatterController::class,'updateBasicDate'])->name('matter.update.basic-data');
         Route::resource('matter', MatterController::class)->except(['store', 'update']);
 
 
