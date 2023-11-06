@@ -129,7 +129,7 @@ class MatterController extends Controller
     public function exportFilterForm()
     {
         abort_unless(auth()->user()->can('matter-export'), '403');
-        list($experts, $assistants, $types, $courts, $claimsStatus) = $this->getExperts();
+        list($experts, $assistants, $types, $courts, $claimsStatus) = $this->getData();
         return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus'));
     }
 
@@ -137,7 +137,7 @@ class MatterController extends Controller
     {
         abort_unless(auth()->user()->can('matter-export'), '403');
         $result = (new MatterService())->setFilters($request)->getForExcel();
-        list($experts, $assistants, $types, $courts, $claimsStatus) = $this->getExperts();
+        list($experts, $assistants, $types, $courts, $claimsStatus) = $this->getData();
 
         /*return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus', 'result')); */
         return (new MattersExport($request))->download('matters-' . now() . '.xlsx');
@@ -200,7 +200,7 @@ class MatterController extends Controller
     /**
      * @return array
      */
-    private function getExperts(): array
+    private function getData(): array
     {
         $experts = Expert::join('accounts', 'accounts.id', 'experts.account_id')->whereIn('category', [Expert::MAIN, Expert::CERTIFIED])->pluck('accounts.name', 'experts.id');
         $assistants = Expert::join('accounts', 'accounts.id', 'experts.account_id')->whereIn('category', [Expert::MAIN, Expert::CERTIFIED, Expert::ASSISTANT])->pluck('accounts.name', 'experts.id');

@@ -31,11 +31,11 @@ use Maatwebsite\Excel\Row;
 */
 
 Auth::routes();
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'MainMenu'])->group(function () {
 
     Route::get('user/force-change-password', [UserController::class, 'forceChangePassowrd'])->name('user.force-change-password');
     Route::post('user/force-change-password', [UserController::class, 'changePassowrd'])->name('password.change');
-    Route::post('/user/{user}/reset-default-password',[UserController::class,'resetDefaultPassword'])->name('password.default');
+    Route::post('/user/{user}/reset-default-password', [UserController::class, 'resetDefaultPassword'])->name('password.default');
 
     Route::middleware('password.force-change')->group(function () {
         Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
@@ -48,9 +48,8 @@ Route::middleware('auth')->group(function () {
         Route::post('matter/{matter}/add-claim', [ClaimController::class, 'addFromMatter'])->name('claims.add-from-matter');
         Route::delete('matter/{matter}/party-unlink/{party}', [MatterController::class, 'partyUnlink'])->name('matter.party-unlink');
         Route::get('matter/distributing', [MatterController::class, 'distributing'])->name('matter.distributing');
-        Route::post('matter/basic-date/{matter}/update', [MatterController::class,'updateBasicDate'])->name('matter.update.basic-data');
+        Route::post('matter/basic-date/{matter}/update', [MatterController::class, 'updateBasicDate'])->name('matter.update.basic-data');
         Route::resource('matter', MatterController::class)->except(['store', 'update']);
-
 
         Route::get('/expert/get-data/', [ExpertController::class, 'getExpertsDataFromUrlForm'])->name('expert.get-data');
         Route::post('expert/get-data/', [ExpertController::class, 'getExpertsDataFromUrl'])->name('expert.parse-data');
@@ -63,7 +62,6 @@ Route::middleware('auth')->group(function () {
 
 
         Route::resource('court', CourtController::class);
-
 
 
         Route::resource('user', UserController::class);
@@ -100,5 +98,10 @@ Route::middleware('auth')->group(function () {
 
 
         Route::delete('claim/{claim}', [ClaimController::class, 'destroy'])->name('claim.destroy');
+
+        Route::prefix('V2')->name('v2.')->group(function () {
+            Route::resource('matter', \App\Http\Controllers\V2\MatterController::class);
+        });
+
     });
 });
