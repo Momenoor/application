@@ -229,4 +229,56 @@
             </div>
         </div>
     </div>
+    <div class="card mt-15">
+        <div class="card-body">
+            <div class="row gx-10 mb-5 mt-5 w-900px">
+                <div class="col-lg-3">
+                    <h4 class="fw-bolder d-flex align-items-center text-dark">{{ __('app.parties') }}
+                        <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                           title="Billing is issued based on your selected account type"></i>
+                    </h4>
+                </div>
+                <!--begin::Col-->
+                <div class="col-lg-9">
+                    <div class="col-lg-12 mb-10">
+                        <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.expert') }}</label>
+                        <select name="matter[expert_id]" aria-label="Select a expert" data-control="select2" data-placeholder="{{__('app.select_expert')}}"
+                                class=" @error('matter.expert_id') is-invalid @enderror form-select form-select-solid">
+                            <option value=""></option>
+                            @foreach ($experts as $expert)
+                                <option @selected(old('matter.expert_id') == $expert->id) value="{{ $expert->id }}">
+                                    {{ $expert->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('matter.expert_id')
+                        <div class="invalid-feedback fv-plugins-message-container">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="col-lg-12 mb-10">
+                        <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.assistant') }}</label>
+                        <select name="matter[assistant]" aria-label="Select a assistant" data-control="select2" data-placeholder="{{__('app.select_assistant')}}"
+                                class=" @error('experts.assistant') is-invalid @enderror form-select form-select-solid">
+                            <option value=""></option>
+                            @foreach ($assistants as $assistant)
+                                <option @selected(old('matter'))value="{{ $assistant->id }}">
+                                    {{ $assistant->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('experts.assistant')
+                        <div class="invalid-feedback fv-plugins-message-container">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+
+                    @include('pages.matters.form.partials.parties-committee')
+                    <div class="separator separator-dashed my-5"></div>
+                    @include('pages.matters.form.partials.parties-parties')
+                </div>
+            </div>
+        </div>
+        <!--end::Row-->
+    </div>
 @endsection
