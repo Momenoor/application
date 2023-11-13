@@ -179,9 +179,9 @@ return [
                 'condition' => +1,
                 'type' => 'income',
             ],
-            'penality' => [
+            'penalty' => [
                 'id' => 3,
-                'name' => 'Penality',
+                'name' => 'Penalty',
                 'color' => 'danger',
                 'active' => true,
                 'condition' => -1,
@@ -201,8 +201,8 @@ return [
                         'name' => 'Monthly',
                         'color' => 'success'
                     ],
-                    'quartely' => [
-                        'name' => 'Quartely',
+                    'quarterly' => [
+                        'name' => 'Quarterly',
                         'color' => 'primary'
                     ],
                     'half-yearly' => [
@@ -264,7 +264,7 @@ return [
         ],
     ],
     'level' => [
-        'first_istance' => [
+        'first_instance' => [
             'id' => '1',
             'name' => 'first_instance'
         ],

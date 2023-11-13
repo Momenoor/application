@@ -22,6 +22,7 @@ class MatterController extends Controller
             return (object) $item;
         });
         $experts = Expert::all();
-        return view('pages.matters.v2.create', compact('courts', 'types', 'levels', 'experts'));
+        $claimsTypes = config('system.claims.types');
+        return view('pages.matters.v2.create', compact('courts', 'types', 'levels', 'experts','claimsTypes'));
     }
 }
