@@ -6,6 +6,7 @@ use App\Http\Controllers\CourtController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\ExpertController;
 use App\Http\Controllers\MatterController;
+use App\Http\Controllers\MatterStatusController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProcedureController;
@@ -102,6 +103,8 @@ Route::middleware(['auth', 'MainMenu'])->group(function () {
         Route::prefix('V2')->name('v2.')->group(function () {
             Route::resource('matter', \App\Http\Controllers\V2\MatterController::class);
         });
+
+        Route::resource('matter-statuses', MatterStatusController::class);
 
     });
 });
