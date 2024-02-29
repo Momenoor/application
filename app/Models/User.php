@@ -7,10 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\Activitylog\Traits\LogsActivity;
-
 
 
 class User extends Authenticatable
@@ -28,7 +27,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $logAttributes  = [
+    protected $logAttributes = [
         'name',
         'password',
         'language',
@@ -67,22 +66,24 @@ class User extends Authenticatable
     {
         return LogOptions::defaults();
     }
-    public function getExpertAttribute()
-    {
-        return optional($this->account)->expert;
-    }
 
-    public function marketers()
+//    public function getExpertAttribute()
+//    {
+//        return optional($this->account)->expert;
+//    }
+
+    public function marketers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
 
         return $this->belongsToMany(User::class, 'matter_marketing')->withPivot('type');
     }
 
-    public function symbol()
+    public function symbol(): string
     {
         return 'M';
     }
-    public function color()
+
+    public function color(): string
     {
         if ($this->pivot) {
             return 'info';
@@ -94,6 +95,7 @@ class User extends Authenticatable
     {
         return $this->category;
     }
+
     public function field()
     {
         if ($this->pivot) {
@@ -102,13 +104,18 @@ class User extends Authenticatable
         return 'user';
     }
 
-    public function pivotType()
+    public function pivotType(): string
     {
         return 'marketing';
     }
 
-    public function account()
+    public function account(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Account::class);
+    }
+
+    public function expert(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Expert::class, 'account_id', 'account_id');
     }
 }

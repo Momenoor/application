@@ -100,9 +100,9 @@ class Expert extends Model implements MatterPartyContract
         return $query->where('active', 'active');
     }
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'account_id', 'account_id');
     }
 
     public function type()

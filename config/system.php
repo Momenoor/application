@@ -148,14 +148,17 @@ return [
             'current' => [
                 'color' => 'primary',
                 'text' => 'current',
+                'index' => 1,
             ],
             'reported' => [
                 'color' => 'warning',
                 'text' => 'reported',
+                'index' => 2,
             ],
             'submitted' => [
                 'color' => 'success',
                 'text' => 'submitted',
+                'index' => 3,
             ],
         ],
     ],

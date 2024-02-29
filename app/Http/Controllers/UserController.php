@@ -55,12 +55,12 @@ class UserController extends Controller
         return view('pages.users.view', compact('user'));
     }
 
-    public function forceChangePassowrd()
+    public function forceChangePassword()
     {
         return view('auth.passwords.force-change');
     }
 
-    public function changePassowrd(Request $request)
+    public function changePassword(Request $request)
     {
         $validated = $request->validate([
             'password' => 'required|confirmed|min:8|not_in:' . User::DEFAULT_PASSWORD,

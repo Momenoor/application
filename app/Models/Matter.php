@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Services\ClaimCollectionStatus;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 use App\Services\ClaimsService;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+/**
+ * @property mixed $status
+ */
 class Matter extends Model
 {
 
@@ -56,7 +58,6 @@ class Matter extends Model
         'parent_id',
         'claim_status',
         'last_action_date',
-        'last_action_date',
     ];
 
     protected $dates = [
@@ -75,11 +76,9 @@ class Matter extends Model
     public const COMMITTEE = 'committee';
 
 
-    public static function boot()
+    public static function boot(): void
     {
-
         parent::boot();
-
         static::retrieved(function ($matter) {
             (new ClaimsService($matter));
         });
@@ -90,25 +89,22 @@ class Matter extends Model
         return LogOptions::defaults();
     }
 
-    public function getAssistantAttribute()
+    public function getAssistantAttribute(): Expert|\Closure|null
     {
-        $assistant = $this->assistants->first();
         //$this->unsetRelation('assistants');
-        return $assistant;
+        return $this->assistants->first();
     }
 
-    public function getPlaintiffAttribute()
+    public function getPlaintiffAttribute(): \Closure|Party|null
     {
-        $plaintiff = $this->plaintiffs->first();
         //$this->unsetRelation('plaintiffs');
-        return $plaintiff;
+        return $this->plaintiffs->first();
     }
 
-    public function getDefendantAttribute()
+    public function getDefendantAttribute(): \Closure|Party|null
     {
-        $defendant = $this->defendants->first();
         //$this->unsetRelation('defendants');
-        return $defendant;
+        return $this->defendants->first();
     }
 
     public function getClaimsSumAmountAttribute()
@@ -128,73 +124,73 @@ class Matter extends Model
         return ClaimCollectionStatus::make($this)->getSumCollectedClaims();
     }
 
-    public function court()
+    public function court(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Court::class);
     }
 
-    public function expert()
+    public function expert(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Expert::class);
     }
 
-    public function type()
+    public function type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Type::class);
     }
 
-    public function assistants()
+    public function assistants(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Expert::class, 'matter_expert')
             ->wherePivot('type', '=', 'assistant')->withTimestamps();
     }
 
-    public function experts()
+    public function experts(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Expert::class, 'matter_expert')
             ->withPivot('type')->withTimestamps();
     }
 
-    public function marketers()
+    public function marketers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(User::class, 'matter_marketing')->withPivot('type')->withTimestamps();
     }
 
-    public function internalMarketers()
+    public function internalMarketers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(User::class, 'matter_marketing')
             ->wherePivot('type', '=', 'marketer')->withTimestamps();
     }
 
-    public function externalMarketers()
+    public function externalMarketers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Party::class, 'matter_party')
             ->wherePivot('type', '=', 'external_marketer')->withTimestamps();
     }
 
-    public function plaintiffs()
+    public function plaintiffs(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Party::class)
             ->wherePivot('type', '=', 'plaintiff')->withTimestamps();
     }
 
-    public function defendants()
+    public function defendants(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Party::class)
             ->wherePivot('type', '=', 'defendant')->withTimestamps();
     }
 
-    public function parties()
+    public function parties(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Party::class)->withPivot(['type', 'parent_id'])->withTimestamps();
     }
 
-    public function onlyParties()
+    public function onlyParties(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Party::class)->withPivot(['type', 'parent_id'])->wherePivotIn('type', ['defendant', 'plaintiff', 'implicat-litigant'])->withTimestamps();
     }
 
-    public function procedures()
+    public function procedures(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Procedure::class);
     }
@@ -205,22 +201,22 @@ class Matter extends Model
             ->where('type', 'next_session_date');
     }
 
-    public function claims()
+    public function claims(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Claim::class);
     }
 
-    public function cashes()
+    public function cashes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Cash::class);
     }
 
-    public function notes()
+    public function notes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Note::class);
     }
 
-    public function attachments()
+    public function attachments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Attachment::class);
     }
@@ -235,36 +231,42 @@ class Matter extends Model
         return $query->whereIn('matters.status', ['reported', 'submitted']);
     }
 
-    public function isReported()
+    public function isCurrent(): bool
+    {
+        return (!$this->isSubmitted() and !$this->isReported()) or $this->status == 'current';
+    }
+
+    public function isReported(): bool
     {
         return (!is_null($this->reported_date)) or $this->status == 'reported';
     }
 
-    public function isSubmitted()
+    public function isSubmitted(): bool
     {
         return $this->isReported() && (!is_null($this->submitted_date) or $this->status == 'submitted');
     }
 
-    public function isOverPaid()
+    public function isOverPaid(): bool
     {
         return Cash::OVERPAID == ClaimCollectionStatus::make($this)->getClaimStatus();
     }
-    public function isPaid()
+
+    public function isPaid(): bool
     {
         return Cash::PAID == ClaimCollectionStatus::make($this)->getClaimStatus();
     }
 
-    public function isUnpaid()
+    public function isUnpaid(): bool
     {
         return Cash::UNPAID == ClaimCollectionStatus::make($this)->getClaimStatus();
     }
 
-    public function isPartial()
+    public function isPartial(): bool
     {
         return Cash::PARTIAL == ClaimCollectionStatus::make($this)->getClaimStatus();
     }
 
-    public function claimsOpen()
+    public function claimsOpen(): bool
     {
         return $this->isUnpaid() or $this->isPartial();
     }
@@ -279,17 +281,17 @@ class Matter extends Model
         return ClaimCollectionStatus::make($this)->getDueClaims();
     }
 
-    public function isPrivate()
+    public function isPrivate(): bool
     {
         return $this->whereNotIn('experts.id', config('system.experts.main'));
     }
 
-    public function isOffice()
+    public function isOffice(): bool
     {
         return !$this->isPrivate();
     }
 
-    public function isNotPrivate()
+    public function isNotPrivate(): bool
     {
         return $this->isOffice();
     }

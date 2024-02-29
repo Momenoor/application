@@ -1,24 +1,28 @@
 <?php
 
-use App\Http\Controllers\CashController;
-use App\Http\Controllers\ClaimController;
-use App\Http\Controllers\CourtController;
-use App\Http\Controllers\EventsController;
-use App\Http\Controllers\ExpertController;
-use App\Http\Controllers\MatterController;
-use App\Http\Controllers\MatterStatusController;
-use App\Http\Controllers\PartyController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\ProcedureController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\ToolsController;
-use App\Http\Controllers\TypeController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\VacationController;
-use App\Models\Matter;
+use App\Http\Controllers\{
+    CashController,
+    ClaimController,
+    CommissionController,
+    CourtController,
+    EventsController,
+    ExpertController,
+    MatterController,
+    MatterStatusController,
+    PartyController,
+    PermissionController,
+    ProcedureController,
+    RoleController,
+    TypeController,
+    ToolsController,
+    HomeController,
+    UserController,
+    VacationController,
+    V2\MatterController as V2MatterController,
+};
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Maatwebsite\Excel\Row;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,13 +38,13 @@ use Maatwebsite\Excel\Row;
 Auth::routes();
 Route::middleware(['auth', 'MainMenu'])->group(function () {
 
-    Route::get('user/force-change-password', [UserController::class, 'forceChangePassowrd'])->name('user.force-change-password');
-    Route::post('user/force-change-password', [UserController::class, 'changePassowrd'])->name('password.change');
+    Route::get('user/force-change-password', [UserController::class, 'forceChangePassword'])->name('user.force-change-password');
+    Route::post('user/force-change-password', [UserController::class, 'changePassword'])->name('password.change');
     Route::post('/user/{user}/reset-default-password', [UserController::class, 'resetDefaultPassword'])->name('password.default');
 
     Route::middleware('password.force-change')->group(function () {
-        Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::get('/', [HomeController::class, 'dashboard'])->name('dashboard');
+        Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
         Route::post('/matter/{matter}/change-status/{status}', [MatterController::class, 'changeStatus'])->name('matter.change-status');
@@ -101,10 +105,14 @@ Route::middleware(['auth', 'MainMenu'])->group(function () {
         Route::delete('claim/{claim}', [ClaimController::class, 'destroy'])->name('claim.destroy');
 
         Route::prefix('V2')->name('v2.')->group(function () {
-            Route::resource('matter', \App\Http\Controllers\V2\MatterController::class);
+            Route::resource('matter', V2MatterController::class);
         });
 
         Route::resource('matter-statuses', MatterStatusController::class);
+
+        Route::get('commissions/import-form', [CommissionController::class, 'importForm'])->name('commissions.import-form');
+        Route::post('commissions/import', [CommissionController::class, 'import'])->name('commissions.import');
+        Route::resource('commissions', CommissionController::class);
 
     });
 });

@@ -8,7 +8,7 @@
         </div>
         <div class="card-body col-8">
             <form class="form" method="POST" action="{{ route('user.update', $user) }}"
-                id="kt_modal_update_user_form">
+                  id="kt_modal_update_user_form">
                 @csrf
                 @method('PUT')
                 <!--begin::Modal body-->
@@ -17,16 +17,16 @@
                     <div class="d-flex flex-column me-n7 pe-7">
                         <!--begin::User toggle-->
                         <div class="fw-boldest fs-3 rotate collapsible mb-7" data-bs-toggle="collapse"
-                            href="#kt_modal_update_user_user_info" role="button" aria-expanded="false"
-                            aria-controls="kt_modal_update_user_user_info">{{ __('app.user_information') }}
+                             href="#kt_modal_update_user_user_info" role="button" aria-expanded="false"
+                             aria-controls="kt_modal_update_user_user_info">{{ __('app.user_information') }}
                             <span class="ms-2 rotate-180">
                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                                 <span class="svg-icon svg-icon-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none">
+                                         fill="none">
                                         <path
                                             d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
-                                            fill="currentColor" />
+                                            fill="currentColor"/>
                                     </svg>
                                 </span>
                                 <!--end::Svg Icon-->
@@ -41,17 +41,17 @@
                                 <label class="fs-6 fw-bold mb-2">
                                     <span>{{ __('app.update_avatar') }}</span>
                                     <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-                                        title="Allowed file types: png, jpg, jpeg."></i>
+                                       title="Allowed file types: png, jpg, jpeg."></i>
                                 </label>
                                 <!--end::Label-->
                                 <!--begin::Image input wrapper-->
                                 <div class="mt-1">
                                     <!--begin::Image input-->
                                     <div class="image-input image-input-outline" data-kt-image-input="true"
-                                        style="background-image: url({{ asset('assets/media/svg/avatars/blank.png') }})">
+                                         style="background-image: url({{ asset('assets/media/svg/avatars/blank.png') }})">
                                         <!--begin::Preview existing avatar-->
                                         <div class="image-input-wrapper w-125px h-125px"
-                                            style="background-image: url({{ asset('assets/media/avatars/' . $user->avatar) }})">
+                                             style="background-image: url({{ asset('assets/media/avatars/' . $user->avatar) }})">
                                         </div>
                                         <!--end::Preview existing avatar-->
                                         <!--begin::Edit-->
@@ -61,8 +61,8 @@
                                             title="{{ __('app.change_avatar') }}">
                                             <i class="bi bi-pencil-fill fs-7"></i>
                                             <!--begin::Inputs-->
-                                            <input type="file" name="avatar" accept=".png, .jpg, .jpeg" />
-                                            <input type="hidden" name="avatar_remove" />
+                                            <input type="file" name="avatar" accept=".png, .jpg, .jpeg"/>
+                                            <input type="hidden" name="avatar_remove"/>
                                             <!--end::Inputs-->
                                         </label>
                                         <!--end::Edit-->
@@ -95,12 +95,12 @@
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <input type="text"
-                                    class="form-control form-control-solid @error('name') is-invalid @enderror"
-                                    placeholder="" name="name" value="{{ old('name', $user->name) }}" />
+                                       class="form-control form-control-solid @error('name') is-invalid @enderror"
+                                       placeholder="" name="name" value="{{ old('name', $user->name) }}"/>
                                 @error('name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                                 <!--end::Input-->
                             </div>
@@ -111,17 +111,17 @@
                                 <label class="fs-6 fw-bold mb-2">
                                     <span>{{ __('app.email') }}</span>
                                     <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-                                        title="{{ 'app.email_address_must_be_active' }}"></i>
+                                       title="{{ 'app.email_address_must_be_active' }}"></i>
                                 </label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <input type="text"
-                                    class="form-control form-control-solid @error('email') is-invalid @enderror"
-                                    placeholder="" name="email" value="{{ old('email', $user->email) }}" />
+                                       class="form-control form-control-solid @error('email') is-invalid @enderror"
+                                       placeholder="" name="email" value="{{ old('email', $user->email) }}"/>
                                 @error('email')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                                 <!--end::Input-->
                             </div>
@@ -133,13 +133,13 @@
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <input type="text"
-                                    class="form-control form-control-solid @error('display_name') is-invalid @enderror"
-                                    placeholder="" name="display_name"
-                                    value="{{ old('display_name', $user->display_name) }}" />
+                                       class="form-control form-control-solid @error('display_name') is-invalid @enderror"
+                                       placeholder="" name="display_name"
+                                       value="{{ old('display_name', $user->display_name) }}"/>
                                 @error('display_name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                                 <!--end::Input-->
                             </div>
@@ -151,20 +151,20 @@
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <select name="language" aria-label="Select a Language" data-control="select2"
-                                    data-placeholder="{{ __('app.select_a_language') }}..."
-                                    class="form-select form-select-solid @error('language') is-invalid @enderror">
+                                        data-placeholder="{{ __('app.select_a_language') }}..."
+                                        class="form-select form-select-solid @error('language') is-invalid @enderror">
                                     <option></option>
                                     @foreach ($languages as $key => $lang)
                                         <option value="{{ $key }}"
-                                            @if (old('language', $user->language) == $key) selected @endif>
+                                                @if (old('language', $user->language) == $key) selected @endif>
                                             {{ data_get($lang, 'text') }}
                                         </option>
                                     @endforeach
                                 </select>
                                 @error('language')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                                 <!--end::Input-->
                             </div>
@@ -177,9 +177,10 @@
                                 <!--begin::Input-->
                                 <div class="d-flex">
                                     <label class="form-check form-check-custom form-check-solid me-10">
-                                        <input class="form-check-input @error('gender') is-invalid @enderror" name="gender"
-                                            type="radio" value="male"
-                                            @if (old('name', $user->gender) == 'male') checked="checked" @endif />
+                                        <input class="form-check-input @error('gender') is-invalid @enderror"
+                                               name="gender"
+                                               type="radio" value="male"
+                                               @if (old('name', $user->gender) == 'male') checked="checked" @endif />
                                         <span class="form-check-label">
                                             {{ __('app.male') }}
                                         </span>
@@ -187,19 +188,21 @@
 
                                     <!--end::Input-->
                                     <!--begin::Input-->
-                                    <label class="form-check form-check-custom form-check-danger form-check-solid me-10">
-                                        <input class="form-check-input @error('gender') is-invalid @enderror" name="gender"
-                                            type="radio" value="female"
-                                            @if (old('gender', $user->gender) == 'female') checked="checked" @endif />
+                                    <label
+                                        class="form-check form-check-custom form-check-danger form-check-solid me-10">
+                                        <input class="form-check-input @error('gender') is-invalid @enderror"
+                                               name="gender"
+                                               type="radio" value="female"
+                                               @if (old('gender', $user->gender) == 'female') checked="checked" @endif />
                                         <span class="form-check-label">
                                             {{ __('app.female') }}
                                         </span>
                                     </label>
                                 </div>
                                 @error('gender')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                                 <!--end::Input-->
                             </div>
@@ -209,12 +212,12 @@
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <select name="role" aria-label="Select a Role" data-control="select2"
-                                    data-placeholder="{{ __('app.select_a_role') }}..."
-                                    class="form-select form-select-solid ">
+                                        data-placeholder="{{ __('app.select_a_role') }}..."
+                                        class="form-select form-select-solid ">
                                     <option></option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}"
-                                            @if (old('role', $user->hasRole($role->id))) selected @endif>
+                                                @if (old('role', $user->hasRole($role->id))) selected @endif>
                                             {{ $role->name }}</option>
                                     @endforeach
                                 </select>
@@ -227,20 +230,20 @@
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <select name="expert" aria-label="Select a Expert" data-control="select2"
-                                    data-placeholder="{{ __('app.select_an_expert') }}..."
-                                    class="form-select form-select-solid @error('expert') is-invalid @enderror">
+                                        data-placeholder="{{ __('app.select_an_expert') }}..."
+                                        class="form-select form-select-solid @error('expert') is-invalid @enderror">
                                     <option></option>
                                     @foreach ($experts as $expert)
                                         <option value="{{ $expert->id }}"
-                                            @if (old('expert', optional($user->expert)->id) == $expert->id) selected @endif>
+                                                @if (old('expert', $user->expert->id == $expert->id)) selected @endif>
                                             {{ '[' . $expert->id . '] - ' . $expert->name }}
                                         </option>
                                     @endforeach
                                 </select>
                                 @error('language')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                                 <!--end::Input-->
                             </div>

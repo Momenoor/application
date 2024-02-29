@@ -4,19 +4,25 @@ namespace App\Http\Controllers;
 
 use App\DataTables\MatterDataTable;
 use App\Exports\MattersExport;
-use App\Models\Cash;
 use App\Models\Court;
 use App\Models\Expert;
 use App\Models\Matter;
 use App\Models\Party;
 use App\Models\Type;
 use App\Services\ClaimsService;
+use App\Services\Common;
 use App\Services\MatterService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 
 class MatterController extends Controller
 {
+
+    public function __construct(private readonly Common $common)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -104,46 +110,65 @@ class MatterController extends Controller
 
     public function changeStatus(Matter $matter, $status)
     {
-        abort_unless(auth()->user()->can('matter-change-status'), '403');
-        $statuses = config('system.matter.status');
-        if (!is_null($status)) {
-            if (key_exists($status, $statuses)) {
-                $matter->status = $status;
-                $matter->{$status . '_date'} = now();
-                $matter->procedures()->where('type', $status . '_date')->delete();
-                $matter->procedures()->create([
-                    'type' => $status . '_date',
-                    'datetime' => now(),
-                    'description' => __($status . '_date'),
+        // Authorization Check
+        Gate::authorize('matter-change-status');
 
-                ]);
-                $matter->save();
-                return redirect()->to(url()->previous())->withToastSuccess(__('app.matter-status-changed-successfuly'));
+        $statuses = config('system.matter.status');
+
+        if (!is_null($status) && key_exists($status, $statuses)) {
+
+            // Check Permissions for Status Change
+            abort_unless($statuses[$status]['index'] >= $statuses[$matter->status]['index'] || auth()->user()->can('matter-change-status-back'), 403);
+
+            // Update Matter Status and Related Information
+            $matter->status = $status;
+            if ($status == 'current') {
+                foreach ($statuses as $key => $value) {
+                    if ($matter->{$key . '_date'}) {
+                        $matter->{$key . '_date'} = null;
+                    }
+                }
+                $matter->procedures()->delete();
+            } else {
+                $matter->{$status . '_date'} = now();
+                $matter->procedures()->updateOrCreate(
+                    ['type' => $status . '_date'],
+                    [
+                        'datetime' => now(),
+                        'description' => __($status . '_date'),
+                    ]
+                );
             }
-            return redirect()->to(url()->previous())->withToastError(__('app.matter-status-cannot-be-changed'));
+
+            $matter->save();
+
+            return redirect()->to(url()->previous())->withToastSuccess(__('app.matter-status-changed-successfuly'));
         }
 
         return redirect()->to(url()->previous())->withToastError(__('app.matter-status-cannot-be-changed'));
     }
 
-    public function exportFilterForm()
+    public
+    function exportFilterForm()
     {
         abort_unless(auth()->user()->can('matter-export'), '403');
-        list($experts, $assistants, $types, $courts, $claimsStatus) = $this->getData();
+        list($experts, $assistants, $types, $courts, $claimsStatus) = $this->common->fetchDataForForm();
         return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus'));
     }
 
-    public function export(Request $request)
+    public
+    function export(Request $request)
     {
         abort_unless(auth()->user()->can('matter-export'), '403');
         $result = (new MatterService())->setFilters($request)->getForExcel();
-        list($experts, $assistants, $types, $courts, $claimsStatus) = $this->getData();
+        list($experts, $assistants, $types, $courts, $claimsStatus) = $this->common->fetchDataForForm();
 
         /*return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus', 'result')); */
         return (new MattersExport($request))->download('matters-' . now() . '.xlsx');
     }
 
-    public function partyUnlink(Matter $matter, $party, Request $request)
+    public
+    function partyUnlink(Matter $matter, $party, Request $request)
     {
         $validated = $request->validate([
             'type' => 'required|in:expert,party',
@@ -154,7 +179,8 @@ class MatterController extends Controller
         return redirect(url()->previous())->withToastSuccess(__('app.party-deleted-successfully'));
     }
 
-    public function distributing()
+    public
+    function distributing()
     {
         $last_activity_start_date = now()->subMonth(1)->day(config('system.last_activity.start_day'))->format('Y/m/d');
         $countCurrent = Matter::Current()->count();
@@ -183,7 +209,8 @@ class MatterController extends Controller
         return view('pages.matters.distributing', compact('assistants', 'last_activity_start_date', 'countCurrent'));
     }
 
-    public function updateBasicDate(Matter $matter, Request $request)
+    public
+    function updateBasicDate(Matter $matter, Request $request)
     {
         $validated = $request->validate([
             'year' => 'required|min:4|max:4|date_format:Y',
@@ -197,21 +224,4 @@ class MatterController extends Controller
         return redirect(url()->previous())->withToastSuccess(__('app.record-updated-successfully'));
     }
 
-    /**
-     * @return array
-     */
-    private function getData(): array
-    {
-        $experts = Expert::join('accounts', 'accounts.id', 'experts.account_id')->whereIn('category', [Expert::MAIN, Expert::CERTIFIED])->pluck('accounts.name', 'experts.id');
-        $assistants = Expert::join('accounts', 'accounts.id', 'experts.account_id')->whereIn('category', [Expert::MAIN, Expert::CERTIFIED, Expert::ASSISTANT])->pluck('accounts.name', 'experts.id');
-        $types = Type::pluck('name', 'id');
-        $courts = Court::pluck('name', 'id');
-        $claimsStatus = [
-            Cash::OVERPAID,
-            Cash::PAID,
-            Cash::UNPAID,
-            Cash::PARTIAL,
-        ];
-        return array($experts, $assistants, $types, $courts, $claimsStatus);
-    }
 }

@@ -42,6 +42,7 @@ class MainMenu
                 ->nickname('experts');
             $menu->experts->add(__('app.experts-list'), ['route' => 'expert.index'])->data('permission', 'expert-view');
             $menu->experts->add(__('app.create-expert'), ['route' => 'expert.create']);
+            $menu->experts->add(__('app.commissions'), ['route' => 'commissions.create'])->data('permission', 'commission-view');
 
             $menu->add(__('app.courts'), '#')->data('icon', 'bi bi-bar-chart')
                 ->data('permission', ['court-view', 'court-create'])

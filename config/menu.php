@@ -39,7 +39,7 @@ return [
         ],
         [
             'title' => 'experts',
-            'permission' => ['expert-view', 'expert-create'],
+            'permission' => ['expert-view', 'expert-create','commission-view'],
             'submenu' => [
                 [
                     'title' => 'experts-list',
@@ -51,6 +51,11 @@ return [
                     'link' => 'expert.create',
                     'permission' => 'expert-create',
                 ],
+                [
+                    'title' => 'commission',
+                    'link' => 'commissions.index',
+                    'permission' => 'commission-view',
+                ]
 
             ]
         ],
