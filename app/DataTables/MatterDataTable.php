@@ -22,16 +22,12 @@ class MatterDataTable extends DataTable
     {
 
         return datatables()
-
             ->eloquent($query)
-
             ->addIndexColumn()
             ->editColumn('number', function ($model) {
 
                 return '<a class="text-' . config('system.matter.status.' . $model->status . '.color') . '" href="' . route('matter.show', $model) . '">' . $model->year . '/' . $model->number . '</a>';
             })
-
-
             ->filterColumn('number', function ($query, $keyword) {
                 if (Str::contains($keyword, '/')) {
                     $keywords = Str::of($keyword)->explode('/');
@@ -42,16 +38,12 @@ class MatterDataTable extends DataTable
                     ->orWhere('matters.year', 'like', '%' . $keyword . '%')
                     ->orWhere('matters.status', 'like', '%' . $keyword . '%');
             })
-
-
             ->editColumn('expert_id', function ($model) {
                 return '<div class="position-relative">
                                 ' . (optional($model->expert)->name) .
                     '<div class="text-primary">' . optional($model->assistant)->name . '</div>
                         </div>';
             })
-
-
             ->filterColumn('expert_id', function ($query, $keyword) {
 
                 $mainExperts = config('system.experts.main');
@@ -68,48 +60,36 @@ class MatterDataTable extends DataTable
                         });
                 }
             })
-
-
             ->editColumn('court_id', function ($model) {
 
                 return '<div class="position-relative">
                                 ' . optional($model->court)->name . '
-                            <div class="fs-7">' . optional($model->type)->name . '</div>
+                            <div class="fs-7">' . optional($model->type)->name . ' - ' . ($model->assign == true) ? "تكميلي" : "" . '</div>
                         </div>';
             })
-
-
             ->filterColumn('court_id', function ($query, $keyword) {
 
                 $query->whereRelation('court', 'courts.name', 'like', '%' . $keyword . '%')
                     ->orWhereRelation('type', 'types.name', 'like', '%' . $keyword . '%')
                     ->orWhere('matters.commissioning', 'like', '%' . $keyword . '%');
             })
-
-
             ->editColumn('plaintiff_name', function ($model) {
 
                 return '<div class="position-relative">
                                 ' . (\Str::of(optional($model->plaintiff)->name)->limit(30)) . '
-                            <div class="text-danger">' . (\Str::of(optional($model->defendant)->name)->limit(30))  . '</div>
+                            <div class="text-danger">' . (\Str::of(optional($model->defendant)->name)->limit(30)) . '</div>
                         </div>';
             })
-
-
             ->filterColumn('plaintiff_name', function ($query, $keyword) {
                 $mainExperts = config('system.experts.main');
                 $query->whereRelation('parties', 'parties.name', 'like', '%' . $keyword . '%');
             })
-
-
             ->editColumn('next_session_date', function ($model) {
                 return '<div class="position-relative">
-                                ' .  (($model->next_session_date instanceof Carbon) ? $model->next_session_date->format('Y-m-d') : __('app.not-set')) . '
-                            <div class="fs-7">' .  $model->received_date->format('Y-m-d') . '</div>
+                                ' . (($model->next_session_date instanceof Carbon) ? $model->next_session_date->format('Y-m-d') : __('app.not-set')) . '
+                            <div class="fs-7">' . $model->received_date->format('Y-m-d') . '</div>
                         </div>';
             })
-
-
             /* ->filterColumn('next_session_date', function ($query, $keyword) {
 
                 return $query->where('matters.next_session_date',  'like', '%' . $keyword . '%')
@@ -119,20 +99,16 @@ class MatterDataTable extends DataTable
             ->editColumn('claims_sum_amount', function ($model) {
                 return '<div class="text-' . $model->getClaimStatusColorAttribute() . '" data-bs-toggle="tooltip" data-bs-placement="top" title="' . __('app.' . $model->claim_status) . '">' . $model->claims_sum_amount . '</div>';
             })
-
             ->filterColumn('claims_sum_amount', function ($query, $keyword) {
                 $query->whereHas('claims', function ($query) use ($keyword) {
                     $query->having(\DB::raw('SUM(claims.amount)'), 'like', '%' . $keyword . '%')->groupBy('claims.matter_id');
                 });
                 $query->orWhere('matters.claim_status', $keyword);
             })
-
-
             ->addColumn('action', function ($model) {
 
                 return view('common.table-action')->with('model', $model);
             })
-
             ->rawColumns(['number', 'expert_id', 'court_id', 'plaintiff_name', 'next_session_date', 'claims_sum_amount']);
     }
 
@@ -159,7 +135,7 @@ class MatterDataTable extends DataTable
             ])->withSum('claims', 'amount')->whereRelation('assistants', 'experts.id', '=', auth()->user()->expert->id)->newQuery();
         }
         if (auth()->user()->can('matter-view')) {
-            return  $model->with([
+            return $model->with([
                 'court',
                 'expert',
                 'assistants',
