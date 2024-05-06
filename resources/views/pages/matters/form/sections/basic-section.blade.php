@@ -213,18 +213,14 @@
                         @enderror
                     </div>
                     <div class="col-lg-4 mt-10">
-                        <label for="assign" class="form-label fs-6 fw-bolder text-gray-700 mb-3">تكميلي</label>
-                        <div class="input-group input-group-solid">
-                            <input type="text" name="matter[assign]"
-                                   wire:model="matter.assign"
-                                   class="@error('matter.assign') pe-5  is-invalid @enderror form-control form-control-solid">
-                            <span class="input-group-text" id="basic-addon2">%</span>
+                        <div>
+                            <label
+                                class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack mt-8 mb-5">
+                    <span
+                        class="form-check-label me-10 ms-0 fw-bolder fs-6 text-gray-700">تكميلي</span>
+                                <input class="form-check-input" wire:model="matter.assign" type="checkbox">
+                            </label>
                         </div>
-                        @error('matter.assign')
-                        <div class="invalid-feedback fv-plugins-message-container">
-                            {{ $message }}
-                        </div>
-                        @enderror
                     </div>
                 </div>
             </div>
