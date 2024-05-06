@@ -64,7 +64,7 @@ class MatterDataTable extends DataTable
 
                 return '<div class="position-relative">
                                 ' . optional($model->court)->name . '
-                            <div class="fs-7">' . optional($model->type)->name . ' - ' . ($model->assign == 1) ? "تكميلي" : "" . '</div>
+                            <div class="fs-7">' . optional($model->type)->name . ' - ' . (($model->assign == 1) ? "تكميلي" : "") . '</div>
                         </div>';
             })
             ->filterColumn('court_id', function ($query, $keyword) {
