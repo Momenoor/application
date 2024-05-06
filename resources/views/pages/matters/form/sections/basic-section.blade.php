@@ -1,4 +1,4 @@
-<div class="card">
+ <div class="card">
     <div class="card-header">
         <h3 class="card-title align-items-start flex-column">
             <span class="card-label fw-bolder fs-3 mb-1">{{ __('app.create-new-matter') }}</span>
@@ -210,6 +210,20 @@
                             <div class="invalid-feedback fv-plugins-message-container">
                                 {{ $message }}
                             </div>
+                        @enderror
+                    </div>
+                    <div class="col-lg-4 mt-10">
+                        <label for="assign" class="form-label fs-6 fw-bolder text-gray-700 mb-3">تكميلي</label>
+                        <div class="input-group input-group-solid">
+                            <input type="text" name="matter[assign]"
+                                   wire:model="matter.assign"
+                                   class="@error('matter.assign') pe-5  is-invalid @enderror form-control form-control-solid">
+                            <span class="input-group-text" id="basic-addon2">%</span>
+                        </div>
+                        @error('matter.assign')
+                        <div class="invalid-feedback fv-plugins-message-container">
+                            {{ $message }}
+                        </div>
                         @enderror
                     </div>
                 </div>

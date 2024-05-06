@@ -72,6 +72,7 @@ class MatterCreateForm extends Component
         'matter.type_id' => 'required|exists:types,id',
         'matter.expert_id' => 'required|exists:experts,id',
         'matter.level_id' => 'required',
+        'matter.assign' => 'bool',
         'experts.committee' => 'required_if:matter.commissioning,committee',
         'experts.assistant' => 'required|exists:experts,id',
         'parties.*.type' => 'required',
