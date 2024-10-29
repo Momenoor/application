@@ -336,7 +336,10 @@ return [
     '' => '',
     '' => '',
     '' => '',
-    '' => '',
+    'matter_list' => 'قائمة القضايا',
+    'commission_period' => 'مدة الانجاز',
+    'commission_percent' => 'النسبة',
+    'commission_amount' => 'الحافز',
 
 
     'current' => 'جاري',

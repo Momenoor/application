@@ -25,7 +25,7 @@ return [
 
 
     'events' => [
-        'types'=> [
+        'types' => [
             'public_holiday',
             'annual_leave',
         ],
@@ -49,21 +49,20 @@ return [
     ],
 
     'experts' =>
-    [
-        'office_share' => [
-            'rate' => 15,
+        [
+            'office_share' => [
+                'rate' => 15,
+            ],
+            'main' => [1],
+            'fields' => [
+                'accounting' => 'accounting',
+                'engineering' => 'engineering',
+                'banking' => 'banking',
+                'technology' => 'technology',
+                'realestate' => 'realestate',
+                'arrbitrator' => 'arrbitrator',
+            ]
         ],
-        'main' => [1],
-        'fields' => [
-            'accounting' => 'accounting',
-            'engineering' => 'engineering',
-            'banking' => 'banking',
-            'technology' => 'technology',
-            'realestate' => 'realestate',
-            'arrbitrator' => 'arrbitrator',
-        ]
-    ],
-
 
 
     /*
@@ -279,5 +278,63 @@ return [
             'id' => '3',
             'name' => 'cassation'
         ],
+    ],
+    'commission' => [
+        'by_period' => [
+            'default' => [
+                [
+                    'start' => 0,
+                    'end' => 7,
+                    'percent' => 5
+                ],
+                [
+                    'start' => 8,
+                    'end' => 12,
+                    'percent' => 4
+                ],
+                [
+                    'start' => 13,
+                    'end' => 22,
+                    'percent' => 3
+                ],
+                [
+                    'percent' => 2
+                ],
+
+            ],
+            'special' => [
+                [
+                    'start' => 0,
+                    'end' => 7,
+                    'percent' => 10
+                ],
+                [
+                    'start' => 8,
+                    'end' => 12,
+                    'percent' => 9
+                ],
+                [
+                    'start' => 13,
+                    'end' => 22,
+                    'percent' => 8
+                ],
+            ],
+        ],
+        'by_count' => [
+            5 => 1,
+            6 => 1.5,
+            'more_than_6' => 2.5,
+        ],
+        'by_type' => [
+            76 => [
+                'with_expert' => 200,
+                'without_expert' => 400,
+            ],
+            217 => 5,
+            233 => 5,
+            234 => 5,
+        ],
+        'start_day' => 26,
+        'end_day' => 25,
     ],
 ];

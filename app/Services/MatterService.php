@@ -15,14 +15,14 @@ class MatterService
 
     protected $with = [
         'expert',
-        'claims',
-        'cashes',
+        'claims.cashes',
         'court',
         'type',
         'assistants',
         'plaintiffs',
         'defendants',
         'cashes',
+        'notes'
     ];
 
     protected $query;
@@ -40,6 +40,7 @@ class MatterService
     {
         return new static($matter);
     }
+
     public static function resolve($data): array
     {
         $matter = [];
@@ -66,7 +67,7 @@ class MatterService
             $parties = [];
             foreach ($data['parties'] as $party) {
 
-                $where  = ['name' => $party['name']];
+                $where = ['name' => $party['name']];
                 $updateOrCreate = [
                     'name' => $party['name'],
                     'phone' => $party['phone'] ?? null,
@@ -74,7 +75,7 @@ class MatterService
                     'type' => 'party',
                 ];
 
-                $dbParty = Party::updateOrCreate($where,$updateOrCreate);
+                $dbParty = Party::updateOrCreate($where, $updateOrCreate);
 
                 $parties[$dbParty->id] = ['type' => $party['type']];
                 if (Arr::has($party, 'subParties')) {
@@ -124,7 +125,6 @@ class MatterService
             }
             $matter['marketing'] = $marketing;
         }
-
 
 
         $matter['procedures'] = [
@@ -214,7 +214,7 @@ class MatterService
         }
 
         if (count($request->get('claimsCollectionStatus')) > 0) {
-            $this->query->whereIn('claim_status',  $request->get('claimsCollectionStatus'));
+            $this->query->whereIn('claim_status', $request->get('claimsCollectionStatus'));
         }
 
         return $this;
@@ -223,6 +223,15 @@ class MatterService
     public function getForExcel()
     {
         $this->query->with($this->with);
+        $this->query->addSelect(['assistant_expert_id' => function ($query) {
+            $query->select('expert_id')
+                ->from('matter_expert')
+                ->whereColumn('matter_expert.matter_id', 'matters.id')
+                ->orderBy('expert_id')
+                ->limit(1);
+        }])
+            ->orderBy('assistant_expert_id')
+            ->orderBy('reported_date');
 
         return $this->query;
     }

@@ -148,23 +148,30 @@ class MatterController extends Controller
         return redirect()->to(url()->previous())->withToastError(__('app.matter-status-cannot-be-changed'));
     }
 
-    public
-    function exportFilterForm()
+    public function exportFilterForm()
     {
         abort_unless(auth()->user()->can('matter-export'), '403');
         list($experts, $assistants, $types, $courts, $claimsStatus) = $this->common->fetchDataForForm();
         return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus'));
     }
 
-    public
-    function export(Request $request)
+    public function export(Request $request)
     {
+        $action = $request->input('action');
+        if ($action == 'view') {
+            return $this->showCommissionFormResult($request);
+        }
         abort_unless(auth()->user()->can('matter-export'), '403');
         $result = (new MatterService())->setFilters($request)->getForExcel();
-        list($experts, $assistants, $types, $courts, $claimsStatus) = $this->common->fetchDataForForm();
-
-        /*return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus', 'result')); */
         return (new MattersExport($request))->download('matters-' . now() . '.xlsx');
+    }
+
+    public function showCommissionFormResult(Request $request)
+    {
+        $matters = (new MatterService())->setFilters($request)->getForExcel()->get();
+        list($experts, $assistants, $types, $courts, $claimsStatus) = $this->common->fetchDataForForm();
+        return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus', 'matters'))
+            ->withInput($request->all()); // Retains old inputs
     }
 
     public

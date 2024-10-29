@@ -52,6 +52,9 @@ class MattersExport implements FromQuery, WithStrictNullComparison, ShouldQueue,
             __('app.claim_dues'),
             __('app.claim_collected'),
             __('app.notes'),
+            __('app.commission_period'),
+            __('app.commission_percent'),
+            __('app.commission_amount'),
         ];
     }
 
@@ -77,6 +80,9 @@ class MattersExport implements FromQuery, WithStrictNullComparison, ShouldQueue,
             $row->dueAmount(),
             $row->cash_sum_amount,
             $row->notes()->implode('text',' / / / / '),
+            $row->commission['period'],
+            $row->commission['percent'],
+            $row->commission['amount'],
         ];
     }
 }
