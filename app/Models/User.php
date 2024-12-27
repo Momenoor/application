@@ -31,11 +31,15 @@ class User extends Authenticatable
         'name',
         'password',
         'language',
+        'email',
+        'display_name',
     ];
     protected $fillable = [
         'name',
         'password',
         'language',
+        'email',
+        'display_name',
     ];
 
     protected $with = [

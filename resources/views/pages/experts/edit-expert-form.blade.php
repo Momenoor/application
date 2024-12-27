@@ -16,7 +16,7 @@
         <input name="newexpert[phone]" type="text" wire:model="newexpert.phone"
             class="form-control @error('newexpert.phone') is-invalid @enderror form-control-solid mb-2 mb-md-0"
             placeholder="{{ __('app.enter_expert_phone') }}"
-            value="{{ old('newexpert.phone') ?? (optional($expert)->phone ?? optional($expert->user)->phone) }}" />
+            value="{{ old('newexpert.phone') ?? (optional($expert)->phone ?: optional($expert->user)->phone) }}" />
         @error('newexpert.phone')
             <div class=" invalid-feedback fv-plugins-message-container">
                 {{ $message }}
@@ -28,7 +28,7 @@
         <input name="newexpert[email]" type="text" wire:model="newexpert.email"
             class="form-control @error('newexpert.email') is-invalid @enderror form-control-solid mb-2 mb-md-0"
             placeholder="{{ __('app.enter_expert_email') }}"
-            value="{{ old('newexpert.email') ?? (optional($expert)->email ?? optional($expert->user)->email) }}" />
+            value="{{ old('newexpert.email') ?? (optional($expert)->email ?: optional($expert->user)->email) }}" />
         @error('newexpert.email')
             <div class=" invalid-feedback fv-plugins-message-container">
                 {{ $message }}

@@ -135,7 +135,7 @@
                                 @foreach ($claimsStatus as $status)
                                     <div class="form-check form-check-custom form-check-solid me-5">
                                         <input class="form-check-input" type="checkbox" name="claimsCollectionStatus[]"
-                                               value="{{ $status }}" id="{{ $status }}"
+                                               value="{{ $status }}" id="{{ $status }}" checked
                                             {{ in_array($status, old('claimsCollectionStatus', request()->input('claimsCollectionStatus', []))) ? 'checked' : '' }} />
                                         <label class="form-check-label" for="{{ $status }}">
                                             {{ __('app.' . $status) }}
@@ -150,7 +150,8 @@
                                 <div class="form-check form-check-custom form-check-solid me-5">
                                     <input class="form-check-input" type="checkbox" name="matterStatus[]"
                                            value="current"
-                                           id="current" {{ in_array('current', old('matterStatus', request()->input('matterStatus', []))) ? 'checked' : '' }} />
+                                           id="current"
+                                           checked {{ in_array('current', old('matterStatus', request()->input('matterStatus', []))) ? 'checked' : '' }} />
                                     <label class="form-check-label" for="current">{{ __('app.current') }}</label>
                                 </div>
                                 <div class="form-check form-check-custom form-check-solid me-5">
@@ -196,6 +197,30 @@
                                 </label>
                             </div>
                         </div>
+                        <div class="mb-10">
+                            <div class="mb-1">
+                                <label for="for_commission"
+                                       class="form-label fw-bolder">{{ __('app.display_commission') }}</label>
+                            </div>
+                            <div class="btn-group w-100 w-lg-50" data-kt-buttons="true"
+                                 data-kt-buttons-target="[data-kt-button]">
+                                <label
+                                    class="btn btn-outline-success text-muted text-hover-white text-active-white btn-outline btn-active-success {{ old('for_commission', request()->input('for_commission')) == 'yes' ? 'active' : '' }}"
+                                    data-kt-button="true">
+                                    <input class="btn-check" type="radio" name="for_commission" value="yes"
+                                        {{ old('for_commission', request()->input('for_commission', 'yes')) == 'yes' ? 'checked' : '' }} />
+                                    {{ __('app.yes') }}
+                                </label>
+                                <label
+                                    class="btn btn-outline-danger text-muted text-hover-white text-active-white btn-outline btn-active-dander {{ old('for_commission', request()->input('for_commission', 'no')) == 'no' ? 'active' : '' }}"
+                                    data-kt-button="true">
+                                    <input class="btn-check" type="radio" name="for_commission" value="no"
+                                        {{ old('for_commission', request()->input('for_commission', 'no')) == 'no' ? 'checked' : '' }} />
+                                    {{ __('app.noo') }}
+                                </label>
+                            </div>
+                        </div>
+
                         <div class="pt-15">
                             <button type="reset" class="btn btn-light me-3"
                                     data-kt-permissions-modal-action="cancel">{{ __('app.reset') }}</button>
@@ -231,9 +256,11 @@
                                         <th>{{ __('app.last_action_date') }}</th>
                                         <th>{{ __('app.reported_date') }}</th>
                                         <th>{{ __('app.claim_amount') }}</th>
-                                        <th>{{ __('app.commission_period') }}</th>
-                                        <th>{{ __('app.commission_percent') }}</th>
-                                        <th>{{ __('app.commission_amount') }}</th>
+                                        @if(request()->input('for_commission') == 'yes')
+                                            <th>{{ __('app.commission_period') }}</th>
+                                            <th>{{ __('app.commission_percent') }}</th>
+                                            <th>{{ __('app.commission_amount') }}</th>
+                                        @endif
                                     </tr>
                                     </thead>
                                     @foreach ($matters as $matter)
@@ -248,9 +275,11 @@
                                             <td>{{ optional($matter->last_action_date)->format('Y-m-d') }}</td>
                                             <td>{{ optional($matter->reported_date)->format('Y-m-d') }}</td>
                                             <td>{{ $matter->claims_sum_amount }}</td>
-                                            <td>{{ $matter->commission['period'] }}</td>
-                                            <td>{{ $matter->commission['percent'] }}%</td>
-                                            <td>{{ $matter->commission['amount'] }}</td>
+                                            @if(request()->input('for_commission') == 'yes')
+                                                <td>{{ $matter->commission['period'] }}</td>
+                                                <td>{{ $matter->commission['percent'] }}%</td>
+                                                <td>{{ $matter->commission['amount'] }}</td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </table>

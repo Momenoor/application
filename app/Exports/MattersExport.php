@@ -32,7 +32,7 @@ class MattersExport implements FromQuery, WithStrictNullComparison, ShouldQueue,
 
     public function headings(): array
     {
-        return [
+        $heading = [
 
             __('app.no'),
             __('app.year'),
@@ -52,16 +52,24 @@ class MattersExport implements FromQuery, WithStrictNullComparison, ShouldQueue,
             __('app.claim_dues'),
             __('app.claim_collected'),
             __('app.notes'),
-            __('app.commission_period'),
-            __('app.commission_percent'),
-            __('app.commission_amount'),
+
         ];
+
+        if ($this->request->input('for_commission') == 'yes') {
+            $heading = array_merge($heading, [
+                __('app.commission_period'),
+                __('app.commission_percent'),
+                __('app.commission_amount'),
+            ]);
+        }
+
+        return $heading;
     }
 
     public function map($row): array
     {
 
-        return [
+        $result = [
             $row->number,
             $row->year,
             optional($row->expert)->name,
@@ -75,14 +83,21 @@ class MattersExport implements FromQuery, WithStrictNullComparison, ShouldQueue,
             optional($row->last_action_date)->format('Y-m-d'),
             optional($row->reported_date)->format('Y-m-d'),
             optional($row->submitted_date)->format('Y-m-d'),
-            __('app.' .$row->claim_status),
+            __('app.' . $row->claim_status),
             $row->claims_sum_amount,
             $row->dueAmount(),
             $row->cash_sum_amount,
-            $row->notes()->implode('text',' / / / / '),
-            $row->commission['period'],
-            $row->commission['percent'],
-            $row->commission['amount'],
+            $row->notes()->implode('text', ' / / / / '),
         ];
+
+        if ($this->request->input('for_commission') == 'yes') {
+            $result = array_merge($result, [
+                $row->commission['period'],
+                $row->commission['percent'],
+                $row->commission['amount'],
+            ]);
+        }
+
+        return $result;
     }
 }

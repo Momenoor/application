@@ -382,9 +382,9 @@ class Matter extends Model
         $completionDate = Carbon::parse($this->reported_date);
         $startCountDate = Carbon::parse($startDate)->setDate($completionDate->year, $completionDate->month, Carbon::parse($startDate)->day);
         $endCountDate = $startCountDate->copy()->addMonth()->subDay(1);
-
+        $expert_id = optional($this->assistants->first())->expert_id;
         return self::whereBetween('reported_date', [$startCountDate, $endCountDate])
-            ->whereHas('assistants', fn($query) => $query->where('expert_id', $this->assistants->first()->expert_id))
+            ->whereHas('assistants', fn($query) => $query->where('expert_id', $expert_id))
             ->count();
     }
 

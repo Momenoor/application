@@ -340,8 +340,9 @@ return [
     'commission_period' => 'مدة الانجاز',
     'commission_percent' => 'النسبة',
     'commission_amount' => 'الحافز',
-
-
+    'display_commission'=>'عرض العمولات',
+    'noo' => 'لا',
+    'yes' => 'نعم',
     'current' => 'جاري',
     'reported' => 'انتهاء التقرير',
     'submitted' => 'ايداع التقرير',

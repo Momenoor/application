@@ -63,7 +63,7 @@ class ExpertController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -75,7 +75,7 @@ class ExpertController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Expert  $expert
+     * @param \App\Models\Expert $expert
      * @return \Illuminate\Http\Response
      */
     public function show(Expert $expert)
@@ -86,7 +86,7 @@ class ExpertController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Expert  $expert
+     * @param \App\Models\Expert $expert
      * @return \Illuminate\Http\Response
      */
     public function edit(Expert $expert)
@@ -97,8 +97,8 @@ class ExpertController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Expert  $expert
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Expert $expert
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Expert $expert)
@@ -111,7 +111,7 @@ class ExpertController extends Controller
 
         $validated = $request->validate(
             [
-                'newexpert.name' => 'required|unique:experts,name,' . $expert->id . ',id',
+                'newexpert.name' => 'required|unique:accounts,name,' . $expert->account_id . ',id',
                 'newexpert.phone' => 'required',
                 'newexpert.email' => 'required|email',
                 'newexpert.field' => 'required',
@@ -121,16 +121,19 @@ class ExpertController extends Controller
         );
 
         $data = $validated['newexpert'];
-
-        $expert->fill($data);
-        $expert->save();
+        $expert->account->update($data);
+        $expert->user->update([
+            'email' => $data['email'],
+            'display_name' => $data['name'],
+        ]);
+        $expert->update($data);
         return redirect(route('expert.index'))->withToastSuccess(__('app.record-updated-successfully'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Expert  $expert
+     * @param \App\Models\Expert $expert
      * @return \Illuminate\Http\Response
      */
     public function destroy(Expert $expert)

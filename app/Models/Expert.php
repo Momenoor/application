@@ -23,7 +23,7 @@ class Expert extends Model implements MatterPartyContract
 
     protected static $submitEmptyLogs = false;
 
-    protected $logAttributes  = [
+    protected $logAttributes = [
         'category',
         'field',
         'active',
@@ -50,8 +50,17 @@ class Expert extends Model implements MatterPartyContract
 
     public function getNameAttribute()
     {
-        //$this->join('accounts', 'accounts.id', 'experts.account_id');
         return optional($this->account)->name;
+    }
+
+    public function getPhoneAttribute()
+    {
+        return optional($this->account)->phone;
+    }
+
+    public function getEmailAttribute()
+    {
+        return optional($this->account)->email;
     }
 
     public function account()
@@ -68,6 +77,7 @@ class Expert extends Model implements MatterPartyContract
     {
         return $this->belongsToMany(Matter::class, 'matter_expert')->wherePivot('type', '=', 'assistant');
     }
+
     public function asAssistantAsFinished()
     {
         return $this->asAssistant()->finished();
@@ -109,14 +119,17 @@ class Expert extends Model implements MatterPartyContract
     {
         return $this->type;
     }
+
     public function category()
     {
         return $this->category;
     }
+
     public function field()
     {
         return $this->field;
     }
+
     public function pivotType()
     {
         if ($this->pivot) {
@@ -124,10 +137,12 @@ class Expert extends Model implements MatterPartyContract
         }
         return 'expert';
     }
+
     public function symbol()
     {
         return 'E';
     }
+
     public function color()
     {
         if ($this->pivot) {
