@@ -7,10 +7,9 @@
             </div>
         </div>
         <div class="card-body col-8">
-            <form class="form" method="POST" action="{{ route('user.update', $user) }}"
+            <form class="form" method="POST" action="{{ route('user.store') }}"
                   id="kt_modal_update_user_form">
                 @csrf
-                @method('PUT')
                 <!--begin::Modal body-->
                 <div class="py-10 px-lg-17">
                     <!--begin::Scroll-->
@@ -51,7 +50,7 @@
                                          style="background-image: url({{ asset('assets/media/svg/avatars/blank.png') }})">
                                         <!--begin::Preview existing avatar-->
                                         <div class="image-input-wrapper w-125px h-125px"
-                                             style="background-image: url({{ asset('assets/media/avatars/' . $user->avatar) }})">
+                                             style="background-image: url({{ asset('assets/media/avatars/' . old('avatar')) }})">
                                         </div>
                                         <!--end::Preview existing avatar-->
                                         <!--begin::Edit-->
@@ -96,7 +95,7 @@
                                 <!--begin::Input-->
                                 <input type="text"
                                        class="form-control form-control-solid @error('name') is-invalid @enderror"
-                                       placeholder="" name="name" value="{{ old('name', $user->name) }}"/>
+                                       placeholder="" name="name" value="{{ old('name') }}"/>
                                 @error('name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -117,7 +116,7 @@
                                 <!--begin::Input-->
                                 <input type="text"
                                        class="form-control form-control-solid @error('email') is-invalid @enderror"
-                                       placeholder="" name="email" value="{{ old('email', $user->email) }}"/>
+                                       placeholder="" name="email" value="{{ old('email') }}"/>
                                 @error('email')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -135,7 +134,7 @@
                                 <input type="text"
                                        class="form-control form-control-solid @error('display_name') is-invalid @enderror"
                                        placeholder="" name="display_name"
-                                       value="{{ old('display_name', $user->display_name) }}"/>
+                                       value="{{ old('display_name') }}"/>
                                 @error('display_name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -156,7 +155,7 @@
                                     <option></option>
                                     @foreach ($languages as $key => $lang)
                                         <option value="{{ $key }}"
-                                                @if (old('language', $user->language) == $key) selected @endif>
+                                                @if (old('language') == $key) selected @endif>
                                             {{ data_get($lang, 'text') }}
                                         </option>
                                     @endforeach
@@ -180,7 +179,7 @@
                                         <input class="form-check-input @error('gender') is-invalid @enderror"
                                                name="gender"
                                                type="radio" value="male"
-                                               @if (old('name', $user->gender) == 'male') checked="checked" @endif />
+                                               @if (old('name') == 'male') checked="checked" @endif />
                                         <span class="form-check-label">
                                             {{ __('app.male') }}
                                         </span>
@@ -193,7 +192,7 @@
                                         <input class="form-check-input @error('gender') is-invalid @enderror"
                                                name="gender"
                                                type="radio" value="female"
-                                               @if (old('gender', $user->gender) == 'female') checked="checked" @endif />
+                                               @if (old('gender') == 'female') checked="checked" @endif />
                                         <span class="form-check-label">
                                             {{ __('app.female') }}
                                         </span>
@@ -217,7 +216,7 @@
                                     <option></option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}"
-                                                @if (old('role', $user->hasRole($role->id))) selected @endif>
+                                                @if (old('role')) selected @endif>
                                             {{ $role->name }}</option>
                                     @endforeach
                                 </select>
@@ -235,7 +234,7 @@
                                     <option></option>
                                     @foreach ($experts as $expert)
                                         <option value="{{ $expert->id }}"
-                                                @if (old('expert', optional($user->expert)->id == $expert->id)) selected @endif>
+                                                @if (old('expert' == $expert->id)) selected @endif>
                                             {{ '[' . $expert->id . '] - ' . $expert->name }}
                                         </option>
                                     @endforeach

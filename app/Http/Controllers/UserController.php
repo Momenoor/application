@@ -19,6 +19,28 @@ class UserController extends Controller
         return view('pages.users.index', compact('users'));
     }
 
+    function create()
+    {
+        $roles = Role::all();
+        $languages = config('system.lang');
+        $experts = Expert::all();
+        return view('pages.users.create', compact('roles', 'languages', 'experts'));
+    }
+
+    public function store(Request $request)
+    {
+        $langRuleArray = implode(',', array_keys(config('system.lang')));
+        $validated = $request->validate([
+            'name' => 'required|unique:users,name',
+            'email' => 'required|unique:users,email,',
+            'gender' => 'required|in:male,female',
+            'language' => 'required|in:' . $langRuleArray,
+            'display_name' => 'string',
+        ]);
+        $user = User::create($validated);
+        return redirect()->to(route('user.show', $user))->withToastSuccess(__('app.user_updated_successfully'));
+    }
+
     public function edit(User $user)
     {
         $roles = Role::all();
