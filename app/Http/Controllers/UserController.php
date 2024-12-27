@@ -37,7 +37,10 @@ class UserController extends Controller
             'language' => 'required|in:' . $langRuleArray,
             'display_name' => 'string',
         ]);
+        $expert = Expert::find($request->input('expert'));
+        $validated['account_id'] = $expert->account_id;
         $user = User::create($validated);
+        $user->syncRoles($request->role);
         return redirect()->to(route('user.show', $user))->withToastSuccess(__('app.user_updated_successfully'));
     }
 
@@ -59,12 +62,9 @@ class UserController extends Controller
             'language' => 'required|in:' . $langRuleArray,
             'display_name' => 'string',
         ]);
-
+        $expert = Expert::find($request->input('expert'));
+        $validated['account_id'] = $expert->account_id;
         $user->fill($validated);
-        $expert = Expert::find($request->expert);
-        if ($expert) {
-            $user->expert()->save($expert);
-        }
         $user->save();
         $user->syncRoles($request->role);
 

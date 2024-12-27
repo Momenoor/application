@@ -33,6 +33,7 @@ class User extends Authenticatable
         'language',
         'email',
         'display_name',
+        'account_id',
     ];
     protected $fillable = [
         'name',
@@ -40,6 +41,7 @@ class User extends Authenticatable
         'language',
         'email',
         'display_name',
+        'account_id',
     ];
 
     protected $with = [
