@@ -92,7 +92,8 @@ class MatterController extends Controller
         $levelList = config('system.level');
         $typesList = Type::all();
         $source = 'edit';
-        return view('pages.matters.edit', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants', 'source', 'claims', 'courtsList', 'levelList', 'typesList'));
+        $matters = Matter::all();
+        return view('pages.matters.edit', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants', 'source', 'claims', 'courtsList', 'levelList', 'typesList','matters'));
     }
 
     /**
@@ -224,6 +225,7 @@ class MatterController extends Controller
             'court_id' => 'required|exists:courts,id',
             'level_id' => 'required',
             'type_id' => 'required|exists:types,id',
+            'parent_id' => 'nullable|exists:matters,id',
         ]);
         $matter->fill($validated);
         $matter->save();

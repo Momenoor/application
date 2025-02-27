@@ -176,6 +176,64 @@
                             @endif
                         </div>
                     </div>
+                    <div class="row align-items-center">
+                        <!-- Checkbox Column -->
+                        <div class="col-lg-4 mt-10 d-flex align-items-center">
+                            <label
+                                class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack mb-0">
+                                <span class="form-check-label me-10 ms-0 fw-bolder fs-6 text-gray-700">تكميلي</span>
+                                <input class="form-check-input" name="complementary" type="checkbox" id="toggleSelect"
+                                       onchange="toggleSelectVisibility()" @checked($matter->parent_id != 0)>
+                            </label>
+                        </div>
+
+                        <!-- Select Dropdown Column -->
+                        <div class="col-lg-4" id="selectContainer" style="display:none;">
+                            <div class="d-flex flex-column h-100 justify-content-center">
+                                <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.matter') }}</label>
+                                <select name="parent_id" aria-label="{{__('app.select_a_matter')}}" data-control="select2"
+                                        data-placeholder="{{__('app.select_a_matter')}}"
+                                        id="parentSelect"
+                                        class="@error('matter.type_id') is-invalid @enderror form-select form-select-solid">
+                                    <option value=""></option>
+                                    @foreach ($matters as $matterItem)
+                                        <option
+                                            @selected(old('parent_id',$matter->parent_id) == $matterItem['id']) value="{{ $matterItem['id'] }}">
+                                            [{{ $matterItem['id'] }}] - {{$matterItem['year']}} /{{$matterItem['number']}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('parent_id')
+                                <div class="invalid-feedback fv-plugins-message-container">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        toggleSelectVisibility();
+
+                        function toggleSelectVisibility() {
+                            const checkbox = document.getElementById('toggleSelect');
+                            const selectContainer = document.getElementById('selectContainer');
+                            const parentSelect = document.getElementById('parentSelect');
+
+                            if (checkbox.checked) {
+                                selectContainer.style.display = 'block';
+                            } else {
+                                selectContainer.style.display = 'none';
+                                parentSelect.value = ''; // Reset the select value
+                                if (parentSelect.hasAttribute('data-control')) {
+                                    // If using select2, reset the display
+                                    $(parentSelect).val(null).trigger('change');
+                                }
+                            }
+                        }
+                    </script>
+
+
                 </div>
             </div>
             <div class="row pt-5">

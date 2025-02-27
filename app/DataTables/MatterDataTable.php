@@ -109,7 +109,11 @@ class MatterDataTable extends DataTable
 
                 return view('common.table-action')->with('model', $model);
             })
-            ->rawColumns(['number', 'expert_id', 'court_id', 'plaintiff_name', 'next_session_date', 'claims_sum_amount']);
+            ->rawColumns(['number', 'expert_id', 'court_id', 'plaintiff_name', 'next_session_date', 'claims_sum_amount'])
+            ->setRowClass(function ($model) {
+                return ($model->parent_id == 0) ? '' : 'bg-light-yellow';
+            })
+            ;
     }
 
     /**
