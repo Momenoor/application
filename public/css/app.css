@@ -94,6 +94,14 @@ body {
     font-family: "JannaLT-Regular", "ACNGESS" !important;
 }
 
+.bg-light-yellow {
+    background-color: #fdf4b5 !important; /* Light yellow */
+}
+
+.odd.bg-light-yellow {
+    background-color: #faf16e !important; /* Slightly darker yellow */
+}
+
 .timeline-label-100 {
     width: 99px;
     flex-shrink: 0;
