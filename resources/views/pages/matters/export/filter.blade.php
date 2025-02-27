@@ -274,7 +274,7 @@
                                             <td>{{ __('app.' . $matter->status) }}</td>
                                             <td>{{ optional($matter->last_action_date)->format('Y-m-d') }}</td>
                                             <td>{{ optional($matter->reported_date)->format('Y-m-d') }}</td>
-                                            <td>{{ $matter->claims_sum_amount }}</td>
+                                            <td>{{ $matter->claimsWithOutVat->sum('amount') }}</td>
                                             @if(request()->input('for_commission') == 'yes')
                                                 <td>{{ $matter->commission['period'] }}</td>
                                                 <td>{{ $matter->commission['percent'] }}%</td>

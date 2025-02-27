@@ -44,27 +44,28 @@
                                             @method('delete')
                                             @csrf
                                             <button class="btn btn-sm btn-icon btn-danger btn-active-danger me-2"
-                                                type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                                data-bs-original-title="{{ __('app.delete') }}">
+                                                    type="submit" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title=""
+                                                    data-bs-original-title="{{ __('app.delete') }}">
                                                 <span class="svg-icon svg-icon-3">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none">
+                                                         viewBox="0 0 24 24" fill="none">
                                                         <path
                                                             d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
-                                                            fill="black" />
+                                                            fill="black"/>
                                                         <path opacity="0.5"
-                                                            d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
-                                                            fill="black" />
+                                                              d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
+                                                              fill="black"/>
                                                         <path opacity="0.5"
-                                                            d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
-                                                            fill="black" />
+                                                              d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
+                                                              fill="black"/>
                                                     </svg>
                                                 </span>
                                             </button>
                                         </form>
                                         @push('scripts')
                                             <script>
-                                                $('#delete').on('submit', function(e) {
+                                                $('#delete').on('submit', function (e) {
                                                     e.preventDefault();
                                                     Swal.fire({
                                                         text: "{{ __('app.are_you_sure_to_delete_record') }}",
@@ -77,7 +78,7 @@
                                                             confirmButton: "btn btn-danger",
                                                             cancelButton: 'btn btn-light',
                                                         }
-                                                    }).then(function(result) {
+                                                    }).then(function (result) {
                                                         if (result.isConfirmed) {
                                                             e.target.submit();
                                                         }
@@ -87,35 +88,64 @@
                                         @endpush
                                     @endcan
                                     @can('matter-create')
-                                        <a href="#" class="btn btn-sm btn-icon btn-primary btn-active-primary me-2"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                            data-bs-original-title="{{ __('app.copy') }}">
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen028.svg-->
-                                            <span class="svg-icon svg-icon-2">
+                                        <form
+                                            action="{{route('matter.clone',$matter)}}"
+                                            method="POST">
+                                            @csrf
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-icon btn-primary btn-active-primary me-2"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                    data-bs-original-title="{{ __('app.copy') }}">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen028.svg-->
+                                                <span class="svg-icon svg-icon-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none">
+                                                     viewBox="0 0 24 24" fill="none">
                                                     <rect opacity="0.5" x="7" y="2" width="14" height="16" rx="3"
-                                                        fill="currentColor"></rect>
+                                                          fill="currentColor"></rect>
                                                     <rect x="3" y="6" width="14" height="16" rx="3" fill="currentColor">
                                                     </rect>
                                                 </svg>
                                             </span>
-                                            <!--end::Svg Icon-->
-                                        </a>
+                                                <!--end::Svg Icon-->
+                                            </button>
+                                        </form>
+                                        <form
+                                            action="{{route('matter.clone',['matter'=>$matter,'without_parties'=>true])}}"
+                                            method="POST">
+                                            @csrf
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-warning btn-active-primary me-2"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                    data-bs-original-title="{{ __('app.copy_without_parties') }}">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen028.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                     viewBox="0 0 24 24" fill="none">
+                                                    <rect opacity="0.5" x="7" y="2" width="14" height="16" rx="3"
+                                                          fill="currentColor"></rect>
+                                                    <rect x="3" y="6" width="14" height="16" rx="3" fill="currentColor">
+                                                    </rect>
+                                                </svg>
+                                                    {{ __('app.without_parties') }}
+                                            </span>
+                                                <!--end::Svg Icon-->
+                                            </button>
+                                        </form>
                                     @endcan
                                 @endif
                                 @if ($source == 'show' && ! $matter->isSubmitted())
                                     @can('matter-edit')
                                         <a href="{{ route('matter.edit', $matter) }}"
-                                            class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary btn-sm me-2">
+                                           class="btn btn-outline btn-outline-dashed btn-outline-primary btn-active-light-primary btn-sm me-2">
                                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr076.svg-->
                                             <span class="svg-icon svg-icon-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                     fill="currentColor" class="bi bi-pencil-square"
+                                                     viewBox="0 0 16 16">
                                                     <path
-                                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                                     <path fill-rule="evenodd"
-                                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                          d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                                 </svg>
                                                 {{ __('app.edit') }}
                                             </span>
@@ -124,14 +154,14 @@
                                     @endcan
                                 @endif
                                 <a href="{{ route('matter.index') }}"
-                                    class="btn btn-sm btn-icon btn-primary btn-active-primary me-2"
-                                    data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('app.back') }}">
+                                   class="btn btn-sm btn-icon btn-primary btn-active-primary me-2"
+                                   data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('app.back') }}">
                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr076.svg-->
                                     <span class="svg-icon svg-icon-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none">
+                                             viewBox="0 0 24 24" fill="none">
                                             <rect opacity="0.3" width="12" height="2" rx="1"
-                                                transform="matrix(-1 0 0 1 15.5 11)" fill="currentColor"></rect>
+                                                  transform="matrix(-1 0 0 1 15.5 11)" fill="currentColor"></rect>
                                             <path
                                                 d="M13.6313 11.6927L11.8756 10.2297C11.4054 9.83785 11.3732 9.12683 11.806 8.69401C12.1957 8.3043 12.8216 8.28591 13.2336 8.65206L16.1592 11.2526C16.6067 11.6504 16.6067 12.3496 16.1592 12.7474L13.2336 15.3479C12.8216 15.7141 12.1957 15.6957 11.806 15.306C11.3732 14.8732 11.4054 14.1621 11.8756 13.7703L13.6313 12.3073C13.8232 12.1474 13.8232 11.8526 13.6313 11.6927Z"
                                                 fill="currentColor"></path>
@@ -151,11 +181,12 @@
                             @if ($source != 'show')
                                 <div class="me-0">
                                     <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary"
-                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start">
+                                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start">
                                         <i class="bi bi-three-dots fs-3"></i>
                                     </button>
                                     <!--begin::Menu 3-->
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3"
+                                    <div
+                                        class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-bold w-200px py-3"
                                         data-kt-menu="true">
                                         <!--begin::Heading-->
                                         <div class="menu-item px-3">
@@ -166,19 +197,19 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
                                             <a href="#" class="menu-link px-3" data-bs-toggle="modal"
-                                                data-bs-target="#addNextSessionDateModal">{{ __('app.add_next_session_date') }}</a>
+                                               data-bs-target="#addNextSessionDateModal">{{ __('app.add_next_session_date') }}</a>
                                         </div>
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
                                             <a href="#" class="menu-link px-3" data-bs-toggle="modal"
-                                                data-bs-target="#changeDatesModal">{{ __('app.change_date') }}</a>
+                                               data-bs-target="#changeDatesModal">{{ __('app.change_date') }}</a>
                                         </div>
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
                                             <a href="#" class="menu-link flex-stack px-3" data-bs-toggle="modal"
-                                                data-bs-target="#addClaimModal">{{ __('app.add_claim') }}
+                                               data-bs-target="#addClaimModal">{{ __('app.add_claim') }}
                                             </a>
                                         </div>
                                         <!--end::Menu item-->
@@ -191,12 +222,12 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3 my-1">
                                             <a href="#" class="menu-link px-3" data-bs-toggle="modal"
-                                                data-bs-target="#addAssistantModal">{{ __('app.assign_assistant') }}</a>
+                                               data-bs-target="#addAssistantModal">{{ __('app.assign_assistant') }}</a>
                                         </div>
                                         @if ($matter->commissioning == Matter::COMMITTEE)
                                             <div class="menu-item px-3 my-1">
                                                 <a href="#" class="menu-link px-3" data-bs-toggle="modal"
-                                                    data-bs-target="#addExternlExpertModal">{{ __('app.add_external_expert') }}</a>
+                                                   data-bs-target="#addExternlExpertModal">{{ __('app.add_external_expert') }}</a>
                                             </div>
                                         @endif
 
@@ -204,13 +235,13 @@
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3 my-1">
                                             <a href="#" class="menu-link px-3" data-bs-toggle="modal"
-                                                data-bs-target="#addPartyModal">{{ __('app.add_party') }}</a>
+                                               data-bs-target="#addPartyModal">{{ __('app.add_party') }}</a>
                                         </div>
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3 my-1">
                                             <a href="#" class="menu-link px-3" data-bs-toggle="modal"
-                                                data-bs-target="#addAdvocateModal">{{ __('app.add_advocate') }}</a>
+                                               data-bs-target="#addAdvocateModal">{{ __('app.add_advocate') }}</a>
                                         </div>
                                         <!--end::Menu item-->
                                     </div>
@@ -303,13 +334,15 @@
                                 </div>
                             @endif
                             <!--begin::Stat-->
-                            <div class="border text-white bg-{{ $matter->claim_status_color }} border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3"
+                            <div
+                                class="border text-white bg-{{ $matter->claim_status_color }} border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3"
                                 data-bs-toggle="tooltip" title="{{ __('app.' . $matter->claim_status) }}">
                                 <!--begin::Number-->
                                 <div class="d-flex align-items-center">
                                     <div class="fs-4 fw-bolder" data-kt-countup="true"
-                                        data-kt-countup-value="{{ $matter->claims_sum_amount }}"
-                                        data-kt-countup-prefix="AED ">0</div>
+                                         data-kt-countup-value="{{ $matter->claims_sum_amount }}"
+                                         data-kt-countup-prefix="AED ">0
+                                    </div>
                                 </div>
                                 <!--end::Number-->
                                 <!--begin::Label-->

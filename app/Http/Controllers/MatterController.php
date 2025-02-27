@@ -216,8 +216,7 @@ class MatterController extends Controller
         return view('pages.matters.distributing', compact('assistants', 'last_activity_start_date', 'countCurrent'));
     }
 
-    public
-    function updateBasicDate(Matter $matter, Request $request)
+    public function updateBasicDate(Matter $matter, Request $request)
     {
         $validated = $request->validate([
             'year' => 'required|min:4|max:4|date_format:Y',
@@ -229,6 +228,41 @@ class MatterController extends Controller
         $matter->fill($validated);
         $matter->save();
         return redirect(url()->previous())->withToastSuccess(__('app.record-updated-successfully'));
+    }
+
+    public function clone(Matter $matter, bool $without_parties = false): \Illuminate\Http\RedirectResponse
+    {
+        $newMatter = $matter->replicate();
+        $newMatter->status = 'current';
+        $newMatter->reported_date = null;
+        $newMatter->submitted_date = null;
+        $newMatter->claim_status = 'unpaid';
+        $newMatter->push();
+        $relations = [ 'experts'];
+        if (!$without_parties) {
+            $relations[] = 'parties';
+        }
+        $matter->load($relations);
+
+        foreach ($matter->getRelations() as $relation => $items) {
+            if ($items->isEmpty()) {
+                continue; // Skip empty relations
+            }
+
+            // Check if the relation uses a pivot table
+            if (method_exists($matter->{$relation}(), 'getPivotColumns')) {
+                foreach ($items as $item) {
+                    $pivotData = $item->pivot->toArray() ?? [];
+                    unset($pivotData['matter_id']); // Remove the old matter ID if necessary
+                    $newMatter->{$relation}()->attach($item->id, $pivotData);
+                }
+            } else {
+                // For normal (non-pivot) relations, just sync IDs
+                $newMatter->{$relation}()->sync($items->pluck('id')->toArray());
+            }
+        }
+
+        return redirect()->route('matter.edit', $newMatter);
     }
 
 }

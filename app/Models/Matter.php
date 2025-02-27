@@ -214,6 +214,10 @@ class Matter extends Model
     {
         return $this->hasMany(Claim::class);
     }
+    public function claimsWithOutVat(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Claim::class)->where('type', '!=', 'vat');
+    }
 
     public function cashes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
@@ -346,7 +350,7 @@ class Matter extends Model
         $this->commissionPercent += $this->calculateCountBasedCommission($byCount, $count);
 
         // Calculate final commission amount
-        $this->commissionAmount = ($this->commissionPercent / 100) * $this->claims->sum('amount');
+        $this->commissionAmount = ($this->commissionPercent / 100) * $this->claimsWithOutVat->sum('amount');
         return $this->commissionAmount;
     }
 
@@ -357,7 +361,7 @@ class Matter extends Model
             return str_contains($notesText, 'رضا') ? $typeSetting['with_expert'] : $typeSetting['without_expert'];
         } else {
             $this->commissionPercent = $typeSetting;
-            return ($typeSetting / 100) * $this->claims->sum('amount');
+            return ($typeSetting / 100) * $this->claimsWithOutVat->sum('amount');
         }
     }
 

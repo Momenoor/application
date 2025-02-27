@@ -55,7 +55,7 @@ Route::middleware(['auth', 'MainMenu'])->group(function () {
         Route::get('matter/distributing', [MatterController::class, 'distributing'])->name('matter.distributing');
         Route::post('matter/basic-date/{matter}/update', [MatterController::class, 'updateBasicDate'])->name('matter.update.basic-data');
         Route::resource('matter', MatterController::class)->except(['store', 'update']);
-
+        Route::post('matter/{matter}/clone/{without_parties?}', [MatterController::class, 'clone'])->name('matter.clone');
         Route::get('/expert/get-data/', [ExpertController::class, 'getExpertsDataFromUrlForm'])->name('expert.get-data');
         Route::post('expert/get-data/', [ExpertController::class, 'getExpertsDataFromUrl'])->name('expert.parse-data');
         Route::post('expert/{matter}/assign-assistant/', [ExpertController::class, 'assignAssistant'])->name('expert.assign-assistant');
