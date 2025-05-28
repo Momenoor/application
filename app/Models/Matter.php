@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * @property mixed $status
@@ -16,7 +18,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Matter extends Model
 {
 
-    use LogsActivity;
+    use LogsActivity, MatterCommissionMethods;
 
     protected static $logOnlyDirty = true;
 
@@ -143,6 +145,16 @@ class Matter extends Model
         return $this->belongsTo(Expert::class);
     }
 
+    public function matterExperts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(MatterExpert::class);
+    }
+
+    public function matter_experts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(MatterExpert::class);
+    }
+
     public function type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Type::class);
@@ -214,6 +226,7 @@ class Matter extends Model
     {
         return $this->hasMany(Claim::class);
     }
+
     public function claimsWithOutVat(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Claim::class)->where('type', '!=', 'vat');
@@ -312,104 +325,6 @@ class Matter extends Model
     public function getClaimStatusColorAttribute()
     {
         return config('system.claims.status.' . $this->claim_status . '.color');
-    }
-
-    public function calculateWorkingDays(): int
-    {
-        $start = Carbon::parse($this->last_action_date);
-        $end = Carbon::parse($this->reported_date);
-
-        $days = 0;
-        while ($start->lte($end)) {
-            if ($start->isWeekday()) {
-                $days++;
-            }
-            $start->addDay();
-        }
-        return $this->commissionCompeletionPeriod = $days;
-    }
-
-    public function calculateCommission()
-    {
-        $settings = config('system.commission');
-        $byType = $settings['by_type'];
-        $byPeriod = $settings['by_period']['default'];
-        $byCount = $settings['by_count'];
-
-        // Type-based commission calculation
-        if (isset($byType[$this->type_id])) {
-            $this->commissionAmount = $this->calculateTypeBasedCommission($byType[$this->type_id]);
-            return $this->commissionAmount;
-        }
-
-        // Period-based commission calculation
-        $this->commissionPercent = $this->calculatePeriodBasedCommission($byPeriod);
-
-        // Count-based commission calculation
-        $count = $this->calculateCasesCount();
-        $this->commissionPercent += $this->calculateCountBasedCommission($byCount, $count);
-
-        // Calculate final commission amount
-        $this->commissionAmount = ($this->commissionPercent / 100) * $this->claimsWithOutVat->sum('amount');
-        return $this->commissionAmount;
-    }
-
-    private function calculateTypeBasedCommission($typeSetting): int
-    {
-        if (is_array($typeSetting)) {
-            $notesText = $this->notes->pluck('text')->implode(' / / / / ');
-            return str_contains($notesText, 'رضا') ? $typeSetting['with_expert'] : $typeSetting['without_expert'];
-        } else {
-            $this->commissionPercent = $typeSetting;
-            return ($typeSetting / 100) * $this->claimsWithOutVat->sum('amount');
-        }
-    }
-
-    private function calculatePeriodBasedCommission(array $periods): int
-    {
-        $completionPeriod = $this->calculateWorkingDays();
-        foreach ($periods as $period) {
-            if (!key_exists('start', $period)) {
-                return $period['percent'];
-            }
-            if ($completionPeriod >= $period['start'] && $completionPeriod <= $period['end']) {
-                return $period['percent'];
-            }
-        }
-        return end($periods)['percent'];
-    }
-
-    private function calculateCasesCount(): int
-    {
-        $startDate = request()->input('start_date');
-        $endDate = request()->input('end_date');
-        $completionDate = Carbon::parse($this->reported_date);
-        $startCountDate = Carbon::parse($startDate)->setDate($completionDate->year, $completionDate->month, Carbon::parse($startDate)->day);
-        $endCountDate = $startCountDate->copy()->addMonth()->subDay(1);
-        $expert_id = optional($this->assistants->first())->expert_id;
-        return self::whereBetween('reported_date', [$startCountDate, $endCountDate])
-            ->whereHas('assistants', fn($query) => $query->where('expert_id', $expert_id))
-            ->count();
-    }
-
-    private function calculateCountBasedCommission(array $countSettings, int $count): int
-    {
-        if (isset($countSettings[$count])) {
-            return $countSettings[$count];
-        } elseif ($count > max(array_keys($countSettings))) {
-            return end($countSettings);
-        }
-        return 0;
-    }
-
-    public function getCommissionAttribute(): array
-    {
-        $this->calculateCommission();
-        return [
-            'amount' => app(Money::class)->getFormattedNumber($this->commissionAmount),
-            'percent' => $this->commissionPercent,
-            'period' => $this->commissionCompeletionPeriod,
-        ];
     }
 
 }

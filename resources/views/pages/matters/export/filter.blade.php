@@ -265,7 +265,9 @@
                                     </thead>
                                     @foreach ($matters as $matter)
                                         <tr>
-                                            <td class="ps-3">{{ $matter->number }}</td>
+                                            <td class="ps-3"><a target="_blank"
+                                                                href="{{route('matter.edit',$matter)}}"> {{ $matter->number }}</a>
+                                            </td>
                                             <td>{{ $matter->year }}</td>
                                             <td>{{ optional($matter->expert)->name }}</td>
                                             <td>{{ optional($matter->court)->name }}</td>
@@ -274,7 +276,7 @@
                                             <td>{{ __('app.' . $matter->status) }}</td>
                                             <td>{{ optional($matter->last_action_date)->format('Y-m-d') }}</td>
                                             <td>{{ optional($matter->reported_date)->format('Y-m-d') }}</td>
-                                            <td>{{ $matter->claimsWithOutVat->sum('amount') }}</td>
+                                            <td>{{ number_format($matter->claimsWithOutVat->sum('amount'),2) }}</td>
                                             @if(request()->input('for_commission') == 'yes')
                                                 <td>{{ $matter->commission['period'] }}</td>
                                                 <td>{{ $matter->commission['percent'] }}%</td>

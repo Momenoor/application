@@ -114,5 +114,10 @@ Route::middleware(['auth', 'MainMenu'])->group(function () {
         Route::post('commissions/import', [CommissionController::class, 'import'])->name('commissions.import');
         Route::resource('commissions', CommissionController::class);
 
+        Route::get('test', function () {
+            $data = \App\Models\Matter::getCommissionSummaryByPeriod('2025-02-26','2025-05-25');
+            dd($data);
+        });
+
     });
 });

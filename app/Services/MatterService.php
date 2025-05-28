@@ -236,6 +236,11 @@ class MatterService
         return $this->query;
     }
 
+    public function forCommission()
+    {
+
+    }
+
     public function getPartyType($id)
     {
 

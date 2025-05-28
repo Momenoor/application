@@ -280,6 +280,10 @@ return [
         ],
     ],
     'commission' => [
+        'special_type_ids' => [
+            203,
+            206
+        ],
         'by_period' => [
             'default' => [
                 [
