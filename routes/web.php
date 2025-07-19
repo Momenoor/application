@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\{
-    CashController,
+use App\Http\Controllers\{CashController,
     ClaimController,
     CommissionController,
     CourtController,
@@ -12,13 +11,14 @@ use App\Http\Controllers\{
     PartyController,
     PermissionController,
     ProcedureController,
+    RequestController,
     RoleController,
     TypeController,
     ToolsController,
     HomeController,
     UserController,
     VacationController,
-    V2\MatterController as V2MatterController,
+    V2\MatterController as V2MatterController
 };
 
 use Illuminate\Support\Facades\Auth;
@@ -82,6 +82,13 @@ Route::middleware(['auth', 'MainMenu'])->group(function () {
         Route::post('procedure/{matter}/next-session', [ProcedureController::class, 'addNextSessionDate'])->name('procedure.next-session');
         Route::resource('procedure', ProcedureController::class);
 
+        Route::get('request', [RequestController::class, 'index'])->name('request.index');
+        Route::get('request/create', [RequestController::class, 'index'])->name('request.create');
+        Route::post('request/{matter}/store', [RequestController::class, 'store'])->name('request.store');
+        Route::post('request/{request}/approve', [RequestController::class, 'approve'])->name('request.approve');
+        Route::post('request/{request}/reject', [RequestController::class, 'reject'])->name('request.reject');
+
+        Route::post('dropzone/upload', [RequestController::class, 'upload'])->name('dropzone.upload');
 
         Route::resource('role', RoleController::class);
 
@@ -115,7 +122,7 @@ Route::middleware(['auth', 'MainMenu'])->group(function () {
         Route::resource('commissions', CommissionController::class);
 
         Route::get('test', function () {
-            $data = \App\Models\Matter::getCommissionSummaryByPeriod('2025-02-26','2025-05-25');
+            $data = \App\Models\Matter::getCommissionSummaryByPeriod('2025-02-26', '2025-05-25');
             dd($data);
         });
 

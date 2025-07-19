@@ -23,6 +23,7 @@ class MainMenu
                 ->nickname('matters');
             $menu->matters->add(__('app.matters_list'), ['route' => 'matter.index'])->data('permission', 'matter-view');
             $menu->matters->add(__('app.create_matter'), ['route' => 'matter.create']);
+            $menu->matters->add(__('app.requests'),['route' => 'request.index'])->data('permission', 'request-view');
 
             $menu->add(__('app.matter-distributing'), ['route'=>'matter.distributing'])->data('icon', 'bi bi-bar-chart')
                 ->data('permission', ['matter-distributing']);

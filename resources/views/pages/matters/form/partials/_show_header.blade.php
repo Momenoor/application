@@ -353,6 +353,10 @@
                         </div>
                         <!--end::Stats-->
                     </div>
+                    <div class="d-flex flex-wrap justify-content-end">
+                        <a class="btn btn-success" data-bs-toggle="modal"
+                           data-bs-target="#addRequestModal">إضافة طلب</a>
+                    </div>
                     <!--end::Info-->
                 </div>
                 <!--end::Wrapper-->
@@ -362,6 +366,7 @@
     </div>
 </div>
 @if ($source != 'show')
+    @include('pages.matters.request.add-request-modal')
     @include('pages.procedures.add-next-session-date-modal')
     @include('pages.procedures.change-dates-modal')
     @include('pages.claims.add-claim-modal')
@@ -375,6 +380,20 @@
                 altInput: !0,
                 altFormat: "d F, Y",
                 dateFormat: "Y-m-d"
+            });
+
+            var myDropzone = new Dropzone("#kt_dropzonejs_example_1", {
+                url: '{{route('dropzone.upload')}}', // Set the url for your upload script location
+                paramName: "file", // The name that will be used to transfer the file
+                maxFiles: 1,
+                maxFilesize: 10, // MB
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                addRemoveLinks: true,
+                success: function (file, response) {
+                    document.getElementById('uploaded_file_path').value = response.file_path;
+                }
             });
         </script>
     @endpush

@@ -327,4 +327,9 @@ class Matter extends Model
         return config('system.claims.status.' . $this->claim_status . '.color');
     }
 
+    public function requests(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Request::class);
+    }
+
 }

@@ -153,9 +153,9 @@
             </div>
             <div class="separator separator-dashed my-10"></div>
             <div class="row mt-10">
-                <div class="col-6">
+                <div class="col-4">
                     <div class="row mb-10">
-                        <label class="col-4 fw-bold text-muted">{{ __('app.commissioning') }}</label>
+                        <label class="col-4 fw-bold text-gray-700">{{ __('app.commissioning') }}</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-8">
@@ -163,7 +163,7 @@
                         </div>
                     </div>
                     <div class="row mb-10">
-                        <label class="col-4 fw-bold text-muted">{{ __('app.status') }}</label>
+                        <label class="col-4 fw-bold text-gray-700">{{ __('app.status') }}</label>
                         <!--end::Label-->
                         <!--begin::Col-->
                         <div class="col-8">
@@ -233,6 +233,39 @@
                         }
                     </script>
 
+
+                </div>
+                <div class="col-8">
+                    <div class="row mb-10">
+                        <label class="col-2 fw-bold text-gray-700"> الطلبات </label>
+                        <!--end::Label-->
+                        <!--begin::Col-->
+                        <div class="col-10">
+                            <table class="table align-middle gs-0 gy-4 my-0">
+                                <thead>
+                                <tr>
+                                    <th class="pe-0 text-start min-w-100px pt-3 fw-bolder">نوع الطلب</th>
+                                    <th class="pe-0 text-start min-w-100px pt-3 fw-bolder">حالة الطلب</th>
+                                    <th class="pe-0 text-start min-w-100px pt-3 fw-bolder">البيان</th>
+                                    <th class="pe-0 text-start min-w-100px pt-3 fw-bolder">التعليق</th>
+                                    <th class="pe-0 text-start min-w-100px pt-3 fw-bolder">بواسطة</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($requests as $request)
+                                    <tr>
+                                        <td>{{$request['type']}}</td>
+                                        <td><span class="badge badge-light-primary">{{$request->status}}</span></td>
+                                        <td>{{$request->comment}}</td>
+                                        <td>{{$request->approved_comment}}</td>
+                                        <td>{{$request->approvedBy?->name}}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
                 </div>
             </div>

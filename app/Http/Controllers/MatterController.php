@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\MatterDataTable;
+use App\Enums\RequestTypeEnum;
 use App\Exports\MattersExport;
 use App\Models\Court;
 use App\Models\Expert;
@@ -93,7 +94,8 @@ class MatterController extends Controller
         $typesList = Type::all();
         $source = 'edit';
         $matters = Matter::all();
-        return view('pages.matters.edit', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants', 'source', 'claims', 'courtsList', 'levelList', 'typesList','matters'));
+        $requests = $matter->requests;
+        return view('pages.matters.edit', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants', 'source', 'claims', 'courtsList', 'levelList', 'typesList', 'matters','requests'));
     }
 
     /**
@@ -240,7 +242,7 @@ class MatterController extends Controller
         $newMatter->submitted_date = null;
         $newMatter->claim_status = 'unpaid';
         $newMatter->push();
-        $relations = [ 'experts'];
+        $relations = ['experts'];
         if (!$without_parties) {
             $relations[] = 'parties';
         }
