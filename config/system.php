@@ -331,8 +331,8 @@ return [
         ],
         'by_type' => [
             76 => [
-                'with_expert' => 200,
-                'without_expert' => 400,
+                'with_expert' => 10,
+                'without_expert' => 20,
             ],
             217 => 5,
             233 => 5,

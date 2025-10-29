@@ -135,8 +135,8 @@
                                 @foreach ($claimsStatus as $status)
                                     <div class="form-check form-check-custom form-check-solid me-5">
                                         <input class="form-check-input" type="checkbox" name="claimsCollectionStatus[]"
-                                               value="{{ $status }}" id="{{ $status }}" checked
-                                            {{ in_array($status, old('claimsCollectionStatus', request()->input('claimsCollectionStatus', []))) ? 'checked' : '' }} />
+                                               value="{{ $status }}"
+                                               id="{{ $status }}" {{ in_array($status, old('claimsCollectionStatus', request()->input('claimsCollectionStatus', []))) ? 'checked' : '' }} />
                                         <label class="form-check-label" for="{{ $status }}">
                                             {{ __('app.' . $status) }}
                                         </label>
@@ -147,23 +147,37 @@
                         <div class="mb-10">
                             <label for="" class="form-label fw-bolder">{{ __('app.matter_status') }}</label>
                             <div class="d-flex">
+                                @php
+                                    $selectedStatuses = old('matterStatus', request()->input('matterStatus', []));
+                                @endphp
+
                                 <div class="form-check form-check-custom form-check-solid me-5">
-                                    <input class="form-check-input" type="checkbox" name="matterStatus[]"
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           name="matterStatus[]"
                                            value="current"
                                            id="current"
-                                           checked {{ in_array('current', old('matterStatus', request()->input('matterStatus', []))) ? 'checked' : '' }} />
+                                        {{ in_array('current', $selectedStatuses) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="current">{{ __('app.current') }}</label>
                                 </div>
+
                                 <div class="form-check form-check-custom form-check-solid me-5">
-                                    <input class="form-check-input" type="checkbox" name="matterStatus[]"
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           name="matterStatus[]"
                                            value="reported"
-                                           id="reported" {{ in_array('reported', old('matterStatus', request()->input('matterStatus', []))) ? 'checked' : '' }} />
+                                           id="reported"
+                                        {{ in_array('reported', $selectedStatuses) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="reported">{{ __('app.reported') }}</label>
                                 </div>
+
                                 <div class="form-check form-check-custom form-check-solid me-5">
-                                    <input class="form-check-input" type="checkbox" name="matterStatus[]"
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           name="matterStatus[]"
                                            value="submitted"
-                                           id="submitted" {{ in_array('submitted', old('matterStatus', request()->input('matterStatus', []))) ? 'checked' : '' }} />
+                                           id="submitted"
+                                        {{ in_array('submitted', $selectedStatuses) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="submitted">{{ __('app.submitted') }}</label>
                                 </div>
                             </div>
@@ -263,27 +277,49 @@
                                         @endif
                                     </tr>
                                     </thead>
-                                    @foreach ($matters as $matter)
+                                    <tbody>
+                                    @foreach ($commissionSummary as $row)
+                                        @php
+                                            // $row is an array from getCommissionSummaryByPeriod
+                                            $m = $matterLookup[$row['case_id']] ?? null; // Matter model or null
+
+                                        @endphp
                                         <tr>
-                                            <td class="ps-3"><a target="_blank"
-                                                                href="{{route('matter.edit',$matter)}}"> {{ $matter->number }}</a>
+                                            <td class="ps-3">
+                                                @if($m)
+                                                    <a target="_blank"
+                                                       href="{{ route('matter.edit', $m->id) }}">{{ $m->number ?? $m->id }}</a>
+                                                @else
+                                                    {{ $row['case_id'] }}
+                                                @endif
                                             </td>
-                                            <td>{{ $matter->year }}</td>
-                                            <td>{{ optional($matter->expert)->name }}</td>
-                                            <td>{{ optional($matter->court)->name }}</td>
-                                            <td>{{ optional($matter->type)->name }}</td>
-                                            <td>{{ optional($matter->assistant)->name }}</td>
-                                            <td>{{ __('app.' . $matter->status) }}</td>
-                                            <td>{{ optional($matter->last_action_date)->format('Y-m-d') }}</td>
-                                            <td>{{ optional($matter->reported_date)->format('Y-m-d') }}</td>
-                                            <td>{{ number_format($matter->claimsWithOutVat->sum('amount'),2) }}</td>
+                                            <td>{{ $m?->year }}</td>
+                                            <td>{{ $m?->expert?->name }}</td>
+                                            <td>{{ $m?->court?->name }}</td>
+                                            <td>{{ $m?->type?->name }}</td>
+
+                                            {{-- assistant name from the $assistants map you already pass to the view --}}
+                                            <td>
+                                                @if ($row['assistant_id'])
+                                                    {{ $assistants[$row['assistant_id']] ?? $row['assistant_id'] }}
+                                                @else
+                                                    —
+                                                @endif
+                                            </td>
+
+                                            <td>{{ $m ? __('app.' . $m->status) : '—' }}</td>
+                                            <td>{{ optional($m?->last_action_date)->format('Y-m-d') }}</td>
+                                            <td>{{ optional($m?->reported_date)->format('Y-m-d') }}</td>
+                                            <td>{{ $m ? number_format($m->claimsWithOutVat->sum('amount'), 2) : '0.00' }}</td>
+
                                             @if(request()->input('for_commission') == 'yes')
-                                                <td>{{ $matter->commission['period'] }}</td>
-                                                <td>{{ $matter->commission['percent'] }}%</td>
-                                                <td>{{ $matter->commission['amount'] }}</td>
+                                                <td>{{ $row['period'] }}</td>
+                                                <td>{{ $row['commission_percent'] }}%</td>
+                                                <td>{{ number_format($row['commission_amount'], 2) }}</td>
                                             @endif
                                         </tr>
                                     @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

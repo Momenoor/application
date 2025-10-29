@@ -15,6 +15,7 @@ use App\Services\Common;
 use App\Services\MatterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 
 
 class MatterController extends Controller
@@ -95,7 +96,7 @@ class MatterController extends Controller
         $source = 'edit';
         $matters = Matter::all();
         $requests = $matter->requests;
-        return view('pages.matters.edit', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants', 'source', 'claims', 'courtsList', 'levelList', 'typesList', 'matters','requests'));
+        return view('pages.matters.edit', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants', 'source', 'claims', 'courtsList', 'levelList', 'typesList', 'matters', 'requests'));
     }
 
     /**
@@ -157,28 +158,150 @@ class MatterController extends Controller
         list($experts, $assistants, $types, $courts, $claimsStatus) = $this->common->fetchDataForForm();
         return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus'));
     }
+    private function buildCombinedRows(Request $request): array
+    {
+        // 1) fetch select lists (assistant id=>name used for display)
+        [, $assistants] = $this->common->fetchDataForForm(); // [experts, assistants, types, courts, claimsStatus]
+
+        // 2) get matters as shown in the view, with eager loads for display columns
+        $matters = (new MatterService())
+            ->setFilters($request)
+            ->getForExcel()
+            ->with(['expert', 'court', 'type', 'claimsWithOutVat'])  // <- important
+            ->get();
+
+        $matterById   = $matters->keyBy('id');
+        $matterIds    = $matters->pluck('id')->all();
+
+        // 3) date window
+        $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
+        $endDate   = $request->input('end_date',   now()->endOfMonth()->toDateString());
+
+        // 4) new per-assistant rows (from your trait)
+        $summary = collect(Matter::getCommissionSummaryByPeriod($startDate, $endDate))
+            ->whereIn('case_id', $matterIds)
+            ->sortBy('assistant_id')     // or sort by name using $assistants map
+            ->values();
+
+        // 5) if any case_ids are missing from lookup, backfill (safety)
+        $missingIds = $summary->pluck('case_id')->unique()->diff($matterById->keys());
+        if ($missingIds->isNotEmpty()) {
+            $extra = Matter::with(['expert', 'court', 'type', 'claimsWithOutVat'])
+                ->whereIn('id', $missingIds)->get()->keyBy('id');
+            $matterById = $matterById->merge($extra);
+        }
+
+        $wantCommissionCols = $request->input('for_commission') === 'yes';
+
+        // 6) build the final combined rows (ASSOCIATIVE arrays with headings you want)
+        $rows = $summary->map(function (array $row) use ($matterById, $assistants, $wantCommissionCols) {
+            $m = $matterById->get($row['case_id']);
+
+            $assistantName = !empty($row['assistant_id'])
+                ? ($assistants[$row['assistant_id']] ?? $row['assistant_id'])
+                : null;
+
+            $claimAmount = $m ? $m->claimsWithOutVat->sum('amount') : 0;
+
+            // legacy / old columns you used to export (add/remove to taste)
+            $base = [
+                'No'                 => $m?->number ?? $row['case_id'],
+                'Year'               => $m?->year,
+                'Expert'             => $m?->expert?->name,
+                'Court'              => $m?->court?->name,
+                'Type'               => $m?->type?->name,
+                'Assistant'          => $assistantName,
+                'Plaintiff'          => $m?->plaintiff->name ?? null,  // adjust to your real column/rel
+                'Defendant'          => $m?->defendant->name ?? null,  // adjust to your real column/rel
+                'Status'             => $m?->status,
+                'Received Date'      => optional($m?->received_date)->format('Y-m-d'),
+                'Last Action Date'   => optional($m?->last_action_date)->format('Y-m-d'),
+                'Reported Date'      => optional($m?->reported_date)->format('Y-m-d'),
+                'Submitted Date'     => optional($m?->submitted_date)->format('Y-m-d'),
+                'Claim Status'       => $m?->claim_status ?? null,
+                'Claim Amount (no VAT)' => number_format((float)$claimAmount, 2, '.', ''),
+                'Claim Dues'         => $m?->claim_dues ?? null,       // if you have it
+                'Claim Collected'    => $m?->claim_collected ?? null,  // if you have it
+                'Notes'              => isset($m->notes)
+                    ? Str::limit(is_iterable($m->notes) ? collect($m->notes)->pluck('text')->implode(' | ') : (string)$m->notes, 500)
+                    : null,
+            ];
+
+            // new concepts (always include; or include only if $wantCommissionCols)
+            $new = [
+                'Working Days'       => (int)($row['period'] ?? 0),
+                'Count in Period'    => (int)($row['count_in_period'] ?? 0),
+                'Commission %'       => $row['commission_percent'] ?? 0,
+                'Commission Amount'  => number_format((float)($row['commission_amount'] ?? 0), 2, '.', ''),
+            ];
+
+            return $wantCommissionCols ? array_merge($base, $new) : $base;
+        })->values()->all();
+
+        return $rows;
+    }
+
+    private function buildCommissionViewData(Request $request): array
+    {
+        // Base lists for selects
+        [$experts, $assistants, $types, $courts, $claimsStatus] = $this->common->fetchDataForForm();
+
+        // Matters per filters (same as view)
+        $matters = (new MatterService())->setFilters($request)->getForExcel()->get();
+        $matterLookup = $matters->keyBy('id');
+        $matterIds = $matters->pluck('id')->all();
+
+        // Dates (same defaults as view)
+        $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
+        $endDate   = $request->input('end_date',   now()->endOfMonth()->toDateString());
+
+        // Summary rows (one row per matter×assistant), same sorting as view
+        $commissionSummary = collect(\App\Models\Matter::getCommissionSummaryByPeriod($startDate, $endDate))
+            ->whereIn('case_id', $matterIds)        // keep only filtered matters
+            ->sortBy('assistant_id')                // EXACTLY like view
+            ->values()
+            ->all();
+
+        return compact(
+            'experts','assistants','types','courts','claimsStatus',
+            'matters','matterLookup','commissionSummary','startDate','endDate'
+        );
+    }
 
     public function export(Request $request)
     {
         $action = $request->input('action');
-        if ($action == 'view') {
+        if ($action === 'view') {
             return $this->showCommissionFormResult($request);
         }
-        abort_unless(auth()->user()->can('matter-export'), '403');
-        $result = (new MatterService())->setFilters($request)->getForExcel();
-        return (new MattersExport($request))->download('matters-' . now() . '.xlsx');
+
+        abort_unless(auth()->user()->can('matter-export'), 403);
+
+        // Build the SAME dataset used by the view
+        $data = $this->buildCommissionViewData($request);
+
+        // If user chose to display commission, export the SAME rows shown
+        if ($request->boolean('for_commission', false)) {
+            $rows = $this->buildCombinedRows($request); // 👈 EXACT dataset used for export
+            $filename = 'matters-' . now()->format('Ymd-His') . '.xlsx';
+            return (new MattersExport($rows))->download($filename);
+        }
+
+        // Otherwise, fall back to your existing matters export
+        $filename = 'matters-' . now()->format('Ymd-His') . '.xlsx';
+        return (new \App\Exports\MattersExport($request))->download($filename);
     }
+
 
     public function showCommissionFormResult(Request $request)
     {
-        $matters = (new MatterService())->setFilters($request)->getForExcel()->get();
-        list($experts, $assistants, $types, $courts, $claimsStatus) = $this->common->fetchDataForForm();
-        return view('pages.matters.export.filter', compact('experts', 'assistants', 'types', 'courts', 'claimsStatus', 'matters'))
-            ->withInput($request->all()); // Retains old inputs
+        $data = $this->buildCommissionViewData($request);
+        // sends: experts, assistants, types, courts, claimsStatus, matters, commissionSummary, matterLookup, startDate, endDate
+        return view('pages.matters.export.filter', $data)
+            ->withInput($request->all());
     }
 
-    public
-    function partyUnlink(Matter $matter, $party, Request $request)
+    public function partyUnlink(Matter $matter, $party, Request $request)
     {
         $validated = $request->validate([
             'type' => 'required|in:expert,party',
@@ -189,8 +312,7 @@ class MatterController extends Controller
         return redirect(url()->previous())->withToastSuccess(__('app.party-deleted-successfully'));
     }
 
-    public
-    function distributing()
+    public function distributing()
     {
         $last_activity_start_date = now()->subMonth(1)->day(config('system.last_activity.start_day'))->format('Y/m/d');
         $countCurrent = Matter::Current()->count();
