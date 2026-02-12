@@ -17,6 +17,6 @@ class RequestAttachment extends Model
 
     public function request(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo('App\Models\Request');
+        return $this->belongsTo(\App\Models\Request::class);
     }
 }
