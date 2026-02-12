@@ -25,6 +25,6 @@ class Common
             Cash::UNPAID,
             Cash::PARTIAL,
         ];
-        return array($experts, $assistants, $types, $courts, $claimsStatus);
+        return [$experts, $assistants, $types, $courts, $claimsStatus];
     }
 }
