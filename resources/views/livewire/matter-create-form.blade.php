@@ -112,6 +112,11 @@
 
                     @this.set('newexpert.category', $(this).select2("val"));
                 });
+
+                $("select[name='difficulty']").on('change', function(e) {
+
+                @this.set('matter.difficulty', $(this).select2("val"));
+                });
                 //$('select').trigger('change');
             }
         })
