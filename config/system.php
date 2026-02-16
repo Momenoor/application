@@ -160,6 +160,20 @@ return [
                 'index' => 3,
             ],
         ],
+        'difficulty_levels' => [
+            'simple' => [
+                'color' => 'success',
+                'text' => 'بسيطة',
+            ],
+            'medium' => [
+                'color' => 'warning',
+                'text' => 'متوسطة',
+            ],
+            'exceptional' => [
+                'color' => 'danger',
+                'text' => 'استثنائية',
+            ],
+        ],
     ],
 
 

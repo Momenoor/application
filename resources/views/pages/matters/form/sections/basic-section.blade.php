@@ -222,6 +222,24 @@
                             </label>
                         </div>
                     </div>
+                    <div class="col-lg-4 mt-10">
+                        <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.difficulty_level') }}</label>
+                        <!--end::Label-->
+                        <!--begin::Select-->
+                        <select name="difficulty" aria-label="{{__('app.select_a_type')}}" data-control="select2"
+                                data-placeholder="{{__('app.select_a_type')}}" wire:model="matter.difficulty"
+                                class="@error('matter.difficulty') is-invalid @enderror form-select form-select-solid">
+                            <option value=""></option>
+                            @foreach ($difficultyLevels as $id => $level)
+                                <option value="{{ $id }}">{{ $level['text'] }}</option>
+                            @endforeach
+                        </select>
+                        @error('matter.difficulty')
+                        <div class="invalid-feedback fv-plugins-message-container">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
                 </div>
             </div>
         </div>

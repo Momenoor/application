@@ -347,7 +347,7 @@ return [
     'comment' => 'البيان',
     'request_type' => 'نوع الطلب',
     'requests' => 'الطلبات',
-    '' => '',
+    'difficulty_level' => 'المستوى',
     '' => '',
     '' => '',
     '' => '',

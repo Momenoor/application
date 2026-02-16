@@ -51,6 +51,7 @@ class MatterCreateForm extends Component
     public $marketersList;
     public $externalMarketersList;
     public $committeeChoiceValue;
+    public $difficultyLevels;
 
     // new subparty form
     public $newsubparty = [];
@@ -73,6 +74,7 @@ class MatterCreateForm extends Component
         'matter.expert_id' => 'required|exists:experts,id',
         'matter.level_id' => 'required',
         'matter.assign' => 'bool',
+        'matter.difficulty' => 'required',
         'experts.committee' => 'required_if:matter.commissioning,committee',
         'experts.assistant' => 'required|exists:experts,id',
         'parties.*.type' => 'required',
@@ -85,7 +87,6 @@ class MatterCreateForm extends Component
         'marketing.marketer.id' => 'required_if:hasMarketingCommission,1',
 
     ];
-
 
 
 
@@ -103,6 +104,7 @@ class MatterCreateForm extends Component
         $this->committeeChoiceValue = Matter::COMMITTEE;
         $this->partyTypes = config('system.parties.type');
         $this->claimsTypes = config('system.claims.types');
+        $this->difficultyLevels = config('system.matter.difficulty_levels');
         $this->addParty();
     }
     public function render()

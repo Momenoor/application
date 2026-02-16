@@ -96,7 +96,8 @@ class MatterController extends Controller
         $source = 'edit';
         $matters = Matter::all();
         $requests = $matter->requests;
-        return view('pages.matters.edit', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants', 'source', 'claims', 'courtsList', 'levelList', 'typesList', 'matters', 'requests'));
+        $difficultyLevels = config('system.matter.difficulty_levels');
+        return view('pages.matters.edit', compact('matter', 'parties', 'claimsTypes', 'partiesTypes', 'subParties', 'assistants', 'source', 'claims', 'courtsList', 'levelList', 'typesList', 'matters', 'requests', 'difficultyLevels'));
     }
 
     /**
@@ -348,6 +349,7 @@ class MatterController extends Controller
             'number' => 'required',
             'court_id' => 'required|exists:courts,id',
             'level_id' => 'required',
+            'difficulty' => 'required',
             'type_id' => 'required|exists:types,id',
             'parent_id' => 'nullable|exists:matters,id',
         ]);

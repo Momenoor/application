@@ -43,6 +43,7 @@ class Matter extends Model
         'parent_id',
         'claim_status',
         'last_action_date',
+        'difficulty'
     ];
 
     protected $fillable = [
@@ -64,6 +65,7 @@ class Matter extends Model
         'parent_id',
         'claim_status',
         'last_action_date',
+        'difficulty'
     ];
 
     protected $dates = [

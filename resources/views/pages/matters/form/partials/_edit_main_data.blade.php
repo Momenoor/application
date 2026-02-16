@@ -148,6 +148,25 @@
                             </div>
                             @enderror
                         </div>
+                        <div class="col-lg-4 mt-10">
+                            <label
+                                class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.difficulty_level') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Select-->
+                            <select name="difficulty" aria-label="{{__('app.select_a_type')}}" data-control="select2"
+                                    data-placeholder="{{__('app.select_a_type')}}" wire:model="matter.difficulty"
+                                    class="@error('matter.difficulty') is-invalid @enderror form-select form-select-solid">
+                                <option value=""></option>
+                                @foreach ($difficultyLevels as $id => $level)
+                                    <option @selected(old('difficulty',$matter->difficulty) == $id) value="{{ $id }}">{{ $level['text'] }}</option>
+                                @endforeach
+                            </select>
+                            @error('matter.difficulty')
+                            <div class="invalid-feedback fv-plugins-message-container">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
                     </div>
                 </div>
             </div>
@@ -191,7 +210,8 @@
                         <div class="col-lg-4" id="selectContainer" style="display:none;">
                             <div class="d-flex flex-column h-100 justify-content-center">
                                 <label class="form-label fw-bolder fs-6 text-gray-700">{{ __('app.matter') }}</label>
-                                <select name="parent_id" aria-label="{{__('app.select_a_matter')}}" data-control="select2"
+                                <select name="parent_id" aria-label="{{__('app.select_a_matter')}}"
+                                        data-control="select2"
                                         data-placeholder="{{__('app.select_a_matter')}}"
                                         id="parentSelect"
                                         class="@error('matter.type_id') is-invalid @enderror form-select form-select-solid">
@@ -199,7 +219,8 @@
                                     @foreach ($matters as $matterItem)
                                         <option
                                             @selected(old('parent_id',$matter->parent_id) == $matterItem['id']) value="{{ $matterItem['id'] }}">
-                                            [{{ $matterItem['id'] }}] - {{$matterItem['year']}} /{{$matterItem['number']}}
+                                            [{{ $matterItem['id'] }}] - {{$matterItem['year']}}
+                                            /{{$matterItem['number']}}
                                         </option>
                                     @endforeach
                                 </select>
