@@ -1,5 +1,5 @@
 <?php
 
-return array(
+return [
     'bootstrap-items' => 'laravel-menu::metronic-navbar-items',
-);
+];
